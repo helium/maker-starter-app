@@ -3,7 +3,6 @@ import { uniq } from 'lodash'
 import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '../../../components/Box'
-import RadarLoader from '../../../components/Loaders/RadarLoader'
 import SafeAreaBox from '../../../components/SafeAreaBox'
 import Text from '../../../components/Text'
 import { useConnectedHotspotContext } from '../../../providers/ConnectedHotspotProvider'
@@ -89,10 +88,9 @@ const HotspotSetupConnectingScreen = () => {
   return (
     <SafeAreaBox flex={1} backgroundColor="primaryBackground">
       <Box flex={0.8} justifyContent="center">
-        <RadarLoader duration={2000} color="green" />
         <Text
           marginTop="xl"
-          variant="body2Light"
+          variant="body2"
           numberOfLines={1}
           adjustsFontSizeToFit
           textAlign="center"

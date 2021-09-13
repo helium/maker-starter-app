@@ -10,7 +10,6 @@ import {
   HotspotSetupStackParamList,
 } from './hotspotSetupTypes'
 import { useConnectedHotspotContext } from '../../../providers/ConnectedHotspotProvider'
-import RadarLoader from '../../../components/Loaders/RadarLoader'
 
 type Route = RouteProp<HotspotSetupStackParamList, 'HotspotSetupScanningScreen'>
 
@@ -39,11 +38,9 @@ const HotspotSetupScanningScreen = () => {
     >
       <Box flex={1} />
 
-      <RadarLoader duration={2000} />
-
       <Text
         marginTop="xl"
-        variant="body2Light"
+        variant="body2"
         numberOfLines={1}
         adjustsFontSizeToFit
         textAlign="center"

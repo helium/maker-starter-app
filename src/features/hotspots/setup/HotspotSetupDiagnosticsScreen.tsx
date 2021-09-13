@@ -10,7 +10,6 @@ import {
   HotspotSetupNavigationProp,
   HotspotSetupStackParamList,
 } from './hotspotSetupTypes'
-import Clipboard from '../../../assets/images/clipboard.svg'
 import Box from '../../../components/Box'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
 
@@ -31,7 +30,6 @@ const HotspotSetupDiagnosticsScreen = () => {
     <BackScreen backgroundColor="primaryBackground" onClose={handleClose}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <Box alignItems="center">
-          <Clipboard />
           <Text
             variant="h1"
             numberOfLines={1}
@@ -43,7 +41,7 @@ const HotspotSetupDiagnosticsScreen = () => {
           </Text>
           <TextTransform
             maxFontSizeMultiplier={1.1}
-            variant="subtitle"
+            variant="subtitle1"
             marginTop="m"
             i18nKey={t(`makerHotspot.${params.hotspotType}.diagnostic`)}
           />

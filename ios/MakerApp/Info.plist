@@ -27,7 +27,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>helium</string>
+				<string>makerappscheme</string>
 			</array>
 		</dict>
 	</array>

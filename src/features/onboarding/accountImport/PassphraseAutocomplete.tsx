@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { KeyboardAvoidingView, ScrollView, StyleSheet } from 'react-native'
 import { useTranslation } from 'react-i18next'
-import Lock from '@assets/images/lock_ico.svg'
 import MatchingWord from './MatchingWord'
 import wordlist from '../../../constants/wordlists/english.json'
 import TextInput from '../../../components/TextInput'
@@ -39,10 +38,9 @@ const PassphraseAutocomplete = ({ onSelectWord, wordIdx }: Props) => {
       style={styles.container}
     >
       <Box marginTop={{ smallPhone: 'm', phone: 'xxl' }}>
-        <Lock />
         <Text
           marginTop="l"
-          variant="bold"
+          variant="body1"
           fontSize={27}
           numberOfLines={2}
           maxFontSizeMultiplier={1}
@@ -51,12 +49,12 @@ const PassphraseAutocomplete = ({ onSelectWord, wordIdx }: Props) => {
         >
           {t('account_import.word_entry.title')}
         </Text>
-        <Text variant="light" color="grayLight" fontSize={20}>
+        <Text variant="body1" fontSize={20}>
           {t('account_import.word_entry.subtitle')}
         </Text>
 
         <TextInput
-          variant="regularDark"
+          variant="secondary"
           placeholder={t('account_import.word_entry.placeholder', {
             ordinal,
           })}

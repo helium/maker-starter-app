@@ -10,7 +10,6 @@ import {
 } from './hotspotSetupTypes'
 import TextInput from '../../../components/TextInput'
 import Button, { DebouncedButton } from '../../../components/Button'
-import Password from '../../../assets/images/password.svg'
 import Box from '../../../components/Box'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
 
@@ -46,9 +45,6 @@ const HotspotSetupWifiScreen = () => {
         behavior="padding"
       >
         <Box flex={1} justifyContent="center" paddingBottom="xxl">
-          <Box flexDirection="row" justifyContent="center" marginBottom="m">
-            <Password />
-          </Box>
           <Box>
             <Text
               variant="h1"
@@ -59,14 +55,14 @@ const HotspotSetupWifiScreen = () => {
               {t('hotspot_setup.wifi_password.join_title')}
             </Text>
             <Text
-              variant="subtitleLight"
+              variant="subtitle2"
               textAlign="center"
               marginBottom="xl"
               maxFontSizeMultiplier={1.2}
             >
               {t('hotspot_setup.wifi_password.subtitle')}
             </Text>
-            <Text variant="body1Bold" marginBottom="s">
+            <Text variant="body1" marginBottom="s">
               {network}
             </Text>
           </Box>
@@ -78,6 +74,7 @@ const HotspotSetupWifiScreen = () => {
             value={password}
             keyboardAppearance="dark"
             autoCorrect={false}
+            placeholderTextColor="secondaryText"
             autoCompleteType="off"
             autoCapitalize="none"
             blurOnSubmit={false}

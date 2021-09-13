@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Modal, ScrollView } from 'react-native'
 import { useTranslation } from 'react-i18next'
-import Lock from '@assets/images/lock_ico.svg'
 import MatchingWord from '../accountImport/MatchingWord'
 import wordlist from '../../../constants/wordlists/english.json'
 import TextInput from '../../../components/TextInput'
@@ -68,10 +67,8 @@ const ImportReplaceWordModal = ({
           marginTop={{ smallPhone: 'm', phone: 'xxl' }}
           paddingHorizontal="lx"
         >
-          <Lock />
-
           <TextInput
-            variant="regularDark"
+            variant="secondary"
             placeholder={t('account_import.word_entry.placeholder', {
               ordinal,
             })}

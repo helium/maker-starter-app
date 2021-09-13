@@ -180,7 +180,7 @@ const HeliumActionSheet = ({
           justifyContent="center"
           borderRadius="ms"
         >
-          <Text variant="medium" fontSize={18} style={styles.cancelText}>
+          <Text variant="body2" fontSize={18} style={styles.cancelText}>
             {t('generic.cancel')}
           </Text>
         </TouchableOpacityBox>
@@ -211,7 +211,7 @@ const HeliumActionSheet = ({
               color="black"
               maxFontSizeMultiplier={1}
               marginRight="xs"
-              variant="bold"
+              variant="body2"
               fontSize={20}
               {...prefixTextProps}
             >
@@ -222,7 +222,7 @@ const HeliumActionSheet = ({
             <Text
               maxFontSizeMultiplier={1}
               marginRight="s"
-              variant="bold"
+              variant="body2"
               fontSize={20}
               color="primary"
               {...textProps}
@@ -274,7 +274,7 @@ const HeliumActionSheet = ({
               justifyContent="space-between"
               alignItems="center"
             >
-              <Text color="purpleGray" variant="body2">
+              <Text color="primaryText" variant="body2">
                 {title}
               </Text>
               <TouchableOpacityBox
@@ -284,7 +284,7 @@ const HeliumActionSheet = ({
                 paddingHorizontal="m"
                 marginEnd="n_m"
               >
-                <Close color={colors.purpleGray} height={14} width={14} />
+                <Close color={colors.primaryText} height={14} width={14} />
               </TouchableOpacityBox>
             </Box>
             <FlatList

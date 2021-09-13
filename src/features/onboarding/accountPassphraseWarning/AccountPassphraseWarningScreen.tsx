@@ -7,7 +7,6 @@ import TextTransform from '../../../components/TextTransform'
 import Button from '../../../components/Button'
 import { OnboardingNavigationProp } from '../onboardingTypes'
 import BackScreen from '../../../components/BackScreen'
-import LockIcon from '../../../assets/images/lockIcon.svg'
 
 const AccountPassphraseWarningScreen = () => {
   const { t } = useTranslation()
@@ -20,7 +19,6 @@ const AccountPassphraseWarningScreen = () => {
       paddingBottom="none"
     >
       <Box flex={1} justifyContent="center" marginBottom="xxl">
-        <LockIcon />
         <Text
           marginVertical="lx"
           variant="h1"
@@ -34,13 +32,13 @@ const AccountPassphraseWarningScreen = () => {
           maxFontSizeMultiplier={1}
           numberOfLines={4}
           adjustsFontSizeToFit
-          variant="subtitle"
+          variant="subtitle1"
           i18nKey="account_setup.warning.subtitle"
         />
       </Box>
       <Button
         mode="contained"
-        variant="primary"
+        variant="secondary"
         width="100%"
         marginBottom="l"
         onPress={() => navigation.push('AccountPassphraseGeneration')}

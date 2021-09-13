@@ -2,7 +2,6 @@ import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet } from 'react-native'
-import Lock from '@assets/images/lock_ico.svg'
 import { upperFirst } from 'lodash'
 import Carousel, { Pagination } from 'react-native-snap-carousel'
 import Box from '../../../components/Box'
@@ -72,9 +71,11 @@ const ImportAccountConfirmScreen = () => {
           alignItems="center"
           flexDirection="row"
         >
-          <Text variant="h1" color="purpleLight" maxFontSizeMultiplier={1}>{`${
-            index + 1
-          }. `}</Text>
+          <Text
+            variant="h1"
+            color="secondaryText"
+            maxFontSizeMultiplier={1}
+          >{`${index + 1}. `}</Text>
           <Text
             variant="h1"
             color="primaryBackground"
@@ -91,11 +92,9 @@ const ImportAccountConfirmScreen = () => {
   return (
     <BackScreen>
       <Box>
-        <Lock />
         <Text
           marginTop="l"
-          variant="bold"
-          fontSize={27}
+          variant="h1"
           numberOfLines={2}
           maxFontSizeMultiplier={1}
           adjustsFontSizeToFit
@@ -104,10 +103,9 @@ const ImportAccountConfirmScreen = () => {
           {t('account_import.confirm.title')}
         </Text>
         <Text
-          variant="light"
-          color="grayLight"
-          fontSize={20}
           maxFontSizeMultiplier={1.1}
+          variant="subtitle1"
+          color="secondaryText"
         >
           {t('account_import.confirm.subtitle')}
         </Text>
@@ -141,7 +139,7 @@ const ImportAccountConfirmScreen = () => {
         <Button
           height={60}
           onPress={navNext}
-          variant="primary"
+          variant="secondary"
           mode="contained"
           title={t('account_import.confirm.next')}
         />

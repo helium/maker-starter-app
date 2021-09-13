@@ -9,7 +9,6 @@ import {
   OnboardingStackParamList,
 } from '../onboardingTypes'
 import { createKeypair } from '../../../utils/secureAccount'
-import RingLoader from '../../../components/Loaders/RingLoader'
 
 type Route = RouteProp<OnboardingStackParamList, 'AccountImportCompleteScreen'>
 
@@ -55,7 +54,6 @@ const AccountImportCompleteScreen = () => {
       backgroundColor="primaryBackground"
       justifyContent="center"
     >
-      <RingLoader color="purple" size={212} />
       <Text variant="body2" color="white" marginTop="lx" textAlign="center">
         {t('account_import.complete.title')}
       </Text>

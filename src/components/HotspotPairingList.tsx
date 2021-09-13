@@ -55,7 +55,7 @@ const HotspotPairingItem = ({
   const [mac, setMac] = useState('')
   const [name, setName] = useState('')
   const [pressing, setPressing] = useState<boolean>()
-  const svgColor = pressing ? colors.white : colors.blueGray
+  const svgColor = pressing ? colors.primary : colors.secondary
 
   const handlePressing = useCallback(
     (value: boolean) => () => setPressing(value),
@@ -119,14 +119,20 @@ const HotspotPairingItem = ({
           {HotspotImage}
         </Box>
         <Box flex={1}>
-          <Text variant="body1" color={pressing ? 'white' : 'blueGray'}>
+          <Text
+            variant="body1"
+            color={pressing ? 'secondary' : 'secondaryText'}
+          >
             {name}
           </Text>
-          <Text variant="body2Light" color={pressing ? 'white' : 'blueGray'}>
+          <Text
+            variant="body2"
+            color={pressing ? 'secondary' : 'secondaryText'}
+          >
             {mac}
           </Text>
         </Box>
-        <CarotRight color={colors.grayLight} />
+        <CarotRight color={colors.secondary} />
       </>
     </DebouncedTouchableHighlightBox>
   )

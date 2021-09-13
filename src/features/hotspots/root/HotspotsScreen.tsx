@@ -28,12 +28,7 @@ const HotspotsScreen = () => {
           backgroundColor="primaryBackground"
         >
           <Text variant="h1">{t('hotspots.empty.title')}</Text>
-          <Text
-            variant="regular"
-            fontSize={18}
-            color="purpleBrightMuted"
-            marginTop="ms"
-          >
+          <Text variant="body1" marginTop="ms">
             {t('hotspots.empty.body')}
           </Text>
           <Button
@@ -42,7 +37,7 @@ const HotspotsScreen = () => {
             backgroundColor="white"
             marginTop="l"
             color="secondary"
-            textVariant="body2"
+            textVariant="body1"
             mode="contained"
             title={t('hotspots.empty.hotspots.add')}
             icon={<AddIcon color={secondary} height={10} />}

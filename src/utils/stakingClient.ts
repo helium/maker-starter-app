@@ -34,7 +34,7 @@ export type Maker = {
 }
 
 const makeRequest = async (url: string, opts: RequestInit = {}) => {
-  const route = [Config.STAKING_API_BASE_URL, url].join('/')
+  const route = [Config.ONBOARDING_API_BASE_URL, url].join('/')
 
   const response = await fetch(route, {
     ...opts,

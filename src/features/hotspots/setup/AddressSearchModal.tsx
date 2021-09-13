@@ -63,7 +63,7 @@ const AddressSearchModal = ({ onSelectPlace }: Props) => {
         placeholder={t('generic.search_location')}
         autoFocus
         autoCorrect={false}
-        variant="light"
+        variant="secondary"
       />
     )
   }, [handleSearchChange, t])
@@ -73,14 +73,14 @@ const AddressSearchModal = ({ onSelectPlace }: Props) => {
       return (
         <TouchableOpacityBox
           onPress={handleSelectPlace(searchResult)}
-          backgroundColor="offwhite"
+          backgroundColor="surface"
           padding="s"
           marginVertical="xxs"
         >
-          <Text variant="body2Medium" color="black" marginBottom="xs">
+          <Text variant="body2" color="surfaceText" marginBottom="xs">
             {searchResult.mainText}
           </Text>
-          <Text variant="body2Light" color="black">
+          <Text variant="body2" color="surfaceText">
             {searchResult.secondaryText}
           </Text>
         </TouchableOpacityBox>

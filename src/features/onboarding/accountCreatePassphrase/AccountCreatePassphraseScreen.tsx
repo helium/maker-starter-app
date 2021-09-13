@@ -52,7 +52,7 @@ const AccountCreatePassphraseScreen = () => {
       alignItems="center"
       flexDirection="row"
     >
-      <Text variant="h1" color="purpleLight" maxFontSizeMultiplier={1}>{`${
+      <Text variant="h1" color="primaryText" maxFontSizeMultiplier={1}>{`${
         index + 1
       }. `}</Text>
       <Text variant="h1" color="primaryBackground" maxFontSizeMultiplier={1}>
@@ -69,7 +69,7 @@ const AccountCreatePassphraseScreen = () => {
       </Text>
       <TextTransform
         marginVertical="l"
-        variant="subtitle"
+        variant="subtitle1"
         maxFontSizeMultiplier={1}
         i18nKey="account_setup.passphrase.subtitle"
       />

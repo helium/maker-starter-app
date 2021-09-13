@@ -7,7 +7,6 @@ import HotspotPairingList from '../../../components/HotspotPairingList'
 import Text from '../../../components/Text'
 import { useConnectedHotspotContext } from '../../../providers/ConnectedHotspotProvider'
 import { HotspotSetupNavigationProp } from './hotspotSetupTypes'
-import Bluetooth from '../../../assets/images/bluetooth.svg'
 
 const HotspotSetupBluetoothSuccess = () => {
   const { t } = useTranslation()
@@ -23,9 +22,6 @@ const HotspotSetupBluetoothSuccess = () => {
   return (
     <Box flex={1}>
       <Box padding="lx" backgroundColor="primaryBackground">
-        <Box marginBottom="l">
-          <Bluetooth />
-        </Box>
         <Text
           variant="h1"
           numberOfLines={1}
@@ -36,11 +32,15 @@ const HotspotSetupBluetoothSuccess = () => {
             count: Object.keys(availableHotspots).length,
           })}
         </Text>
-        <Text variant="subtitleLight">
+        <Text variant="subtitle2">
           {t('hotspot_setup.ble_select.subtitle')}
         </Text>
       </Box>
-      <Box flex={1} paddingHorizontal="lx" backgroundColor="purple200">
+      <Box
+        flex={1}
+        paddingHorizontal="lx"
+        backgroundColor="secondaryBackground"
+      >
         <HotspotPairingList
           hotspots={Object.values(availableHotspots)}
           onPress={handleConnect}

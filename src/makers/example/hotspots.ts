@@ -3,7 +3,7 @@ import { MakerHotspot } from '../hotspotMakerTypes'
 import ANTENNAS from './antennas'
 
 const ExampleHotspotBLE = {
-  name: 'Example Hotspot',
+  name: 'Example Hotspot BLE',
   icon: HotspotIcon,
   onboardType: 'BLE',
   translations: {
@@ -36,7 +36,7 @@ const ExampleHotspotBLE = {
 } as MakerHotspot
 
 const ExampleHotspotQR = {
-  name: 'Example Hotspot',
+  name: 'Example Hotspot QR',
   icon: HotspotIcon,
   onboardType: 'QR',
   translations: {

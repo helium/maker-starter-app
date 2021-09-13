@@ -18,7 +18,7 @@ type Props = HeliumActionSheetItemType & {
 export const HeliumActionSheetItemHeight = 50
 
 const HeliumActionSheetItem = ({ label, onPress, selected, Icon }: Props) => {
-  const { primary, grayLight } = useColors()
+  const { primary, secondary } = useColors()
   return (
     <TouchableOpacityBox
       height={HeliumActionSheetItemHeight}
@@ -27,12 +27,12 @@ const HeliumActionSheetItem = ({ label, onPress, selected, Icon }: Props) => {
       flexDirection="row"
     >
       {!!Icon && (
-        <Icon color={selected ? primary : grayLight} height={16} width={16} />
+        <Icon color={selected ? primary : secondary} height={16} width={16} />
       )}
       <Text
         marginLeft={Icon ? 'ms' : 'none'}
-        color={selected ? 'primary' : 'black'}
-        variant={selected ? 'medium' : 'regular'}
+        color={selected ? 'surfaceText' : 'secondaryText'}
+        variant={selected ? 'body1' : 'body2'}
         fontSize={18}
       >
         {label}
