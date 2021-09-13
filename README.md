@@ -182,24 +182,6 @@ See [React Native Debugging](https://reactnative.dev/docs/debugging.html).
 
 ---
 
-### **_Reactotron_**
-
-The app is configured to use the [Reactotron](https://github.com/infinitered/reactotron) app which can be used to:
-
-- view your application state
-- show API requests & responses
-- perform quick performance benchmarks
-- subscribe to parts of your application state
-- display messages similar to `console.log`
-- track global errors with source-mapped stack traces including saga stack traces!
-- dispatch actions like a government-run mind control experiment
-- hot swap your app's state using Redux or mobx-state-tree
-- track your sagas
-- show image overlay in React Native
-- track your Async Storage in React Native
-
-The latest version of Reactotron can be downloaded [here](https://github.com/infinitered/reactotron/releases)
-
 ### **_React Native Debugger_**
 
 See [React Native Debugger](https://github.com/jhen0409/react-native-debugger)
