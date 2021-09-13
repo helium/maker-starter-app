@@ -2,16 +2,9 @@ import { configureStore, Action, getDefaultMiddleware } from '@reduxjs/toolkit'
 import { ThunkAction } from 'redux-thunk'
 import { useDispatch, useStore } from 'react-redux'
 import rootReducer, { RootState } from './rootReducer'
-import Reactotron from '../../ReactotronConfig'
-
-const enhancers = []
-if (Reactotron.createEnhancer) {
-  enhancers.push(Reactotron.createEnhancer())
-}
 
 const store = configureStore({
   reducer: rootReducer,
-  enhancers,
   middleware: getDefaultMiddleware({
     serializableCheck: false,
     immutableCheck: false,

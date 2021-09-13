@@ -8,7 +8,6 @@ import Config from 'react-native-config'
 import { useSelector } from 'react-redux'
 import MapboxGL from '@react-native-mapbox-gl/maps'
 import { useAsync } from 'react-async-hook'
-import { ActionSheetProvider } from '@expo/react-native-action-sheet'
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
 import * as SplashScreen from 'expo-splash-screen'
 import { NavigationContainer } from '@react-navigation/native'
@@ -153,29 +152,25 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <BottomSheetModalProvider>
-        <ActionSheetProvider>
-          <BluetoothProvider>
-            <ConnectedHotspotProvider>
-              <SafeAreaProvider>
-                {/* TODO: Will need to adapt status bar for light/dark modes */}
-                {Platform.OS === 'ios' && (
-                  <StatusBar barStyle="light-content" />
-                )}
-                {Platform.OS === 'android' && (
-                  <StatusBar translucent backgroundColor="transparent" />
-                )}
-                <NavigationContainer ref={navigationRef}>
-                  <AppLinkProvider>
-                    <NavigationRoot />
-                  </AppLinkProvider>
-                </NavigationContainer>
-              </SafeAreaProvider>
-              <SecurityScreen
-                visible={appState !== 'active' && appState !== 'unknown'}
-              />
-            </ConnectedHotspotProvider>
-          </BluetoothProvider>
-        </ActionSheetProvider>
+        <BluetoothProvider>
+          <ConnectedHotspotProvider>
+            <SafeAreaProvider>
+              {/* TODO: Will need to adapt status bar for light/dark modes */}
+              {Platform.OS === 'ios' && <StatusBar barStyle="light-content" />}
+              {Platform.OS === 'android' && (
+                <StatusBar translucent backgroundColor="transparent" />
+              )}
+              <NavigationContainer ref={navigationRef}>
+                <AppLinkProvider>
+                  <NavigationRoot />
+                </AppLinkProvider>
+              </NavigationContainer>
+            </SafeAreaProvider>
+            <SecurityScreen
+              visible={appState !== 'active' && appState !== 'unknown'}
+            />
+          </ConnectedHotspotProvider>
+        </BluetoothProvider>
       </BottomSheetModalProvider>
     </ThemeProvider>
   )

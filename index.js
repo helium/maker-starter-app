@@ -7,11 +7,6 @@ import { name as appName } from './app.json'
 import store from './src/store/store'
 import LanguageProvider from './src/providers/LanguageProvider'
 
-// eslint-disable-next-line no-undef
-if (__DEV__) {
-  import('./ReactotronConfig')
-}
-
 const render = () => {
   return (
     <LanguageProvider>

@@ -3,7 +3,6 @@ import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
 import Box from '../../../components/Box'
 import { DebouncedButton } from '../../../components/Button'
-import EmojiBlip from '../../../components/EmojiBlip'
 import SafeAreaBox from '../../../components/SafeAreaBox'
 import Text from '../../../components/Text'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
@@ -33,10 +32,6 @@ const OnboardingErrorScreen = () => {
   return (
     <SafeAreaBox backgroundColor="primaryBackground" flex={1} padding="l">
       <Box flex={1} justifyContent="center" paddingBottom="xxl">
-        <Box paddingBottom="l">
-          <EmojiBlip name="exploding_head" />
-        </Box>
-
         <Text variant="h1">{t('hotspot_setup.onboarding_error.title')}</Text>
         <Text variant="body1" marginVertical="l">
           {subtitle}
