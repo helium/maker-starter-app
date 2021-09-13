@@ -3,7 +3,7 @@ import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import { isString } from 'lodash'
-import { AddGatewayV1 } from '@helium/transactions'
+import { AddGateway } from '@helium/react-native-sdk'
 import Box from '../../../components/Box'
 import { DebouncedButton } from '../../../components/Button'
 import RingLoader from '../../../components/Loaders/RingLoader'
@@ -11,12 +11,11 @@ import Text from '../../../components/Text'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
 import SafeAreaBox from '../../../components/SafeAreaBox'
 import { useConnectedHotspotContext } from '../../../providers/ConnectedHotspotProvider'
-import { getHotspotDetails } from '../../../utils/appDataClient'
+import { getHotspotDetails, submitTxn } from '../../../utils/appDataClient'
 import { RootState } from '../../../store/rootReducer'
 import useAlert from '../../../utils/useAlert'
 import { HotspotErrorCode } from '../../../utils/useHotspot'
 import { assertLocationTxn } from '../../../utils/assertLocationUtils'
-import useSubmitTxn from '../../../hooks/useSubmitTxn'
 import { HotspotSetupStackParamList } from './hotspotSetupTypes'
 import { getKeypair } from '../../../utils/secureAccount'
 import { getStakingSignedTransaction } from '../../../utils/stakingClient'
@@ -36,7 +35,6 @@ const HotspotTxnsProgressScreen = () => {
   )
   const { showOKAlert } = useAlert()
   const { addGatewayTxn } = useConnectedHotspotContext()
-  const submitTxn = useSubmitTxn()
 
   const handleError = async (
     error: false | Error | string,
@@ -107,7 +105,7 @@ const HotspotTxnsProgressScreen = () => {
 
         // Gateway Txn scanned from QR
         try {
-          const txn = AddGatewayV1.fromString(qrAddGatewayTxn)
+          const txn = AddGateway.txnFromString(qrAddGatewayTxn)
 
           const keypair = await getKeypair()
 
@@ -120,11 +118,11 @@ const HotspotTxnsProgressScreen = () => {
             txnOwnerSigned.toString(),
           )
 
-          const stakingServerSignedTxn = AddGatewayV1.fromString(
+          const stakingServerSignedTxn = AddGateway.txnFromString(
             stakingServerSignedTxnStr,
           )
 
-          await submitTxn(stakingServerSignedTxn)
+          await submitTxn(stakingServerSignedTxn.toString())
         } catch (error) {
           handleError(error, 'add_gateway')
           return
@@ -156,7 +154,6 @@ const HotspotTxnsProgressScreen = () => {
           decimalGain: gain,
           elevation,
           onboardingRecord,
-          updatingLocation: true,
           dataOnly: false,
         })
         if (assertLocTxnResponse) {

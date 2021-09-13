@@ -2,9 +2,9 @@ import { useRef, useState } from 'react'
 import { BleError, Device, Subscription } from 'react-native-ble-plx'
 import compareVersions from 'compare-versions'
 import { useSelector } from 'react-redux'
-import { AddGatewayV1 } from '@helium/transactions'
 import { decode } from 'base-64'
 import { Hotspot } from '@helium/http'
+import { AddGateway } from '@helium/react-native-sdk'
 import { useBluetoothContext } from '../providers/BluetoothProvider'
 import {
   FirmwareCharacteristic,
@@ -18,10 +18,6 @@ import {
   encodeWifiRemove,
   parseChar,
 } from './bluetooth/bluetoothDataParser'
-import { getAddress } from './appDataClient'
-import { getSecureItem } from './secureAccount'
-import { makeAddGatewayTxn } from './transactions'
-import { calculateAddGatewayFee } from './fees'
 import connectedHotspotSlice, {
   AllHotspotDetails,
   fetchConnectedHotspotDetails,
@@ -29,7 +25,8 @@ import connectedHotspotSlice, {
 } from '../store/connectedHotspot/connectedHotspotSlice'
 import { useAppDispatch } from '../store/store'
 import { RootState } from '../store/rootReducer'
-import useSubmitTxn from '../hooks/useSubmitTxn'
+import { getAddress, getSodiumKeypair } from './secureAccount'
+import { submitTxn } from './appDataClient'
 
 export type HotspotConnectStatus =
   | 'success'
@@ -49,7 +46,6 @@ export enum HotspotErrorCode {
 }
 
 const useHotspot = () => {
-  const submitTxn = useSubmitTxn()
   const connectedHotspot = useRef<Device | null>(null)
   const [availableHotspots, setAvailableHotspots] = useState<
     Record<string, Device>
@@ -304,7 +300,7 @@ const useHotspot = () => {
   }
 
   const updateHotspotStatus = async (hotspot?: Hotspot) => {
-    const address = await getAddress()
+    const address = (await getAddress())?.b58
     let status: HotspotStatus = 'new'
     if (hotspot && hotspot.owner === address) {
       status = 'owned'
@@ -324,10 +320,11 @@ const useHotspot = () => {
     )
     if (!characteristic) return false
 
-    const owner = await getSecureItem('address')
+    const owner = (await getAddress())?.b58
     const payer = connectedHotspotDetails.onboardingRecord?.maker.address
     if (!payer || !owner) return false
-    const { fee, stakingFee } = calculateAddGatewayFee(owner, payer) || 0
+    const { fee, stakingFee } =
+      AddGateway.calculateAddGatewayFee(owner, payer) || 0
 
     const encodedPayload = encodeAddGateway(owner, stakingFee, fee, payer)
 
@@ -340,18 +337,24 @@ const useHotspot = () => {
       return parsedValue
     }
 
-    const txn = await makeAddGatewayTxn(value)
+    const keypair = await getSodiumKeypair()
+    if (!keypair) return false
+
+    const txn = await AddGateway.signGatewayTxn(value, keypair)
+    if (!txn) return false
 
     const stakingServerSignedTxnStr = await getStakingSignedTransaction(
       connectedHotspotDetails.onboardingAddress,
-      txn.toString(),
+      txn,
     )
 
-    const stakingServerSignedTxn = AddGatewayV1.fromString(
+    const stakingServerSignedTxn = AddGateway.txnFromString(
       stakingServerSignedTxnStr,
     )
 
-    const pendingTransaction = await submitTxn(stakingServerSignedTxn)
+    const pendingTransaction = await submitTxn(
+      stakingServerSignedTxn.toString(),
+    )
     return !!pendingTransaction
   }
 

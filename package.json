@@ -88,6 +88,7 @@
     "react-native-config": "^1.4.1",
     "react-native-device-info": "^7.1.0",
     "react-native-gesture-handler": "1.10.3",
+    "react-native-get-random-values": "^1.7.0",
     "react-native-keyboard-aware-scroll-view": "^0.9.3",
     "react-native-localize": "^1.4.3",
     "react-native-navigation-bar-color": "^2.0.1",

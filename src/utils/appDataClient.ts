@@ -1,6 +1,6 @@
 import Client, { Hotspot } from '@helium/http'
 import { Transaction } from '@helium/transactions'
-import { getSecureItem } from './secureAccount'
+import { getAddress } from './secureAccount'
 
 const MAX = 100000
 const client = new Client()
@@ -14,12 +14,12 @@ export const getChainVars = async () => {
   return client.vars.get()
 }
 
-export const getAddress = async () => {
-  return getSecureItem('address')
+export const submitTxn = async (txn: string) => {
+  return client.transactions.submit(txn)
 }
 
 export const getHotspots = async () => {
-  const address = await getAddress()
+  const address = (await getAddress())?.b58
   if (!address) return []
 
   const newHotspotList = await client.account(address).hotspots.list()
@@ -31,7 +31,7 @@ export const getHotspotDetails = async (address: string): Promise<Hotspot> => {
 }
 
 export const getAccount = async (address?: string) => {
-  const accountAddress = address || (await getAddress())
+  const accountAddress = address || (await getAddress())?.b58
   if (!accountAddress) return
 
   const { data } = await client.accounts.get(accountAddress)

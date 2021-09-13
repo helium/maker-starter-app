@@ -2,9 +2,9 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
 import Fingerprint from '@assets/images/fingerprint.svg'
-import { AddGatewayV1 } from '@helium/transactions'
 import { ActivityIndicator } from 'react-native'
 import { useAsync } from 'react-async-hook'
+import { AddGateway } from '@helium/react-native-sdk'
 import BackScreen from '../../../components/BackScreen'
 import Box from '../../../components/Box'
 import Text from '../../../components/Text'
@@ -20,7 +20,7 @@ import {
 import animateTransition from '../../../utils/animateTransition'
 import { DebouncedButton } from '../../../components/Button'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
-import { getSecureItem } from '../../../utils/secureAccount'
+import { getAddress } from '../../../utils/secureAccount'
 
 type Route = RouteProp<
   HotspotSetupStackParamList,
@@ -33,7 +33,7 @@ const HotspotSetupExternalConfirmScreen = () => {
   const navigation = useNavigation<HotspotSetupNavigationProp>()
   const colors = useColors()
   const breakpoints = useBreakpoints()
-  const { result: address } = useAsync(getSecureItem, ['address'])
+  const [address, setAddress] = useState('')
   const [publicKey, setPublicKey] = useState('')
   const [macAddress, setMacAddress] = useState('')
   const [ownerAddress, setOwnerAddress] = useState('')
@@ -41,6 +41,11 @@ const HotspotSetupExternalConfirmScreen = () => {
   const rootNav = useNavigation<RootNavigationProp>()
 
   const handleClose = useCallback(() => rootNav.navigate('MainTabs'), [rootNav])
+
+  useAsync(async () => {
+    const accountAddress = await getAddress()
+    setAddress(accountAddress?.b58 || '')
+  }, [])
 
   useEffect(() => {
     if (!publicKey) return
@@ -57,7 +62,7 @@ const HotspotSetupExternalConfirmScreen = () => {
   useEffect(() => {
     if (!params.addGatewayTxn) return
 
-    const addGatewayTxn = AddGatewayV1.fromString(params.addGatewayTxn)
+    const addGatewayTxn = AddGateway.txnFromString(params.addGatewayTxn)
 
     setPublicKey(addGatewayTxn.gateway?.b58 || '')
     setOwnerAddress(addGatewayTxn.owner?.b58 || '')
