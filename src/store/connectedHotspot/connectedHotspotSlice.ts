@@ -1,10 +1,7 @@
 import { Hotspot } from '@helium/http'
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { Onboarding } from '@helium/react-native-sdk'
 import { getHotspotDetails } from '../../utils/appDataClient'
-import {
-  getOnboardingRecord,
-  OnboardingRecord,
-} from '../../utils/stakingClient'
 
 export type HotspotStatus = 'owned' | 'global' | 'new' | 'error' | 'initial'
 
@@ -12,7 +9,7 @@ export type HotspotDetails = {
   mac?: string
   address?: string
   wifi?: string
-  onboardingRecord?: OnboardingRecord
+  onboardingRecord?: Onboarding.OnboardingRecord
   onboardingAddress?: string
   firmware?: {
     version: string
@@ -29,7 +26,7 @@ const initialState: HotspotDetails = {
 
 export type AllHotspotDetails = {
   hotspot?: Hotspot
-  onboardingRecord?: OnboardingRecord
+  onboardingRecord?: Onboarding.OnboardingRecord
 }
 export const fetchConnectedHotspotDetails = createAsyncThunk<
   AllHotspotDetails,
@@ -46,7 +43,7 @@ export const fetchConnectedHotspotDetails = createAsyncThunk<
     getHotspotDetails(details.address).catch(() => {
       // Hotspot may not yet exist on the chain, let it fail silently
     }),
-    getOnboardingRecord(details.onboardingAddress),
+    Onboarding.getOnboardingRecord(details.onboardingAddress),
   ])
 
   return {

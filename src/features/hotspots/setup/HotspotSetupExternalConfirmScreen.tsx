@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import Fingerprint from '@assets/images/fingerprint.svg'
 import { ActivityIndicator } from 'react-native'
 import { useAsync } from 'react-async-hook'
-import { AddGateway } from '@helium/react-native-sdk'
+import { AddGateway, Onboarding } from '@helium/react-native-sdk'
 import BackScreen from '../../../components/BackScreen'
 import Box from '../../../components/Box'
 import Text from '../../../components/Text'
@@ -13,10 +13,6 @@ import {
   HotspotSetupStackParamList,
 } from './hotspotSetupTypes'
 import { useBreakpoints, useColors } from '../../../theme/themeHooks'
-import {
-  getOnboardingRecord,
-  OnboardingRecord,
-} from '../../../utils/stakingClient'
 import animateTransition from '../../../utils/animateTransition'
 import { DebouncedButton } from '../../../components/Button'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
@@ -37,7 +33,10 @@ const HotspotSetupExternalConfirmScreen = () => {
   const [publicKey, setPublicKey] = useState('')
   const [macAddress, setMacAddress] = useState('')
   const [ownerAddress, setOwnerAddress] = useState('')
-  const [onboardingRecord, setOnboardingRecord] = useState<OnboardingRecord>()
+  const [
+    onboardingRecord,
+    setOnboardingRecord,
+  ] = useState<Onboarding.OnboardingRecord>()
   const rootNav = useNavigation<RootNavigationProp>()
 
   const handleClose = useCallback(() => rootNav.navigate('MainTabs'), [rootNav])
@@ -51,7 +50,7 @@ const HotspotSetupExternalConfirmScreen = () => {
     if (!publicKey) return
 
     const getRecord = async () => {
-      const record = await getOnboardingRecord(publicKey)
+      const record = await Onboarding.getOnboardingRecord(publicKey)
       animateTransition('HotspotSetupExternalConfirmScreen.GetMac')
       setMacAddress(record.macEth0 || t('generic.unknown'))
       setOnboardingRecord(record)

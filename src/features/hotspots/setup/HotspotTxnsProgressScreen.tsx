@@ -3,7 +3,7 @@ import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import { isString } from 'lodash'
-import { AddGateway } from '@helium/react-native-sdk'
+import { AddGateway, Onboarding } from '@helium/react-native-sdk'
 import Box from '../../../components/Box'
 import { DebouncedButton } from '../../../components/Button'
 import RingLoader from '../../../components/Loaders/RingLoader'
@@ -18,7 +18,6 @@ import { HotspotErrorCode } from '../../../utils/useHotspot'
 import { assertLocationTxn } from '../../../utils/assertLocationUtils'
 import { HotspotSetupStackParamList } from './hotspotSetupTypes'
 import { getKeypair } from '../../../utils/secureAccount'
-import { getStakingSignedTransaction } from '../../../utils/stakingClient'
 
 type Route = RouteProp<HotspotSetupStackParamList, 'HotspotTxnsProgressScreen'>
 
@@ -113,7 +112,7 @@ const HotspotTxnsProgressScreen = () => {
             owner: keypair,
           })
 
-          const stakingServerSignedTxnStr = await getStakingSignedTransaction(
+          const stakingServerSignedTxnStr = await Onboarding.getOnboardingSignedTransaction(
             address,
             txnOwnerSigned.toString(),
           )

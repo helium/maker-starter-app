@@ -1,17 +1,17 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { OraclePrice } from '@helium/http'
+import { Onboarding } from '@helium/react-native-sdk'
 import {
   getBlockHeight,
   getCurrentOraclePrice,
   getPredictedOraclePrice,
 } from '../../utils/appDataClient'
-import { getMakers, Maker } from '../../utils/stakingClient'
 
 export type HeliumDataState = {
   blockHeight?: number
   currentOraclePrice?: OraclePrice
   predictedOraclePrices: OraclePrice[]
-  makers?: Maker[]
+  makers?: Onboarding.Maker[]
   hotspotCount?: number
 }
 const initialState: HeliumDataState = {
@@ -39,7 +39,7 @@ export const fetchInitialData = createAsyncThunk<HeliumDataState>(
     const vals = await Promise.all([
       getCurrentOraclePrice(),
       getPredictedOraclePrice(),
-      getMakers(),
+      Onboarding.getMakers(),
       getBlockHeight(),
     ])
     const [

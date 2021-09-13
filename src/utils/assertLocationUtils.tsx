@@ -1,5 +1,4 @@
-import { Location } from '@helium/react-native-sdk'
-import { OnboardingRecord } from './stakingClient'
+import { Location, Onboarding } from '@helium/react-native-sdk'
 import { getAddress, getSodiumKeypair } from './secureAccount'
 
 export const assertLocationTxn = async ({
@@ -17,7 +16,7 @@ export const assertLocationTxn = async ({
   lng: number | undefined
   decimalGain?: number
   elevation?: number
-  onboardingRecord: OnboardingRecord | undefined
+  onboardingRecord: Onboarding.OnboardingRecord | undefined
   currentLocation?: string
   dataOnly: boolean
 }) => {
@@ -57,7 +56,7 @@ export const loadLocationFeeData = async ({
 }: {
   nonce?: number
   accountIntegerBalance?: number
-  onboardingRecord?: OnboardingRecord
+  onboardingRecord?: Onboarding.OnboardingRecord
   dataOnly?: boolean
 }) => {
   const owner = await getAddress()

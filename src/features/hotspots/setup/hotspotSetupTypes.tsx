@@ -1,6 +1,6 @@
 import { StackNavigationProp } from '@react-navigation/stack'
+import { Onboarding } from '@helium/react-native-sdk'
 import { HotspotType } from '../../../makers'
-import { OnboardingRecord } from '../../../utils/stakingClient'
 import { HotspotConnectStatus } from '../../../utils/useHotspot'
 
 export type HotspotSetupStackParamList = {
@@ -28,42 +28,42 @@ export type HotspotSetupStackParamList = {
     | {
         addGatewayTxn: string
         hotspotAddress: string
-        onboardingRecord: OnboardingRecord
+        onboardingRecord: Onboarding.OnboardingRecord
       }
     | undefined
   HotspotSetupPickLocationScreen:
     | {
         addGatewayTxn: string
         hotspotAddress: string
-        onboardingRecord: OnboardingRecord
+        onboardingRecord: Onboarding.OnboardingRecord
       }
     | undefined
   AntennaSetupScreen:
     | {
         addGatewayTxn: string
         hotspotAddress: string
-        onboardingRecord: OnboardingRecord
+        onboardingRecord: Onboarding.OnboardingRecord
       }
     | undefined
   HotspotSetupConfirmLocationScreen:
     | {
         addGatewayTxn: string
         hotspotAddress: string
-        onboardingRecord: OnboardingRecord
+        onboardingRecord: Onboarding.OnboardingRecord
       }
     | undefined
   HotspotSetupSkipLocationScreen:
     | {
         addGatewayTxn: string
         hotspotAddress: string
-        onboardingRecord: OnboardingRecord
+        onboardingRecord: Onboarding.OnboardingRecord
       }
     | undefined
   HotspotTxnsProgressScreen:
     | {
         addGatewayTxn: string
         hotspotAddress: string
-        onboardingRecord: OnboardingRecord
+        onboardingRecord: Onboarding.OnboardingRecord
       }
     | undefined
   NotHotspotOwnerErrorScreen: undefined

@@ -4,14 +4,13 @@ import compareVersions from 'compare-versions'
 import { useSelector } from 'react-redux'
 import { decode } from 'base-64'
 import { Hotspot } from '@helium/http'
-import { AddGateway } from '@helium/react-native-sdk'
+import { AddGateway, Onboarding } from '@helium/react-native-sdk'
 import { useBluetoothContext } from '../providers/BluetoothProvider'
 import {
   FirmwareCharacteristic,
   HotspotCharacteristic,
   Service,
 } from './bluetooth/bluetoothTypes'
-import { getStaking, getStakingSignedTransaction } from './stakingClient'
 import {
   encodeAddGateway,
   encodeWifiConnect,
@@ -287,7 +286,9 @@ const useHotspot = () => {
 
     const deviceFirmwareVersion = parseChar(charVal, characteristic)
 
-    const firmware: { version: string } = await getStaking('firmware')
+    const firmware: { version: string } = await Onboarding.getOnboarding(
+      'firmware',
+    )
     const { version: minVersion } = firmware
 
     dispatch(
@@ -343,7 +344,7 @@ const useHotspot = () => {
     const txn = await AddGateway.signGatewayTxn(value, keypair)
     if (!txn) return false
 
-    const stakingServerSignedTxnStr = await getStakingSignedTransaction(
+    const stakingServerSignedTxnStr = await Onboarding.getOnboardingSignedTransaction(
       connectedHotspotDetails.onboardingAddress,
       txn,
     )
