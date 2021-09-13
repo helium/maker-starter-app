@@ -19,12 +19,12 @@ const textVariants = {
   },
   subtitle1: {
     fontSize: 20,
-    fontWeight: '300',
+    fontWeight: '500',
     color: 'primaryText',
   },
   subtitle2: {
     fontSize: 17,
-    fontWeight: '300',
+    fontWeight: '500',
     color: 'primaryText',
   },
   body1: {
@@ -67,23 +67,24 @@ const palette = {
   offWhite: '#F9FAFC',
 }
 
-const isDarkTheme = false
-
-const lightThemeColors = {
+export const lightThemeColors = {
   ...palette,
 
   primary: palette.yellow,
-  primaryBackground: palette.charcoal,
-  primaryText: palette.white,
-  secondaryBackground: palette.peacockGreen,
-  secondary: palette.deepOrange,
-  secondaryText: palette.yellow,
-  surfaceText: palette.charcoal,
+  primaryBackground: palette.white,
+  primaryText: palette.charcoal,
+  secondaryBackground: palette.offWhite,
+  secondary: palette.peacockGreen,
+  secondaryText: palette.peacockGreen,
   error: palette.burntSienna,
   surface: palette.white,
+  surfaceText: palette.charcoal,
   surfaceSecondary: palette.offWhite,
+  surfaceSecondaryText: palette.charcoal,
+  surfaceContrast: palette.charcoal,
+  surfaceContrastText: palette.white,
 }
-const darkThemeColors = {
+export const darkThemeColors = {
   ...palette,
 
   primary: palette.yellow,
@@ -92,14 +93,17 @@ const darkThemeColors = {
   secondaryBackground: palette.peacockGreen,
   secondary: palette.deepOrange,
   secondaryText: palette.yellow,
-  surfaceText: palette.charcoal,
   error: palette.burntSienna,
-  surface: palette.white,
+  surface: palette.charcoal,
+  surfaceText: palette.white,
   surfaceSecondary: palette.offWhite,
+  surfaceSecondaryText: palette.charcoal,
+  surfaceContrast: palette.white,
+  surfaceContrastText: palette.charcoal,
 }
 
 export const theme = createTheme({
-  colors: isDarkTheme ? darkThemeColors : lightThemeColors,
+  colors: lightThemeColors,
   spacing: {
     n_xxxxl: -240,
     n_xxxl: -120,
@@ -179,7 +183,7 @@ export const theme = createTheme({
       height: 52,
       paddingHorizontal: 'm',
       fontSize: 18,
-      color: 'surfaceText',
+      color: 'surfaceSecondaryText',
       borderRadius: 'm',
     },
   },

@@ -24,7 +24,7 @@ const CarouselItem = ({ item }: { item: CarouselItemData }) => {
     >
       <ImageBox source={item.image} width="100%" flex={1} />
       <Box
-        backgroundColor="white"
+        backgroundColor="surface"
         paddingHorizontal="m"
         justifyContent="center"
         height={175}
@@ -32,7 +32,7 @@ const CarouselItem = ({ item }: { item: CarouselItemData }) => {
         <Text
           variant="body1"
           paddingBottom={{ smallPhone: 'xs', phone: 'm' }}
-          color="secondaryText"
+          color="surfaceText"
           textAlign="center"
           numberOfLines={1}
           adjustsFontSizeToFit

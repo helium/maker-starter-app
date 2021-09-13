@@ -66,19 +66,19 @@ const ImportAccountConfirmScreen = () => {
           variant="elevated"
           flex={1}
           overflow="hidden"
-          backgroundColor="white"
+          backgroundColor="surfaceContrast"
           paddingHorizontal="l"
           alignItems="center"
           flexDirection="row"
         >
           <Text
             variant="h1"
-            color="secondaryText"
+            color="surfaceContrastText"
             maxFontSizeMultiplier={1}
           >{`${index + 1}. `}</Text>
           <Text
             variant="h1"
-            color="primaryBackground"
+            color="surfaceContrastText"
             maxFontSizeMultiplier={1}
           >
             {upperFirst(item)}

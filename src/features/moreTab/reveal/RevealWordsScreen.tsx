@@ -24,15 +24,17 @@ const RevealWordsScreen = () => {
       variant="elevated"
       flex={1}
       overflow="hidden"
-      backgroundColor="white"
+      backgroundColor="surfaceContrast"
       paddingHorizontal="l"
       alignItems="center"
       flexDirection="row"
     >
-      <Text variant="h1" color="primaryText" maxFontSizeMultiplier={1}>{`${
-        index + 1
-      }. `}</Text>
-      <Text variant="h1" color="primaryBackground" maxFontSizeMultiplier={1}>
+      <Text
+        variant="h1"
+        color="surfaceContrastText"
+        maxFontSizeMultiplier={1}
+      >{`${index + 1}. `}</Text>
+      <Text variant="h1" color="surfaceContrastText" maxFontSizeMultiplier={1}>
         {upperFirst(item)}
       </Text>
     </Card>

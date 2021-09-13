@@ -35,7 +35,7 @@ const HotspotSetupSelectionListItem = ({
       backgroundColor="white"
       width="100%"
       paddingHorizontal="m"
-      underlayColor={colors.primary}
+      underlayColor={colors.secondaryBackground}
       onPressIn={handlePressing(true)}
       onPressOut={handlePressing(false)}
       onPress={onPress}
@@ -51,14 +51,13 @@ const HotspotSetupSelectionListItem = ({
           {HotspotImage}
         </Box>
         <Text
-          variant="body1"
+          variant="subtitle2"
           color={pressing ? 'primary' : 'secondary'}
           paddingVertical="l"
           paddingHorizontal="m"
           textAlign="center"
           numberOfLines={1}
           adjustsFontSizeToFit
-          lineHeight={19}
           maxFontSizeMultiplier={1.1}
         >
           {HotspotMakerModels[hotspotType].name}

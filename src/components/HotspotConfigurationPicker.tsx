@@ -132,7 +132,7 @@ const HotspotConfigurationPicker = ({
 
   return (
     <Box
-      backgroundColor="white"
+      backgroundColor="surfaceSecondary"
       borderRadius="m"
       marginVertical="l"
       borderWidth={outline ? 1 : 0}
@@ -160,7 +160,7 @@ const HotspotConfigurationPicker = ({
           alignItems="center"
         >
           <Box flexDirection="row" alignItems="center">
-            <Text color="primary" marginRight="xs">
+            <Text color="surfaceSecondaryText" marginRight="xs">
               {t('antennas.onboarding.gain')}
             </Text>
             <TouchableOpacityBox onPress={showGainInfo} padding="xs">
@@ -195,7 +195,7 @@ const HotspotConfigurationPicker = ({
           alignItems="center"
         >
           <Box flexDirection="row" alignItems="center">
-            <Text color="primary" marginRight="xs">
+            <Text color="surfaceSecondaryText" marginRight="xs">
               {t('antennas.onboarding.elevation')}
             </Text>
             <TouchableOpacityBox onPress={showElevationInfo} padding="xs">

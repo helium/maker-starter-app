@@ -113,7 +113,7 @@ const Keypad = ({
         flexBasis="33%"
         onPressIn={handleBackspace}
       >
-        <Backspace color={colors.white} height={24} width={24} />
+        <Backspace color={colors.primaryText} height={24} width={24} />
       </TouchableCircle>
     </Box>
   )

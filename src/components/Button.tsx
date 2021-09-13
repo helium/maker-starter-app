@@ -54,7 +54,7 @@ const Button = ({
     if (color) return color
 
     if (mode === 'contained') {
-      return 'white'
+      return 'primaryText'
     }
 
     if (variant === 'secondary') {
@@ -66,7 +66,7 @@ const Button = ({
 
   const getTextVariant = () => {
     if (textVariant) return textVariant
-    return 'body1'
+    return 'subtitle2'
   }
 
   return (

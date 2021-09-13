@@ -47,15 +47,17 @@ const AccountCreatePassphraseScreen = () => {
       variant="elevated"
       flex={1}
       overflow="hidden"
-      backgroundColor="white"
+      backgroundColor="surfaceContrast"
       padding="l"
       alignItems="center"
       flexDirection="row"
     >
-      <Text variant="h1" color="primaryText" maxFontSizeMultiplier={1}>{`${
-        index + 1
-      }. `}</Text>
-      <Text variant="h1" color="primaryBackground" maxFontSizeMultiplier={1}>
+      <Text
+        variant="h1"
+        color="surfaceContrastText"
+        maxFontSizeMultiplier={1}
+      >{`${index + 1}. `}</Text>
+      <Text variant="h1" color="surfaceContrastText" maxFontSizeMultiplier={1}>
         {upperFirst(item)}
       </Text>
     </Card>
@@ -96,7 +98,7 @@ const AccountCreatePassphraseScreen = () => {
           width: 6,
           height: 6,
           borderRadius: 3,
-          backgroundColor: colors.white,
+          backgroundColor: colors.surfaceContrast,
         }}
         inactiveDotOpacity={0.4}
         inactiveDotScale={1}

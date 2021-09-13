@@ -29,7 +29,7 @@ import {
 } from './hotspotSetupTypes'
 import SafeAreaBox from '../../../components/SafeAreaBox'
 import TouchableOpacityBox from '../../../components/TouchableOpacityBox'
-import { useSpacing } from '../../../theme/themeHooks'
+import { useColors, useSpacing } from '../../../theme/themeHooks'
 import BSHandle from '../../../components/BSHandle'
 import AddressSearchModal from './AddressSearchModal'
 import { PlaceGeography } from '../../../utils/googlePlaces'
@@ -54,6 +54,7 @@ const HotspotSetupPickLocationScreen = () => {
   const insets = useSafeAreaInsets()
   const searchModal = useRef<BottomSheetModal>(null)
   const dispatch = useAppDispatch()
+  const { surface } = useColors()
 
   useEffect(() => {
     const sleepThenEnable = async () => {
@@ -175,6 +176,7 @@ const HotspotSetupPickLocationScreen = () => {
           snapPoints={searchSnapPoints}
           handleComponent={BSHandle}
           backdropComponent={BottomSheetBackdrop}
+          backgroundStyle={{ backgroundColor: surface }}
         >
           <AddressSearchModal onSelectPlace={handleSelectPlace} />
         </BottomSheetModal>

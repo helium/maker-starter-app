@@ -73,7 +73,7 @@ const AddressSearchModal = ({ onSelectPlace }: Props) => {
       return (
         <TouchableOpacityBox
           onPress={handleSelectPlace(searchResult)}
-          backgroundColor="surface"
+          // backgroundColor="secondary"
           padding="s"
           marginVertical="xxs"
         >

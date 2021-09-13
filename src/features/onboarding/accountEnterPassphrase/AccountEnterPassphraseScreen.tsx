@@ -117,15 +117,23 @@ const AccountEnterPassphraseScreen = () => {
         variant="elevated"
         flex={1}
         overflow="hidden"
-        backgroundColor="white"
+        backgroundColor="surfaceContrast"
         paddingHorizontal="l"
         alignItems="center"
         flexDirection="row"
       >
-        <Text variant="h1" color="secondaryText" maxFontSizeMultiplier={1}>
+        <Text
+          variant="h1"
+          color="surfaceContrastText"
+          maxFontSizeMultiplier={1}
+        >
           {`${index + 1}. `}
         </Text>
-        <Text variant="h1" color="primaryBackground" maxFontSizeMultiplier={1}>
+        <Text
+          variant="h1"
+          color="surfaceContrastText"
+          maxFontSizeMultiplier={1}
+        >
           {step === index && word ? upperFirst(word) : '?????'}
         </Text>
       </Card>

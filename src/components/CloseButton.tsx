@@ -8,10 +8,10 @@ import {
 import { useColors } from '../theme/themeHooks'
 
 const CloseButton = (props: TouchableOpacityBoxProps) => {
-  const { white } = useColors()
+  const { primaryText } = useColors()
   return (
     <DebouncedTouchableOpacityBox padding="xs" {...props}>
-      <Close color={white} />
+      <Close color={primaryText} />
     </DebouncedTouchableOpacityBox>
   )
 }
