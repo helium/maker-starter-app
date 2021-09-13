@@ -1,0 +1,883 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		00E356F31AD99517003FC87E /* MakerAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* MakerAppTests.m */; };
+		028A47D1144942AAB084FC03 /* NotoSerif-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8CF7CB13CCE24F928D25FB7F /* NotoSerif-Regular.ttf */; };
+		04B7B04F50704A1AB50E9ED2 /* Inter-MediumItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 81166484EECE40299BEB9570 /* Inter-MediumItalic.otf */; };
+		09C5A179F5234DFEA8A1BFEB /* Inter-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1B612616272949C8AF98D15A /* Inter-Black.otf */; };
+		0B74DE2CA1694927BF8B64BC /* NotoSerif-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1007DBE6C5684F4999FA631B /* NotoSerif-Bold.ttf */; };
+		0E9226941D8EB508973B0E6A /* libPods-MakerApp-MakerAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CA5A5E66FD6140EE4B025D78 /* libPods-MakerApp-MakerAppTests.a */; };
+		0F2353332F964D2DB2DEC9E9 /* Inter-ExtraBoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3CE29D13B8054DA5BCE755E1 /* Inter-ExtraBoldItalic.otf */; };
+		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
+		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
+		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		152177F134874D2B9184AD42 /* NotoSerif-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9EB90AF3A0FA454484F833EB /* NotoSerif-BoldItalic.ttf */; };
+		19324A79480445D6A4F2865D /* Inter-ThinItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = F4F0344FC9EB4979AA504A35 /* Inter-ThinItalic.otf */; };
+		28A2A93001814339911894A4 /* InputMono-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C7BF43D0CDD04C61BC626EBC /* InputMono-Regular.ttf */; };
+		2E9A234A8A2048BDA978454D /* InputMono-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EB40A7C9F9344DC7A09F6876 /* InputMono-Medium.ttf */; };
+		317C3D6FA3594073A9892514 /* Inter-V.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 241B15BCF31749CAB3CD9A6B /* Inter-V.ttf */; };
+		3650E51FFED245A1B1475936 /* Inter-ExtraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = E3B07B1489E74A128A3C96AB /* Inter-ExtraLight.otf */; };
+		41E226383CC0AC782E945B86 /* libPods-MakerApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 22C1975BA31E007F0C711ACB /* libPods-MakerApp.a */; };
+		4B47FD0E054C4FC8BD171E9B /* Inter-BlackItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 27665798A13443388965B386 /* Inter-BlackItalic.otf */; };
+		4CE0E2DE494B4C38AEF7B485 /* Inter-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = C0525728D70943D986DF2664 /* Inter-SemiBold.otf */; };
+		50220074260B81B500BE34C9 /* RCTDateModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 50220073260B81B500BE34C9 /* RCTDateModule.m */; };
+		50416777003A4F49B0555192 /* InputMono-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A479F1315370424BA4C2BF03 /* InputMono-Light.ttf */; };
+		73882C4BC2B149C8A0C6018F /* Soleil-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 7EE3C0182B6E484FB54DB40C /* Soleil-SemiBold.otf */; };
+		7B8CAA0072BE46E58E542998 /* Soleil-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 898B757CCE3C47C3BEE06830 /* Soleil-Bold.ttf */; };
+		7F574B39260D4DC5A5A770C4 /* Inter-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 842A327CA15C4AEDB5A0E567 /* Inter-BoldItalic.otf */; };
+		814FFD845C7F45FB97CF70C6 /* Soleil-Book.otf in Resources */ = {isa = PBXBuildFile; fileRef = D63A417472CB43E0967E4EE5 /* Soleil-Book.otf */; };
+		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		8A545491ABE249C3ACCF3D79 /* Inter-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 574F3684C39A464FA2A7FF51 /* Inter-Bold.otf */; };
+		8DC3333BBCC94A249719A62B /* Inter-ExtraLightItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 601B9FB2E77946869E6B9D6B /* Inter-ExtraLightItalic.otf */; };
+		92C6185DA0484FA99E23D71F /* Soleil-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = E8F391FD281F4727B9C1681A /* Soleil-Light.otf */; };
+		964E9C302638CD0C00CCBCCC /* bridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 964E9C2F2638CD0C00CCBCCC /* bridge.swift */; };
+		A10E8BD929D049EDA161260D /* NotoSerif-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BF9582A476D94209AF37866B /* NotoSerif-Italic.ttf */; };
+		A42E05B8AD2D452DBA997CF2 /* Soleil-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = E60DB270CEE74027B4039F4A /* Soleil-Regular.otf */; };
+		A63A7C36C9E948809F57B404 /* Inter-ExtraBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = E61F2B2B732547DEB1C3219F /* Inter-ExtraBold.otf */; };
+		B00ACFD501FB43A3A089F37C /* Inter-Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = F1047DD27662496F85C8B66C /* Inter-Italic.otf */; };
+		B49CB391F0F24551BC6FBB93 /* Inter-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9863D0E9676144BB8873C9FF /* Inter-Light.otf */; };
+		BB0BE1BCD9864DCB883950E8 /* Inter-SemiBoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 42F8FDE2399B4FA8B34EE3CA /* Inter-SemiBoldItalic.otf */; };
+		C1138FCE1DD142E093DA4395 /* Inter-LightItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5D2A1FCF497741BD8DB14DBF /* Inter-LightItalic.otf */; };
+		C7840AAA72F848BEBD73CBA8 /* InputMono-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D1EC077532EF40BCA6430610 /* InputMono-Bold.ttf */; };
+		E723BBC12AB04A1D9CC9C7A5 /* Inter-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = AEFA142C9A4E488C8FB53FDE /* Inter-Medium.otf */; };
+		EC4546F4E5CF416C9D630B0A /* Inter-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = F5D6ECE844F84ECABC681059 /* Inter-Regular.otf */; };
+		F6789F5F69A34F20B503AC2E /* Inter-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5BE0F3C218C340DEB451FC32 /* Inter-Thin.otf */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		00E356F41AD99517003FC87E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 13B07F861A680F5B00A75B9A;
+			remoteInfo = MakerApp;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		F8B0E225256300AD00EB1E73 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
+		00E356EE1AD99517003FC87E /* MakerAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MakerAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		00E356F21AD99517003FC87E /* MakerAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MakerAppTests.m; sourceTree = "<group>"; };
+		0C1127B9BA1FDFCCD7DA3CBB /* Pods-MakerApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MakerApp.debug.xcconfig"; path = "Target Support Files/Pods-MakerApp/Pods-MakerApp.debug.xcconfig"; sourceTree = "<group>"; };
+		0E904D2CCD7AB28A6C5B7C3A /* Pods-OneSignalNotificationServiceExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.debug.xcconfig"; path = "Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.debug.xcconfig"; sourceTree = "<group>"; };
+		1007DBE6C5684F4999FA631B /* NotoSerif-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSerif-Bold.ttf"; path = "../src/assets/fonts/NotoSerif-Bold.ttf"; sourceTree = "<group>"; };
+		13B07F961A680F5B00A75B9A /* MakerApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MakerApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = MakerApp/AppDelegate.h; sourceTree = "<group>"; };
+		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = MakerApp/AppDelegate.m; sourceTree = "<group>"; };
+		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = MakerApp/Images.xcassets; sourceTree = "<group>"; };
+		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = MakerApp/Info.plist; sourceTree = "<group>"; };
+		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = MakerApp/main.m; sourceTree = "<group>"; };
+		1B612616272949C8AF98D15A /* Inter-Black.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Black.otf"; path = "../src/assets/fonts/Inter-Black.otf"; sourceTree = "<group>"; };
+		1ED42C0AD18670C2DEA530AA /* Pods-OneSignalNotificationServiceExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.release.xcconfig"; path = "Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.release.xcconfig"; sourceTree = "<group>"; };
+		22C1975BA31E007F0C711ACB /* libPods-MakerApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MakerApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		241B15BCF31749CAB3CD9A6B /* Inter-V.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-V.ttf"; path = "../src/assets/fonts/Inter-V.ttf"; sourceTree = "<group>"; };
+		27665798A13443388965B386 /* Inter-BlackItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-BlackItalic.otf"; path = "../src/assets/fonts/Inter-BlackItalic.otf"; sourceTree = "<group>"; };
+		3CE29D13B8054DA5BCE755E1 /* Inter-ExtraBoldItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-ExtraBoldItalic.otf"; path = "../src/assets/fonts/Inter-ExtraBoldItalic.otf"; sourceTree = "<group>"; };
+		42F8FDE2399B4FA8B34EE3CA /* Inter-SemiBoldItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-SemiBoldItalic.otf"; path = "../src/assets/fonts/Inter-SemiBoldItalic.otf"; sourceTree = "<group>"; };
+		50220072260B817100BE34C9 /* RCTDateModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCTDateModule.h; sourceTree = "<group>"; };
+		50220073260B81B500BE34C9 /* RCTDateModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RCTDateModule.m; sourceTree = "<group>"; };
+		574F3684C39A464FA2A7FF51 /* Inter-Bold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Bold.otf"; path = "../src/assets/fonts/Inter-Bold.otf"; sourceTree = "<group>"; };
+		5BE0F3C218C340DEB451FC32 /* Inter-Thin.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Thin.otf"; path = "../src/assets/fonts/Inter-Thin.otf"; sourceTree = "<group>"; };
+		5D2A1FCF497741BD8DB14DBF /* Inter-LightItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-LightItalic.otf"; path = "../src/assets/fonts/Inter-LightItalic.otf"; sourceTree = "<group>"; };
+		601B9FB2E77946869E6B9D6B /* Inter-ExtraLightItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-ExtraLightItalic.otf"; path = "../src/assets/fonts/Inter-ExtraLightItalic.otf"; sourceTree = "<group>"; };
+		6A4E97D088B70BB9403ED112 /* libPods-OneSignalNotificationServiceExtension.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-OneSignalNotificationServiceExtension.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6EDEC31FA02CF0C8C17E4116 /* Pods-MakerApp-MakerAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MakerApp-MakerAppTests.debug.xcconfig"; path = "Target Support Files/Pods-MakerApp-MakerAppTests/Pods-MakerApp-MakerAppTests.debug.xcconfig"; sourceTree = "<group>"; };
+		7EE3C0182B6E484FB54DB40C /* Soleil-SemiBold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Soleil-SemiBold.otf"; path = "../src/assets/fonts/Soleil-SemiBold.otf"; sourceTree = "<group>"; };
+		81166484EECE40299BEB9570 /* Inter-MediumItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-MediumItalic.otf"; path = "../src/assets/fonts/Inter-MediumItalic.otf"; sourceTree = "<group>"; };
+		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = MakerApp/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		842A327CA15C4AEDB5A0E567 /* Inter-BoldItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-BoldItalic.otf"; path = "../src/assets/fonts/Inter-BoldItalic.otf"; sourceTree = "<group>"; };
+		898B757CCE3C47C3BEE06830 /* Soleil-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Soleil-Bold.ttf"; path = "../src/assets/fonts/Soleil-Bold.ttf"; sourceTree = "<group>"; };
+		8CF7CB13CCE24F928D25FB7F /* NotoSerif-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSerif-Regular.ttf"; path = "../src/assets/fonts/NotoSerif-Regular.ttf"; sourceTree = "<group>"; };
+		964E9C2E2638CD0B00CCBCCC /* MakerApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MakerApp-Bridging-Header.h"; sourceTree = "<group>"; };
+		964E9C2F2638CD0C00CCBCCC /* bridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bridge.swift; sourceTree = "<group>"; };
+		9863D0E9676144BB8873C9FF /* Inter-Light.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Light.otf"; path = "../src/assets/fonts/Inter-Light.otf"; sourceTree = "<group>"; };
+		9EB90AF3A0FA454484F833EB /* NotoSerif-BoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSerif-BoldItalic.ttf"; path = "../src/assets/fonts/NotoSerif-BoldItalic.ttf"; sourceTree = "<group>"; };
+		A479F1315370424BA4C2BF03 /* InputMono-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "InputMono-Light.ttf"; path = "../src/assets/fonts/InputMono-Light.ttf"; sourceTree = "<group>"; };
+		AEFA142C9A4E488C8FB53FDE /* Inter-Medium.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Medium.otf"; path = "../src/assets/fonts/Inter-Medium.otf"; sourceTree = "<group>"; };
+		BF9582A476D94209AF37866B /* NotoSerif-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSerif-Italic.ttf"; path = "../src/assets/fonts/NotoSerif-Italic.ttf"; sourceTree = "<group>"; };
+		C0525728D70943D986DF2664 /* Inter-SemiBold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-SemiBold.otf"; path = "../src/assets/fonts/Inter-SemiBold.otf"; sourceTree = "<group>"; };
+		C6D26845385ABC05CF2EBAB8 /* Pods-MakerApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MakerApp.release.xcconfig"; path = "Target Support Files/Pods-MakerApp/Pods-MakerApp.release.xcconfig"; sourceTree = "<group>"; };
+		C7BF43D0CDD04C61BC626EBC /* InputMono-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "InputMono-Regular.ttf"; path = "../src/assets/fonts/InputMono-Regular.ttf"; sourceTree = "<group>"; };
+		CA5A5E66FD6140EE4B025D78 /* libPods-MakerApp-MakerAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MakerApp-MakerAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D1EC077532EF40BCA6430610 /* InputMono-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "InputMono-Bold.ttf"; path = "../src/assets/fonts/InputMono-Bold.ttf"; sourceTree = "<group>"; };
+		D63A417472CB43E0967E4EE5 /* Soleil-Book.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Soleil-Book.otf"; path = "../src/assets/fonts/Soleil-Book.otf"; sourceTree = "<group>"; };
+		E3B07B1489E74A128A3C96AB /* Inter-ExtraLight.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-ExtraLight.otf"; path = "../src/assets/fonts/Inter-ExtraLight.otf"; sourceTree = "<group>"; };
+		E60DB270CEE74027B4039F4A /* Soleil-Regular.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Soleil-Regular.otf"; path = "../src/assets/fonts/Soleil-Regular.otf"; sourceTree = "<group>"; };
+		E61F2B2B732547DEB1C3219F /* Inter-ExtraBold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-ExtraBold.otf"; path = "../src/assets/fonts/Inter-ExtraBold.otf"; sourceTree = "<group>"; };
+		E8F391FD281F4727B9C1681A /* Soleil-Light.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Soleil-Light.otf"; path = "../src/assets/fonts/Soleil-Light.otf"; sourceTree = "<group>"; };
+		EAF9784B2EC76EB219FE69E9 /* Pods-MakerApp-MakerAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MakerApp-MakerAppTests.release.xcconfig"; path = "Target Support Files/Pods-MakerApp-MakerAppTests/Pods-MakerApp-MakerAppTests.release.xcconfig"; sourceTree = "<group>"; };
+		EB40A7C9F9344DC7A09F6876 /* InputMono-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "InputMono-Medium.ttf"; path = "../src/assets/fonts/InputMono-Medium.ttf"; sourceTree = "<group>"; };
+		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
+		F1047DD27662496F85C8B66C /* Inter-Italic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Italic.otf"; path = "../src/assets/fonts/Inter-Italic.otf"; sourceTree = "<group>"; };
+		F4F0344FC9EB4979AA504A35 /* Inter-ThinItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-ThinItalic.otf"; path = "../src/assets/fonts/Inter-ThinItalic.otf"; sourceTree = "<group>"; };
+		F5D6ECE844F84ECABC681059 /* Inter-Regular.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Regular.otf"; path = "../src/assets/fonts/Inter-Regular.otf"; sourceTree = "<group>"; };
+		F8B0E2112563005D00EB1E73 /* MakerApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = MakerApp.entitlements; path = MakerApp/MakerApp.entitlements; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		00E356EB1AD99517003FC87E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0E9226941D8EB508973B0E6A /* libPods-MakerApp-MakerAppTests.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		13B07F8C1A680F5B00A75B9A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				41E226383CC0AC782E945B86 /* libPods-MakerApp.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		00E356EF1AD99517003FC87E /* MakerAppTests */ = {
+			isa = PBXGroup;
+			children = (
+				00E356F21AD99517003FC87E /* MakerAppTests.m */,
+				00E356F01AD99517003FC87E /* Supporting Files */,
+			);
+			path = MakerAppTests;
+			sourceTree = "<group>";
+		};
+		00E356F01AD99517003FC87E /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				00E356F11AD99517003FC87E /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		13B07FAE1A68108700A75B9A /* MakerApp */ = {
+			isa = PBXGroup;
+			children = (
+				F8B0E2112563005D00EB1E73 /* MakerApp.entitlements */,
+				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
+				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
+				13B07FB01A68108700A75B9A /* AppDelegate.m */,
+				13B07FB51A68108700A75B9A /* Images.xcassets */,
+				13B07FB61A68108700A75B9A /* Info.plist */,
+				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
+				13B07FB71A68108700A75B9A /* main.m */,
+				50220072260B817100BE34C9 /* RCTDateModule.h */,
+				50220073260B81B500BE34C9 /* RCTDateModule.m */,
+				964E9C2F2638CD0C00CCBCCC /* bridge.swift */,
+				964E9C2E2638CD0B00CCBCCC /* MakerApp-Bridging-Header.h */,
+			);
+			name = MakerApp;
+			sourceTree = "<group>";
+		};
+		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
+				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
+				22C1975BA31E007F0C711ACB /* libPods-MakerApp.a */,
+				CA5A5E66FD6140EE4B025D78 /* libPods-MakerApp-MakerAppTests.a */,
+				6A4E97D088B70BB9403ED112 /* libPods-OneSignalNotificationServiceExtension.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		4E395C02883C4FB2ADE7CF53 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				1007DBE6C5684F4999FA631B /* NotoSerif-Bold.ttf */,
+				9EB90AF3A0FA454484F833EB /* NotoSerif-BoldItalic.ttf */,
+				BF9582A476D94209AF37866B /* NotoSerif-Italic.ttf */,
+				8CF7CB13CCE24F928D25FB7F /* NotoSerif-Regular.ttf */,
+				D1EC077532EF40BCA6430610 /* InputMono-Bold.ttf */,
+				A479F1315370424BA4C2BF03 /* InputMono-Light.ttf */,
+				EB40A7C9F9344DC7A09F6876 /* InputMono-Medium.ttf */,
+				C7BF43D0CDD04C61BC626EBC /* InputMono-Regular.ttf */,
+				898B757CCE3C47C3BEE06830 /* Soleil-Bold.ttf */,
+				D63A417472CB43E0967E4EE5 /* Soleil-Book.otf */,
+				E8F391FD281F4727B9C1681A /* Soleil-Light.otf */,
+				E60DB270CEE74027B4039F4A /* Soleil-Regular.otf */,
+				7EE3C0182B6E484FB54DB40C /* Soleil-SemiBold.otf */,
+				1B612616272949C8AF98D15A /* Inter-Black.otf */,
+				27665798A13443388965B386 /* Inter-BlackItalic.otf */,
+				574F3684C39A464FA2A7FF51 /* Inter-Bold.otf */,
+				842A327CA15C4AEDB5A0E567 /* Inter-BoldItalic.otf */,
+				E61F2B2B732547DEB1C3219F /* Inter-ExtraBold.otf */,
+				3CE29D13B8054DA5BCE755E1 /* Inter-ExtraBoldItalic.otf */,
+				E3B07B1489E74A128A3C96AB /* Inter-ExtraLight.otf */,
+				601B9FB2E77946869E6B9D6B /* Inter-ExtraLightItalic.otf */,
+				F1047DD27662496F85C8B66C /* Inter-Italic.otf */,
+				9863D0E9676144BB8873C9FF /* Inter-Light.otf */,
+				5D2A1FCF497741BD8DB14DBF /* Inter-LightItalic.otf */,
+				AEFA142C9A4E488C8FB53FDE /* Inter-Medium.otf */,
+				81166484EECE40299BEB9570 /* Inter-MediumItalic.otf */,
+				F5D6ECE844F84ECABC681059 /* Inter-Regular.otf */,
+				C0525728D70943D986DF2664 /* Inter-SemiBold.otf */,
+				42F8FDE2399B4FA8B34EE3CA /* Inter-SemiBoldItalic.otf */,
+				5BE0F3C218C340DEB451FC32 /* Inter-Thin.otf */,
+				F4F0344FC9EB4979AA504A35 /* Inter-ThinItalic.otf */,
+				241B15BCF31749CAB3CD9A6B /* Inter-V.ttf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Libraries;
+			sourceTree = "<group>";
+		};
+		83CBB9F61A601CBA00E9B192 = {
+			isa = PBXGroup;
+			children = (
+				13B07FAE1A68108700A75B9A /* MakerApp */,
+				832341AE1AAA6A7D00B99B32 /* Libraries */,
+				00E356EF1AD99517003FC87E /* MakerAppTests */,
+				83CBBA001A601CBA00E9B192 /* Products */,
+				2D16E6871FA4F8E400B85C8A /* Frameworks */,
+				BBB8A579C848048078120971 /* Pods */,
+				4E395C02883C4FB2ADE7CF53 /* Resources */,
+			);
+			indentWidth = 2;
+			sourceTree = "<group>";
+			tabWidth = 2;
+			usesTabs = 0;
+		};
+		83CBBA001A601CBA00E9B192 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				13B07F961A680F5B00A75B9A /* MakerApp.app */,
+				00E356EE1AD99517003FC87E /* MakerAppTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		BBB8A579C848048078120971 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				0C1127B9BA1FDFCCD7DA3CBB /* Pods-MakerApp.debug.xcconfig */,
+				C6D26845385ABC05CF2EBAB8 /* Pods-MakerApp.release.xcconfig */,
+				6EDEC31FA02CF0C8C17E4116 /* Pods-MakerApp-MakerAppTests.debug.xcconfig */,
+				EAF9784B2EC76EB219FE69E9 /* Pods-MakerApp-MakerAppTests.release.xcconfig */,
+				0E904D2CCD7AB28A6C5B7C3A /* Pods-OneSignalNotificationServiceExtension.debug.xcconfig */,
+				1ED42C0AD18670C2DEA530AA /* Pods-OneSignalNotificationServiceExtension.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		00E356ED1AD99517003FC87E /* MakerAppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "MakerAppTests" */;
+			buildPhases = (
+				A5CEB93CADDCD03D892C7D1C /* [CP] Check Pods Manifest.lock */,
+				00E356EA1AD99517003FC87E /* Sources */,
+				00E356EB1AD99517003FC87E /* Frameworks */,
+				00E356EC1AD99517003FC87E /* Resources */,
+				521735159C26F0712E9F9FB6 /* [CP] Embed Pods Frameworks */,
+				0D63B690CA9B682DC4495F19 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				00E356F51AD99517003FC87E /* PBXTargetDependency */,
+			);
+			name = MakerAppTests;
+			productName = MakerAppTests;
+			productReference = 00E356EE1AD99517003FC87E /* MakerAppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		13B07F861A680F5B00A75B9A /* MakerApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "MakerApp" */;
+			buildPhases = (
+				DA533292F273BB5A38F98DB8 /* [CP] Check Pods Manifest.lock */,
+				FD10A7F022414F080027D42C /* Start Packager */,
+				13B07F871A680F5B00A75B9A /* Sources */,
+				13B07F8C1A680F5B00A75B9A /* Frameworks */,
+				13B07F8E1A680F5B00A75B9A /* Resources */,
+				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
+				F8B0E225256300AD00EB1E73 /* Embed App Extensions */,
+				4E00D3C5980DD5F657E3D762 /* [CP] Embed Pods Frameworks */,
+				E871BE60CD1527841988FA93 /* [CP] Copy Pods Resources */,
+				3EC1340D21634D2DAAC699B5 /* Upload Debug Symbols to Sentry */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MakerApp;
+			productName = MakerApp;
+			productReference = 13B07F961A680F5B00A75B9A /* MakerApp.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		83CBB9F71A601CBA00E9B192 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1220;
+				LastUpgradeCheck = 1130;
+				TargetAttributes = {
+					00E356ED1AD99517003FC87E = {
+						CreatedOnToolsVersion = 6.2;
+						TestTargetID = 13B07F861A680F5B00A75B9A;
+					};
+					13B07F861A680F5B00A75B9A = {
+						DevelopmentTeam = PVM9KJZ2AD;
+						LastSwiftMigration = 1250;
+					};
+				};
+			};
+			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "MakerApp" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 83CBB9F61A601CBA00E9B192;
+			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				13B07F861A680F5B00A75B9A /* MakerApp */,
+				00E356ED1AD99517003FC87E /* MakerAppTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		00E356EC1AD99517003FC87E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		13B07F8E1A680F5B00A75B9A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
+				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				0B74DE2CA1694927BF8B64BC /* NotoSerif-Bold.ttf in Resources */,
+				152177F134874D2B9184AD42 /* NotoSerif-BoldItalic.ttf in Resources */,
+				A10E8BD929D049EDA161260D /* NotoSerif-Italic.ttf in Resources */,
+				028A47D1144942AAB084FC03 /* NotoSerif-Regular.ttf in Resources */,
+				C7840AAA72F848BEBD73CBA8 /* InputMono-Bold.ttf in Resources */,
+				50416777003A4F49B0555192 /* InputMono-Light.ttf in Resources */,
+				2E9A234A8A2048BDA978454D /* InputMono-Medium.ttf in Resources */,
+				28A2A93001814339911894A4 /* InputMono-Regular.ttf in Resources */,
+				7B8CAA0072BE46E58E542998 /* Soleil-Bold.ttf in Resources */,
+				814FFD845C7F45FB97CF70C6 /* Soleil-Book.otf in Resources */,
+				92C6185DA0484FA99E23D71F /* Soleil-Light.otf in Resources */,
+				A42E05B8AD2D452DBA997CF2 /* Soleil-Regular.otf in Resources */,
+				73882C4BC2B149C8A0C6018F /* Soleil-SemiBold.otf in Resources */,
+				09C5A179F5234DFEA8A1BFEB /* Inter-Black.otf in Resources */,
+				4B47FD0E054C4FC8BD171E9B /* Inter-BlackItalic.otf in Resources */,
+				8A545491ABE249C3ACCF3D79 /* Inter-Bold.otf in Resources */,
+				7F574B39260D4DC5A5A770C4 /* Inter-BoldItalic.otf in Resources */,
+				A63A7C36C9E948809F57B404 /* Inter-ExtraBold.otf in Resources */,
+				0F2353332F964D2DB2DEC9E9 /* Inter-ExtraBoldItalic.otf in Resources */,
+				3650E51FFED245A1B1475936 /* Inter-ExtraLight.otf in Resources */,
+				8DC3333BBCC94A249719A62B /* Inter-ExtraLightItalic.otf in Resources */,
+				B00ACFD501FB43A3A089F37C /* Inter-Italic.otf in Resources */,
+				B49CB391F0F24551BC6FBB93 /* Inter-Light.otf in Resources */,
+				C1138FCE1DD142E093DA4395 /* Inter-LightItalic.otf in Resources */,
+				E723BBC12AB04A1D9CC9C7A5 /* Inter-Medium.otf in Resources */,
+				04B7B04F50704A1AB50E9ED2 /* Inter-MediumItalic.otf in Resources */,
+				EC4546F4E5CF416C9D630B0A /* Inter-Regular.otf in Resources */,
+				4CE0E2DE494B4C38AEF7B485 /* Inter-SemiBold.otf in Resources */,
+				BB0BE1BCD9864DCB883950E8 /* Inter-SemiBoldItalic.otf in Resources */,
+				F6789F5F69A34F20B503AC2E /* Inter-Thin.otf in Resources */,
+				19324A79480445D6A4F2865D /* Inter-ThinItalic.otf in Resources */,
+				317C3D6FA3594073A9892514 /* Inter-V.ttf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Bundle React Native code and images";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export NODE_BINARY=node\nexport EXTRA_PACKAGER_ARGS=\"--sourcemap-output $DERIVED_FILE_DIR/main.jsbundle.map\"\nexport SENTRY_PROPERTIES=sentry.properties\n\n../node_modules/@sentry/cli/bin/sentry-cli react-native xcode \\\n  ../node_modules/react-native/scripts/react-native-xcode.sh\n";
+		};
+		0D63B690CA9B682DC4495F19 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MakerApp-MakerAppTests/Pods-MakerApp-MakerAppTests-resources.sh",
+				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AccessibilityResources.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MakerApp-MakerAppTests/Pods-MakerApp-MakerAppTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3EC1340D21634D2DAAC699B5 /* Upload Debug Symbols to Sentry */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Upload Debug Symbols to Sentry";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export SENTRY_PROPERTIES=sentry.properties\n../node_modules/@sentry/cli/bin/sentry-cli upload-dsym\n";
+		};
+		4E00D3C5980DD5F657E3D762 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MakerApp/Pods-MakerApp-frameworks.sh",
+				"${PODS_ROOT}/Mapbox-iOS-SDK/dynamic/Mapbox.framework",
+				"${BUILT_PRODUCTS_DIR}/MapboxMobileEvents/MapboxMobileEvents.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Mapbox.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxMobileEvents.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MakerApp/Pods-MakerApp-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		521735159C26F0712E9F9FB6 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MakerApp-MakerAppTests/Pods-MakerApp-MakerAppTests-frameworks.sh",
+				"${PODS_ROOT}/Mapbox-iOS-SDK/dynamic/Mapbox.framework",
+				"${BUILT_PRODUCTS_DIR}/MapboxMobileEvents/MapboxMobileEvents.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Mapbox.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxMobileEvents.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MakerApp-MakerAppTests/Pods-MakerApp-MakerAppTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A5CEB93CADDCD03D892C7D1C /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-MakerApp-MakerAppTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DA533292F273BB5A38F98DB8 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-MakerApp-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E871BE60CD1527841988FA93 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MakerApp/Pods-MakerApp-resources.sh",
+				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AccessibilityResources.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MakerApp/Pods-MakerApp-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FD10A7F022414F080027D42C /* Start Packager */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Start Packager";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export RCT_METRO_PORT=\"${RCT_METRO_PORT:=8081}\"\necho \"export RCT_METRO_PORT=${RCT_METRO_PORT}\" > \"${SRCROOT}/../node_modules/react-native/scripts/.packager.env\"\nif [ -z \"${RCT_NO_LAUNCH_PACKAGER+xxx}\" ] ; then\n  if nc -w 5 -z localhost ${RCT_METRO_PORT} ; then\n    if ! curl -s \"http://localhost:${RCT_METRO_PORT}/status\" | grep -q \"packager-status:running\" ; then\n      echo \"Port ${RCT_METRO_PORT} already in use, packager is either not running or not running correctly\"\n      exit 2\n    fi\n  else\n    open \"$SRCROOT/../node_modules/react-native/scripts/launchPackager.command\" || echo \"Can't start packager automatically\"\n  fi\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		00E356EA1AD99517003FC87E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				00E356F31AD99517003FC87E /* MakerAppTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		13B07F871A680F5B00A75B9A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				964E9C302638CD0C00CCBCCC /* bridge.swift in Sources */,
+				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				50220074260B81B500BE34C9 /* RCTDateModule.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		00E356F51AD99517003FC87E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 13B07F861A680F5B00A75B9A /* MakerApp */;
+			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		00E356F61AD99517003FC87E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6EDEC31FA02CF0C8C17E4116 /* Pods-MakerApp-MakerAppTests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = MakerAppTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-lc++",
+					"$(inherited)",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MakerApp.app/MakerApp";
+			};
+			name = Debug;
+		};
+		00E356F71AD99517003FC87E /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = EAF9784B2EC76EB219FE69E9 /* Pods-MakerApp-MakerAppTests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COPY_PHASE_STRIP = NO;
+				INFOPLIST_FILE = MakerAppTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-lc++",
+					"$(inherited)",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MakerApp.app/MakerApp";
+			};
+			name = Release;
+		};
+		13B07F941A680F5B00A75B9A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0C1127B9BA1FDFCCD7DA3CBB /* Pods-MakerApp.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = MakerApp/MakerApp.entitlements;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = PVM9KJZ2AD;
+				ENABLE_BITCODE = NO;
+				EXCLUDED_ARCHS = "";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
+				INFOPLIST_FILE = MakerApp/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 1.0.0;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.maker.makerapp;
+				PRODUCT_NAME = MakerApp;
+				SWIFT_OBJC_BRIDGING_HEADER = "MakerApp-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Debug;
+		};
+		13B07F951A680F5B00A75B9A /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C6D26845385ABC05CF2EBAB8 /* Pods-MakerApp.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = MakerApp/MakerApp.entitlements;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = PVM9KJZ2AD;
+				EXCLUDED_ARCHS = "";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
+				INFOPLIST_FILE = MakerApp/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 1.0.0;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.maker.makerapp;
+				PRODUCT_NAME = MakerApp;
+				SWIFT_OBJC_BRIDGING_HEADER = "MakerApp-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Release;
+		};
+		83CBBA201A601CBA00E9B192 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				EXCLUDED_ARCHS = "";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "arm64 ";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				LD_RUNPATH_SEARCH_PATHS = "/usr/lib/swift $(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"\"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)\"",
+					"\"$(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)\"",
+					"\"$(inherited)\"",
+				);
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		83CBBA211A601CBA00E9B192 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				EXCLUDED_ARCHS = "";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "arm64 ";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				LD_RUNPATH_SEARCH_PATHS = "/usr/lib/swift $(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"\"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)\"",
+					"\"$(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)\"",
+					"\"$(inherited)\"",
+				);
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "MakerAppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				00E356F61AD99517003FC87E /* Debug */,
+				00E356F71AD99517003FC87E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "MakerApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				13B07F941A680F5B00A75B9A /* Debug */,
+				13B07F951A680F5B00A75B9A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "MakerApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				83CBBA201A601CBA00E9B192 /* Debug */,
+				83CBBA211A601CBA00E9B192 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 83CBB9F71A601CBA00E9B192 /* Project object */;
+}
