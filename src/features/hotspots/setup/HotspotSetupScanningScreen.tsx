@@ -27,6 +27,7 @@ const HotspotSetupScanningScreen = () => {
       await startScan((error) => {
         if (error) {
           // TODO: handle error
+          // eslint-disable-next-line no-console
           console.log(error)
         }
       })

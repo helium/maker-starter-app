@@ -38,7 +38,7 @@ const HotspotSetupBluetoothSuccess = () => {
   const handleError = useCallback(
     async (e: unknown) => {
       const titleKey = 'generic.error'
-      if ((e as BleError).toString) {
+      if ((e as BleError).toString !== undefined) {
         await showOKAlert({
           titleKey,
           messageKey: (e as BleError).toString(),

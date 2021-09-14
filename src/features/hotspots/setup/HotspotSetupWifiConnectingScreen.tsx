@@ -43,7 +43,7 @@ const HotspotSetupWifiConnectingScreen = () => {
     async (err: unknown) => {
       let msg = ''
 
-      if ((err as BleError).toString) {
+      if ((err as BleError).toString !== undefined) {
         msg = (err as BleError).toString()
       } else {
         msg = err as string
