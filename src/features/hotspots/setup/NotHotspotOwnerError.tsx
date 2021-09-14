@@ -28,7 +28,7 @@ const NotHotspotOwnerErrorScreen = () => {
           {t('hotspot_setup.not_owner.title')}
         </Text>
         <Text
-          variant="subtitleMedium"
+          variant="subtitle1"
           color="primary"
           numberOfLines={2}
           maxFontSizeMultiplier={1.1}

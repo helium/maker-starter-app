@@ -1,24 +1,27 @@
 import React, { useEffect, useState } from 'react'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
-import { useSelector } from 'react-redux'
 import { isString } from 'lodash'
-import { AddGatewayV1 } from '@helium/transactions'
+import {
+  AddGateway,
+  Onboarding,
+  useHotspotBle,
+  HotspotErrorCode,
+} from '@helium/react-native-sdk'
 import Box from '../../../components/Box'
 import { DebouncedButton } from '../../../components/Button'
 import Text from '../../../components/Text'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
 import SafeAreaBox from '../../../components/SafeAreaBox'
-import { useConnectedHotspotContext } from '../../../providers/ConnectedHotspotProvider'
-import { getHotspotDetails } from '../../../utils/appDataClient'
-import { RootState } from '../../../store/rootReducer'
+import { getHotspotDetails, submitTxn } from '../../../utils/appDataClient'
 import useAlert from '../../../utils/useAlert'
-import { HotspotErrorCode } from '../../../utils/useHotspot'
 import { assertLocationTxn } from '../../../utils/assertLocationUtils'
-import useSubmitTxn from '../../../hooks/useSubmitTxn'
 import { HotspotSetupStackParamList } from './hotspotSetupTypes'
-import { getKeypair } from '../../../utils/secureAccount'
-import { getStakingSignedTransaction } from '../../../utils/stakingClient'
+import {
+  getAddress,
+  getKeypair,
+  getSodiumKeypair,
+} from '../../../utils/secureAccount'
 
 type Route = RouteProp<HotspotSetupStackParamList, 'HotspotTxnsProgressScreen'>
 
@@ -27,15 +30,8 @@ const HotspotTxnsProgressScreen = () => {
   const { params } = useRoute<Route>()
   const navigation = useNavigation<RootNavigationProp>()
   const [finished, setFinished] = useState(false)
-  const { hotspotCoords, gain, elevation } = useSelector(
-    (state: RootState) => state.hotspotOnboarding,
-  )
-  const connectedHotspot = useSelector(
-    (state: RootState) => state.connectedHotspot,
-  )
   const { showOKAlert } = useAlert()
-  const { addGatewayTxn } = useConnectedHotspotContext()
-  const submitTxn = useSubmitTxn()
+  const { createGatewayTxn } = useHotspotBle()
 
   const handleError = async (
     error: false | Error | string,
@@ -72,7 +68,7 @@ const HotspotTxnsProgressScreen = () => {
   const submitOnboardingTxns = async () => {
     const qrAddGatewayTxn = params?.addGatewayTxn
 
-    if (!connectedHotspot.address && !qrAddGatewayTxn) {
+    if (!params.hotspotAddress && !qrAddGatewayTxn) {
       showOKAlert({
         titleKey: 'hotspot_setup.onboarding_error.title',
         messageKey: 'hotspot_setup.onboarding_error.disconnected',
@@ -88,7 +84,7 @@ const HotspotTxnsProgressScreen = () => {
       return
     }
 
-    const address = params?.hotspotAddress || connectedHotspot.address || ''
+    const address = params?.hotspotAddress
 
     // check if add gateway needed
     const isOnChain = await hotspotOnChain(address)
@@ -106,7 +102,7 @@ const HotspotTxnsProgressScreen = () => {
 
         // Gateway Txn scanned from QR
         try {
-          const txn = AddGatewayV1.fromString(qrAddGatewayTxn)
+          const txn = AddGateway.txnFromString(qrAddGatewayTxn)
 
           const keypair = await getKeypair()
 
@@ -114,48 +110,54 @@ const HotspotTxnsProgressScreen = () => {
             owner: keypair,
           })
 
-          const stakingServerSignedTxnStr = await getStakingSignedTransaction(
+          const stakingServerSignedTxnStr = await Onboarding.getOnboardingSignedTransaction(
             address,
             txnOwnerSigned.toString(),
           )
 
-          const stakingServerSignedTxn = AddGatewayV1.fromString(
+          const stakingServerSignedTxn = AddGateway.txnFromString(
             stakingServerSignedTxnStr,
           )
 
-          await submitTxn(stakingServerSignedTxn)
+          await submitTxn(stakingServerSignedTxn.toString())
         } catch (error) {
-          handleError(error, 'add_gateway')
+          await handleError(error, 'add_gateway')
           return
         }
       } else {
         try {
-          const addGatewayResponse = await addGatewayTxn()
-          if (addGatewayResponse !== true) {
-            handleError(addGatewayResponse, 'add_gateway')
+          const ownerAddress = await getAddress()
+          const ownerKeypairRaw = await getSodiumKeypair()
+
+          if (!ownerAddress?.b58 || !ownerKeypairRaw) {
+            await handleError(false, 'add_gateway')
             return
           }
+
+          const addGatewayResponse = await createGatewayTxn(
+            ownerAddress?.b58,
+            ownerKeypairRaw,
+          )
+          await submitTxn(addGatewayResponse)
         } catch (error) {
-          handleError(error, 'add_gateway')
+          await handleError(error, 'add_gateway')
           return
         }
       }
     }
 
     // construct and publish assert location
-    if (hotspotCoords) {
-      const [lng, lat] = hotspotCoords
+    if (params.coords) {
+      const [lng, lat] = params.coords
       try {
-        const onboardingRecord =
-          params?.onboardingRecord || connectedHotspot.onboardingRecord
+        const onboardingRecord = params?.onboardingRecord
         const assertLocTxnResponse = await assertLocationTxn({
           gateway: address,
           lat,
           lng,
-          decimalGain: gain,
-          elevation,
+          decimalGain: params.gain,
+          elevation: params.elevation,
           onboardingRecord,
-          updatingLocation: true,
           dataOnly: false,
         })
         if (assertLocTxnResponse) {

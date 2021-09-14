@@ -3,6 +3,7 @@ import { Linking, Platform } from 'react-native'
 import React, { useCallback, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
+import { useHotspotBle } from '@helium/react-native-sdk'
 import BackScreen from '../../../components/BackScreen'
 import { DebouncedButton } from '../../../components/Button'
 import Text from '../../../components/Text'
@@ -11,7 +12,6 @@ import {
   HotspotSetupStackParamList,
 } from './hotspotSetupTypes'
 import useAlert from '../../../utils/useAlert'
-import { useBluetoothContext } from '../../../providers/BluetoothProvider'
 import Box from '../../../components/Box'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
 import { RootState } from '../../../store/rootReducer'
@@ -33,7 +33,7 @@ const HotspotSetupBluetoothInfoScreen = () => {
   const { permissionResponse, locationBlocked } = useSelector(
     (state: RootState) => state.location,
   )
-  const { enable, getState } = useBluetoothContext()
+  const { enable, getState } = useHotspotBle()
   const { showOKCancelAlert } = useAlert()
 
   useEffect(() => {

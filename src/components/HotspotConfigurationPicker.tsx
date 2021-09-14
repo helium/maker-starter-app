@@ -84,7 +84,7 @@ const HotspotConfigurationPicker = ({
 
   const onChangeGain = (text: string) => setGain(text)
   const onDoneEditingGain = () => {
-    const gainFloat = gain
+    let gainFloat = gain
       ? parseFloat(
           gain.replace(groupSeparator, '').replace(decimalSeparator, '.'),
         )
@@ -94,6 +94,7 @@ const HotspotConfigurationPicker = ({
       gainString = '1'
     } else if (gainFloat >= 15) {
       gainString = '15'
+      gainFloat = 15
     } else {
       gainString = gainFloat.toLocaleString(locale, {
         maximumFractionDigits: 1,

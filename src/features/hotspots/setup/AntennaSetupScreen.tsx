@@ -2,7 +2,6 @@ import React, { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { getCountry } from 'react-native-localize'
-import { useSelector } from 'react-redux'
 import { KeyboardAvoidingView, StyleSheet } from 'react-native'
 import Box from '../../../components/Box'
 import {
@@ -13,9 +12,6 @@ import BackScreen from '../../../components/BackScreen'
 import Text from '../../../components/Text'
 import { DebouncedButton } from '../../../components/Button'
 import HotspotConfigurationPicker from '../../../components/HotspotConfigurationPicker'
-import hotspotOnboardingSlice from '../../../store/hotspots/hotspotOnboardingSlice'
-import { useAppDispatch } from '../../../store/store'
-import { RootState } from '../../../store/rootReducer'
 import { MakerAntenna } from '../../../makers/antennaMakerTypes'
 import Example from '../../../makers/example'
 import { HotspotMakerModels } from '../../../makers'
@@ -28,10 +24,6 @@ const AntennaSetupScreen = () => {
   const navigation = useNavigation<HotspotSetupNavigationProp>()
   const rootNav = useNavigation<RootNavigationProp>()
   const { params } = useRoute<Route>()
-  const dispatch = useAppDispatch()
-  const hotspotType = useSelector(
-    (state: RootState) => state.hotspotOnboarding.hotspotType,
-  )
 
   const handleClose = useCallback(() => rootNav.navigate('MainTabs'), [rootNav])
 
@@ -39,7 +31,7 @@ const AntennaSetupScreen = () => {
     const country = getCountry()
     const isUS = country === 'US'
     const makerAntenna =
-      HotspotMakerModels[hotspotType || 'ExampleHotspotBLE'].antenna
+      HotspotMakerModels[params.hotspotType || 'ExampleHotspotBLE'].antenna
     const ant =
       isUS && makerAntenna?.us ? makerAntenna.us : makerAntenna?.default
 
@@ -47,7 +39,7 @@ const AntennaSetupScreen = () => {
       return isUS ? Example.antennas.EXAMPLE_US : Example.antennas.EXAMPLE_US
 
     return ant
-  }, [hotspotType])
+  }, [params.hotspotType])
 
   const [antenna, setAntenna] = useState<MakerAntenna>(defaultAntenna)
   const [gain, setGain] = useState<number>(defaultAntenna.gain)
@@ -56,11 +48,12 @@ const AntennaSetupScreen = () => {
   const navNext = useCallback(async () => {
     if (!antenna) return
 
-    dispatch(hotspotOnboardingSlice.actions.setElevation(elevation))
-    dispatch(hotspotOnboardingSlice.actions.setGain(gain))
-    dispatch(hotspotOnboardingSlice.actions.setAntenna(antenna))
-    navigation.navigate('HotspotSetupConfirmLocationScreen', params)
-  }, [antenna, dispatch, elevation, gain, navigation, params])
+    navigation.navigate('HotspotSetupConfirmLocationScreen', {
+      ...params,
+      gain,
+      elevation,
+    })
+  }, [antenna, elevation, gain, navigation, params])
 
   return (
     <BackScreen onClose={handleClose}>

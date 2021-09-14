@@ -1,31 +1,23 @@
-import { useNavigation } from '@react-navigation/native'
-import React, { useCallback, useEffect } from 'react'
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
+import React, { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useSelector } from 'react-redux'
 import BackScreen from '../../../components/BackScreen'
 import { DebouncedButton } from '../../../components/Button'
 import Text from '../../../components/Text'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
-import { useConnectedHotspotContext } from '../../../providers/ConnectedHotspotProvider'
-import { RootState } from '../../../store/rootReducer'
 import Cloud from '../../../assets/images/cloud.svg'
 import Box from '../../../components/Box'
+import { HotspotSetupStackParamList } from './hotspotSetupTypes'
+
+type Route = RouteProp<HotspotSetupStackParamList, 'FirmwareUpdateNeededScreen'>
 
 const FirmwareUpdateNeededScreen = () => {
   const { t } = useTranslation()
-  const { checkFirmwareCurrent } = useConnectedHotspotContext()
-  const { connectedHotspot } = useSelector((state: RootState) => state)
-
+  const { params } = useRoute<Route>()
   const navigation = useNavigation<RootNavigationProp>()
   const handleClose = useCallback(() => navigation.navigate('MainTabs'), [
     navigation,
   ])
-
-  useEffect(() => {
-    if (!connectedHotspot.firmware?.minVersion) {
-      checkFirmwareCurrent()
-    }
-  }, [connectedHotspot.firmware, checkFirmwareCurrent])
 
   return (
     <BackScreen onClose={handleClose}>
@@ -44,16 +36,16 @@ const FirmwareUpdateNeededScreen = () => {
             <Text variant="body2" textAlign="center" marginBottom="ms">
               {t('hotspot_setup.firmware_update.current_version')}
             </Text>
-            <Text textAlign="center" variant="body1Mono">
-              {connectedHotspot.firmware?.version || '12.45.1'}
+            <Text textAlign="center" variant="body1">
+              {params.deviceFirmwareVersion || '12.45.1'}
             </Text>
           </Box>
           <Box flex={1}>
             <Text variant="body2" textAlign="center" marginBottom="ms">
               {t('hotspot_setup.firmware_update.required_version')}
             </Text>
-            <Text textAlign="center" variant="body1Mono">
-              {connectedHotspot.firmware?.minVersion || '1234.123.1'}
+            <Text textAlign="center" variant="body1">
+              {params.minVersion || '1234.123.1'}
             </Text>
           </Box>
         </Box>

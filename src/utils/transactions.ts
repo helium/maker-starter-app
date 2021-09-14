@@ -1,25 +1,6 @@
 import { Address } from '@helium/crypto-react-native'
-import { AddGatewayV1, AssertLocationV2 } from '@helium/transactions'
+import { AssertLocationV2 } from '@helium/transactions'
 import { getKeypair } from './secureAccount'
-
-export const DEFAULT_MEMO = 'AAAAAAAAAAA='
-
-export const encodeMemoString = (utf8Input: string | undefined) => {
-  if (!utf8Input) return undefined
-  const buff = Buffer.from(utf8Input, 'utf8')
-  return buff.toString('base64')
-}
-
-export const makeAddGatewayTxn = async (
-  partialTxnBin: string,
-): Promise<AddGatewayV1> => {
-  const addGatewayTxn = AddGatewayV1.fromString(partialTxnBin)
-  const keypair = await getKeypair()
-
-  return addGatewayTxn.sign({
-    owner: keypair,
-  })
-}
 
 export const makeAssertLocTxn = async (
   ownerB58: string,

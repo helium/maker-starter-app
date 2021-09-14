@@ -40,7 +40,7 @@ android_build_config(
 
 android_resource(
     name = "res",
-    package = "com.heliumwallet",
+    package = "com.maker.makerapp",
     res = "src/main/res",
 )
 

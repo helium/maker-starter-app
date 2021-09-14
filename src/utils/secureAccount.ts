@@ -1,5 +1,5 @@
-import { Address, Keypair, Mnemonic } from '@helium/crypto-react-native'
 import * as SecureStore from 'expo-secure-store'
+import { Account } from '@helium/react-native-sdk'
 
 type AccountStoreKey = BooleanKey | StringKey
 
@@ -39,19 +39,10 @@ export async function getSecureItem(key: AccountStoreKey) {
 export const deleteSecureItem = async (key: AccountStoreKey) =>
   SecureStore.deleteItemAsync(key)
 
-export const createKeypair = async (
-  givenMnemonic: Mnemonic | Array<string> | null = null,
-) => {
-  let mnemonic: Mnemonic
-  if (!givenMnemonic) {
-    mnemonic = await Mnemonic.create()
-  } else if ('words' in givenMnemonic) {
-    mnemonic = givenMnemonic
-  } else {
-    mnemonic = new Mnemonic(givenMnemonic)
-  }
-  const { keypair: keypairRaw, address } = await Keypair.fromMnemonic(mnemonic)
-
+export const createKeypair = async (givenMnemonic?: string[]) => {
+  const { keypairRaw, address, mnemonic } = await Account.createKeypair(
+    givenMnemonic,
+  )
   await Promise.all([
     setSecureItem('mnemonic', JSON.stringify(mnemonic.words)),
     setSecureItem('keypair', JSON.stringify(keypairRaw)),
@@ -59,76 +50,39 @@ export const createKeypair = async (
   ])
 }
 
-export const getAddress = async (): Promise<Address | undefined> => {
+export const getAddress = async () => {
   const addressB58 = await getSecureItem('address')
   if (!addressB58) return
 
-  return Address.fromB58(addressB58)
+  return Account.getAddress(addressB58)
 }
 
-export const getMnemonic = async (): Promise<Mnemonic | undefined> => {
+export const getMnemonic = async () => {
   const wordsStr = await getSecureItem('mnemonic')
   if (!wordsStr) return
 
   let words: string[] = []
   try {
-    words = JSON.parse(wordsStr) // The new (v3) app uses JSON.stringify ['hello', 'one', 'two', 'etc'] => "[\"hello\",\"one\",\"two\",\"etc\"]"
+    words = JSON.parse(wordsStr)
   } catch (e) {
-    words = wordsStr.split(' ') // The old (v2) app space separated "hello one two etc"
-    setSecureItem('mnemonic', JSON.stringify(words)) // upgrade the users to the new format
+    return
   }
-  return new Mnemonic(words)
+  return Account.getMnemonic(words)
 }
 
-export const getKeypair = async (): Promise<Keypair | undefined> => {
+export const getKeypair = async () => {
+  const keypairRaw = await getSodiumKeypair()
+  if (keypairRaw) {
+    return Account.getKeypair(keypairRaw)
+  }
+}
+
+export const getSodiumKeypair = async (): Promise<
+  Account.SodiumKeyPair | undefined
+> => {
   const keypairStr = await getSecureItem('keypair')
-  if (keypairStr) {
-    const keypairRaw = JSON.parse(keypairStr)
-    return new Keypair(keypairRaw)
-  }
-}
-
-const makeSignature = async (token: { address: string; time: number }) => {
-  const stringifiedToken = JSON.stringify(token)
-  const keypair = await getKeypair()
-  if (!keypair) return
-  const buffer = await keypair.sign(stringifiedToken)
-
-  return buffer.toString('base64')
-}
-
-export const makeDiscoverySignature = async (hotspotAddress: string) => {
-  const keypair = await getKeypair()
-  if (!keypair) return
-  const buffer = await keypair.sign(hotspotAddress)
-
-  return buffer.toString('base64')
-}
-
-const makeWalletApiToken = async (address: string) => {
-  const time = Math.floor(Date.now() / 1000)
-
-  const token = {
-    address,
-    time,
-  }
-
-  const signature = await makeSignature(token)
-
-  const signedToken = { ...token, signature }
-  return Buffer.from(JSON.stringify(signedToken)).toString('base64')
-}
-
-export const getWalletApiToken = async () => {
-  const existingToken = await getSecureItem('walletApiToken')
-  if (existingToken) return existingToken
-
-  const address = await getSecureItem('address')
-  if (!address) return
-
-  const apiToken = await makeWalletApiToken(address)
-  await setSecureItem('walletApiToken', apiToken)
-  return apiToken
+  if (!keypairStr) return
+  return JSON.parse(keypairStr)
 }
 
 export const signOut = async () => {

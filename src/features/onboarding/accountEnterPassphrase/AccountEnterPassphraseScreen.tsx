@@ -1,19 +1,11 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react'
-import {
-  random,
-  shuffle,
-  uniq,
-  take,
-  reject,
-  sampleSize,
-  upperFirst,
-} from 'lodash'
+import { random, upperFirst } from 'lodash'
 import { useTranslation } from 'react-i18next'
 import { useNavigation } from '@react-navigation/native'
 import Carousel from 'react-native-snap-carousel'
+import { Account } from '@helium/react-native-sdk'
 import Box from '../../../components/Box'
 import Text from '../../../components/Text'
-import wordlist from '../../../constants/wordlists/english.json'
 import PhraseChip from './PhraseChip'
 import Button from '../../../components/Button'
 import { OnboardingNavigationProp } from '../onboardingTypes'
@@ -29,13 +21,6 @@ import animateTransition from '../../../utils/animateTransition'
 const testIndices = __DEV__
   ? [0, 1, 2]
   : [random(0, 3), random(4, 7), random(8, 11)]
-
-const generateChallengeWords = (targetWord: string) =>
-  shuffle(
-    uniq(
-      take(reject(sampleSize(wordlist, 12), targetWord), 11).concat(targetWord),
-    ),
-  )
 
 type CarouselItemData = number
 
@@ -69,7 +54,7 @@ const AccountEnterPassphraseScreen = () => {
       triggerNotification('error')
       await sleep(1000)
       setWord(null)
-      setChallengeWords(generateChallengeWords(findTargetWord(step)))
+      setChallengeWords(Account.generateChallengeWords(findTargetWord(step)))
       animateTransition('AccountEnterPassphraseScreen.OnPressWord')
     }
   }
@@ -83,7 +68,9 @@ const AccountEnterPassphraseScreen = () => {
         setStep(step + 1)
         setWord(null)
         animateTransition('AccountEnterPassphraseScreen.NextStep')
-        setChallengeWords(generateChallengeWords(findTargetWord(step + 1)))
+        setChallengeWords(
+          Account.generateChallengeWords(findTargetWord(step + 1)),
+        )
       }
     }, 1000)
   }
@@ -96,7 +83,7 @@ const AccountEnterPassphraseScreen = () => {
     setWord(null)
     setCorrect(false)
     setChallengeWords(
-      generateChallengeWords(findTargetWord(step, nextMnemonic)),
+      Account.generateChallengeWords(findTargetWord(step, nextMnemonic)),
     )
   }, [step, findTargetWord])
 

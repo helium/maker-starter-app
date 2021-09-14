@@ -1,15 +1,5 @@
-import { AssertLocationV2, Transaction } from '@helium/transactions'
-import { Balance, CurrencyType } from '@helium/currency'
-import { calculateAssertLocFee } from './fees'
-import { makeAssertLocTxn } from './transactions'
-import {
-  getAddress,
-  getChainVars,
-  getCurrentOraclePrice,
-  getHotspotDetails,
-} from './appDataClient'
-import { getStakingSignedTransaction, OnboardingRecord } from './stakingClient'
-import { getH3Location } from './h3Utils'
+import { Location, Onboarding } from '@helium/react-native-sdk'
+import { getAddress, getSodiumKeypair } from './secureAccount'
 
 export const assertLocationTxn = async ({
   gateway,
@@ -18,7 +8,7 @@ export const assertLocationTxn = async ({
   decimalGain = 1.2,
   elevation = 0,
   onboardingRecord,
-  updatingLocation,
+  currentLocation,
   dataOnly,
 }: {
   gateway: string | undefined
@@ -26,66 +16,36 @@ export const assertLocationTxn = async ({
   lng: number | undefined
   decimalGain?: number
   elevation?: number
-  onboardingRecord: OnboardingRecord | undefined
-  updatingLocation: boolean
+  onboardingRecord: Onboarding.OnboardingRecord | undefined
+  currentLocation?: string
   dataOnly: boolean
 }) => {
-  if (!gateway) {
-    return undefined
-  }
-
-  let speculativeNonce = 0
-  try {
-    const response = await getHotspotDetails(gateway)
-    speculativeNonce = response.speculativeNonce || 0
-  } catch (e) {}
-  const newNonce = speculativeNonce + 1
-  let isFree = false
-  if (!dataOnly) {
-    isFree = hasFreeLocationAssert(speculativeNonce, onboardingRecord)
-  }
   const owner = await getAddress()
-  const payer = isFree ? onboardingRecord?.maker?.address : owner
-
-  if (!owner || !payer || !lat || !lng) {
+  const ownerKeypairRaw = await getSodiumKeypair()
+  if (
+    !owner ||
+    !gateway ||
+    !ownerKeypairRaw ||
+    !lat ||
+    !lng ||
+    !onboardingRecord?.maker?.address
+  ) {
     return undefined
   }
 
-  const antennaGain = decimalGain * 10
-  let stakingFee = 0
-  if (updatingLocation) {
-    if (dataOnly) {
-      const chainVars = await getChainVars()
-      const { stakingFeeTxnAssertLocationDataonlyGatewayV1: fee } = chainVars
-      stakingFee = fee
-    } else {
-      stakingFee = Transaction.stakingFeeTxnAssertLocationV1
-    }
-  }
-  const location = getH3Location(lat, lng)
-
-  const txn = await makeAssertLocTxn(
-    owner,
+  return Location.assertLocationTxn({
     gateway,
-    payer,
-    location,
-    newNonce,
-    antennaGain,
+    owner: owner.b58,
+    lat,
+    lng,
+    decimalGain,
     elevation,
-    stakingFee,
-  )
-
-  let finalTxn = txn
-
-  if (isFree) {
-    const stakingServerSignedTxn = await getStakingSignedTransaction(
-      gateway,
-      txn.toString(),
-    )
-    finalTxn = AssertLocationV2.fromString(stakingServerSignedTxn)
-  }
-
-  return finalTxn
+    dataOnly,
+    ownerKeypairRaw,
+    currentLocation,
+    makerAddress: onboardingRecord?.maker?.address,
+    locationNonceLimit: onboardingRecord?.maker?.locationNonceLimit || 0,
+  })
 }
 
 export const loadLocationFeeData = async ({
@@ -96,62 +56,18 @@ export const loadLocationFeeData = async ({
 }: {
   nonce?: number
   accountIntegerBalance?: number
-  onboardingRecord?: OnboardingRecord
+  onboardingRecord?: Onboarding.OnboardingRecord
   dataOnly?: boolean
 }) => {
-  let isFree = false
-  if (!dataOnly) {
-    isFree = hasFreeLocationAssert(nonce, onboardingRecord)
-  }
   const owner = await getAddress()
-  const payer = isFree ? onboardingRecord?.maker?.address : owner
+  if (!owner || !onboardingRecord?.maker?.address) return
 
-  if (!owner || !payer) {
-    throw new Error('Missing payer or owner')
-  }
-
-  const { price: oraclePrice } = await getCurrentOraclePrice()
-
-  let totalStakingAmountDC = new Balance(0, CurrencyType.dataCredit)
-
-  if (!dataOnly) {
-    const { stakingFee, fee } = calculateAssertLocFee(owner, payer, nonce)
-
-    totalStakingAmountDC = new Balance(
-      stakingFee + fee,
-      CurrencyType.dataCredit,
-    )
-  } else {
-    const chainVars = await getChainVars()
-    const { stakingFeeTxnAssertLocationDataonlyGatewayV1: fee } = chainVars
-    totalStakingAmountDC = new Balance(fee, CurrencyType.dataCredit)
-  }
-
-  const totalStakingAmount = totalStakingAmountDC.toNetworkTokens(oraclePrice)
-  const totalStakingAmountUsd = totalStakingAmountDC.toUsd(oraclePrice)
-
-  const balance = accountIntegerBalance || 0
-  const hasSufficientBalance = balance >= totalStakingAmount.integerBalance
-  const remainingFreeAsserts =
-    (onboardingRecord?.maker?.locationNonceLimit || 0) - nonce
-
-  return {
-    isFree,
-    hasSufficientBalance,
-    remainingFreeAsserts,
-    totalStakingAmount,
-    totalStakingAmountDC,
-    totalStakingAmountUsd,
-  }
-}
-
-export const hasFreeLocationAssert = (
-  nonce: number,
-  onboardingRecord?: OnboardingRecord,
-): boolean => {
-  if (!onboardingRecord || !onboardingRecord.maker) {
-    return false
-  }
-  const locationNonceLimit = onboardingRecord?.maker.locationNonceLimit || 0
-  return nonce < locationNonceLimit
+  return Location.loadLocationFeeData({
+    accountIntegerBalance,
+    dataOnly,
+    locationNonceLimit: onboardingRecord?.maker?.locationNonceLimit || 0,
+    makerAddress: onboardingRecord?.maker?.address,
+    nonce,
+    owner: owner.b58,
+  })
 }

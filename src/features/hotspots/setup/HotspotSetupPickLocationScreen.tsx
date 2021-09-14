@@ -33,8 +33,6 @@ import { useColors, useSpacing } from '../../../theme/themeHooks'
 import BSHandle from '../../../components/BSHandle'
 import AddressSearchModal from './AddressSearchModal'
 import { PlaceGeography } from '../../../utils/googlePlaces'
-import hotspotOnboardingSlice from '../../../store/hotspots/hotspotOnboardingSlice'
-import { useAppDispatch } from '../../../store/store'
 
 type Route = RouteProp<
   HotspotSetupStackParamList,
@@ -53,7 +51,6 @@ const HotspotSetupPickLocationScreen = () => {
   const spacing = useSpacing()
   const insets = useSafeAreaInsets()
   const searchModal = useRef<BottomSheetModal>(null)
-  const dispatch = useAppDispatch()
   const { surface } = useColors()
 
   useEffect(() => {
@@ -76,10 +73,12 @@ const HotspotSetupPickLocationScreen = () => {
   }, [])
 
   const navNext = useCallback(() => {
-    dispatch(hotspotOnboardingSlice.actions.setLocationName(locationName))
-    dispatch(hotspotOnboardingSlice.actions.setHotspotCoords(markerCenter))
-    navigation.navigate('AntennaSetupScreen', params)
-  }, [dispatch, locationName, markerCenter, navigation, params])
+    navigation.navigate('AntennaSetupScreen', {
+      ...params,
+      coords: markerCenter,
+      locationName,
+    })
+  }, [locationName, markerCenter, navigation, params])
 
   const onDidFinishLoadingMap = useCallback(
     (latitude: number, longitude: number) => {

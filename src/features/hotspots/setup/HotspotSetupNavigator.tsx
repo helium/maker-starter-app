@@ -7,7 +7,6 @@ import HotspotSetupPowerScreen from './HotspotSetupPowerScreen'
 import HotspotSetupBluetoothInfoScreen from './HotspotSetupBluetoothInfoScreen'
 import HotspotSetupScanningScreen from './HotspotSetupScanningScreen'
 import HotspotSetupPickHotspotScreen from './HotspotSetupPickHotspotScreen'
-import HotspotSetupConnectingScreen from './HotspotSetupConnectingScreen'
 import HotspotSetupWifiScreen from './HotspotSetupWifiScreen'
 import defaultScreenOptions from '../../../navigation/defaultScreenOptions'
 import HotspotSetupLocationInfoScreen from './HotspotSetupLocationInfoScreen'
@@ -68,10 +67,6 @@ const HotspotSetup = () => {
       <HotspotSetupStack.Screen
         name="HotspotSetupPickHotspotScreen"
         component={HotspotSetupPickHotspotScreen}
-      />
-      <HotspotSetupStack.Screen
-        name="HotspotSetupConnectingScreen"
-        component={HotspotSetupConnectingScreen}
       />
       <HotspotSetupStack.Screen
         name="OnboardingErrorScreen"

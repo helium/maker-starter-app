@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
 import QrIcon from '@assets/images/qr.svg'
@@ -16,7 +16,7 @@ import Box from '../../../components/Box'
 import Text from '../../../components/Text'
 import { HotspotSetupStackParamList } from './hotspotSetupTypes'
 import { useColors, useBorderRadii } from '../../../theme/themeHooks'
-import { getSecureItem } from '../../../utils/secureAccount'
+import { getAddress } from '../../../utils/secureAccount'
 import { useAppLinkContext } from '../../../providers/AppLinkProvider'
 import useHaptic from '../../../utils/useHaptic'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
@@ -29,10 +29,15 @@ const HotspotSetupExternalScreen = () => {
   const { params } = useRoute<Route>()
   const colors = useColors()
   const { xl } = useBorderRadii()
-  const { result: address } = useAsync(getSecureItem, ['address'])
+  const [address, setAddress] = useState('')
   const { handleBarCode } = useAppLinkContext()
   const { triggerNotification } = useHaptic()
   const navigation = useNavigation<RootNavigationProp>()
+
+  useAsync(async () => {
+    const accountAddress = await getAddress()
+    setAddress(accountAddress?.b58 || '')
+  }, [])
 
   const isQr = useMemo(
     () => HotspotMakerModels[params.hotspotType].onboardType === 'QR',

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { Modal, ScrollView } from 'react-native'
 import { useTranslation } from 'react-i18next'
+import { Account } from '@helium/react-native-sdk'
 import MatchingWord from '../accountImport/MatchingWord'
-import wordlist from '../../../constants/wordlists/english.json'
 import TextInput from '../../../components/TextInput'
 import Box from '../../../components/Box'
 import SafeAreaBox from '../../../components/SafeAreaBox'
@@ -31,9 +31,7 @@ const ImportReplaceWordModal = ({
   const ordinal = wordIdx <= TOTAL_WORDS ? t(`ordinals.${wordIdx}`) : ''
 
   useEffect(() => {
-    setMatchingWords(
-      wordlist.filter((w) => w.indexOf(word.toLowerCase()) === 0),
-    )
+    setMatchingWords(Account.getMatchingWords(word))
   }, [word])
 
   const handleWordSelect = (selectedWord: string) => {
