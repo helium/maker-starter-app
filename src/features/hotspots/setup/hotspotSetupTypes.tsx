@@ -17,63 +17,87 @@ export type HotspotSetupStackParamList = {
   HotspotSetupExternalScreen: { hotspotType: HotspotType }
   HotspotSetupExternalConfirmScreen: {
     addGatewayTxn: string
+    hotspotType: HotspotType
   }
   HotspotSetupDiagnosticsScreen: { hotspotType: HotspotType }
   HotspotSetupPowerScreen: { hotspotType: HotspotType }
   HotspotSetupBluetoothInfoScreen: { hotspotType: HotspotType }
   HotspotSetupScanningScreen: { hotspotType: HotspotType }
   HotspotSetupPickHotspotScreen: { hotspotType: HotspotType }
-  HotspotSetupConnectingScreen: { hotspotId: string }
   OnboardingErrorScreen: { connectStatus: HotspotConnectStatus }
   HotspotSetupPickWifiScreen: {
     networks: string[]
     connectedNetworks: string[]
+    addGatewayTxn?: string
+    hotspotAddress: string
+    onboardingRecord: Onboarding.OnboardingRecord
+    hotspotType: HotspotType
   }
-  FirmwareUpdateNeededScreen: undefined
-  HotspotSetupWifiScreen: { network: string }
-  HotspotSetupWifiConnectingScreen: { network: string; password: string }
-  HotspotSetupLocationInfoScreen:
-    | {
-        addGatewayTxn: string
-        hotspotAddress: string
-        onboardingRecord: Onboarding.OnboardingRecord
-      }
-    | undefined
-  HotspotSetupPickLocationScreen:
-    | {
-        addGatewayTxn: string
-        hotspotAddress: string
-        onboardingRecord: Onboarding.OnboardingRecord
-      }
-    | undefined
-  AntennaSetupScreen:
-    | {
-        addGatewayTxn: string
-        hotspotAddress: string
-        onboardingRecord: Onboarding.OnboardingRecord
-      }
-    | undefined
-  HotspotSetupConfirmLocationScreen:
-    | {
-        addGatewayTxn: string
-        hotspotAddress: string
-        onboardingRecord: Onboarding.OnboardingRecord
-      }
-    | undefined
-  HotspotSetupSkipLocationScreen:
-    | {
-        addGatewayTxn: string
-        hotspotAddress: string
-        onboardingRecord: Onboarding.OnboardingRecord
-      }
-    | undefined
-  HotspotTxnsProgressScreen:
-    | {
-        addGatewayTxn: string
-        hotspotAddress: string
-        onboardingRecord: Onboarding.OnboardingRecord
-      }
-    | undefined
+  FirmwareUpdateNeededScreen: {
+    current: boolean
+    minVersion: string
+    deviceFirmwareVersion: string
+  }
+  HotspotSetupWifiScreen: {
+    network: string
+    addGatewayTxn?: string
+    hotspotAddress: string
+    onboardingRecord: Onboarding.OnboardingRecord
+    hotspotType: HotspotType
+  }
+  HotspotSetupWifiConnectingScreen: {
+    network: string
+    password: string
+    addGatewayTxn?: string
+    hotspotAddress: string
+    onboardingRecord: Onboarding.OnboardingRecord
+    hotspotType: HotspotType
+  }
+  HotspotSetupLocationInfoScreen: {
+    hotspotType: HotspotType
+    addGatewayTxn?: string
+    hotspotAddress: string
+    onboardingRecord: Onboarding.OnboardingRecord
+  }
+  HotspotSetupPickLocationScreen: {
+    hotspotType: HotspotType
+    addGatewayTxn?: string
+    hotspotAddress: string
+    onboardingRecord: Onboarding.OnboardingRecord
+  }
+  AntennaSetupScreen: {
+    hotspotType: HotspotType
+    addGatewayTxn?: string
+    hotspotAddress: string
+    onboardingRecord: Onboarding.OnboardingRecord
+    coords?: number[]
+    locationName?: string
+  }
+  HotspotSetupConfirmLocationScreen: {
+    addGatewayTxn?: string
+    hotspotAddress: string
+    onboardingRecord: Onboarding.OnboardingRecord
+    elevation?: number
+    gain?: number
+    coords?: number[]
+    locationName?: string
+  }
+  HotspotSetupSkipLocationScreen: {
+    addGatewayTxn?: string
+    hotspotAddress: string
+    onboardingRecord: Onboarding.OnboardingRecord
+    elevation?: number
+    gain?: number
+  }
+  HotspotTxnsProgressScreen: {
+    addGatewayTxn?: string
+    hotspotAddress: string
+    onboardingRecord: Onboarding.OnboardingRecord
+    elevation?: number
+    gain?: number
+    coords?: number[]
+    locationName?: string
+  }
   NotHotspotOwnerErrorScreen: undefined
   OwnedHotspotErrorScreen: undefined
 }

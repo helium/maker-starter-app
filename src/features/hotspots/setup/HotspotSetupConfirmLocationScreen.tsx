@@ -1,9 +1,15 @@
-import React, { useCallback, useEffect } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { ActivityIndicator, ScrollView } from 'react-native'
 import { useTranslation } from 'react-i18next'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
-import { useAsync } from 'react-async-hook'
-import { useSelector } from 'react-redux'
+import {
+  Balance,
+  DataCredits,
+  Location,
+  NetworkTokens,
+  USDollars,
+} from '@helium/react-native-sdk'
+import type { Account } from '@helium/http'
 import {
   HotspotSetupNavigationProp,
   HotspotSetupStackParamList,
@@ -14,10 +20,10 @@ import ImageBox from '../../../components/ImageBox'
 import { DebouncedButton } from '../../../components/Button'
 import Map from '../../../components/Map'
 import Text from '../../../components/Text'
-import { RootState } from '../../../store/rootReducer'
 import { decimalSeparator, groupSeparator } from '../../../utils/i18n'
-import { loadLocationFeeData } from '../../../utils/assertLocationUtils'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
+import { getSecureItem } from '../../../utils/secureAccount'
+import { getAccount } from '../../../utils/appDataClient'
 
 type Route = RouteProp<
   HotspotSetupStackParamList,
@@ -28,36 +34,42 @@ const HotspotSetupConfirmLocationScreen = () => {
   const { t } = useTranslation()
   const navigation = useNavigation<HotspotSetupNavigationProp>()
   const rootNav = useNavigation<RootNavigationProp>()
-
+  const [account, setAccount] = useState<Account>()
+  const [ownerAddress, setOwnerAddress] = useState<string | null>(null)
+  const [feeData, setFeeData] = useState<{
+    isFree: boolean
+    hasSufficientBalance: boolean
+    remainingFreeAsserts: number
+    totalStakingAmount: Balance<NetworkTokens>
+    totalStakingAmountDC: Balance<DataCredits>
+    totalStakingAmountUsd: Balance<USDollars>
+  }>()
   const { params } = useRoute<Route>()
-  const account = useSelector((state: RootState) => state.account.account)
-  const connectedHotspotOnboardingRecord = useSelector(
-    (state: RootState) => state.connectedHotspot.onboardingRecord,
-  )
-  const connectedHotspotDetails = useSelector(
-    (state: RootState) => state.connectedHotspot.details,
-  )
-  const { hotspotCoords, locationName, gain, elevation } = useSelector(
-    (state: RootState) => state.hotspotOnboarding,
-  )
-  const { loading, result, error } = useAsync(
-    () =>
-      loadLocationFeeData({
-        nonce: connectedHotspotDetails?.nonce || 0,
-        accountIntegerBalance: account?.balance?.integerBalance,
-        onboardingRecord:
-          connectedHotspotOnboardingRecord || params?.onboardingRecord,
-      }),
-    [],
-  )
+  const { onboardingRecord, elevation, gain, coords } = params
 
   useEffect(() => {
-    if (error) {
-      navigation.navigate('OnboardingErrorScreen', {
-        connectStatus: 'no_onboarding_key',
-      })
+    getSecureItem('address').then(setOwnerAddress)
+  }, [])
+
+  useEffect(() => {
+    if (!ownerAddress) return
+    getAccount(ownerAddress).then(setAccount)
+  }, [ownerAddress])
+
+  useEffect(() => {
+    if (!onboardingRecord || !ownerAddress || !account?.balance) {
+      return
     }
-  }, [error, navigation])
+
+    Location.loadLocationFeeData({
+      nonce: 0,
+      accountIntegerBalance: account.balance.integerBalance,
+      dataOnly: false,
+      owner: ownerAddress,
+      locationNonceLimit: onboardingRecord.maker.locationNonceLimit,
+      makerAddress: onboardingRecord.maker.address,
+    }).then(setFeeData)
+  }, [onboardingRecord, ownerAddress, account])
 
   const navNext = useCallback(async () => {
     navigation.replace('HotspotTxnsProgressScreen', params)
@@ -65,7 +77,7 @@ const HotspotSetupConfirmLocationScreen = () => {
 
   const handleClose = useCallback(() => rootNav.navigate('MainTabs'), [rootNav])
 
-  if (loading || !result) {
+  if (!feeData) {
     return (
       <BackScreen onClose={handleClose}>
         <Box flex={1} justifyContent="center" paddingBottom="xxl">
@@ -75,7 +87,7 @@ const HotspotSetupConfirmLocationScreen = () => {
     )
   }
 
-  const { isFree, hasSufficientBalance, totalStakingAmount } = result
+  const { isFree, hasSufficientBalance, totalStakingAmount } = feeData
 
   return (
     <BackScreen onClose={handleClose}>
@@ -115,11 +127,7 @@ const HotspotSetupConfirmLocationScreen = () => {
             marginBottom={{ phone: 'm', smallPhone: 'ms' }}
           >
             <Box flex={1}>
-              <Map
-                mapCenter={hotspotCoords}
-                zoomLevel={16}
-                interactive={false}
-              />
+              <Map mapCenter={coords} zoomLevel={16} interactive={false} />
               <Box
                 position="absolute"
                 top="50%"
@@ -139,7 +147,7 @@ const HotspotSetupConfirmLocationScreen = () => {
             </Box>
             <Box padding="m" backgroundColor="secondaryBackground">
               <Text variant="body2" numberOfLines={1} adjustsFontSizeToFit>
-                {locationName}
+                {params.locationName}
               </Text>
             </Box>
           </Box>
@@ -152,7 +160,7 @@ const HotspotSetupConfirmLocationScreen = () => {
             <Text variant="body1" color="secondaryText">
               {t('hotspot_setup.location_fee.gain_label')}
             </Text>
-            <Text variant="body1" color="white">
+            <Text variant="body1" color="primaryText">
               {t('hotspot_setup.location_fee.gain', { gain })}
             </Text>
           </Box>
@@ -165,7 +173,7 @@ const HotspotSetupConfirmLocationScreen = () => {
             <Text variant="body1" color="secondaryText">
               {t('hotspot_setup.location_fee.elevation_label')}
             </Text>
-            <Text variant="body1" color="white">
+            <Text variant="body1" color="primaryText">
               {t('hotspot_setup.location_fee.elevation', { count: elevation })}
             </Text>
           </Box>
@@ -200,7 +208,7 @@ const HotspotSetupConfirmLocationScreen = () => {
                 <Text variant="body1" color="secondaryText">
                   {t('hotspot_setup.location_fee.fee')}
                 </Text>
-                <Text variant="body1" color="white">
+                <Text variant="body1" color="primaryText">
                   {totalStakingAmount.toString(2)}
                 </Text>
               </Box>

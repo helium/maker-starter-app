@@ -1,6 +1,5 @@
 import * as SecureStore from 'expo-secure-store'
 import { Account } from '@helium/react-native-sdk'
-import { SodiumKeyPair } from '@helium/react-native-sdk/lib/typescript/src/Account/account'
 
 type AccountStoreKey = BooleanKey | StringKey
 
@@ -79,7 +78,7 @@ export const getKeypair = async () => {
 }
 
 export const getSodiumKeypair = async (): Promise<
-  SodiumKeyPair | undefined
+  Account.SodiumKeyPair | undefined
 > => {
   const keypairStr = await getSecureItem('keypair')
   if (!keypairStr) return

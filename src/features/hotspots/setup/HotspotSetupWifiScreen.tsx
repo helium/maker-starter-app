@@ -20,7 +20,13 @@ const HotspotSetupWifiScreen = () => {
   const rootNav = useNavigation<RootNavigationProp>()
 
   const {
-    params: { network },
+    params: {
+      network,
+      hotspotAddress,
+      addGatewayTxn,
+      onboardingRecord,
+      hotspotType,
+    },
   } = useRoute<Route>()
   const [password, setPassword] = useState('')
   const [secureTextEntry, setSecureTextEntry] = useState(true)
@@ -35,6 +41,10 @@ const HotspotSetupWifiScreen = () => {
     navigation.replace('HotspotSetupWifiConnectingScreen', {
       network,
       password,
+      hotspotAddress,
+      addGatewayTxn,
+      onboardingRecord,
+      hotspotType,
     })
   }
 

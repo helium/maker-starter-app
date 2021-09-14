@@ -1,23 +1,110 @@
-import { useNavigation } from '@react-navigation/native'
-import React from 'react'
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Device } from 'react-native-ble-plx'
-import { useHotspotBle } from '@helium/react-native-sdk'
+import { BleError, Device } from 'react-native-ble-plx'
+import { Onboarding, useHotspotBle } from '@helium/react-native-sdk'
+import { uniq } from 'lodash'
 import Box from '../../../components/Box'
 import HotspotPairingList from '../../../components/HotspotPairingList'
 import Text from '../../../components/Text'
-import { HotspotSetupNavigationProp } from './hotspotSetupTypes'
+import {
+  HotspotSetupNavigationProp,
+  HotspotSetupStackParamList,
+} from './hotspotSetupTypes'
+import useAlert from '../../../utils/useAlert'
 
+type Route = RouteProp<
+  HotspotSetupStackParamList,
+  'HotspotSetupPickHotspotScreen'
+>
 const HotspotSetupBluetoothSuccess = () => {
   const { t } = useTranslation()
+  const [connectStatus, setConnectStatus] = useState<'connecting' | boolean>(
+    false,
+  )
+  const {
+    params: { hotspotType },
+  } = useRoute<Route>()
   const navigation = useNavigation<HotspotSetupNavigationProp>()
-  const { scannedDevices } = useHotspotBle()
+  const {
+    scannedDevices,
+    connect,
+    checkFirmwareCurrent,
+    readWifiNetworks,
+    getOnboardingAddress,
+  } = useHotspotBle()
+  const { showOKAlert } = useAlert()
 
-  const handleConnect = async (hotspot: Device) => {
-    navigation.replace('HotspotSetupConnectingScreen', {
-      hotspotId: hotspot.id,
-    })
-  }
+  const handleError = useCallback(
+    async (e: unknown) => {
+      const titleKey = 'generic.error'
+      if ((e as BleError).toString) {
+        await showOKAlert({
+          titleKey,
+          messageKey: (e as BleError).toString(),
+        })
+      }
+    },
+    [showOKAlert],
+  )
+
+  const handleConnect = useCallback(
+    async (hotspot: Device) => {
+      if (connectStatus === 'connecting') return
+
+      setConnectStatus('connecting')
+      try {
+        await connect(hotspot)
+        setConnectStatus(true)
+      } catch (e) {
+        handleError(e)
+      }
+    },
+    [connect, connectStatus, handleError],
+  )
+
+  useEffect(() => {
+    const configureHotspot = async () => {
+      if (connectStatus !== true) return
+
+      try {
+        // check firmware
+        const firmwareDetails = await checkFirmwareCurrent()
+        if (!firmwareDetails.current) {
+          navigation.navigate('FirmwareUpdateNeededScreen', firmwareDetails)
+          return
+        }
+
+        // scan for wifi networks
+        const networks = uniq((await readWifiNetworks(false)) || [])
+        const connectedNetworks = uniq((await readWifiNetworks(true)) || [])
+        const hotspotAddress = await getOnboardingAddress()
+        const onboardingRecord = await Onboarding.getOnboardingRecord(
+          hotspotAddress,
+        )
+
+        // navigate to next screen
+        navigation.replace('HotspotSetupPickWifiScreen', {
+          networks,
+          connectedNetworks,
+          hotspotAddress,
+          onboardingRecord,
+          hotspotType,
+        })
+      } catch (e) {
+        handleError(e)
+      }
+    }
+    configureHotspot()
+  }, [
+    checkFirmwareCurrent,
+    connectStatus,
+    getOnboardingAddress,
+    handleError,
+    hotspotType,
+    navigation,
+    readWifiNetworks,
+  ])
 
   return (
     <Box flex={1}>

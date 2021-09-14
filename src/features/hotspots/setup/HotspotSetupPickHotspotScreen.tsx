@@ -8,7 +8,7 @@ import { RootNavigationProp } from '../../../navigation/main/tabTypes'
 
 const HotspotSetupPickHotspotScreen = () => {
   const { scannedDevices } = useHotspotBle()
-  const hotspotCount = scannedDevices?.length
+  const hotspotCount = scannedDevices.length
   const rootNav = useNavigation<RootNavigationProp>()
   const handleClose = useCallback(() => rootNav.navigate('MainTabs'), [rootNav])
 

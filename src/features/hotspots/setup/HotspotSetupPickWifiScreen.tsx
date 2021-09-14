@@ -2,7 +2,6 @@ import React, { useCallback, useMemo, useState } from 'react'
 import { ActivityIndicator, FlatList } from 'react-native'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
-import { useSelector } from 'react-redux'
 import { uniq } from 'lodash'
 import { useHotspotBle } from '@helium/react-native-sdk'
 import BackScreen from '../../../components/BackScreen'
@@ -17,8 +16,9 @@ import { useColors } from '../../../theme/themeHooks'
 import { DebouncedButton } from '../../../components/Button'
 import TouchableOpacityBox from '../../../components/TouchableOpacityBox'
 import Checkmark from '../../../assets/images/check.svg'
-import { RootState } from '../../../store/rootReducer'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
+import { getSecureItem } from '../../../utils/secureAccount'
+import { getHotspotDetails } from '../../../utils/appDataClient'
 
 const WifiItem = ({
   name,
@@ -62,9 +62,15 @@ const HotspotSetupPickWifiScreen = () => {
   const navigation = useNavigation<HotspotSetupNavigationProp>()
   const rootNav = useNavigation<RootNavigationProp>()
 
-  const { connectedHotspot } = useSelector((state: RootState) => state)
   const {
-    params: { networks, connectedNetworks },
+    params: {
+      networks,
+      connectedNetworks,
+      hotspotAddress,
+      onboardingRecord,
+      addGatewayTxn,
+      hotspotType,
+    },
   } = useRoute<Route>()
   const { readWifiNetworks } = useHotspotBle()
 
@@ -81,18 +87,32 @@ const HotspotSetupPickWifiScreen = () => {
     return wifiNetworks.length > 0
   }, [wifiNetworks])
 
-  const navSkip = useCallback(() => {
-    if (connectedHotspot.status === 'owned') {
-      navigation.navigate('OwnedHotspotErrorScreen')
-    } else if (connectedHotspot.status === 'global') {
-      navigation.navigate('NotHotspotOwnerErrorScreen')
+  const navSkip = useCallback(async () => {
+    const address = await getSecureItem('address')
+    const hotspot = await getHotspotDetails(hotspotAddress)
+
+    if (hotspot && hotspot.owner === address) {
+      navigation.replace('OwnedHotspotErrorScreen')
+    } else if (hotspot && hotspot.owner !== address) {
+      navigation.replace('NotHotspotOwnerErrorScreen')
     } else {
-      navigation.navigate('HotspotSetupLocationInfoScreen')
+      navigation.replace('HotspotSetupLocationInfoScreen', {
+        hotspotAddress,
+        onboardingRecord,
+        addGatewayTxn,
+        hotspotType,
+      })
     }
-  }, [connectedHotspot.status, navigation])
+  }, [addGatewayTxn, hotspotAddress, navigation, onboardingRecord, hotspotType])
 
   const navNext = (network: string) => {
-    navigation.navigate('HotspotSetupWifiScreen', { network })
+    navigation.navigate('HotspotSetupWifiScreen', {
+      network,
+      hotspotAddress,
+      onboardingRecord,
+      addGatewayTxn,
+      hotspotType,
+    })
   }
 
   const scanForNetworks = async () => {

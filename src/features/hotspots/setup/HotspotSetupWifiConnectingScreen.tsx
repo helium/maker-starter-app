@@ -3,8 +3,7 @@ import { uniq } from 'lodash'
 import { useAsync } from 'react-async-hook'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
-import { useSelector } from 'react-redux'
-import { useHotspotBle } from '@helium/react-native-sdk'
+import { BleError, useHotspotBle } from '@helium/react-native-sdk'
 import useAlert from '../../../utils/useAlert'
 import {
   HotspotSetupNavigationProp,
@@ -13,7 +12,8 @@ import {
 import Text from '../../../components/Text'
 import Box from '../../../components/Box'
 import SafeAreaBox from '../../../components/SafeAreaBox'
-import { RootState } from '../../../store/rootReducer'
+import { getHotspotDetails } from '../../../utils/appDataClient'
+import { getSecureItem } from '../../../utils/secureAccount'
 
 type Route = RouteProp<
   HotspotSetupStackParamList,
@@ -23,10 +23,16 @@ type Route = RouteProp<
 const HotspotSetupWifiConnectingScreen = () => {
   const { t } = useTranslation()
   const navigation = useNavigation<HotspotSetupNavigationProp>()
-  const { connectedHotspot } = useSelector((state: RootState) => state)
 
   const {
-    params: { network, password },
+    params: {
+      network,
+      password,
+      hotspotAddress,
+      onboardingRecord,
+      addGatewayTxn,
+      hotspotType,
+    },
   } = useRoute<Route>()
 
   const { readWifiNetworks, setWifi, removeConfiguredWifi } = useHotspotBle()
@@ -34,22 +40,36 @@ const HotspotSetupWifiConnectingScreen = () => {
   const { showOKAlert } = useAlert()
 
   const handleError = useCallback(
-    async (messageKey: string) => {
-      await showOKAlert({ titleKey: 'generic.error', messageKey })
+    async (err: unknown) => {
+      let msg = ''
+
+      if ((err as BleError).toString) {
+        msg = (err as BleError).toString()
+      } else {
+        msg = err as string
+      }
+      await showOKAlert({ titleKey: 'generic.error', messageKey: msg })
       navigation.goBack()
     },
     [navigation, showOKAlert],
   )
 
-  const goToNextStep = useCallback(() => {
-    if (connectedHotspot.status === 'owned') {
+  const goToNextStep = useCallback(async () => {
+    const address = await getSecureItem('address')
+    const hotspot = await getHotspotDetails(hotspotAddress)
+    if (hotspot && hotspot.owner === address) {
       navigation.replace('OwnedHotspotErrorScreen')
-    } else if (connectedHotspot.status === 'global') {
+    } else if (hotspot && hotspot.owner !== address) {
       navigation.replace('NotHotspotOwnerErrorScreen')
     } else {
-      navigation.replace('HotspotSetupLocationInfoScreen')
+      navigation.replace('HotspotSetupLocationInfoScreen', {
+        hotspotAddress,
+        onboardingRecord,
+        addGatewayTxn,
+        hotspotType,
+      })
     }
-  }, [connectedHotspot.status, navigation])
+  }, [addGatewayTxn, hotspotAddress, hotspotType, navigation, onboardingRecord])
 
   const connectToWifi = useCallback(async () => {
     const response = await setWifi(network, password)

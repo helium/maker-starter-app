@@ -10,12 +10,14 @@ import {
   HotspotSetupNavigationProp,
   HotspotSetupStackParamList,
 } from './hotspotSetupTypes'
+import sleep from '../../../utils/sleep'
 
 type Route = RouteProp<HotspotSetupStackParamList, 'HotspotSetupScanningScreen'>
 
+const SCAN_DURATION = 6000
 const HotspotSetupScanningScreen = () => {
   const { t } = useTranslation()
-  const { startScan } = useHotspotBle()
+  const { startScan, stopScan } = useHotspotBle()
 
   const { params } = useRoute<Route>()
   const navigation = useNavigation<HotspotSetupNavigationProp>()
@@ -24,8 +26,12 @@ const HotspotSetupScanningScreen = () => {
     const scan = async () => {
       await startScan((error) => {
         if (error) {
-        } // TODO: handle error
+          // TODO: handle error
+          console.log(error)
+        }
       })
+      await sleep(SCAN_DURATION)
+      stopScan()
       navigation.replace('HotspotSetupPickHotspotScreen', params)
     }
     scan()

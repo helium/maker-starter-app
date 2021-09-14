@@ -165,9 +165,9 @@ const App = () => {
   )
 
   return (
-    <ThemeProvider theme={colorAdaptedTheme}>
-      <BottomSheetModalProvider>
-        <HotspotBleProvider>
+    <HotspotBleProvider>
+      <ThemeProvider theme={colorAdaptedTheme}>
+        <BottomSheetModalProvider>
           <SafeAreaProvider>
             {/* TODO: Will need to adapt status bar for light/dark modes */}
             {Platform.OS === 'ios' && <StatusBar barStyle="light-content" />}
@@ -183,9 +183,9 @@ const App = () => {
           <SecurityScreen
             visible={appState !== 'active' && appState !== 'unknown'}
           />
-        </HotspotBleProvider>
-      </BottomSheetModalProvider>
-    </ThemeProvider>
+        </BottomSheetModalProvider>
+      </ThemeProvider>
+    </HotspotBleProvider>
   )
 }
 
