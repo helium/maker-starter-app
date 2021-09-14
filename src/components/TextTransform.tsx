@@ -3,11 +3,11 @@ import React from 'react'
 import { Trans } from 'react-i18next'
 import { TextProps } from '@shopify/restyle'
 import Text from './Text'
-import { Font, Theme } from '../theme/theme'
+import { Theme } from '../theme/theme'
 
 const components = {
-  b: <Text fontFamily={Font.main.semiBold} />,
-  red: <Text color="redMain" />,
+  b: <Text />,
+  red: <Text color="error" />,
   blue: <Text color="secondary" />,
   white: <Text color="white" />,
   purple: <Text color="primary" />,

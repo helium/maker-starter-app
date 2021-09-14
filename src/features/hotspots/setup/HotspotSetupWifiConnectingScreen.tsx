@@ -4,7 +4,6 @@ import { useAsync } from 'react-async-hook'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
-import RingLoader from '../../../components/Loaders/RingLoader'
 import { useConnectedHotspotContext } from '../../../providers/ConnectedHotspotProvider'
 import useAlert from '../../../utils/useAlert'
 import {
@@ -102,9 +101,8 @@ const HotspotSetupWifiConnectingScreen = () => {
   return (
     <SafeAreaBox flex={1} backgroundColor="primaryBackground">
       <Box flex={1} justifyContent="center" paddingBottom="xxl">
-        <RingLoader color="green" />
         <Box marginTop="xl">
-          <Text variant="body1Light" textAlign="center">
+          <Text variant="body1" textAlign="center">
             {t('hotspot_setup.wifi_password.connecting').toUpperCase()}
           </Text>
         </Box>

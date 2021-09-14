@@ -81,7 +81,7 @@ const HotspotSetupExternalConfirmScreen = () => {
       <Box
         height={52}
         width={52}
-        backgroundColor="purple500"
+        backgroundColor="secondaryBackground"
         borderRadius="m"
         alignItems="center"
         justifyContent="center"
@@ -101,23 +101,17 @@ const HotspotSetupExternalConfirmScreen = () => {
       </Text>
       <Box
         padding="l"
-        backgroundColor="offblack"
+        backgroundColor="secondaryBackground"
         borderTopLeftRadius="s"
         borderTopRightRadius="s"
         marginTop={{ smallPhone: 'm', phone: 'xl' }}
         justifyContent="center"
       >
-        <Text
-          variant="medium"
-          color="purpleLight"
-          fontSize={16}
-          maxFontSizeMultiplier={1}
-        >
+        <Text variant="body1" maxFontSizeMultiplier={1}>
           {t('hotspot_setup.confirm.public_key')}
         </Text>
         <Text
-          variant="light"
-          fontSize={18}
+          variant="body1"
           marginTop="xs"
           maxFontSizeMultiplier={1}
           numberOfLines={2}
@@ -128,26 +122,16 @@ const HotspotSetupExternalConfirmScreen = () => {
       </Box>
       <Box
         padding="l"
-        backgroundColor="offblack"
+        backgroundColor="secondaryBackground"
         marginTop="xs"
         justifyContent="center"
         alignItems="flex-start"
       >
-        <Text
-          variant="medium"
-          color="purpleLight"
-          fontSize={16}
-          maxFontSizeMultiplier={1}
-        >
+        <Text variant="body1" maxFontSizeMultiplier={1}>
           {t('hotspot_setup.confirm.mac_address')}
         </Text>
         {macAddress ? (
-          <Text
-            variant="light"
-            marginTop="xs"
-            fontSize={18}
-            maxFontSizeMultiplier={1}
-          >
+          <Text variant="body1" marginTop="xs" maxFontSizeMultiplier={1}>
             {macAddress}
           </Text>
         ) : (
@@ -158,23 +142,17 @@ const HotspotSetupExternalConfirmScreen = () => {
       </Box>
       <Box
         marginTop="xs"
-        backgroundColor="offblack"
+        backgroundColor="secondaryBackground"
         borderBottomLeftRadius="s"
         borderBottomRightRadius="s"
         padding="l"
         justifyContent="center"
       >
-        <Text
-          variant="medium"
-          color="purpleLight"
-          fontSize={16}
-          maxFontSizeMultiplier={1}
-        >
+        <Text variant="body1" maxFontSizeMultiplier={1}>
           {t('hotspot_setup.confirm.owner_address')}
         </Text>
         <Text
-          variant="light"
-          fontSize={18}
+          variant="body1"
           maxFontSizeMultiplier={1}
           marginTop="xs"
           numberOfLines={2}

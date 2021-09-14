@@ -8,7 +8,6 @@ import {
   HotspotSetupNavigationProp,
   HotspotSetupStackParamList,
 } from './hotspotSetupTypes'
-import Lightning from '../../../assets/images/lightning.svg'
 import Box from '../../../components/Box'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
 
@@ -37,7 +36,6 @@ const HotspotSetupPowerScreen = () => {
       justifyContent="center"
     >
       <Box flex={1} alignItems="center" justifyContent="center">
-        <Lightning />
         <Text
           marginTop="xl"
           variant="h1"
@@ -52,7 +50,7 @@ const HotspotSetupPowerScreen = () => {
         <Text
           marginBottom="lx"
           maxFontSizeMultiplier={1.2}
-          variant="subtitleBold"
+          variant="subtitle1"
           textAlign="center"
           color="white"
         >
@@ -61,7 +59,7 @@ const HotspotSetupPowerScreen = () => {
         <Text
           marginBottom="xl"
           maxFontSizeMultiplier={1.2}
-          variant="subtitle"
+          variant="subtitle1"
           textAlign="center"
         >
           {t(`makerHotspot.${hotspotType}.power.1`)}

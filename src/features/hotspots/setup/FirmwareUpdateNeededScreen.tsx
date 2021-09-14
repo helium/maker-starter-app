@@ -36,7 +36,7 @@ const FirmwareUpdateNeededScreen = () => {
         <Text variant="h1" textAlign="center" marginBottom="m">
           {t('hotspot_setup.firmware_update.title')}
         </Text>
-        <Text variant="subtitle" textAlign="center">
+        <Text variant="subtitle1" textAlign="center">
           {t('hotspot_setup.firmware_update.subtitle')}
         </Text>
         <Box marginVertical="xl" flexDirection="row">

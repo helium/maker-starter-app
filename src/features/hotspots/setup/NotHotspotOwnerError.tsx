@@ -19,7 +19,7 @@ const NotHotspotOwnerErrorScreen = () => {
     <BackScreen>
       <Box justifyContent="center" flex={1}>
         <Text
-          variant="h1s"
+          variant="h2"
           marginBottom="lm"
           numberOfLines={2}
           adjustsFontSizeToFit
@@ -39,7 +39,7 @@ const NotHotspotOwnerErrorScreen = () => {
         </Text>
       </Box>
       <Text
-        variant="subtitleLight"
+        variant="subtitle2"
         marginBottom={{ phone: 'lx', smallPhone: 'ms' }}
         fontSize={14}
         lineHeight={19}

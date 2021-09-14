@@ -5,10 +5,8 @@ import SafeAreaBox from '../../../components/SafeAreaBox'
 import Text from '../../../components/Text'
 import { OnboardingNavigationProp } from '../onboardingTypes'
 import { createKeypair } from '../../../utils/secureAccount'
-import RingLoader from '../../../components/Loaders/RingLoader'
 
-const DURATION = 4000
-const IMAGE_SIZE = 212
+const DURATION = 2000
 
 const AccountPassphraseGenerationScreen = () => {
   const { t } = useTranslation()
@@ -39,8 +37,7 @@ const AccountPassphraseGenerationScreen = () => {
       alignItems="center"
       justifyContent="center"
     >
-      <RingLoader color="purple" size={IMAGE_SIZE} />
-      <Text textAlign="center" variant="body2Light" marginTop="xl">
+      <Text textAlign="center" variant="body1" marginTop="xl">
         {t('account_setup.generating')}
       </Text>
     </SafeAreaBox>

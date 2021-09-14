@@ -2,13 +2,12 @@ import React, { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigation } from '@react-navigation/native'
 import Config from 'react-native-config'
-import { isTablet } from 'react-native-device-info'
 import Button from '../../../components/Button'
 import Text from '../../../components/Text'
 import { OnboardingNavigationProp } from '../onboardingTypes'
 import Box from '../../../components/Box'
-import ImageBox from '../../../components/ImageBox'
 import TextTransform from '../../../components/TextTransform'
+import SafeAreaBox from '../../../components/SafeAreaBox'
 
 const WelcomeScreen = () => {
   const { t } = useTranslation()
@@ -31,46 +30,36 @@ const WelcomeScreen = () => {
   }, [navigation])
 
   return (
-    <Box backgroundColor="primaryBackground" flex={1}>
-      <Box flex={2} height="100%">
-        <ImageBox
-          flex={1}
-          alignSelf={isTablet() ? 'flex-end' : 'auto'}
-          maxHeight="100%"
-          resizeMode="contain"
-          aspectRatio={1242 / 1340}
-          width="50%"
-          source={require('../../../assets/images/welcome.png')}
-        />
-      </Box>
-      <Box
-        flex={1}
-        paddingVertical="l"
-        paddingHorizontal="lx"
-        justifyContent="flex-end"
-      >
-        <Text variant="h1">{t('account_setup.welcome.title')}</Text>
-        <TextTransform
-          variant="subtitle"
-          marginVertical="lx"
-          i18nKey="account_setup.welcome.subtitle"
-        />
-        <Button
-          mode="contained"
-          variant="primary"
-          width="100%"
-          marginBottom="s"
-          onPress={createAccount}
-          title={t('account_setup.welcome.create_account')}
-        />
-        <Button
-          onPress={importAccount}
-          mode="text"
-          variant="secondary"
-          title={t('account_setup.welcome.import_account')}
-        />
-      </Box>
-    </Box>
+    <SafeAreaBox
+      backgroundColor="primaryBackground"
+      flex={1}
+      paddingHorizontal="l"
+      alignItems="center"
+      paddingTop="xxxl"
+    >
+      <Text variant="h1">{t('account_setup.welcome.title')}</Text>
+      <TextTransform
+        variant="subtitle1"
+        marginVertical="xxl"
+        i18nKey="account_setup.welcome.subtitle"
+      />
+      <Box flex={1} />
+      <Button
+        mode="contained"
+        variant="primary"
+        color="error"
+        width="100%"
+        marginBottom="s"
+        onPress={createAccount}
+        title={t('account_setup.welcome.create_account')}
+      />
+      <Button
+        onPress={importAccount}
+        mode="text"
+        variant="secondary"
+        title={t('account_setup.welcome.import_account')}
+      />
+    </SafeAreaBox>
   )
 }
 

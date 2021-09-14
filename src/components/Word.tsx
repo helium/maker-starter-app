@@ -29,16 +29,16 @@ const Word = ({
         alignItems="center"
         onPress={onPress}
       >
-        <Text variant="body1Mono" color="grayMain" maxFontSizeMultiplier={1.1}>
+        <Text variant="body1" color="primaryText" maxFontSizeMultiplier={1.1}>
           {position}
         </Text>
 
         <Text
-          variant="body1Mono"
+          variant="body1"
           numberOfLines={1}
           adjustsFontSizeToFit
           maxFontSizeMultiplier={1.1}
-          color="grayLight"
+          color="secondaryText"
           marginLeft="s"
         >
           {upperFirst(word)}

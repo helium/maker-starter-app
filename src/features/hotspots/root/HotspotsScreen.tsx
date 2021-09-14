@@ -12,7 +12,7 @@ import { useColors } from '../../../theme/themeHooks'
 const HotspotsScreen = () => {
   const { t } = useTranslation()
   const navigation = useNavigation<RootNavigationProp>()
-  const { secondary } = useColors()
+  const { primaryText } = useColors()
 
   const goToSetup = useCallback(() => navigation.push('HotspotSetup'), [
     navigation,
@@ -28,24 +28,16 @@ const HotspotsScreen = () => {
           backgroundColor="primaryBackground"
         >
           <Text variant="h1">{t('hotspots.empty.title')}</Text>
-          <Text
-            variant="regular"
-            fontSize={18}
-            color="purpleBrightMuted"
-            marginTop="ms"
-          >
+          <Text variant="body1" marginTop="ms">
             {t('hotspots.empty.body')}
           </Text>
           <Button
             onPress={goToSetup}
             height={48}
-            backgroundColor="white"
             marginTop="l"
-            color="secondary"
-            textVariant="body2"
             mode="contained"
             title={t('hotspots.empty.hotspots.add')}
-            icon={<AddIcon color={secondary} height={10} />}
+            icon={<AddIcon color={primaryText} height={10} />}
           />
         </Box>
       </BottomSheetModalProvider>

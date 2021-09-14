@@ -29,7 +29,7 @@ const OwnedHotspotErrorScreen = () => {
           {t('hotspot_setup.owned_hotspot.subtitle_1')}
         </Text>
         <Text
-          variant="subtitleLight"
+          variant="subtitle2"
           marginBottom={{ phone: 'xl', smallPhone: 'ms' }}
           numberOfLines={2}
           adjustsFontSizeToFit

@@ -28,9 +28,8 @@ import {
   HotspotSetupStackParamList,
 } from './hotspotSetupTypes'
 import SafeAreaBox from '../../../components/SafeAreaBox'
-import Info from '../../../assets/images/info.svg'
 import TouchableOpacityBox from '../../../components/TouchableOpacityBox'
-import { useSpacing } from '../../../theme/themeHooks'
+import { useColors, useSpacing } from '../../../theme/themeHooks'
 import BSHandle from '../../../components/BSHandle'
 import AddressSearchModal from './AddressSearchModal'
 import { PlaceGeography } from '../../../utils/googlePlaces'
@@ -55,6 +54,7 @@ const HotspotSetupPickLocationScreen = () => {
   const insets = useSafeAreaInsets()
   const searchModal = useRef<BottomSheetModal>(null)
   const dispatch = useAppDispatch()
+  const { surface } = useColors()
 
   useEffect(() => {
     const sleepThenEnable = async () => {
@@ -159,11 +159,8 @@ const HotspotSetupPickLocationScreen = () => {
             <Text variant="body1" marginBottom="xs">
               {t('hotspot_setup.location.title')}
             </Text>
-            <Text variant="body1Bold">{locationName}</Text>
+            <Text variant="body1">{locationName}</Text>
           </Box>
-          <TouchableOpacityBox>
-            <Info />
-          </TouchableOpacityBox>
         </Box>
         <DebouncedButton
           onPress={navNext}
@@ -179,6 +176,7 @@ const HotspotSetupPickLocationScreen = () => {
           snapPoints={searchSnapPoints}
           handleComponent={BSHandle}
           backdropComponent={BottomSheetBackdrop}
+          backgroundStyle={{ backgroundColor: surface }}
         >
           <AddressSearchModal onSelectPlace={handleSelectPlace} />
         </BottomSheetModal>

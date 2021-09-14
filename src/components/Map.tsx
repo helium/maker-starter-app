@@ -42,7 +42,6 @@ type Props = BoxProps<Theme> & {
   zoomLevel?: number
   mapCenter?: number[]
   ownedHotspots?: Hotspot[]
-  followedHotspots?: Hotspot[]
   selectedHotspot?: Hotspot | Witness
   witnesses?: Witness[]
   animationMode?: 'flyTo' | 'easeTo' | 'moveTo'
@@ -76,7 +75,6 @@ const Map = ({
   showNoLocation,
   showNearbyHotspots = false,
   showH3Grid = false,
-  followedHotspots,
   showRewardScale,
   cameraBottomOffset,
   ...props
@@ -250,7 +248,7 @@ const Map = ({
           <Text variant="h2" color="white" marginTop="m">
             {t('hotspot_details.no_location_title')}
           </Text>
-          <Text variant="body2" color="purpleMuted" marginTop="s">
+          <Text variant="body2" marginTop="s">
             {t('hotspot_details.no_location_body')}
           </Text>
         </Box>
@@ -296,7 +294,6 @@ const Map = ({
             selectedHexId={selectedHex}
             witnesses={witnesses}
             ownedHotspots={ownedHotspots}
-            followedHotspots={followedHotspots}
             showRewardScale={showRewardScale}
           />
         )}

@@ -50,7 +50,7 @@ const TouchableCircle = ({ children, onPressIn, ...rest }: Props) => {
             height="100%"
             width="100%"
             borderRadius="round"
-            backgroundColor="whiteTransparent"
+            backgroundColor="white"
           />
 
           {children}

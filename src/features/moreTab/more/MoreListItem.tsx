@@ -46,16 +46,17 @@ const MoreListItem = ({
   }
 
   const trackColor = useMemo(
-    () => ({ false: colors.purple300, true: colors.primary }),
+    () => ({
+      false: colors.secondaryBackground,
+      true: colors.primaryBackground,
+    }),
     [colors],
   )
 
   const actionSheetTextProps = useMemo(
     () =>
       ({
-        variant: 'regular',
-        fontSize: 16,
-        color: 'purpleBrightMuted',
+        variant: 'body2',
       } as TextProps),
     [],
   )
@@ -64,7 +65,7 @@ const MoreListItem = ({
     <TouchableOpacityBox
       flexDirection="row"
       justifyContent="space-between"
-      backgroundColor="purple400"
+      backgroundColor="secondaryBackground"
       alignItems="center"
       height={48}
       paddingHorizontal="ms"
@@ -76,11 +77,14 @@ const MoreListItem = ({
       borderBottomLeftRadius={isBottom ? 'm' : 'none'}
       borderBottomRightRadius={isBottom ? 'm' : 'none'}
     >
-      <Text variant="body2" color={destructive ? 'redMain' : 'primaryText'}>
+      <Text
+        variant="body2"
+        color={destructive ? 'secondaryText' : 'primaryText'}
+      >
         {title}
       </Text>
       {!onToggle && !select && onPress && (
-        <CarotRight color={colors.purpleMuted} />
+        <CarotRight color={colors.secondaryBackground} />
       )}
       {openUrl && <LinkImg />}
       {onToggle && (

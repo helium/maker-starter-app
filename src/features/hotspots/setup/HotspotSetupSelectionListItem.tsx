@@ -19,7 +19,7 @@ const HotspotSetupSelectionListItem = ({
 }: Props) => {
   const colors = useColors()
   const [pressing, setPressing] = useState<boolean>()
-  const svgColor = pressing ? colors.white : colors.blueGray
+  const svgColor = pressing ? colors.primary : colors.secondary
   const handlePressing = useCallback(
     (value: boolean) => () => setPressing(value),
     [],
@@ -35,7 +35,7 @@ const HotspotSetupSelectionListItem = ({
       backgroundColor="white"
       width="100%"
       paddingHorizontal="m"
-      underlayColor={colors.primary}
+      underlayColor={colors.secondaryBackground}
       onPressIn={handlePressing(true)}
       onPressOut={handlePressing(false)}
       onPress={onPress}
@@ -51,14 +51,13 @@ const HotspotSetupSelectionListItem = ({
           {HotspotImage}
         </Box>
         <Text
-          variant="body1Medium"
-          color={pressing ? 'white' : 'blueGray'}
+          variant="subtitle2"
+          color={pressing ? 'primary' : 'secondary'}
           paddingVertical="l"
           paddingHorizontal="m"
           textAlign="center"
           numberOfLines={1}
           adjustsFontSizeToFit
-          lineHeight={19}
           maxFontSizeMultiplier={1.1}
         >
           {HotspotMakerModels[hotspotType].name}

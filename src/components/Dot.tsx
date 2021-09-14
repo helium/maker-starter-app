@@ -8,11 +8,11 @@ const Dot = ({ filled }: Props) => {
     <Box
       borderWidth={1}
       marginHorizontal="xs"
-      borderColor="white"
+      borderColor="primaryText"
       width={dotSize}
       height={dotSize}
       borderRadius="round"
-      backgroundColor={filled ? 'white' : undefined}
+      backgroundColor={filled ? 'primaryText' : undefined}
     />
   )
 }

@@ -27,7 +27,7 @@ type ButtonVariant = 'primary' | 'secondary' | 'destructive'
 const containedBackground = {
   primary: 'primary',
   secondary: 'secondary',
-  destructive: 'purpleMuted',
+  destructive: 'error',
 } as Record<string, Colors>
 
 const Button = ({
@@ -54,20 +54,19 @@ const Button = ({
     if (color) return color
 
     if (mode === 'contained') {
-      return 'white'
+      return 'primaryText'
     }
 
     if (variant === 'secondary') {
       return 'secondaryText'
     }
 
-    return 'purpleLight'
+    return 'primaryText'
   }
 
   const getTextVariant = () => {
     if (textVariant) return textVariant
-    if (mode === 'contained') return 'buttonBold'
-    return 'buttonMedium'
+    return 'subtitle2'
   }
 
   return (
