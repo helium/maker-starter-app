@@ -148,6 +148,7 @@ export default {
     meters: '{{distance}}m',
     kilometers: '{{distance}}km',
     owner: 'Owner',
+    period: '.',
   },
   hotspot_setup: {
     selection: {
@@ -583,6 +584,8 @@ export default {
     enter_current: 'Enter your current PIN to continue',
   },
   hotspots: {
+    view_activity: 'After adding a Hotspot, you can view your account on the ',
+    explorer: 'Helium Explorer',
     sort_by: 'Sort Hotspots By',
     new: {
       title: 'Add a New Hotspot',
