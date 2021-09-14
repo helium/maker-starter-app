@@ -51,7 +51,7 @@ const HotspotSetupScanWifiSuccess = ({
 
       {configuredNetwork && (
         <>
-          <Text variant="subtitleBold">{configuredNetwork}</Text>
+          <Text variant="subtitle1">{configuredNetwork}</Text>
           <DebouncedButton
             disabled={disabled}
             marginTop="l"

@@ -23,7 +23,7 @@ import {
   Payee,
 } from './appLinkTypes'
 
-const APP_LINK_PROTOCOL = 'helium://'
+const APP_LINK_PROTOCOL = 'makerappscheme://'
 
 export const createAppLink = (
   resource: AppLinkCategoryType,
@@ -130,7 +130,7 @@ const useAppLink = () => {
 
   /**
    * The data scanned from the QR code is expected to be one of these possibilities:
-   * (1) A helium deeplink URL
+   * (1) A deeplink URL
    * (2) address string
    * (3) stringified JSON object { type, address, amount?, memo? }
    * (4) stringified JSON object { type, payees: {[payeeAddress]: amount} }
@@ -144,7 +144,7 @@ const useAppLink = () => {
         }
       }
 
-      // Case (1) helium deeplink URL
+      // Case (1) deeplink URL
       const urlParams = parseUrl(data)
       if (urlParams) {
         return urlParams

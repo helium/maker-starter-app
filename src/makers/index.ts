@@ -1,4 +1,5 @@
 import example from './example'
+import customAntennas from './custom/antennas'
 import { LangType, supportedLangs } from '../utils/i18n/i18nTypes'
 import { HotspotMakerLangField } from './hotspotMakerTypes'
 
@@ -8,6 +9,7 @@ export const Makers: Record<string, { id: number; supportEmail: string }> = {
 
 export const AntennaModels = {
   ...example.antennas,
+  ...customAntennas,
 }
 
 export const HotspotMakerModels = {

@@ -180,7 +180,7 @@ const HeliumActionSheet = ({
           justifyContent="center"
           borderRadius="ms"
         >
-          <Text variant="medium" fontSize={18} style={styles.cancelText}>
+          <Text variant="body2" fontSize={18} style={styles.cancelText}>
             {t('generic.cancel')}
           </Text>
         </TouchableOpacityBox>
@@ -208,10 +208,10 @@ const HeliumActionSheet = ({
         <Box flexDirection="row">
           {!!prefix && (
             <Text
-              color="black"
+              color="surfaceText"
               maxFontSizeMultiplier={1}
               marginRight="xs"
-              variant="bold"
+              variant="body2"
               fontSize={20}
               {...prefixTextProps}
             >
@@ -222,9 +222,9 @@ const HeliumActionSheet = ({
             <Text
               maxFontSizeMultiplier={1}
               marginRight="s"
-              variant="bold"
+              variant="body2"
               fontSize={20}
-              color="primary"
+              color="surfaceText"
               {...textProps}
             >
               {buttonTitle}
@@ -262,8 +262,8 @@ const HeliumActionSheet = ({
             borderTopLeftRadius="l"
             borderTopRightRadius="l"
             height={sheetHeight}
-            backgroundColor="white"
             paddingHorizontal="lx"
+            backgroundColor="surface"
           >
             <Box
               flexDirection="row"
@@ -274,7 +274,7 @@ const HeliumActionSheet = ({
               justifyContent="space-between"
               alignItems="center"
             >
-              <Text color="purpleGray" variant="body2">
+              <Text color="surfaceText" variant="body2">
                 {title}
               </Text>
               <TouchableOpacityBox
@@ -284,7 +284,7 @@ const HeliumActionSheet = ({
                 paddingHorizontal="m"
                 marginEnd="n_m"
               >
-                <Close color={colors.purpleGray} height={14} width={14} />
+                <Close color={colors.surfaceText} height={14} width={14} />
               </TouchableOpacityBox>
             </Box>
             <FlatList

@@ -33,7 +33,6 @@ type Props = {
   witnessColors?: HexColors
   networkColors?: HexColors
   ownedColors?: HexColors
-  followedColors?: HexColors
   selectedOutlineColor?: Colors
   fillOpacity?: number
   selectedHexId?: string
@@ -41,7 +40,6 @@ type Props = {
   selectedOutlineWidth?: number
   witnesses?: CoverageItem[]
   ownedHotspots?: CoverageItem[]
-  followedHotspots?: CoverageItem[]
   onHexSelected?: (id: string) => void
   showRewardScale?: boolean
   showGrid?: boolean
@@ -51,8 +49,8 @@ const Coverage = ({
   bounds,
   mapZoom,
   networkColors = {
-    fill: 'grayHex',
-    outline: 'offblack',
+    fill: 'secondary',
+    outline: 'white',
   },
   witnessColors = {
     fill: 'yellow',
@@ -62,10 +60,6 @@ const Coverage = ({
     fill: 'secondary',
     outline: 'secondary',
   },
-  followedColors = {
-    fill: 'purpleBright',
-    outline: 'purpleBright',
-  },
   selectedOutlineColor = 'white',
   fillOpacity = 0.5,
   onHexSelected,
@@ -74,7 +68,6 @@ const Coverage = ({
   selectedOutlineWidth = 5,
   witnesses,
   ownedHotspots,
-  followedHotspots,
   showRewardScale,
   showGrid = true,
 }: Props) => {
@@ -111,16 +104,12 @@ const Coverage = ({
   const styles = useMemo(() => {
     const witnessLocations = getLocationHexes(witnesses)
     const ownedLocations = getLocationHexes(ownedHotspots)
-    const followedLocations = getLocationHexes(followedHotspots).filter(
-      (f) => ownedLocations.indexOf(f) < 0,
-    )
 
     return makeStyles(
       '#1C1E3B',
       1,
       colors[witnessColors.fill],
       colors[ownedColors.fill],
-      colors[followedColors.fill],
       colors[networkColors.fill],
       colors[networkColors.outline],
       colors[selectedOutlineColor],
@@ -129,14 +118,11 @@ const Coverage = ({
       selectedOutlineWidth,
       witnessLocations,
       ownedLocations,
-      followedLocations,
       selectedHexId || '',
     )
   }, [
     colors,
     fillOpacity,
-    followedColors.fill,
-    followedHotspots,
     getLocationHexes,
     networkColors.fill,
     networkColors.outline,
@@ -235,7 +221,6 @@ const makeStyles = (
   gridLineWidth: number,
   witnessFillColor: string,
   ownedFillColor: string,
-  followedFillColor: string,
   networkFillColor: string,
   networkOutlineColor: string,
   selectedOutlineColor: string,
@@ -244,13 +229,11 @@ const makeStyles = (
   selectedLineWidth: number,
   witnessLocations: string[],
   ownedLocations: string[],
-  followedLocations: string[],
   selectedHex?: string,
 ) => {
   // needed to prevent mapbox from crashing
   if (witnessLocations.length === 0) witnessLocations.push('witness_empty')
   if (ownedLocations.length === 0) ownedLocations.push('owned_empty')
-  if (followedLocations.length === 0) followedLocations.push('followed_empty')
 
   const fillColor = [
     'match',
@@ -259,8 +242,6 @@ const makeStyles = (
     witnessFillColor,
     ownedLocations,
     ownedFillColor,
-    followedLocations,
-    followedFillColor,
     networkFillColor,
   ]
 
@@ -270,8 +251,6 @@ const makeStyles = (
     witnessLocations,
     0.7,
     ownedLocations,
-    0.55,
-    followedLocations,
     0.67,
     fillOpacity,
   ]

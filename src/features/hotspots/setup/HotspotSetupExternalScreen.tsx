@@ -96,7 +96,6 @@ const HotspotSetupExternalScreen = () => {
     return (
       <TouchableOpacity onPress={openMakerUrl(url)}>
         <Text
-          variant="bold"
           fontSize={{ smallPhone: 15, phone: 19 }}
           color="primary"
           lineHeight={{ smallPhone: 20, phone: 26 }}
@@ -149,7 +148,7 @@ const HotspotSetupExternalScreen = () => {
         <Box
           height={52}
           width={52}
-          backgroundColor="purple500"
+          backgroundColor="secondaryBackground"
           borderRadius="m"
           alignItems="center"
           justifyContent="center"
@@ -171,7 +170,7 @@ const HotspotSetupExternalScreen = () => {
           {t(`hotspot_setup.external.${isQr ? 'qr' : 'web'}Title`)}
         </Text>
         <Text
-          variant="subtitle"
+          variant="subtitle1"
           fontSize={{ smallPhone: 15, phone: 19 }}
           lineHeight={{ smallPhone: 20, phone: 26 }}
           maxFontSizeMultiplier={1}
@@ -184,7 +183,7 @@ const HotspotSetupExternalScreen = () => {
         </Text>
         {linkToMaker}
         <Text
-          variant="subtitle"
+          variant="subtitle1"
           fontSize={{ smallPhone: 15, phone: 19 }}
           lineHeight={{ smallPhone: 20, phone: 26 }}
           maxFontSizeMultiplier={1}
@@ -192,13 +191,7 @@ const HotspotSetupExternalScreen = () => {
           {t('hotspot_setup.external.wallet_address')}
         </Text>
         <TouchableOpacity onPress={copyAddress}>
-          <Text
-            variant="bold"
-            fontSize={{ smallPhone: 15, phone: 19 }}
-            color="primary"
-            lineHeight={{ smallPhone: 20, phone: 26 }}
-            maxFontSizeMultiplier={1}
-          >
+          <Text variant="body1" maxFontSizeMultiplier={1}>
             {address}
           </Text>
         </TouchableOpacity>
@@ -230,7 +223,7 @@ const HotspotSetupExternalScreen = () => {
             <Text
               // eslint-disable-next-line react/no-array-index-key
               key={idx}
-              variant="subtitle"
+              variant="subtitle1"
               fontSize={{ smallPhone: 15, phone: 19 }}
               lineHeight={{ smallPhone: 20, phone: 26 }}
               marginTop={{ smallPhone: 's', phone: 'l' }}

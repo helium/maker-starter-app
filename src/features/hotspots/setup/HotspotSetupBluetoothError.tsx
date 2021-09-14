@@ -8,7 +8,6 @@ import {
   HotspotSetupNavigationProp,
   HotspotSetupStackParamList,
 } from './hotspotSetupTypes'
-import Bluetooth from '../../../assets/images/bluetooth.svg'
 
 type Route = RouteProp<
   HotspotSetupStackParamList,
@@ -21,7 +20,6 @@ const HotspotSetupBluetoothError = () => {
   return (
     <Box flex={1}>
       <Box flex={1} alignItems="center" justifyContent="center">
-        <Bluetooth />
         <Text
           marginTop="l"
           variant="h1"
@@ -31,27 +29,27 @@ const HotspotSetupBluetoothError = () => {
           adjustsFontSizeToFit
           marginBottom="xxl"
         >
-          {t('hotspot_setup.ble_error.title')} :(
+          {t('hotspot_setup.ble_error.title')}
         </Text>
 
         <Box flexDirection="row">
           <Box
             flex={3}
-            backgroundColor="purple200"
+            backgroundColor="secondaryBackground"
             borderTopLeftRadius="m"
             borderBottomLeftRadius="m"
             padding="m"
           >
-            <Text variant="body2Medium" marginBottom="xs">
+            <Text variant="body2" marginBottom="xs">
               {t('hotspot_setup.ble_error.enablePairing')}
             </Text>
-            <Text variant="body2Light">
+            <Text variant="body2">
               {t('hotspot_setup.ble_error.pairingInstructions')}
             </Text>
           </Box>
           <Box
             flex={1}
-            backgroundColor="purple300"
+            backgroundColor="secondary"
             borderTopRightRadius="m"
             borderBottomRightRadius="m"
             alignItems="center"

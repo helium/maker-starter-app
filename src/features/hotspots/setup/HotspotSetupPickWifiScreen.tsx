@@ -11,7 +11,6 @@ import {
   HotspotSetupStackParamList,
 } from './hotspotSetupTypes'
 import Box from '../../../components/Box'
-import Wifi from '../../../assets/images/wifi-icon.svg'
 import CarotRight from '../../../assets/images/carot-right.svg'
 import { useColors } from '../../../theme/themeHooks'
 import { DebouncedButton } from '../../../components/Button'
@@ -48,10 +47,10 @@ const WifiItem = ({
       borderBottomLeftRadius={isLast ? 'm' : 'none'}
       borderBottomRightRadius={isLast ? 'm' : 'none'}
     >
-      <Text variant="body2Medium" color="black">
+      <Text variant="body2" color="black">
         {name}
       </Text>
-      {icon === 'carot' && <CarotRight color={colors.graySteel} />}
+      {icon === 'carot' && <CarotRight color={colors.secondaryBackground} />}
       {icon === 'check' && <Checkmark />}
     </TouchableOpacityBox>
   )
@@ -111,10 +110,12 @@ const HotspotSetupPickWifiScreen = () => {
       backgroundColor="primaryBackground"
       onClose={handleClose}
     >
-      <Box backgroundColor="primaryBackground" padding="m" alignItems="center">
-        <Box flexDirection="row" justifyContent="center" marginBottom="lm">
-          <Wifi />
-        </Box>
+      <Box
+        backgroundColor="primaryBackground"
+        padding="m"
+        paddingTop="xl"
+        alignItems="center"
+      >
         <Text
           variant="h1"
           textAlign="center"
@@ -124,7 +125,7 @@ const HotspotSetupPickWifiScreen = () => {
           {t('hotspot_setup.wifi_scan.title')}
         </Text>
         <Text
-          variant="subtitleLight"
+          variant="subtitle1"
           textAlign="center"
           marginBottom="m"
           maxFontSizeMultiplier={1.1}
@@ -143,7 +144,7 @@ const HotspotSetupPickWifiScreen = () => {
           mode="contained"
         />
       </Box>
-      <Box paddingHorizontal="l" flex={1} backgroundColor="purple200">
+      <Box paddingHorizontal="l" flex={1} backgroundColor="secondaryBackground">
         <FlatList
           data={wifiNetworks}
           keyExtractor={(item) => item}
@@ -153,7 +154,7 @@ const HotspotSetupPickWifiScreen = () => {
               {connectedWifiNetworks.length > 0 && (
                 <Box marginBottom="m">
                   <Text
-                    variant="body1Bold"
+                    variant="body1"
                     marginBottom="s"
                     maxFontSizeMultiplier={1.2}
                   >
@@ -172,7 +173,7 @@ const HotspotSetupPickWifiScreen = () => {
                 </Box>
               )}
               <Text
-                variant="body1Bold"
+                variant="body1"
                 marginBottom="s"
                 maxFontSizeMultiplier={1.2}
                 visible={hasNetworks}
@@ -192,14 +193,14 @@ const HotspotSetupPickWifiScreen = () => {
           ListEmptyComponent={
             <Box margin="l">
               <Text
-                variant="body1Medium"
+                variant="body1"
                 marginBottom="l"
                 textAlign="center"
-                color="purpleLight"
+                color="primaryText"
               >
                 {t('hotspot_setup.wifi_scan.not_found_title')}
               </Text>
-              <Text variant="body1Light" textAlign="center" color="purpleLight">
+              <Text variant="body1" textAlign="center" color="primaryText">
                 {t('hotspot_setup.wifi_scan.not_found_desc')}
               </Text>
             </Box>

@@ -15,7 +15,7 @@ import appSlice from '../../store/user/appSlice'
 const MainTab = createBottomTabNavigator()
 
 const MainTabs = () => {
-  const { primaryBackground } = useColors()
+  const { surfaceContrast } = useColors()
   const navigation = useNavigation<RootNavigationProp>()
   const {
     app: { isLocked, isSettingUpHotspot },
@@ -45,12 +45,11 @@ const MainTabs = () => {
     () => ({
       showLabel: false,
       style: {
-        backgroundColor: primaryBackground,
-        borderTopWidth: 0,
+        backgroundColor: surfaceContrast,
         paddingHorizontal: wp(12),
       },
     }),
-    [primaryBackground],
+    [surfaceContrast],
   )
 
   const screenOptions = useCallback(

@@ -40,7 +40,7 @@ const BackButton = ({
       <Text
         marginLeft="xs"
         color={color}
-        variant="bold"
+        variant="subtitle1"
         fontSize={fontSize}
         maxFontSizeMultiplier={1.1}
       >

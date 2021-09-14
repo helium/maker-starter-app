@@ -1,7 +1,13 @@
 import 'react-native-gesture-handler'
-import React, { useEffect } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
-import { LogBox, Platform, StatusBar, UIManager } from 'react-native'
+import {
+  LogBox,
+  Platform,
+  StatusBar,
+  UIManager,
+  useColorScheme,
+} from 'react-native'
 import useAppState from 'react-native-appstate-hook'
 import { ThemeProvider } from '@shopify/restyle'
 import Config from 'react-native-config'
@@ -11,7 +17,7 @@ import { useAsync } from 'react-async-hook'
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
 import * as SplashScreen from 'expo-splash-screen'
 import { NavigationContainer } from '@react-navigation/native'
-import { theme } from './theme/theme'
+import { theme, darkThemeColors, lightThemeColors } from './theme/theme'
 import NavigationRoot from './navigation/NavigationRoot'
 import { useAppDispatch } from './store/store'
 import appSlice, { restoreAppSettings } from './store/user/appSlice'
@@ -35,6 +41,8 @@ SplashScreen.preventAutoHideAsync().catch(() => {
 })
 
 const App = () => {
+  const colorScheme = useColorScheme()
+
   if (Platform.OS === 'android') {
     if (UIManager.setLayoutAnimationEnabledExperimental) {
       UIManager.setLayoutAnimationEnabledExperimental(true)
@@ -149,8 +157,16 @@ const App = () => {
     }
   }, [blockHeight, dispatch, isBackedUp])
 
+  const colorAdaptedTheme = useMemo(
+    () => ({
+      ...theme,
+      colors: colorScheme === 'light' ? lightThemeColors : darkThemeColors,
+    }),
+    [colorScheme],
+  )
+
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={colorAdaptedTheme}>
       <BottomSheetModalProvider>
         <BluetoothProvider>
           <ConnectedHotspotProvider>

@@ -10,7 +10,6 @@ import {
   HotspotSetupNavigationProp,
   HotspotSetupStackParamList,
 } from './hotspotSetupTypes'
-import Bluetooth from '../../../assets/images/bluetooth.svg'
 import useAlert from '../../../utils/useAlert'
 import { useBluetoothContext } from '../../../providers/BluetoothProvider'
 import Box from '../../../components/Box'
@@ -126,7 +125,6 @@ const HotspotSetupBluetoothInfoScreen = () => {
       onClose={handleClose}
     >
       <Box alignItems="center" justifyContent="center" flex={1}>
-        <Bluetooth />
         <Text
           marginTop={{ phone: 'xl', smallPhone: 's' }}
           maxFontSizeMultiplier={1}
@@ -141,7 +139,7 @@ const HotspotSetupBluetoothInfoScreen = () => {
         <Text
           maxFontSizeMultiplier={1.05}
           marginBottom={{ phone: 'lx', smallPhone: 's' }}
-          variant="subtitleBold"
+          variant="subtitle1"
           textAlign="center"
           color="white"
         >
@@ -150,7 +148,7 @@ const HotspotSetupBluetoothInfoScreen = () => {
         <Text
           maxFontSizeMultiplier={1.05}
           marginBottom="xl"
-          variant="subtitle"
+          variant="subtitle1"
           textAlign="center"
           numberOfLines={9}
           adjustsFontSizeToFit

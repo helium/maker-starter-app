@@ -173,15 +173,3 @@ yarn android-release
 ```
 
 You can also open the Android project in Android Studio by selecting `open an existing project` and selecting the `/android` folder.
-
-# Debugging
-
-See [React Native Debugging](https://reactnative.dev/docs/debugging.html).
-
-## Recommended tools
-
----
-
-### **_React Native Debugger_**
-
-See [React Native Debugger](https://github.com/jhen0409/react-native-debugger)

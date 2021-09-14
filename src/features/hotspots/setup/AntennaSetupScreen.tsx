@@ -12,8 +12,6 @@ import {
 import BackScreen from '../../../components/BackScreen'
 import Text from '../../../components/Text'
 import { DebouncedButton } from '../../../components/Button'
-import DiscoveryModeIcon from '../../../assets/images/discovery_mode_icon.svg'
-import { useColors } from '../../../theme/themeHooks'
 import HotspotConfigurationPicker from '../../../components/HotspotConfigurationPicker'
 import hotspotOnboardingSlice from '../../../store/hotspots/hotspotOnboardingSlice'
 import { useAppDispatch } from '../../../store/store'
@@ -30,7 +28,6 @@ const AntennaSetupScreen = () => {
   const navigation = useNavigation<HotspotSetupNavigationProp>()
   const rootNav = useNavigation<RootNavigationProp>()
   const { params } = useRoute<Route>()
-  const colors = useColors()
   const dispatch = useAppDispatch()
   const hotspotType = useSelector(
     (state: RootState) => state.hotspotOnboarding.hotspotType,
@@ -72,16 +69,6 @@ const AntennaSetupScreen = () => {
         behavior="padding"
       >
         <Box flex={1} justifyContent="center" paddingBottom="xxl">
-          <Box
-            height={52}
-            width={52}
-            backgroundColor="purple500"
-            borderRadius="m"
-            alignItems="center"
-            justifyContent="center"
-          >
-            <DiscoveryModeIcon color={colors.primary} width={30} height={22} />
-          </Box>
           <Box>
             <Text
               variant="h1"
@@ -92,7 +79,7 @@ const AntennaSetupScreen = () => {
               {t('antennas.onboarding.title')}
             </Text>
             <Text
-              variant="subtitleLight"
+              variant="subtitle2"
               numberOfLines={2}
               adjustsFontSizeToFit
               maxFontSizeMultiplier={1.3}

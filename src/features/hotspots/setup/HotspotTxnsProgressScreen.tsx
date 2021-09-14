@@ -6,7 +6,6 @@ import { isString } from 'lodash'
 import { AddGateway, Onboarding } from '@helium/react-native-sdk'
 import Box from '../../../components/Box'
 import { DebouncedButton } from '../../../components/Button'
-import RingLoader from '../../../components/Loaders/RingLoader'
 import Text from '../../../components/Text'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
 import SafeAreaBox from '../../../components/SafeAreaBox'
@@ -182,15 +181,12 @@ const HotspotTxnsProgressScreen = () => {
       paddingTop="xxl"
     >
       <Box flex={1} alignItems="center" paddingTop="xxl">
-        <Box marginBottom="xxl">
-          <RingLoader color="purple" />
-        </Box>
-        <Text variant="subtitleMono" marginBottom="l">
+        <Text variant="subtitle1" marginBottom="l">
           {t('hotspot_setup.progress.title')}
         </Text>
         <Box paddingHorizontal="l">
           {finished && (
-            <Text variant="body1Light" textAlign="center" marginBottom="l">
+            <Text variant="body1" textAlign="center" marginBottom="l">
               {t('hotspot_setup.progress.subtitle')}
             </Text>
           )}

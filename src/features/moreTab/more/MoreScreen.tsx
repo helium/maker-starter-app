@@ -20,8 +20,6 @@ import useAuthIntervals from './useAuthIntervals'
 import { useSpacing } from '../../../theme/themeHooks'
 import accountSlice from '../../../store/account/accountSlice'
 import connectedHotspotSlice from '../../../store/connectedHotspot/connectedHotspotSlice'
-import Security from '../../../assets/images/security.svg'
-import Account from '../../../assets/images/account.svg'
 import Box from '../../../components/Box'
 
 type Route = RouteProp<RootStackParamList & MoreStackParamList, 'MoreScreen'>
@@ -146,12 +144,10 @@ const MoreScreen = () => {
     return [
       {
         title: t('more.sections.security.title'),
-        icon: <Security />,
         data: pin,
       },
       {
         title: t('more.sections.app.title'),
-        icon: <Account />,
         data: [
           {
             title: t('more.sections.app.signOut'),
@@ -203,7 +199,7 @@ const MoreScreen = () => {
         backgroundColor="primaryBackground"
       >
         {icon !== undefined && icon}
-        <Text variant="body1Bold" marginLeft="s">
+        <Text variant="body1" marginLeft="s">
           {title}
         </Text>
       </Box>

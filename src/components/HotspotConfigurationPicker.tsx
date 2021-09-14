@@ -132,15 +132,15 @@ const HotspotConfigurationPicker = ({
 
   return (
     <Box
-      backgroundColor="white"
+      backgroundColor="surfaceSecondary"
       borderRadius="m"
       marginVertical="l"
       borderWidth={outline ? 1 : 0}
-      borderColor="grayLight"
+      borderColor="primary"
     >
       <HeliumActionSheet
         title={t('antennas.onboarding.select')}
-        textProps={{ variant: 'medium', fontSize: 16, color: 'black' }}
+        textProps={{ variant: 'body1', fontSize: 16, color: 'black' }}
         initialValue={t('antennas.onboarding.select')}
         data={antennas}
         iconColor="black"
@@ -151,7 +151,7 @@ const HotspotConfigurationPicker = ({
         paddingVertical="lm"
         maxModalHeight={700}
       />
-      <Box backgroundColor="grayLight" height={1} />
+      <Box backgroundColor="primary" height={1} />
       <TouchableWithoutFeedback onPress={focusGain}>
         <Box
           padding="m"
@@ -160,11 +160,11 @@ const HotspotConfigurationPicker = ({
           alignItems="center"
         >
           <Box flexDirection="row" alignItems="center">
-            <Text color="primary" marginRight="xs">
+            <Text color="surfaceSecondaryText" marginRight="xs">
               {t('antennas.onboarding.gain')}
             </Text>
             <TouchableOpacityBox onPress={showGainInfo} padding="xs">
-              <InfoIcon color={colors.grayLight} />
+              <InfoIcon color={colors.primary} />
             </TouchableOpacityBox>
           </Box>
           <Box
@@ -186,7 +186,7 @@ const HotspotConfigurationPicker = ({
           </Box>
         </Box>
       </TouchableWithoutFeedback>
-      <Box backgroundColor="grayLight" height={1} />
+      <Box backgroundColor="primary" height={1} />
       <TouchableWithoutFeedback onPress={focusElevation}>
         <Box
           padding="m"
@@ -195,11 +195,11 @@ const HotspotConfigurationPicker = ({
           alignItems="center"
         >
           <Box flexDirection="row" alignItems="center">
-            <Text color="primary" marginRight="xs">
+            <Text color="surfaceSecondaryText" marginRight="xs">
               {t('antennas.onboarding.elevation')}
             </Text>
             <TouchableOpacityBox onPress={showElevationInfo} padding="xs">
-              <InfoIcon color={colors.grayLight} />
+              <InfoIcon color={colors.primary} />
             </TouchableOpacityBox>
           </Box>
           <TextInput

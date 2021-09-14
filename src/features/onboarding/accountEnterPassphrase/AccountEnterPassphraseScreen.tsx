@@ -117,15 +117,23 @@ const AccountEnterPassphraseScreen = () => {
         variant="elevated"
         flex={1}
         overflow="hidden"
-        backgroundColor="white"
+        backgroundColor="surfaceContrast"
         paddingHorizontal="l"
         alignItems="center"
         flexDirection="row"
       >
-        <Text variant="h1" color="purpleLight" maxFontSizeMultiplier={1}>
+        <Text
+          variant="h1"
+          color="surfaceContrastText"
+          maxFontSizeMultiplier={1}
+        >
           {`${index + 1}. `}
         </Text>
-        <Text variant="h1" color="primaryBackground" maxFontSizeMultiplier={1}>
+        <Text
+          variant="h1"
+          color="surfaceContrastText"
+          maxFontSizeMultiplier={1}
+        >
           {step === index && word ? upperFirst(word) : '?????'}
         </Text>
       </Card>
@@ -154,7 +162,7 @@ const AccountEnterPassphraseScreen = () => {
         values={{
           ordinal: t(`ordinals.${testIndices[step]}`),
         }}
-        variant="subtitle"
+        variant="subtitle1"
         i18nKey="account_setup.confirm.subtitle"
       />
       <Box flex={1} />

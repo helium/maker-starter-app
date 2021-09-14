@@ -33,7 +33,7 @@ const TI = ({ variant, placeholderTextColor, ...rest }: Props) => {
     if (variant === 'regular') {
       return '#788AB4'
     }
-    if (variant === 'regularDark') return colors.grayLight
+    if (variant === 'secondary') return colors.secondaryText
 
     return undefined
   }, [colors, placeholderTextColor, variant])
