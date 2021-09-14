@@ -23,13 +23,7 @@ import NavigationRoot from './navigation/NavigationRoot'
 import { useAppDispatch } from './store/store'
 import appSlice, { restoreAppSettings } from './store/user/appSlice'
 import { RootState } from './store/rootReducer'
-import { fetchData } from './store/account/accountSlice'
-import {
-  fetchBlockHeight,
-  fetchInitialData,
-} from './store/helium/heliumDataSlice'
 import SecurityScreen from './features/security/SecurityScreen'
-import usePrevious from './utils/usePrevious'
 import AppLinkProvider from './providers/AppLinkProvider'
 import { navigationRef } from './navigation/navigator'
 import useMount from './utils/useMount'
@@ -70,18 +64,8 @@ const App = () => {
     isLocked,
   } = useSelector((state: RootState) => state.app)
 
-  const prevAppState = usePrevious(appState)
-
-  const fetchDataStatus = useSelector(
-    (state: RootState) => state.account.fetchDataStatus,
-  )
-  const blockHeight = useSelector(
-    (state: RootState) => state.heliumData.blockHeight,
-  )
-
   useMount(() => {
     dispatch(restoreAppSettings())
-    dispatch(fetchInitialData())
   })
 
   useEffect(() => {
@@ -110,26 +94,15 @@ const App = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [appState])
 
-  // update initial data when account is restored or app comes into foreground from background
-  useEffect(() => {
-    if (prevAppState === 'background' && appState === 'active') {
-      dispatch(fetchInitialData())
-    }
-  }, [appState, dispatch, prevAppState])
-
   // hide splash screen
   useAsync(async () => {
     const loggedOut = isRestored && !isBackedUp
-    const loggedInAndLoaded =
-      isRestored &&
-      isBackedUp &&
-      fetchDataStatus !== 'pending' &&
-      fetchDataStatus !== 'idle'
+    const loggedInAndLoaded = isRestored && isBackedUp
 
     if (loggedOut || loggedInAndLoaded) {
       await SplashScreen.hideAsync()
     }
-  }, [fetchDataStatus, isBackedUp, isRestored])
+  }, [isBackedUp, isRestored])
 
   useEffect(() => {
     // Hide splash after 5 seconds, deal with the consequences?
@@ -138,21 +111,6 @@ const App = () => {
     }, 5000)
     return () => clearInterval(timeout)
   }, [dispatch])
-
-  // poll block height to update realtime data throughout the app
-  useEffect(() => {
-    const interval = setInterval(() => {
-      dispatch(fetchBlockHeight())
-    }, 30000)
-    return () => clearInterval(interval)
-  }, [dispatch])
-
-  // fetch account data when logged in and block changes (called whenever block height updates)
-  useEffect(() => {
-    if (isBackedUp && blockHeight) {
-      dispatch(fetchData())
-    }
-  }, [blockHeight, dispatch, isBackedUp])
 
   const colorAdaptedTheme = useMemo(
     () => ({

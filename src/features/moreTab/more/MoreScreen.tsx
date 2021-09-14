@@ -18,7 +18,6 @@ import {
 import MoreListItem, { MoreListItemType } from './MoreListItem'
 import useAuthIntervals from './useAuthIntervals'
 import { useSpacing } from '../../../theme/themeHooks'
-import accountSlice from '../../../store/account/accountSlice'
 import Box from '../../../components/Box'
 
 type Route = RouteProp<RootStackParamList & MoreStackParamList, 'MoreScreen'>
@@ -82,7 +81,6 @@ const MoreScreen = () => {
           style: 'destructive',
           onPress: () => {
             dispatch(appSlice.actions.signOut())
-            dispatch(accountSlice.actions.signOut())
           },
         },
       ],
