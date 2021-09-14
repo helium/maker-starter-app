@@ -36,8 +36,8 @@ const HotspotSetupSkipLocationScreen = () => {
           {t('hotspot_setup.skip_location.title')}
         </Text>
         <Text
-          variant="subtitleMedium"
-          color="greenBright"
+          variant="subtitle1"
+          color="secondary"
           marginBottom={{ phone: 'l', smallPhone: 'ms' }}
         >
           {t('hotspot_setup.skip_location.subtitle_1')}

@@ -7,7 +7,7 @@ const HotspotSetupScanWifiError = () => {
   return (
     <>
       <Text variant="h1">{t('hotspot_setup.wifi_scan.title')}</Text>
-      <Text variant="subtitleMedium" marginVertical="l">
+      <Text variant="subtitle1" marginVertical="l">
         {t('hotspot_setup.wifi_scan.scan_fail_subtitle')}
       </Text>
     </>
