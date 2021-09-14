@@ -3,20 +3,27 @@ import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import { isString } from 'lodash'
-import { AddGateway, Onboarding } from '@helium/react-native-sdk'
+import {
+  AddGateway,
+  Onboarding,
+  useHotspotBle,
+  HotspotErrorCode,
+} from '@helium/react-native-sdk'
 import Box from '../../../components/Box'
 import { DebouncedButton } from '../../../components/Button'
 import Text from '../../../components/Text'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
 import SafeAreaBox from '../../../components/SafeAreaBox'
-import { useConnectedHotspotContext } from '../../../providers/ConnectedHotspotProvider'
 import { getHotspotDetails, submitTxn } from '../../../utils/appDataClient'
 import { RootState } from '../../../store/rootReducer'
 import useAlert from '../../../utils/useAlert'
-import { HotspotErrorCode } from '../../../utils/useHotspot'
 import { assertLocationTxn } from '../../../utils/assertLocationUtils'
 import { HotspotSetupStackParamList } from './hotspotSetupTypes'
-import { getKeypair } from '../../../utils/secureAccount'
+import {
+  getAddress,
+  getKeypair,
+  getSodiumKeypair,
+} from '../../../utils/secureAccount'
 
 type Route = RouteProp<HotspotSetupStackParamList, 'HotspotTxnsProgressScreen'>
 
@@ -32,7 +39,7 @@ const HotspotTxnsProgressScreen = () => {
     (state: RootState) => state.connectedHotspot,
   )
   const { showOKAlert } = useAlert()
-  const { addGatewayTxn } = useConnectedHotspotContext()
+  const { createGatewayTxn } = useHotspotBle()
 
   const handleError = async (
     error: false | Error | string,
@@ -122,18 +129,26 @@ const HotspotTxnsProgressScreen = () => {
 
           await submitTxn(stakingServerSignedTxn.toString())
         } catch (error) {
-          handleError(error, 'add_gateway')
+          await handleError(error, 'add_gateway')
           return
         }
       } else {
         try {
-          const addGatewayResponse = await addGatewayTxn()
-          if (addGatewayResponse !== true) {
-            handleError(addGatewayResponse, 'add_gateway')
+          const ownerAddress = await getAddress()
+          const ownerKeypairRaw = await getSodiumKeypair()
+
+          if (!ownerAddress?.b58 || !ownerKeypairRaw) {
+            await handleError(false, 'add_gateway')
             return
           }
+
+          const addGatewayResponse = await createGatewayTxn(
+            ownerAddress?.b58,
+            ownerKeypairRaw,
+          )
+          await submitTxn(addGatewayResponse)
         } catch (error) {
-          handleError(error, 'add_gateway')
+          await handleError(error, 'add_gateway')
           return
         }
       }

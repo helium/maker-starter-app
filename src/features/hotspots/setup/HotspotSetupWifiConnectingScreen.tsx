@@ -4,7 +4,7 @@ import { useAsync } from 'react-async-hook'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
-import { useConnectedHotspotContext } from '../../../providers/ConnectedHotspotProvider'
+import { useHotspotBle } from '@helium/react-native-sdk'
 import useAlert from '../../../utils/useAlert'
 import {
   HotspotSetupNavigationProp,
@@ -29,11 +29,7 @@ const HotspotSetupWifiConnectingScreen = () => {
     params: { network, password },
   } = useRoute<Route>()
 
-  const {
-    scanForWifiNetworks,
-    setWifiCredentials,
-    removeConfiguredWifi,
-  } = useConnectedHotspotContext()
+  const { readWifiNetworks, setWifi, removeConfiguredWifi } = useHotspotBle()
 
   const { showOKAlert } = useAlert()
 
@@ -55,36 +51,28 @@ const HotspotSetupWifiConnectingScreen = () => {
     }
   }, [connectedHotspot.status, navigation])
 
-  const connectToWifi = useCallback(() => {
-    setWifiCredentials(network, password, async (response, error) => {
-      if (response === 'error') {
-        showOKAlert({
-          titleKey: 'generic.error',
-          messageKey: error?.toString() || 'generic.something_went_wrong',
-        })
-        navigation.goBack()
-      } else if (response === 'invalid') {
-        showOKAlert({
-          titleKey: 'generic.error',
-          messageKey: 'generic.invalid_password',
-        })
-        navigation.goBack()
-      } else {
-        goToNextStep()
-      }
-    })
-  }, [
-    goToNextStep,
-    navigation,
-    network,
-    password,
-    setWifiCredentials,
-    showOKAlert,
-  ])
+  const connectToWifi = useCallback(async () => {
+    const response = await setWifi(network, password)
+    if (response === 'not_found') {
+      showOKAlert({
+        titleKey: 'generic.error',
+        messageKey: 'generic.something_went_wrong',
+      })
+      navigation.goBack()
+    } else if (response === 'invalid') {
+      showOKAlert({
+        titleKey: 'generic.error',
+        messageKey: 'generic.invalid_password',
+      })
+      navigation.goBack()
+    } else {
+      goToNextStep()
+    }
+  }, [goToNextStep, navigation, network, password, setWifi, showOKAlert])
 
   const forgetWifi = async () => {
     try {
-      const connectedNetworks = uniq((await scanForWifiNetworks(true)) || [])
+      const connectedNetworks = uniq((await readWifiNetworks(true)) || [])
       if (connectedNetworks.length > 0) {
         await removeConfiguredWifi(connectedNetworks[0])
       }

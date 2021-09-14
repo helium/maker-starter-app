@@ -1,11 +1,11 @@
-import { useNavigation, useRoute, RouteProp } from '@react-navigation/native'
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { uniq } from 'lodash'
 import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useHotspotBle } from '@helium/react-native-sdk'
 import Box from '../../../components/Box'
 import SafeAreaBox from '../../../components/SafeAreaBox'
 import Text from '../../../components/Text'
-import { useConnectedHotspotContext } from '../../../providers/ConnectedHotspotProvider'
 import useAlert from '../../../utils/useAlert'
 import {
   HotspotSetupNavigationProp,
@@ -23,40 +23,29 @@ const HotspotSetupConnectingScreen = () => {
     params: { hotspotId },
   } = useRoute<Route>()
 
-  const { showOKAlert, showOKCancelAlert } = useAlert()
+  const { showOKAlert } = useAlert()
 
   const {
-    availableHotspots,
-    connectAndConfigHotspot,
-    scanForWifiNetworks,
+    scannedDevices,
+    connect,
+    readWifiNetworks,
     checkFirmwareCurrent,
-  } = useConnectedHotspotContext()
+  } = useHotspotBle()
 
-  const hotspot = availableHotspots[hotspotId]
+  const hotspot = scannedDevices.find((d) => d.id === hotspotId)
 
   useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', async () => {
+    return navigation.addListener('focus', async () => {
       try {
-        // connect to hotspot
-        const connectStatus = await connectAndConfigHotspot(hotspot)
-
-        if (connectStatus === 'no_onboarding_key') {
-          // prompt to retry
-          const decision = await showOKCancelAlert({
-            titleKey: 'hotspot_setup.add_hotspot.no_onboarding_key_title',
-            messageKey: 'hotspot_setup.add_hotspot.no_onboarding_key_message',
+        if (!hotspot) {
+          navigation.navigate('OnboardingErrorScreen', {
+            connectStatus: 'no_device_found',
           })
-          if (decision) {
-            navigation.goBack()
-            return
-          }
-        }
-
-        // check for valid onboarding record
-        if (connectStatus !== 'success') {
-          navigation.navigate('OnboardingErrorScreen', { connectStatus })
           return
         }
+
+        // connect to hotspot
+        await connect(hotspot)
 
         // check firmware
         const hasCurrentFirmware = await checkFirmwareCurrent()
@@ -66,8 +55,8 @@ const HotspotSetupConnectingScreen = () => {
         }
 
         // scan for wifi networks
-        const networks = uniq((await scanForWifiNetworks()) || [])
-        const connectedNetworks = uniq((await scanForWifiNetworks(true)) || [])
+        const networks = uniq((await readWifiNetworks(false)) || [])
+        const connectedNetworks = uniq((await readWifiNetworks(true)) || [])
 
         // navigate to next screen
         navigation.replace('HotspotSetupPickWifiScreen', {
@@ -80,8 +69,6 @@ const HotspotSetupConnectingScreen = () => {
         navigation.goBack()
       }
     })
-
-    return unsubscribe
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -96,7 +83,7 @@ const HotspotSetupConnectingScreen = () => {
           textAlign="center"
         >
           {t('hotspot_setup.ble_scan.connecting', {
-            hotspotName: hotspot.localName,
+            hotspotName: hotspot?.localName,
           }).toUpperCase()}
         </Text>
       </Box>

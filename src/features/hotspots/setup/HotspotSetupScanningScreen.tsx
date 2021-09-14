@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
+import { useHotspotBle } from '@helium/react-native-sdk'
 import Box from '../../../components/Box'
 import { DebouncedButton } from '../../../components/Button'
 import SafeAreaBox from '../../../components/SafeAreaBox'
@@ -9,21 +10,22 @@ import {
   HotspotSetupNavigationProp,
   HotspotSetupStackParamList,
 } from './hotspotSetupTypes'
-import { useConnectedHotspotContext } from '../../../providers/ConnectedHotspotProvider'
 
 type Route = RouteProp<HotspotSetupStackParamList, 'HotspotSetupScanningScreen'>
 
-const SCAN_DURATION = 6000
 const HotspotSetupScanningScreen = () => {
   const { t } = useTranslation()
-  const { scanForHotspots } = useConnectedHotspotContext()
+  const { startScan } = useHotspotBle()
 
   const { params } = useRoute<Route>()
   const navigation = useNavigation<HotspotSetupNavigationProp>()
 
   useEffect(() => {
     const scan = async () => {
-      await scanForHotspots(SCAN_DURATION)
+      await startScan((error) => {
+        if (error) {
+        } // TODO: handle error
+      })
       navigation.replace('HotspotSetupPickHotspotScreen', params)
     }
     scan()

@@ -1,7 +1,15 @@
 import { StackNavigationProp } from '@react-navigation/stack'
 import { Onboarding } from '@helium/react-native-sdk'
 import { HotspotType } from '../../../makers'
-import { HotspotConnectStatus } from '../../../utils/useHotspot'
+
+export type HotspotConnectStatus =
+  | 'success'
+  | 'no_device_found'
+  | 'no_services_found'
+  | 'invalid_onboarding_address'
+  | 'no_onboarding_key'
+  | 'service_unavailable'
+  | 'details_fetch_failure'
 
 export type HotspotSetupStackParamList = {
   HotspotSetupSelectionScreen: undefined

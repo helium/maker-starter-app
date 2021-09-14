@@ -2,16 +2,16 @@ import { useNavigation } from '@react-navigation/native'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Device } from 'react-native-ble-plx'
+import { useHotspotBle } from '@helium/react-native-sdk'
 import Box from '../../../components/Box'
 import HotspotPairingList from '../../../components/HotspotPairingList'
 import Text from '../../../components/Text'
-import { useConnectedHotspotContext } from '../../../providers/ConnectedHotspotProvider'
 import { HotspotSetupNavigationProp } from './hotspotSetupTypes'
 
 const HotspotSetupBluetoothSuccess = () => {
   const { t } = useTranslation()
   const navigation = useNavigation<HotspotSetupNavigationProp>()
-  const { availableHotspots } = useConnectedHotspotContext()
+  const { scannedDevices } = useHotspotBle()
 
   const handleConnect = async (hotspot: Device) => {
     navigation.replace('HotspotSetupConnectingScreen', {
@@ -29,7 +29,7 @@ const HotspotSetupBluetoothSuccess = () => {
           marginBottom="m"
         >
           {t('hotspot_setup.ble_select.hotspots_found', {
-            count: Object.keys(availableHotspots).length,
+            count: scannedDevices?.length,
           })}
         </Text>
         <Text variant="subtitle2">
@@ -41,10 +41,7 @@ const HotspotSetupBluetoothSuccess = () => {
         paddingHorizontal="lx"
         backgroundColor="secondaryBackground"
       >
-        <HotspotPairingList
-          hotspots={Object.values(availableHotspots)}
-          onPress={handleConnect}
-        />
+        <HotspotPairingList hotspots={scannedDevices} onPress={handleConnect} />
       </Box>
     </Box>
   )

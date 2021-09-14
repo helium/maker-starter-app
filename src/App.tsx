@@ -17,14 +17,13 @@ import { useAsync } from 'react-async-hook'
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
 import * as SplashScreen from 'expo-splash-screen'
 import { NavigationContainer } from '@react-navigation/native'
+import { HotspotBleProvider } from '@helium/react-native-sdk'
 import { theme, darkThemeColors, lightThemeColors } from './theme/theme'
 import NavigationRoot from './navigation/NavigationRoot'
 import { useAppDispatch } from './store/store'
 import appSlice, { restoreAppSettings } from './store/user/appSlice'
 import { RootState } from './store/rootReducer'
 import { fetchData } from './store/account/accountSlice'
-import BluetoothProvider from './providers/BluetoothProvider'
-import ConnectedHotspotProvider from './providers/ConnectedHotspotProvider'
 import { configChainVars } from './utils/appDataClient'
 import {
   fetchBlockHeight,
@@ -168,25 +167,23 @@ const App = () => {
   return (
     <ThemeProvider theme={colorAdaptedTheme}>
       <BottomSheetModalProvider>
-        <BluetoothProvider>
-          <ConnectedHotspotProvider>
-            <SafeAreaProvider>
-              {/* TODO: Will need to adapt status bar for light/dark modes */}
-              {Platform.OS === 'ios' && <StatusBar barStyle="light-content" />}
-              {Platform.OS === 'android' && (
-                <StatusBar translucent backgroundColor="transparent" />
-              )}
-              <NavigationContainer ref={navigationRef}>
-                <AppLinkProvider>
-                  <NavigationRoot />
-                </AppLinkProvider>
-              </NavigationContainer>
-            </SafeAreaProvider>
-            <SecurityScreen
-              visible={appState !== 'active' && appState !== 'unknown'}
-            />
-          </ConnectedHotspotProvider>
-        </BluetoothProvider>
+        <HotspotBleProvider>
+          <SafeAreaProvider>
+            {/* TODO: Will need to adapt status bar for light/dark modes */}
+            {Platform.OS === 'ios' && <StatusBar barStyle="light-content" />}
+            {Platform.OS === 'android' && (
+              <StatusBar translucent backgroundColor="transparent" />
+            )}
+            <NavigationContainer ref={navigationRef}>
+              <AppLinkProvider>
+                <NavigationRoot />
+              </AppLinkProvider>
+            </NavigationContainer>
+          </SafeAreaProvider>
+          <SecurityScreen
+            visible={appState !== 'active' && appState !== 'unknown'}
+          />
+        </HotspotBleProvider>
       </BottomSheetModalProvider>
     </ThemeProvider>
   )

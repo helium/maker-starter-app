@@ -1,19 +1,20 @@
 import { useNavigation } from '@react-navigation/native'
-import React, { useCallback, useEffect } from 'react'
+import React, { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
+import { useHotspotBle } from '@helium/react-native-sdk'
+import { useAsync } from 'react-async-hook'
 import BackScreen from '../../../components/BackScreen'
 import { DebouncedButton } from '../../../components/Button'
 import Text from '../../../components/Text'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
-import { useConnectedHotspotContext } from '../../../providers/ConnectedHotspotProvider'
 import { RootState } from '../../../store/rootReducer'
 import Cloud from '../../../assets/images/cloud.svg'
 import Box from '../../../components/Box'
 
 const FirmwareUpdateNeededScreen = () => {
   const { t } = useTranslation()
-  const { checkFirmwareCurrent } = useConnectedHotspotContext()
+  const { checkFirmwareCurrent } = useHotspotBle()
   const { connectedHotspot } = useSelector((state: RootState) => state)
 
   const navigation = useNavigation<RootNavigationProp>()
@@ -21,9 +22,9 @@ const FirmwareUpdateNeededScreen = () => {
     navigation,
   ])
 
-  useEffect(() => {
+  useAsync(async () => {
     if (!connectedHotspot.firmware?.minVersion) {
-      checkFirmwareCurrent()
+      await checkFirmwareCurrent()
     }
   }, [connectedHotspot.firmware, checkFirmwareCurrent])
 
@@ -44,7 +45,7 @@ const FirmwareUpdateNeededScreen = () => {
             <Text variant="body2" textAlign="center" marginBottom="ms">
               {t('hotspot_setup.firmware_update.current_version')}
             </Text>
-            <Text textAlign="center" variant="body1Mono">
+            <Text textAlign="center" variant="body1">
               {connectedHotspot.firmware?.version || '12.45.1'}
             </Text>
           </Box>
@@ -52,7 +53,7 @@ const FirmwareUpdateNeededScreen = () => {
             <Text variant="body2" textAlign="center" marginBottom="ms">
               {t('hotspot_setup.firmware_update.required_version')}
             </Text>
-            <Text textAlign="center" variant="body1Mono">
+            <Text textAlign="center" variant="body1">
               {connectedHotspot.firmware?.minVersion || '1234.123.1'}
             </Text>
           </Box>

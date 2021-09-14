@@ -4,6 +4,7 @@ import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import { uniq } from 'lodash'
+import { useHotspotBle } from '@helium/react-native-sdk'
 import BackScreen from '../../../components/BackScreen'
 import Text from '../../../components/Text'
 import {
@@ -17,7 +18,6 @@ import { DebouncedButton } from '../../../components/Button'
 import TouchableOpacityBox from '../../../components/TouchableOpacityBox'
 import Checkmark from '../../../assets/images/check.svg'
 import { RootState } from '../../../store/rootReducer'
-import { useConnectedHotspotContext } from '../../../providers/ConnectedHotspotProvider'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
 
 const WifiItem = ({
@@ -66,7 +66,7 @@ const HotspotSetupPickWifiScreen = () => {
   const {
     params: { networks, connectedNetworks },
   } = useRoute<Route>()
-  const { scanForWifiNetworks } = useConnectedHotspotContext()
+  const { readWifiNetworks } = useHotspotBle()
 
   const [wifiNetworks, setWifiNetworks] = useState(networks)
   const [connectedWifiNetworks, setConnectedWifiNetworks] = useState(
@@ -97,8 +97,8 @@ const HotspotSetupPickWifiScreen = () => {
 
   const scanForNetworks = async () => {
     setScanning(true)
-    const newNetworks = uniq((await scanForWifiNetworks()) || [])
-    const newConnectedNetworks = uniq((await scanForWifiNetworks(true)) || [])
+    const newNetworks = uniq((await readWifiNetworks(false)) || [])
+    const newConnectedNetworks = uniq((await readWifiNetworks(true)) || [])
     setScanning(false)
     setWifiNetworks(newNetworks)
     setConnectedWifiNetworks(newConnectedNetworks)
