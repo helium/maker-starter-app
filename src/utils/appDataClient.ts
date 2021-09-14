@@ -1,14 +1,8 @@
 import { Hotspot } from '@helium/http'
-import { Transaction } from '@helium/transactions'
 import { heliumHttpClient } from '@helium/react-native-sdk'
 import { getAddress } from './secureAccount'
 
 const MAX = 100000
-
-export const configChainVars = async () => {
-  const vars = await heliumHttpClient.vars.get()
-  Transaction.config(vars)
-}
 
 export const getChainVars = async () => {
   return heliumHttpClient.vars.get()

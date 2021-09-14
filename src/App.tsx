@@ -24,7 +24,6 @@ import { useAppDispatch } from './store/store'
 import appSlice, { restoreAppSettings } from './store/user/appSlice'
 import { RootState } from './store/rootReducer'
 import { fetchData } from './store/account/accountSlice'
-import { configChainVars } from './utils/appDataClient'
 import {
   fetchBlockHeight,
   fetchInitialData,
@@ -83,7 +82,6 @@ const App = () => {
   useMount(() => {
     dispatch(restoreAppSettings())
     dispatch(fetchInitialData())
-    configChainVars()
   })
 
   useEffect(() => {
