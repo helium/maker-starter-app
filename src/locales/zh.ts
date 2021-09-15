@@ -21,6 +21,7 @@ export default {
   account_setup: {
     confirm: {
       forgot: '我忘记了助记词',
+      subtitle: '以下哪个词是您的<b><purple>{{ordinal}}助记词?</purple></b>',
       title: '确认助记词\n',
     },
     confirm_pin: {
@@ -34,15 +35,21 @@ export default {
     generating: '正在生成您的 12 个助记词...',
     passphrase: {
       next: '我已记下了',
+      subtitle:
+        '请务必按顺序<b>记下这\n12 个助记词</b>，\n\n<red>Helium 无法恢复这些助记词。</red>',
       title: '您的 12 个助记词密码\n',
     },
     warning: {
       generate: '生成我的 12 个助记词',
+      subtitle:
+        'Helium 帐户受到\n<b><purple>12 个独特助记词</purple></b>的保护，作为登录或恢复帐户的密码。\n\n',
       title: '正在创建安全帐户。\n',
     },
     welcome: {
       create_account: '新建帐户',
       import_account: '导入现有帐户',
+      subtitle:
+        '玩转 Hotspot，赚取 <b><purple>Helium 币</purple></b>（一种新型加密货币），参与搭建 People’s Network。\n\n',
       title: '欢迎使用 Helium\n',
     },
   },
@@ -262,6 +269,7 @@ export default {
   more: {
     sections: {
       app: {
+        language: '语言',
         signOut: '注销',
         signOutAlert: {
           body:
