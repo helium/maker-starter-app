@@ -19,6 +19,8 @@ import MoreListItem, { MoreListItemType } from './MoreListItem'
 import useAuthIntervals from './useAuthIntervals'
 import { useSpacing } from '../../../theme/themeHooks'
 import Box from '../../../components/Box'
+import { SUPPORTED_LANGUAGUES } from '../../../utils/i18n/i18nTypes'
+import { useLanguageContext } from '../../../providers/LanguageProvider'
 
 type Route = RouteProp<RootStackParamList & MoreStackParamList, 'MoreScreen'>
 const MoreScreen = () => {
@@ -29,6 +31,7 @@ const MoreScreen = () => {
   const authIntervals = useAuthIntervals()
   const navigation = useNavigation<MoreNavigationProp & RootNavigationProp>()
   const spacing = useSpacing()
+  const { changeLanguage, language } = useLanguageContext()
 
   useEffect(() => {
     if (!params?.pinVerifiedFor) return
@@ -47,6 +50,13 @@ const MoreScreen = () => {
         break
     }
   }, [dispatch, params, navigation])
+
+  const handleLanguageChange = useCallback(
+    (lng: string) => {
+      changeLanguage(lng)
+    },
+    [changeLanguage],
+  )
 
   const handlePinRequired = useCallback(
     (value?: boolean) => {
@@ -146,6 +156,14 @@ const MoreScreen = () => {
         title: t('more.sections.app.title'),
         data: [
           {
+            title: t('more.sections.app.language'),
+            value: language,
+            select: {
+              items: SUPPORTED_LANGUAGUES,
+              onValueSelect: handleLanguageChange,
+            },
+          },
+          {
             title: t('more.sections.app.signOut'),
             onPress: handleSignOut,
             destructive: true,
@@ -159,6 +177,8 @@ const MoreScreen = () => {
     app.isPinRequired,
     app.authInterval,
     handleRevealWords,
+    language,
+    handleLanguageChange,
     handleSignOut,
     authIntervals,
     handleIntervalSelected,
