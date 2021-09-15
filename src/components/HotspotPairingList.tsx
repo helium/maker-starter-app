@@ -1,8 +1,7 @@
 import React, { useEffect, useMemo, useState, useCallback } from 'react'
-import { FlatList } from 'react-native'
+import { ActivityIndicator, FlatList } from 'react-native'
 import { Device } from 'react-native-ble-plx'
-import Fuse from 'fuse.js'
-import Hotspot from '@assets/images/hotspot.svg'
+import Hotspot from '@assets/images/placeholders/icon.svg'
 import Box from './Box'
 import Text from './Text'
 import { DebouncedTouchableHighlightBox } from './TouchableHighlightBox'
@@ -14,10 +13,12 @@ const HotspotPairingList = ({
   hotspots,
   onPress,
   disabled = false,
+  connect,
 }: {
   hotspots: Device[]
   onPress: (hotspot: Device) => void
   disabled?: boolean
+  connect: boolean | string
 }) => {
   const spacing = useSpacing()
   return (
@@ -27,6 +28,7 @@ const HotspotPairingList = ({
       keyExtractor={(item) => item.id}
       renderItem={({ item, index }) => (
         <HotspotPairingItem
+          connect={connect}
           hotspot={item}
           onPress={onPress}
           isTop={index === 0}
@@ -44,18 +46,19 @@ const HotspotPairingItem = ({
   isBottom = false,
   onPress,
   disabled,
+  connect,
 }: {
   hotspot: Device
   isTop?: boolean
   isBottom?: boolean
   onPress: (hotspot: Device) => void
   disabled: boolean
+  connect: string | boolean
 }) => {
   const colors = useColors()
   const [mac, setMac] = useState('')
   const [name, setName] = useState('')
   const [pressing, setPressing] = useState<boolean>()
-  const svgColor = pressing ? colors.primary : colors.secondary
 
   const handlePressing = useCallback(
     (value: boolean) => () => setPressing(value),
@@ -82,19 +85,21 @@ const HotspotPairingItem = ({
   }, [hotspot])
 
   const HotspotImage = useMemo(() => {
-    const hotspotArr = HotspotModelKeys.map((k) => HotspotMakerModels[k])
-    const results = new Fuse(hotspotArr, {
-      keys: ['name'],
-      threshold: 0.3,
-    }).search(name)
+    const results = HotspotModelKeys.map((k) => HotspotMakerModels[k])
 
     let Icon = Hotspot
     if (results.length) {
-      Icon = results[0].item.icon
+      Icon = results[0].icon
     }
 
-    return <Icon color={svgColor} height="100%" width="100%" />
-  }, [name, svgColor])
+    return (
+      <Icon
+        color={pressing ? colors.secondary : colors.surfaceContrastText}
+        height="100%"
+        width="100%"
+      />
+    )
+  }, [colors.secondary, colors.surfaceContrastText, pressing])
 
   return (
     <DebouncedTouchableHighlightBox
@@ -102,7 +107,7 @@ const HotspotPairingItem = ({
       onPressIn={handlePressing(true)}
       onPressOut={handlePressing(false)}
       onPress={handlePress}
-      backgroundColor="white"
+      backgroundColor="surfaceContrast"
       underlayColor={colors.primary}
       flexDirection="row"
       alignItems="center"
@@ -121,18 +126,22 @@ const HotspotPairingItem = ({
         <Box flex={1}>
           <Text
             variant="body1"
-            color={pressing ? 'secondary' : 'secondaryText'}
+            color={pressing ? 'secondary' : 'surfaceContrastText'}
           >
             {name}
           </Text>
           <Text
             variant="body2"
-            color={pressing ? 'secondary' : 'secondaryText'}
+            color={pressing ? 'secondary' : 'surfaceContrastText'}
           >
             {mac}
           </Text>
         </Box>
-        <CarotRight color={colors.secondary} />
+        {connect === hotspot.id || connect === true ? (
+          <ActivityIndicator color={colors.secondary} />
+        ) : (
+          <CarotRight color={colors.secondary} />
+        )}
       </>
     </DebouncedTouchableHighlightBox>
   )

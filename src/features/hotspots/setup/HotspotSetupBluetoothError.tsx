@@ -73,6 +73,8 @@ const HotspotSetupBluetoothError = () => {
         mode="contained"
         variant="primary"
         title={t('generic.scan_again')}
+        backgroundColor="surfaceContrast"
+        color="surfaceContrastText"
       />
     </Box>
   )

@@ -47,7 +47,8 @@ const WelcomeScreen = () => {
       <Button
         mode="contained"
         variant="primary"
-        color="error"
+        color="surfaceContrastText"
+        backgroundColor="surfaceContrast"
         width="100%"
         marginBottom="s"
         onPress={createAccount}

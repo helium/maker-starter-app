@@ -75,6 +75,8 @@ const RevealWordsScreen = () => {
       <Button
         mode="contained"
         variant="primary"
+        color="surfaceContrastText"
+        backgroundColor="surfaceContrast"
         onPress={() => navigation.goBack()}
         title={t('account_setup.passphrase.next')}
         marginBottom="m"

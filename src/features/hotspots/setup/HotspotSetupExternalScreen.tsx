@@ -1,8 +1,7 @@
 import React, { useCallback, useMemo, useState } from 'react'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
-import QrIcon from '@assets/images/qr.svg'
-import LinkIcon from '@assets/images/webLink.svg'
+import Icon from '@assets/images/placeholders/icon.svg'
 import { BarCodeScanner, BarCodeScannerResult } from 'expo-barcode-scanner'
 import { Camera } from 'expo-camera'
 import { useAsync } from 'react-async-hook'
@@ -153,11 +152,7 @@ const HotspotSetupExternalScreen = () => {
           alignItems="center"
           justifyContent="center"
         >
-          {isQr ? (
-            <QrIcon color={colors.primary} width={24} height={24} />
-          ) : (
-            <LinkIcon color={colors.primary} width={30} height={30} />
-          )}
+          <Icon color={colors.primary} width={24} height={24} />
         </Box>
         <Text
           variant="h1"

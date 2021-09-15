@@ -15,16 +15,33 @@ import { RootNavigationProp } from '../../../navigation/main/tabTypes'
 
 type Route = RouteProp<
   HotspotSetupStackParamList,
-  'HotspotSetupDiagnosticsScreen'
+  'HotspotSetupInstructionsScreen'
 >
 
 const HotspotSetupDiagnosticsScreen = () => {
-  const { params } = useRoute<Route>()
-  const { t } = useTranslation()
+  const {
+    params: { hotspotType, slideIndex },
+  } = useRoute<Route>()
+  const { t, i18n } = useTranslation()
   const navigation = useNavigation<HotspotSetupNavigationProp>()
   const rootNav = useNavigation<RootNavigationProp>()
 
   const handleClose = useCallback(() => rootNav.navigate('MainTabs'), [rootNav])
+
+  const handleNext = useCallback(() => {
+    const nextSlideIndex = slideIndex + 1
+    const hasNext = i18n.exists(
+      `makerHotspot.${hotspotType}.internal.${nextSlideIndex}`,
+    )
+    if (hasNext) {
+      navigation.push('HotspotSetupInstructionsScreen', {
+        hotspotType,
+        slideIndex: nextSlideIndex,
+      })
+    } else {
+      navigation.push('HotspotSetupScanningScreen', { hotspotType })
+    }
+  }, [hotspotType, i18n, navigation, slideIndex])
 
   return (
     <BackScreen backgroundColor="primaryBackground" onClose={handleClose}>
@@ -37,21 +54,25 @@ const HotspotSetupDiagnosticsScreen = () => {
             adjustsFontSizeToFit
             marginVertical="l"
           >
-            {t('hotspot_setup.diagnostics.title')}
+            {t(`makerHotspot.${hotspotType}.internal.${slideIndex}.title`)}
           </Text>
           <TextTransform
             maxFontSizeMultiplier={1.1}
             variant="subtitle1"
             marginTop="m"
-            i18nKey={t(`makerHotspot.${params.hotspotType}.diagnostic`)}
+            i18nKey={t(
+              `makerHotspot.${hotspotType}.internal.${slideIndex}.body`,
+            )}
           />
         </Box>
       </ScrollView>
       <DebouncedButton
         variant="primary"
         mode="contained"
-        title={t('generic.understand')}
-        onPress={() => navigation.push('HotspotSetupPowerScreen', params)}
+        backgroundColor="surfaceContrast"
+        color="surfaceContrastText"
+        title={t(`makerHotspot.${hotspotType}.internal.${slideIndex}.button`)}
+        onPress={handleNext}
       />
     </BackScreen>
   )

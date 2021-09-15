@@ -19,9 +19,10 @@ export type HotspotSetupStackParamList = {
     addGatewayTxn: string
     hotspotType: HotspotType
   }
-  HotspotSetupDiagnosticsScreen: { hotspotType: HotspotType }
-  HotspotSetupPowerScreen: { hotspotType: HotspotType }
-  HotspotSetupBluetoothInfoScreen: { hotspotType: HotspotType }
+  HotspotSetupInstructionsScreen: {
+    slideIndex: number
+    hotspotType: HotspotType
+  }
   HotspotSetupScanningScreen: { hotspotType: HotspotType }
   HotspotSetupPickHotspotScreen: { hotspotType: HotspotType }
   OnboardingErrorScreen: { connectStatus: HotspotConnectStatus }

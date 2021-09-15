@@ -93,7 +93,7 @@ export default {
     ok: 'OK',
     scan_again: 'Scan Again',
     search_location: 'Search for an address or place',
-    skip_for_now: 'Skip for now',
+    skip: '[skip button]',
     something_went_wrong: 'Something went wrong',
     understand: 'I understand',
     unknown: 'Unknown',
@@ -143,27 +143,23 @@ export default {
     education: {
       cards: [
         {
-          subtitle:
-            'Hotspots love places where they can see plenty of sky and spaced at least 300 meters away from other Hotspots. ',
-          title: 'Give me a nice view',
+          subtitle: '[Placeholder]',
+          title: '[Placeholder]',
         },
         {
-          subtitle:
-            "Hotspots shouldn't hide in a nightstand or bookcase. Put it next to a window instead.",
-          title: "Don't hide me",
+          subtitle: '[Placeholder]',
+          title: '[Placeholder]',
         },
         {
-          subtitle:
-            "Nearby buildings may decrease your Hotspot's coverage for nearby devices.",
-          title: 'Buildings may block my signals',
+          subtitle: '[Placeholder]',
+          title: '[Placeholder]',
         },
         {
-          subtitle:
-            'Try to keep your Hotspot away from metal meshes, which can block radio signals dramatically.',
-          title: 'Finally - I hate bug screens!',
+          subtitle: '[Placeholder]',
+          title: '[Placeholder]',
         },
       ],
-      title: 'Placing\nyour Hotspot.',
+      title: '[Your Hotspot\nSetup Instructions]',
     },
     enable_location: {
       cancel: "No thanks, I'll set it up later",
@@ -253,8 +249,7 @@ export default {
       title: 'REGISTERING HOTSPOT',
     },
     selection: {
-      subtitle:
-        'Select your Hotspot Maker below to add a Hotspot to the Helium Network.',
+      subtitle: '[Placeholder instructions]',
       title: 'Add\nyour Hotspot.',
     },
     skip_location: {
@@ -290,15 +285,15 @@ export default {
     view_activity: 'After adding a Hotspot, you can view your account on the ',
     explorer: 'Helium Explorer',
     empty: {
-      body: 'Start below to add your Hotspot\nto the Helium Network.',
+      body: 'Your add hotspot\ninstructions',
       hotspots: {
         add: 'Add Hotspot',
       },
-      title: 'Add a\nHelium Miner',
+      title: 'Add a\n[Placeholder] Miner',
     },
   },
   learn: {
-    next: "I've read the guide",
+    next: '[next button]',
   },
   more: {
     sections: {

@@ -656,7 +656,7 @@ SPEC CHECKSUMS:
   EXSecureStore: 1b571851e6068b30b8ec097be848a04603c03bae
   EXSplashScreen: ab5984afcca91e0af6b3138f01a8c47dc4955c51
   FBLazyVector: 49cbe4b43e445b06bf29199b6ad2057649e4c8f5
-  FBReactNativeSpec: e3b48bab43bfa79a9e18365d9a1b02e454c3f4cd
+  FBReactNativeSpec: 4d5a845c0400a100e6e25a2d1a5861832397812f
   glog: 7a8788d88d2a384c05df45e95c5e763e4d81f3ad
   helium-react-native-sdk: cf624f531c73325a97f4d295e1ed490aa0fc9c2e
   lottie-ios: 48fac6be217c76937e36e340e2d09cf7b10b7f5f

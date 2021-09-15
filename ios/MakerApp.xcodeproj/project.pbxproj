@@ -241,6 +241,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
+						DevelopmentTeam = A43Q9D6876;
 						LastSwiftMigration = 1250;
 					};
 				};
@@ -523,7 +524,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = MakerApp/MakerApp.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = A43Q9D6876;
 				ENABLE_BITCODE = NO;
 				EXCLUDED_ARCHS = "";
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
@@ -535,7 +536,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.maker.makerapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.maker.makerappppp;
 				PRODUCT_NAME = MakerApp;
 				SWIFT_OBJC_BRIDGING_HEADER = "MakerApp-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -554,7 +555,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = MakerApp/MakerApp.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = A43Q9D6876;
 				EXCLUDED_ARCHS = "";
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = MakerApp/Info.plist;
@@ -565,7 +566,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.maker.makerapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.maker.makerappppp;
 				PRODUCT_NAME = MakerApp;
 				SWIFT_OBJC_BRIDGING_HEADER = "MakerApp-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
