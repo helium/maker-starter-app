@@ -22,6 +22,8 @@ export default {
   account_setup: {
     confirm: {
       forgot: '단어를 잊어버림',
+      subtitle:
+        '다음 중 귀하의 <b><purple>{{ordinal}} 단어는 무엇인가요?</purple></b>',
       title: '단어를\n확인하세요',
     },
     confirm_pin: {
@@ -35,15 +37,21 @@ export default {
     generating: '12개의 단어 생성 중...',
     passphrase: {
       next: '단어를 모두 적었습니다',
+      subtitle:
+        '12개의 단어를 순서대로 <b>모두 적어둬야\n합니다</b>.\n\n<red>Helium은 암호에 쓰인 단어를 복구할 수 없습니다.</red>',
       title: '12단어\n암호',
     },
     warning: {
       generate: '12개의 단어 생성',
+      subtitle:
+        'Helium 계정은\n<b><purple>12개의 고유한 단어</purple></b>로 보호되며, 이는 계정에\n로그인하거나\n계정을 복구하기 위해 사용하는 암호 역할을 합니다.',
       title: '보안 계정\n생성.',
     },
     welcome: {
       create_account: '계정 생성',
       import_account: '기존 계정 가져오기',
+      subtitle:
+        'The People’s Network 구축을 위해 Hotspot을 호스팅하고\n새로운 암호화폐인\n<b><purple>$HNT</purple></b>을 획득하세요.',
       title: 'Helium에 오신 것을\n환영합니다',
     },
   },
@@ -274,6 +282,7 @@ export default {
   more: {
     sections: {
       app: {
+        language: '언어',
         signOut: '로그아웃',
         signOutAlert: {
           body:

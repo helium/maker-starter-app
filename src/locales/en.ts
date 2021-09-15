@@ -22,6 +22,8 @@ export default {
   account_setup: {
     confirm: {
       forgot: 'I forgot my words',
+      subtitle:
+        'Which word below was your <b><purple>{{ordinal}} word?</purple></b>',
       title: 'Confirm\nYour Words',
     },
     confirm_pin: {
@@ -35,15 +37,21 @@ export default {
     generating: 'GENERATING YOUR 12 WORDS...',
     passphrase: {
       next: 'I have written these down',
+      subtitle:
+        'It is crucial you <b>write all of these\n12 words down, in order</b>.\n\n<red>Helium cannot recover these words.</red>',
       title: 'Your 12 Word\nPassword',
     },
     warning: {
       generate: 'Generate my 12 words',
+      subtitle:
+        'Helium accounts are protected by\n<b><purple>12 unique words</purple></b>, that act as\na password for signing in or\nrecovering accounts.',
       title: 'Creating\nSecure Account.',
     },
     welcome: {
       create_account: 'Create an Account',
       import_account: 'Import Existing Account',
+      subtitle:
+        'Host a Hotspot and earn <b><purple>$HNT</purple></b>,\na new cryptocurrency,\nfor building The People’s Network.',
       title: 'Welcome\nto Helium',
     },
   },
@@ -165,7 +173,9 @@ export default {
       title: 'Set Hotspot\nLocation',
     },
     external: {
+      qrTitle: 'Scan QR Code',
       wallet_address: 'Your wallet address is:',
+      webTitle: 'Web Onboarding',
     },
     firmware_update: {
       current_version: 'Current Version',
@@ -290,6 +300,7 @@ export default {
   more: {
     sections: {
       app: {
+        language: 'Language',
         signOut: 'Sign Out',
         signOutAlert: {
           body:
