@@ -97,6 +97,7 @@ export default {
     something_went_wrong: 'Something went wrong',
     understand: 'I understand',
     unknown: 'Unknown',
+    period: '.',
   },
   hotspot_details: {
     no_location_body: 'Pair with the Hotspot to begin.',
@@ -286,6 +287,8 @@ export default {
     },
   },
   hotspots: {
+    view_activity: 'After adding a Hotspot, you can view your account on the ',
+    explorer: 'Helium Explorer',
     empty: {
       body: 'Start below to add your Hotspot\nto the Helium Network.',
       hotspots: {

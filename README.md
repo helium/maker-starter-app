@@ -2,6 +2,17 @@
 
 ## Getting Started
 
+### App Setup
+
+1. First add your environment variables. See the [installing](#Installing) section below for more detail on how to do so.
+   1. You will need a [Mapbox](https://docs.mapbox.com/help/getting-started/access-tokens/) API key to show the map for Hotspot onboarding.
+   2. You will need a [Google](https://developers.google.com/maps/documentation/javascript/get-api-key) API key for address and location search.
+2. Rename your application using [React Native Rename](https://github.com/junedomingo/react-native-rename). You will want to pass in the custom bundle identifier for [Android](https://developer.android.com/studio/build/configure-app-module#set_the_application_id) and also change it manually for [iOS](https://developer.apple.com/documentation/appstoreconnectapi/bundle_ids).
+3. Update your theme colors in [theme.ts](src/theme/theme.ts). The theme controls the look of the application.
+4. Add your Hotspot and Antenna data in the [makers](src/makers) folder. See the [Makers README](src/makers/README.md) for more detail.
+5. You will need to update your App Scheme for any deep linking. There are guides for both [iOS](https://developer.apple.com/documentation/xcode/defining-a-custom-url-scheme-for-your-app) and [Android](https://developer.android.com/training/app-links/deep-linking).
+6. The basics of the [Helium React Native SDK](https://github.com/helium/react-native-helium) and [Helium Blockchain API](https://docs.helium.com/api/blockchain/introduction/) have been integrated into this starter app. Review the docs to learn more.
+
 ### React Native Dev Setup
 
 If you have already set up react native on your machine, skip to the [installing](#Installing) section.
@@ -150,13 +161,7 @@ The fastest way to run the app is on the iOS simulator. Just type:
 yarn ios
 ```
 
-Or for a release build:
-
-```
-yarn ios-release
-```
-
-You can also open the `helium.xcworkspace` file in the `/ios` folder using xcode and run the app on your device or any other simulator.
+You can also open the `MakerApp.xcworkspace` file in the `/ios` folder using xcode and run the app on your device or any other simulator.
 
 #### Android
 
@@ -164,12 +169,6 @@ Similar to iOS, run
 
 ```
 yarn android
-```
-
-Or for a release build:
-
-```
-yarn android-release
 ```
 
 You can also open the Android project in Android Studio by selecting `open an existing project` and selecting the `/android` folder.
