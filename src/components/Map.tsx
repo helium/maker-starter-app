@@ -27,7 +27,6 @@ import { findBounds } from '../utils/mapUtils'
 import CurrentLocationButton from './CurrentLocationButton'
 import { theme, Theme } from '../theme/theme'
 import { useColors } from '../theme/themeHooks'
-import Coverage from './Coverage'
 import { distance } from '../utils/location'
 
 const defaultLngLat = [-122.419418, 37.774929] // San Francisco
@@ -36,12 +35,10 @@ type Props = BoxProps<Theme> & {
   onMapMoved?: (coords?: Position) => void
   onDidFinishLoadingMap?: (latitude: number, longitude: number) => void
   onMapMoving?: (feature: Feature<Point, RegionPayload>) => void
-  onHexSelected?: (id: string) => void
   cameraBottomOffset?: number
   currentLocationEnabled?: boolean
   zoomLevel?: number
   mapCenter?: number[]
-  ownedHotspots?: Hotspot[]
   selectedHotspot?: Hotspot | Witness
   witnesses?: Witness[]
   animationMode?: 'flyTo' | 'easeTo' | 'moveTo'
@@ -51,9 +48,6 @@ type Props = BoxProps<Theme> & {
   interactive?: boolean
   showUserLocation?: boolean
   showNoLocation?: boolean
-  showNearbyHotspots?: boolean
-  showH3Grid?: boolean
-  showRewardScale?: boolean
 }
 const Map = ({
   onMapMoved,
@@ -64,18 +58,13 @@ const Map = ({
   mapCenter,
   animationMode = 'moveTo',
   animationDuration = 500,
-  ownedHotspots = [],
   selectedHotspot,
   witnesses = [],
   showUserLocation,
   maxZoomLevel = 16,
   minZoomLevel = 0,
   interactive = true,
-  onHexSelected = () => {},
   showNoLocation,
-  showNearbyHotspots = false,
-  showH3Grid = false,
-  showRewardScale,
   cameraBottomOffset,
   ...props
 }: Props) => {
@@ -85,8 +74,6 @@ const Map = ({
   const camera = useRef<MapboxGL.Camera>(null)
   const [loaded, setLoaded] = useState(false)
   const [userCoords, setUserCoords] = useState({ latitude: 0, longitude: 0 })
-  const [mapBounds, setMapBounds] = useState<Position[]>()
-  const [mapZoomLevel, setMapZoomLevel] = useState<number>()
   const styles = useMemo(() => makeStyles(colors), [colors])
 
   const onRegionDidChange = useCallback(async () => {
@@ -94,11 +81,6 @@ const Map = ({
       const center = await map.current?.getCenter()
       onMapMoved(center)
     }
-    const currentBounds = await map.current?.getVisibleBounds()
-    setMapBounds(currentBounds)
-
-    const currentZoomLevel = await map.current?.getZoom()
-    setMapZoomLevel(currentZoomLevel)
   }, [onMapMoved])
 
   const centerUserLocation = useCallback(() => {
@@ -143,24 +125,11 @@ const Map = ({
 
   const onDidFinishLoad = useCallback(() => {
     setLoaded(true)
-
-    const loadMapBoundsAndZoom = async () => {
-      const currentBounds = await map.current?.getVisibleBounds()
-      setMapBounds(currentBounds)
-
-      const currentZoomLevel = await map.current?.getZoom()
-      setMapZoomLevel(currentZoomLevel)
-    }
-    loadMapBoundsAndZoom()
   }, [])
 
   const selectedHex = useMemo(() => selectedHotspot?.locationHex, [
     selectedHotspot?.locationHex,
   ])
-
-  const onHexPress = (id: string) => {
-    onHexSelected(id)
-  }
 
   useEffect(() => {
     if (loaded && userCoords) {
@@ -285,18 +254,6 @@ const Map = ({
           animationDuration={animationDuration}
         />
         <MapboxGL.Images images={mapImages} />
-        {showNearbyHotspots && (
-          <Coverage
-            showGrid={showH3Grid}
-            bounds={mapBounds}
-            mapZoom={mapZoomLevel}
-            onHexSelected={onHexPress}
-            selectedHexId={selectedHex}
-            witnesses={witnesses}
-            ownedHotspots={ownedHotspots}
-            showRewardScale={showRewardScale}
-          />
-        )}
       </MapboxGL.MapView>
       {currentLocationEnabled && (
         <CurrentLocationButton onPress={centerUserLocation} />
@@ -350,18 +307,11 @@ const hotspotsEqual = (
 export default memo(Map, (prevProps, nextProps) => {
   const {
     mapCenter: prevMapCenter,
-    ownedHotspots: prevOwnedHotspots,
     selectedHotspot: prevSelectedHotspot,
     witnesses: prevWitnesses,
     ...prevRest
   } = prevProps
-  const {
-    mapCenter,
-    ownedHotspots,
-    selectedHotspot,
-    witnesses,
-    ...nextRest
-  } = nextProps
+  const { mapCenter, selectedHotspot, witnesses, ...nextRest } = nextProps
 
   const primitivesEqual = Object.keys(prevRest).every((key) => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -374,10 +324,6 @@ export default memo(Map, (prevProps, nextProps) => {
       mapCenter[0] === prevMapCenter[0] && mapCenter[1] === prevMapCenter[1]
   }
 
-  const ownedHotspotsEqual = hotspotsEqual(
-    prevOwnedHotspots || [],
-    ownedHotspots || [],
-  )
   const selectedHotspotEqual =
     prevSelectedHotspot?.address === selectedHotspot?.address
   const witnessHotspotsEqual = hotspotsEqual(
@@ -387,7 +333,6 @@ export default memo(Map, (prevProps, nextProps) => {
   return (
     primitivesEqual &&
     mapCenterEqual &&
-    ownedHotspotsEqual &&
     selectedHotspotEqual &&
     witnessHotspotsEqual
   )

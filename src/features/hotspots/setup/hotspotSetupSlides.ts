@@ -1,4 +1,4 @@
-import Icon from '@assets/images/placeholders/icon.svg'
+import Icon from '@assets/images/placeholder.svg'
 import { CarouselItemData } from '../../../components/CarouselItem'
 
 const slides: Array<CarouselItemData> = [

@@ -24,7 +24,10 @@ export const HotspotTypeCount = HotspotModelKeys.length
 
 type MakerLangType = Record<
   HotspotType,
-  Record<HotspotMakerLangField, string | string[]>
+  Record<
+    HotspotMakerLangField,
+    string | { title: string; body: string; button: string }[]
+  >
 >
 export const getTranslations = () => {
   const trans: Record<LangType, MakerLangType> = {

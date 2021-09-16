@@ -1,6 +1,6 @@
 import React, { memo } from 'react'
 import Cog from '@assets/images/cog.svg'
-import Hotspot from '@assets/images/placeholders/icon.svg'
+import Hotspot from '@assets/images/placeholder.svg'
 import Box from '../../components/Box'
 import { MainTabType, TabBarIconType } from './tabTypes'
 import { useColors } from '../../theme/themeHooks'

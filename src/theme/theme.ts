@@ -105,7 +105,7 @@ export const darkThemeColors = {
   surface: palette.bobcatDarkGrey,
   surfaceText: palette.white,
   surfaceSecondary: palette.offWhite,
-  surfaceSecondaryText: palette.bobcatGrey,
+  surfaceSecondaryText: palette.bobcatDarkGrey,
   surfaceContrast: palette.white,
   surfaceContrastText: palette.bobcatDarkGrey,
 }

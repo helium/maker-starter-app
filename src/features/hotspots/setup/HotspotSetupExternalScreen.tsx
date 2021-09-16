@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo, useState } from 'react'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
-import Icon from '@assets/images/placeholders/icon.svg'
+import Icon from '@assets/images/placeholder.svg'
 import { BarCodeScanner, BarCodeScannerResult } from 'expo-barcode-scanner'
 import { Camera } from 'expo-camera'
 import { useAsync } from 'react-async-hook'

@@ -6,6 +6,7 @@ import Text from './Text'
 import { Theme } from '../theme/theme'
 
 const components = {
+  b: <Text fontWeight="700" />,
   errorText: <Text color="error" />,
   secondaryText: <Text color="secondaryText" />,
   primaryText: <Text color="primaryText" />,

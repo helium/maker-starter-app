@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState, useCallback } from 'react'
 import { ActivityIndicator, FlatList } from 'react-native'
 import { Device } from 'react-native-ble-plx'
-import Hotspot from '@assets/images/placeholders/icon.svg'
+import Hotspot from '@assets/images/placeholder.svg'
 import Box from './Box'
 import Text from './Text'
 import { DebouncedTouchableHighlightBox } from './TouchableHighlightBox'

@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react'
-import { TextStyle } from 'react-native'
+import { ActivityIndicator, TextStyle } from 'react-native'
 import { BoxProps } from '@shopify/restyle'
 import { SvgProps } from 'react-native-svg'
 import Text from './Text'
@@ -21,6 +21,7 @@ type Props = BoxProps<Theme> & {
   color?: Colors
   backgroundColor?: Colors
   Icon?: React.FC<SvgProps>
+  loading?: boolean
 }
 
 type ButtonVariant = 'primary' | 'secondary' | 'destructive'
@@ -43,6 +44,7 @@ const Button = ({
   height,
   Icon,
   backgroundColor,
+  loading,
   ...rest
 }: Props) => {
   const colors = useColors()
@@ -56,6 +58,9 @@ const Button = ({
     if (color) return color
 
     if (mode === 'contained') {
+      if (variant === 'secondary') {
+        return 'secondaryText'
+      }
       return 'surfaceContrastText'
     }
 
@@ -99,6 +104,11 @@ const Button = ({
         >
           {title}
         </Text>
+        {loading && (
+          <Box marginStart="s">
+            <ActivityIndicator color={colors[getTextColor()]} />
+          </Box>
+        )}
       </TouchableOpacityBox>
     </Box>
   )

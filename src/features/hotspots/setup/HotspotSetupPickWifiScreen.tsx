@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo, useState } from 'react'
-import { ActivityIndicator, FlatList } from 'react-native'
+import { FlatList } from 'react-native'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
 import { uniq } from 'lodash'
@@ -153,7 +153,7 @@ const HotspotSetupPickWifiScreen = () => {
           {t('hotspot_setup.wifi_scan.subtitle')}
         </Text>
         <DebouncedButton
-          icon={scanning ? <ActivityIndicator color="white" /> : undefined}
+          loading={scanning}
           onPress={scanForNetworks}
           title={t('hotspot_setup.wifi_scan.scan_networks')}
           variant="primary"

@@ -53,10 +53,6 @@ PODS:
   - glog (0.3.5)
   - helium-react-native-sdk (0.1.1):
     - React-Core
-  - lottie-ios (3.1.8)
-  - lottie-react-native (4.0.2):
-    - lottie-ios (~> 3.1.8)
-    - React-Core
   - Mapbox-iOS-SDK (5.9.0):
     - MapboxMobileEvents (= 0.10.2)
   - MapboxMobileEvents (0.10.2)
@@ -433,8 +429,6 @@ DEPENDENCIES:
   - FBReactNativeSpec (from `../node_modules/react-native/React/FBReactNativeSpec`)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
   - "helium-react-native-sdk (from `../node_modules/@helium/react-native-sdk`)"
-  - lottie-ios (from `../node_modules/lottie-ios`)
-  - lottie-react-native (from `../node_modules/lottie-react-native`)
   - RCT-Folly (from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
   - RCTRequired (from `../node_modules/react-native/Libraries/RCTRequired`)
   - RCTTypeSafety (from `../node_modules/react-native/Libraries/TypeSafety`)
@@ -532,10 +526,6 @@ EXTERNAL SOURCES:
     :podspec: "../node_modules/react-native/third-party-podspecs/glog.podspec"
   helium-react-native-sdk:
     :path: "../node_modules/@helium/react-native-sdk"
-  lottie-ios:
-    :path: "../node_modules/lottie-ios"
-  lottie-react-native:
-    :path: "../node_modules/lottie-react-native"
   RCT-Folly:
     :podspec: "../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec"
   RCTRequired:
@@ -659,8 +649,6 @@ SPEC CHECKSUMS:
   FBReactNativeSpec: 4d5a845c0400a100e6e25a2d1a5861832397812f
   glog: 7a8788d88d2a384c05df45e95c5e763e4d81f3ad
   helium-react-native-sdk: cf624f531c73325a97f4d295e1ed490aa0fc9c2e
-  lottie-ios: 48fac6be217c76937e36e340e2d09cf7b10b7f5f
-  lottie-react-native: 4dff8fe8d10ddef9e7880e770080f4a56121397e
   Mapbox-iOS-SDK: a5915700ec84bc1a7f8b3e746d474789e35b7956
   MapboxMobileEvents: 2bc0ca2eedb627b73cf403258dce2b2fa98074a6
   MultiplatformBleAdapter: 975cfb2a333b2c42b7a11628bd100ccb61872da2
