@@ -2,6 +2,16 @@
 
 ## Getting Started
 
+### App Setup
+
+1. First add your environment variables. See the [env vars section](#Environment Variables) for more details on how to do so.
+   1. You will need a [Mapbox](https://docs.mapbox.com/help/getting-started/access-tokens/) API key to show the map for Hotspot onboarding.
+   2. You will need a [Google](https://developers.google.com/maps/documentation/javascript/get-api-key) API key for address and location search.
+2. Rename your application using [React Native Rename](https://github.com/junedomingo/react-native-rename). You will want to pass in the custom bundle identifier for [Android](https://developer.android.com/studio/build/configure-app-module#set_the_application_id) and also change it manually for [iOS](https://developer.apple.com/documentation/appstoreconnectapi/bundle_ids).
+3. Update your theme colors in [theme.ts](src/theme/theme.ts). The theme controls the look of the application.
+4. Add you Hotspot and Antenna data in the [makers](src/makers) folder. See the [Makers README](src/makers/README.md) for more detail.
+5. You will need to update your App Scheme for any deep linking. There are guides for both [iOS](https://developer.apple.com/documentation/xcode/defining-a-custom-url-scheme-for-your-app) and [Android](https://developer.android.com/training/app-links/deep-linking).
+
 ### React Native Dev Setup
 
 If you have already set up react native on your machine, skip to the [installing](#Installing) section.
