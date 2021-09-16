@@ -160,7 +160,7 @@ The fastest way to run the app is on the iOS simulator. Just type:
 yarn ios
 ```
 
-You can also open the `helium.xcworkspace` file in the `/ios` folder using xcode and run the app on your device or any other simulator.
+You can also open the `MakerApp.xcworkspace` file in the `/ios` folder using xcode and run the app on your device or any other simulator.
 
 #### Android
 
