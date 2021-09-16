@@ -127,8 +127,6 @@ const HotspotSetupPickLocationScreen = () => {
           onDidFinishLoadingMap={onDidFinishLoadingMap}
           zoomLevel={zoomLevel}
           currentLocationEnabled
-          showH3Grid
-          showNearbyHotspots
         />
         <Box
           position="absolute"
