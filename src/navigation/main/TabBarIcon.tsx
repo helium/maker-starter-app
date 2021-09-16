@@ -1,6 +1,6 @@
 import React, { memo } from 'react'
 import Cog from '@assets/images/cog.svg'
-import Hotspot from '@assets/images/hotspotIcon.svg'
+import Hotspot from '@assets/images/placeholder.svg'
 import Box from '../../components/Box'
 import { MainTabType, TabBarIconType } from './tabTypes'
 import { useColors } from '../../theme/themeHooks'
@@ -25,8 +25,8 @@ const Icon = ({
 }
 
 const TabBarIcon = ({ name, focused, size }: Props) => {
-  const { primary, error } = useColors()
-  const color = focused ? error : primary
+  const { black, bobcatRed } = useColors()
+  const color = focused ? bobcatRed : black
 
   return (
     <Box

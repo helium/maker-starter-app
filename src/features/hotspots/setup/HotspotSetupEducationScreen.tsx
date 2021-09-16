@@ -34,7 +34,11 @@ const HotspotEducationScreen = () => {
   const spacing = useSpacing()
   const colors = useColors()
 
-  const navNext = () => navigation.push('HotspotSetupDiagnosticsScreen', params)
+  const navNext = () =>
+    navigation.push('HotspotSetupInstructionsScreen', {
+      ...params,
+      slideIndex: 0,
+    })
 
   const handleClose = useCallback(() => rootNav.navigate('MainTabs'), [rootNav])
 
@@ -54,7 +58,7 @@ const HotspotEducationScreen = () => {
         variant="secondary"
         mode="text"
         onPress={navNext}
-        title={t('generic.skip_for_now')}
+        title={t('generic.skip')}
       />
     )
   }
@@ -77,7 +81,7 @@ const HotspotEducationScreen = () => {
       onClose={handleClose}
     >
       <Text
-        variant="h1"
+        variant="h2"
         numberOfLines={2}
         paddingHorizontal="lx"
         maxFontSizeMultiplier={1}

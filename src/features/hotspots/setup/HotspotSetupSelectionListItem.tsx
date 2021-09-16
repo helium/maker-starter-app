@@ -19,7 +19,7 @@ const HotspotSetupSelectionListItem = ({
 }: Props) => {
   const colors = useColors()
   const [pressing, setPressing] = useState<boolean>()
-  const svgColor = pressing ? colors.primary : colors.secondary
+  const svgColor = pressing ? colors.primary : colors.surfaceText
   const handlePressing = useCallback(
     (value: boolean) => () => setPressing(value),
     [],
@@ -32,7 +32,7 @@ const HotspotSetupSelectionListItem = ({
 
   return (
     <DebouncedTouchableHighlightBox
-      backgroundColor="white"
+      backgroundColor="surface"
       width="100%"
       paddingHorizontal="m"
       underlayColor={colors.secondaryBackground}
@@ -52,7 +52,7 @@ const HotspotSetupSelectionListItem = ({
         </Box>
         <Text
           variant="subtitle2"
-          color={pressing ? 'primary' : 'secondary'}
+          color={pressing ? 'primary' : 'surfaceText'}
           paddingVertical="l"
           paddingHorizontal="m"
           textAlign="center"

@@ -108,6 +108,8 @@ const AccountCreatePassphraseScreen = () => {
         marginBottom="m"
         mode="contained"
         disabled={disabled}
+        color="surfaceContrastText"
+        backgroundColor="surfaceContrast"
         variant="primary"
         onPress={() => navigation.push('AccountEnterPassphraseScreen')}
         title={t('account_setup.passphrase.next')}

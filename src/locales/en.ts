@@ -1,7 +1,7 @@
 export default {
   account_import: {
     alert: {
-      body: "This seed phrase doesn't correspond to a Helium account",
+      body: "This seed phrase doesn't correspond to an account",
       title: 'Error',
     },
     complete: {
@@ -23,7 +23,7 @@ export default {
     confirm: {
       forgot: 'I forgot my words',
       subtitle:
-        'Which word below was your <b><purple>{{ordinal}} word?</purple></b>',
+        'Which word below was your <b><errorText>{{ordinal}} word?</errorText></b>',
       title: 'Confirm\nYour Words',
     },
     confirm_pin: {
@@ -38,21 +38,21 @@ export default {
     passphrase: {
       next: 'I have written these down',
       subtitle:
-        'It is crucial you <b>write all of these\n12 words down, in order</b>.\n\n<red>Helium cannot recover these words.</red>',
+        'It is crucial you <b>write all of these\n12 words down, in order</b>.\n\n<errorText>They cannot be recovered.</errorText>',
       title: 'Your 12 Word\nPassword',
     },
     warning: {
       generate: 'Generate my 12 words',
       subtitle:
-        'Helium accounts are protected by\n<b><purple>12 unique words</purple></b>, that act as\na password for signing in or\nrecovering accounts.',
+        'Accounts are protected by\n<b><errorText>12 unique words</errorText></b>, that act as\na password for signing in or\nrecovering accounts.',
       title: 'Creating\nSecure Account.',
     },
     welcome: {
       create_account: 'Create an Account',
       import_account: 'Import Existing Account',
       subtitle:
-        'Host a Hotspot and earn <b><purple>$HNT</purple></b>,\na new cryptocurrency,\nfor building The People’s Network.',
-      title: 'Welcome\nto Helium',
+        'Lorem ipsum <b><errorText>$HNT</errorText></b> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      title: 'Welcome\nto Maker App',
     },
   },
   antennas: {
@@ -93,7 +93,7 @@ export default {
     ok: 'OK',
     scan_again: 'Scan Again',
     search_location: 'Search for an address or place',
-    skip_for_now: 'Skip for now',
+    skip: '[skip button]',
     something_went_wrong: 'Something went wrong',
     understand: 'I understand',
     unknown: 'Unknown',
@@ -143,27 +143,23 @@ export default {
     education: {
       cards: [
         {
-          subtitle:
-            'Hotspots love places where they can see plenty of sky and spaced at least 300 meters away from other Hotspots. ',
-          title: 'Give me a nice view',
+          subtitle: '[Placeholder]',
+          title: '[Placeholder]',
         },
         {
-          subtitle:
-            "Hotspots shouldn't hide in a nightstand or bookcase. Put it next to a window instead.",
-          title: "Don't hide me",
+          subtitle: '[Placeholder]',
+          title: '[Placeholder]',
         },
         {
-          subtitle:
-            "Nearby buildings may decrease your Hotspot's coverage for nearby devices.",
-          title: 'Buildings may block my signals',
+          subtitle: '[Placeholder]',
+          title: '[Placeholder]',
         },
         {
-          subtitle:
-            'Try to keep your Hotspot away from metal meshes, which can block radio signals dramatically.',
-          title: 'Finally - I hate bug screens!',
+          subtitle: '[Placeholder]',
+          title: '[Placeholder]',
         },
       ],
-      title: 'Placing\nyour Hotspot.',
+      title: '[Your Hotspot\nSetup Instructions]',
     },
     enable_location: {
       cancel: "No thanks, I'll set it up later",
@@ -236,7 +232,7 @@ export default {
       },
       alert_no_permissions: {
         body:
-          'Helium needs permission to use Bluetooth. You can enable Bluetooth permission in Settings.',
+          'MakerApp needs permission to use Bluetooth. You can enable Bluetooth permission in Settings.',
         title: 'Authorize Bluetooth',
       },
       scan: 'Scan for my Hotspot',
@@ -253,8 +249,7 @@ export default {
       title: 'REGISTERING HOTSPOT',
     },
     selection: {
-      subtitle:
-        'Select your Hotspot Maker below to add a Hotspot to the Helium Network.',
+      subtitle: '[Placeholder instructions]',
       title: 'Add\nyour Hotspot.',
     },
     skip_location: {
@@ -290,15 +285,15 @@ export default {
     view_activity: 'After adding a Hotspot, you can view your account on the ',
     explorer: 'Helium Explorer',
     empty: {
-      body: 'Start below to add your Hotspot\nto the Helium Network.',
+      body: 'Your add hotspot\ninstructions',
       hotspots: {
         add: 'Add Hotspot',
       },
-      title: 'Add a\nHelium Miner',
+      title: 'Add a\n[Placeholder] Miner',
     },
   },
   learn: {
-    next: "I've read the guide",
+    next: '[next button]',
   },
   more: {
     sections: {
@@ -347,7 +342,7 @@ export default {
   permissions: {
     location: {
       message:
-        'Helium needs access to your location for Bluetooth discovery and to enable location assertion. This information will never be sold or shared.',
+        'MakerApp needs access to your location for Bluetooth discovery and to enable location assertion. This information will never be sold or shared.',
       title: 'Location Permission',
     },
   },

@@ -7,6 +7,7 @@ import {
   createBox,
 } from '@shopify/restyle'
 import { TextInput as RNTextInput } from 'react-native'
+import tinycolor from 'tinycolor2'
 import { Colors, Theme } from '../theme/theme'
 import { useColors } from '../theme/themeHooks'
 
@@ -28,14 +29,21 @@ const TI = ({ variant, placeholderTextColor, ...rest }: Props) => {
   const colors = useColors()
 
   const getPlaceholderTextColor = useMemo(() => {
-    if (placeholderTextColor) return colors[placeholderTextColor]
+    const findColor = () => {
+      if (placeholderTextColor) return colors[placeholderTextColor]
 
-    if (variant === 'regular') {
-      return '#788AB4'
+      if (variant === 'regular') {
+        return colors.primaryText
+      }
+      if (variant === 'secondary') return colors.surfaceSecondaryText
+
+      return undefined
     }
-    if (variant === 'secondary') return colors.secondaryText
 
-    return undefined
+    const color = findColor()
+    if (!color) return
+
+    return tinycolor(color).setAlpha(0.6).toRgbString()
   }, [colors, placeholderTextColor, variant])
 
   return (

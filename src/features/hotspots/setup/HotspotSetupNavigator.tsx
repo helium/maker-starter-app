@@ -2,9 +2,6 @@ import * as React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 import HotspotSetupSelectionScreen from './HotspotSetupSelectionScreen'
 import HotspotSetupEducationScreen from './HotspotSetupEducationScreen'
-import HotspotSetupDiagnosticsScreen from './HotspotSetupDiagnosticsScreen'
-import HotspotSetupPowerScreen from './HotspotSetupPowerScreen'
-import HotspotSetupBluetoothInfoScreen from './HotspotSetupBluetoothInfoScreen'
 import HotspotSetupScanningScreen from './HotspotSetupScanningScreen'
 import HotspotSetupPickHotspotScreen from './HotspotSetupPickHotspotScreen'
 import HotspotSetupWifiScreen from './HotspotSetupWifiScreen'
@@ -23,6 +20,7 @@ import OwnedHotspotError from './OwnedHotspotError'
 import AntennaSetupScreen from './AntennaSetupScreen'
 import HotspotSetupExternalScreen from './HotspotSetupExternalScreen'
 import HotspotSetupExternalConfirmScreen from './HotspotSetupExternalConfirmScreen'
+import HotspotSetupInstructionsScreen from './HotspotSetupInstructionsScreen'
 
 const HotspotSetupStack = createStackNavigator()
 
@@ -49,16 +47,8 @@ const HotspotSetup = () => {
         component={HotspotSetupExternalConfirmScreen}
       />
       <HotspotSetupStack.Screen
-        name="HotspotSetupDiagnosticsScreen"
-        component={HotspotSetupDiagnosticsScreen}
-      />
-      <HotspotSetupStack.Screen
-        name="HotspotSetupPowerScreen"
-        component={HotspotSetupPowerScreen}
-      />
-      <HotspotSetupStack.Screen
-        name="HotspotSetupBluetoothInfoScreen"
-        component={HotspotSetupBluetoothInfoScreen}
+        name="HotspotSetupInstructionsScreen"
+        component={HotspotSetupInstructionsScreen}
       />
       <HotspotSetupStack.Screen
         name="HotspotSetupScanningScreen"

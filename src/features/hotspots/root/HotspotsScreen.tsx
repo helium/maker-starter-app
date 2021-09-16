@@ -9,14 +9,12 @@ import Box from '../../../components/Box'
 import Text from '../../../components/Text'
 import Button from '../../../components/Button'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
-import { useColors } from '../../../theme/themeHooks'
 import { EXPLORER_BASE_URL } from '../../../utils/config'
 import { getAddress } from '../../../utils/secureAccount'
 
 const HotspotsScreen = () => {
   const { t } = useTranslation()
   const navigation = useNavigation<RootNavigationProp>()
-  const { primaryText } = useColors()
   const [accountB58, setAccountB58] = useState('')
 
   useAsync(async () => {
@@ -42,7 +40,7 @@ const HotspotsScreen = () => {
           justifyContent="center"
           backgroundColor="primaryBackground"
         >
-          <Text variant="h1">{t('hotspots.empty.title')}</Text>
+          <Text variant="h2">{t('hotspots.empty.title')}</Text>
           <Text variant="body1" marginTop="ms">
             {t('hotspots.empty.body')}
           </Text>
@@ -52,7 +50,7 @@ const HotspotsScreen = () => {
             marginTop="l"
             mode="contained"
             title={t('hotspots.empty.hotspots.add')}
-            icon={<AddIcon color={primaryText} height={10} />}
+            Icon={AddIcon}
           />
           <Text variant="body1" marginTop="l">
             {t('hotspots.view_activity')}

@@ -1,13 +1,14 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react'
-import { TextStyle } from 'react-native'
+import { ActivityIndicator, TextStyle } from 'react-native'
 import { BoxProps } from '@shopify/restyle'
-
+import { SvgProps } from 'react-native-svg'
 import Text from './Text'
 import { Colors, TextVariant, Theme } from '../theme/theme'
 import TouchableOpacityBox from './TouchableOpacityBox'
 import Box from './Box'
 import WithDebounce from './WithDebounce'
+import { useColors } from '../theme/themeHooks'
 
 type Props = BoxProps<Theme> & {
   mode?: 'text' | 'contained'
@@ -19,13 +20,14 @@ type Props = BoxProps<Theme> & {
   textVariant?: TextVariant
   color?: Colors
   backgroundColor?: Colors
-  icon?: Element
+  Icon?: React.FC<SvgProps>
+  loading?: boolean
 }
 
 type ButtonVariant = 'primary' | 'secondary' | 'destructive'
 
 const containedBackground = {
-  primary: 'primary',
+  primary: 'surfaceContrast',
   secondary: 'secondary',
   destructive: 'error',
 } as Record<string, Colors>
@@ -40,10 +42,12 @@ const Button = ({
   textVariant,
   disabled,
   height,
-  icon,
+  Icon,
   backgroundColor,
+  loading,
   ...rest
 }: Props) => {
+  const colors = useColors()
   const getBackground = (): Colors | undefined => {
     if (backgroundColor) return backgroundColor
     if (mode !== 'contained') return undefined
@@ -54,7 +58,10 @@ const Button = ({
     if (color) return color
 
     if (mode === 'contained') {
-      return 'primaryText'
+      if (variant === 'secondary') {
+        return 'secondaryText'
+      }
+      return 'surfaceContrastText'
     }
 
     if (variant === 'secondary') {
@@ -82,7 +89,11 @@ const Button = ({
         alignItems="center"
         paddingHorizontal="ms"
       >
-        {icon && <Box marginEnd="xxs">{icon}</Box>}
+        {!!Icon && (
+          <Box marginEnd="xxs">
+            <Icon color={colors[getTextColor()]} height={10} />
+          </Box>
+        )}
         <Text
           maxFontSizeMultiplier={1.2}
           alignSelf="center"
@@ -93,6 +104,11 @@ const Button = ({
         >
           {title}
         </Text>
+        {loading && (
+          <Box marginStart="s">
+            <ActivityIndicator color={colors[getTextColor()]} />
+          </Box>
+        )}
       </TouchableOpacityBox>
     </Box>
   )

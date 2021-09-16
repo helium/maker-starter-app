@@ -19,9 +19,7 @@ type Route = RouteProp<
 >
 const HotspotSetupBluetoothSuccess = () => {
   const { t } = useTranslation()
-  const [connectStatus, setConnectStatus] = useState<'connecting' | boolean>(
-    false,
-  )
+  const [connectStatus, setConnectStatus] = useState<string | boolean>(false)
   const {
     params: { hotspotType },
   } = useRoute<Route>()
@@ -52,11 +50,12 @@ const HotspotSetupBluetoothSuccess = () => {
     async (hotspot: Device) => {
       if (connectStatus === 'connecting') return
 
-      setConnectStatus('connecting')
+      setConnectStatus(hotspot.id)
       try {
         await connect(hotspot)
         setConnectStatus(true)
       } catch (e) {
+        setConnectStatus(false)
         handleError(e)
       }
     },
@@ -128,7 +127,11 @@ const HotspotSetupBluetoothSuccess = () => {
         paddingHorizontal="lx"
         backgroundColor="secondaryBackground"
       >
-        <HotspotPairingList hotspots={scannedDevices} onPress={handleConnect} />
+        <HotspotPairingList
+          hotspots={scannedDevices}
+          onPress={handleConnect}
+          connect={connectStatus}
+        />
       </Box>
     </Box>
   )

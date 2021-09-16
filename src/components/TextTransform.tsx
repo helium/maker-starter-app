@@ -6,11 +6,10 @@ import Text from './Text'
 import { Theme } from '../theme/theme'
 
 const components = {
-  b: <Text />,
-  red: <Text color="error" />,
-  blue: <Text color="secondary" />,
-  white: <Text color="white" />,
-  purple: <Text color="primary" />,
+  b: <Text fontWeight="700" />,
+  errorText: <Text color="error" />,
+  secondaryText: <Text color="secondaryText" />,
+  primaryText: <Text color="primaryText" />,
 }
 
 type Props = TextProps<Theme> & {
