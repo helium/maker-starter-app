@@ -160,12 +160,6 @@ The fastest way to run the app is on the iOS simulator. Just type:
 yarn ios
 ```
 
-Or for a release build:
-
-```
-yarn ios-release
-```
-
 You can also open the `helium.xcworkspace` file in the `/ios` folder using xcode and run the app on your device or any other simulator.
 
 #### Android
@@ -174,12 +168,6 @@ Similar to iOS, run
 
 ```
 yarn android
-```
-
-Or for a release build:
-
-```
-yarn android-release
 ```
 
 You can also open the Android project in Android Studio by selecting `open an existing project` and selecting the `/android` folder.
