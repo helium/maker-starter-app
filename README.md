@@ -11,6 +11,7 @@
 3. Update your theme colors in [theme.ts](src/theme/theme.ts). The theme controls the look of the application.
 4. Add your Hotspot and Antenna data in the [makers](src/makers) folder. See the [Makers README](src/makers/README.md) for more detail.
 5. You will need to update your App Scheme for any deep linking. There are guides for both [iOS](https://developer.apple.com/documentation/xcode/defining-a-custom-url-scheme-for-your-app) and [Android](https://developer.android.com/training/app-links/deep-linking).
+6. The basics of the [Helium React Native SDK](https://github.com/helium/react-native-helium) and [Helium Blockchain API](https://docs.helium.com/api/blockchain/introduction/) have been integrated into this starter app. Review the docs to learn more.
 
 ### React Native Dev Setup
 
