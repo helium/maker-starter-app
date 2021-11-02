@@ -48,12 +48,19 @@ export default {
       title: 'Creating\nSecure Account.',
     },
     welcome: {
-      create_account: 'Create an Account',
-      import_account: 'Import Existing Account',
-      login_with_helium: 'Login With Helium',
+      create_account: 'Create an account on the Helium Network',
+      login_with_helium: 'Already have a Helium Wallet?\nTap to get started.',
       subtitle:
         'Lorem ipsum <b><errorText>$HNT</errorText></b> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
       title: 'Welcome\nto Maker App',
+    },
+    linkAccount: {
+      stepOne: '1. Download a supported Wallet App',
+      stepTwo: '2. Create account',
+      stepThree: '3. Come back to this app and sign in.',
+    },
+    createAccount: {
+      signInWith: 'Sign in with:',
     },
   },
   antennas: {
