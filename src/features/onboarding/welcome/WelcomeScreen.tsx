@@ -1,13 +1,14 @@
 import React, { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigation } from '@react-navigation/native'
-import Config from 'react-native-config'
+import { Linking } from 'react-native'
 import Button from '../../../components/Button'
 import Text from '../../../components/Text'
 import { OnboardingNavigationProp } from '../onboardingTypes'
 import Box from '../../../components/Box'
 import TextTransform from '../../../components/TextTransform'
 import SafeAreaBox from '../../../components/SafeAreaBox'
+import { APP_LINK_PROTOCOL } from '../../../providers/AppLinkProvider'
 
 const WelcomeScreen = () => {
   const { t } = useTranslation()
@@ -18,16 +19,14 @@ const WelcomeScreen = () => {
     [navigation],
   )
 
-  const importAccount = useCallback(() => {
-    const hasWords = !!Config.WORDS
-    if (!hasWords) {
-      navigation.push('AccountImportScreen')
-    } else {
-      navigation.push('ImportAccountConfirmScreen', {
-        words: Config.WORDS.split(','),
-      })
+  const importAccount = useCallback(async () => {
+    const url = `https://helium.com/link_wallet?callback=${APP_LINK_PROTOCOL}`
+    const canOpen = await Linking.canOpenURL(url)
+    if (!canOpen) {
+      return
     }
-  }, [navigation])
+    Linking.openURL(url)
+  }, [])
 
   return (
     <SafeAreaBox
@@ -58,7 +57,7 @@ const WelcomeScreen = () => {
         onPress={importAccount}
         mode="text"
         variant="secondary"
-        title={t('account_setup.welcome.import_account')}
+        title={t('account_setup.welcome.login_with_helium')}
       />
     </SafeAreaBox>
   )

@@ -19,6 +19,9 @@ target 'MakerApp' do
     # Pods for testing
   end
 
+   # temp fix for xcode 13 until https://github.com/dotintent/react-native-ble-plx/pull/900 merges
+   pod 'MultiplatformBleAdapter', :git => 'https://github.com/below/MultiPlatformBleAdapter', :tag => '0.1.9'
+
   # Enables Flipper.
   #
   # Note that if you have use_frameworks! enabled, Flipper will not work and

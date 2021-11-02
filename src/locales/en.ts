@@ -50,6 +50,7 @@ export default {
     welcome: {
       create_account: 'Create an Account',
       import_account: 'Import Existing Account',
+      login_with_helium: 'Login With Helium',
       subtitle:
         'Lorem ipsum <b><errorText>$HNT</errorText></b> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
       title: 'Welcome\nto Maker App',

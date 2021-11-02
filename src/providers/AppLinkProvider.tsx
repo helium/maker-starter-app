@@ -23,7 +23,7 @@ import {
   Payee,
 } from './appLinkTypes'
 
-const APP_LINK_PROTOCOL = 'makerappscheme://'
+export const APP_LINK_PROTOCOL = 'makerappscheme://'
 
 export const createAppLink = (
   resource: AppLinkCategoryType,
@@ -102,6 +102,7 @@ const useAppLink = () => {
   }, [isLocked, navToAppLink, unhandledAppLink, isBackedUp])
 
   const parseUrl = useCallback((url: string) => {
+    console.log({ url })
     if (!url) return
 
     const parsed = queryString.parseUrl(url)
