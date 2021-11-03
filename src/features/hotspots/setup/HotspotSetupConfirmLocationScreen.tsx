@@ -10,6 +10,7 @@ import {
   USDollars,
 } from '@helium/react-native-sdk'
 import type { Account } from '@helium/http'
+import { useAsync } from 'react-async-hook'
 import {
   HotspotSetupNavigationProp,
   HotspotSetupStackParamList,
@@ -22,7 +23,7 @@ import Map from '../../../components/Map'
 import Text from '../../../components/Text'
 import { decimalSeparator, groupSeparator } from '../../../utils/i18n'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
-import { getSecureItem } from '../../../utils/secureAccount'
+import { getAddress } from '../../../utils/secureAccount'
 import { getAccount } from '../../../utils/appDataClient'
 
 type Route = RouteProp<
@@ -47,8 +48,10 @@ const HotspotSetupConfirmLocationScreen = () => {
   const { params } = useRoute<Route>()
   const { onboardingRecord, elevation, gain, coords } = params
 
-  useEffect(() => {
-    getSecureItem('address').then(setOwnerAddress)
+  useAsync(async () => {
+    const address = await getAddress()
+    if (!address) return
+    setOwnerAddress(address)
   }, [])
 
   useEffect(() => {

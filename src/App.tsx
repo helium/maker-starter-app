@@ -59,7 +59,6 @@ const App = () => {
     isPinRequired,
     authInterval,
     isRestored,
-    isBackedUp,
     isRequestingPermission,
     isLocked,
   } = useSelector((state: RootState) => state.app)
@@ -96,13 +95,13 @@ const App = () => {
 
   // hide splash screen
   useAsync(async () => {
-    const loggedOut = isRestored && !isBackedUp
-    const loggedInAndLoaded = isRestored && isBackedUp
+    const loggedOut = isRestored
+    const loggedInAndLoaded = isRestored
 
     if (loggedOut || loggedInAndLoaded) {
       await SplashScreen.hideAsync()
     }
-  }, [isBackedUp, isRestored])
+  }, [isRestored])
 
   useEffect(() => {
     // Hide splash after 5 seconds, deal with the consequences?

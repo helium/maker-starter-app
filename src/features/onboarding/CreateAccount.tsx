@@ -1,6 +1,6 @@
 import React, { memo, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-import { AppLink } from '@helium/react-native-sdk'
+import { WalletLink } from '@helium/react-native-sdk'
 import { Linking, Platform } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import SafeAreaBox from '../../components/SafeAreaBox'
@@ -11,11 +11,11 @@ import { locale } from '../../utils/i18n'
 
 const CreateAccount = () => {
   const { t } = useTranslation()
-  const { supportedApps } = AppLink
+  const { supportedApps } = WalletLink
   const nav = useNavigation()
 
   const handleAppSelection = useCallback(
-    (app: AppLink.SupportedApp) => async () => {
+    (app: WalletLink.SupportedApp) => async () => {
       if (Platform.OS === 'android') {
         Linking.openURL(`market://details?id=${app.androidPackage}`)
       } else if (Platform.OS === 'ios') {
