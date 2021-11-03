@@ -309,8 +309,7 @@ export default {
         language: 'Language',
         signOut: 'Sign Out',
         signOutAlert: {
-          body:
-            'You are signing out of your account. Do you have your 12 recovery words? If you don’t, you will lose access to:\n\n- your Hotspots\n- your HNT\n- your Wallet',
+          body: 'You are signing out of your account.',
           title: 'Warning!',
         },
         title: 'App',
@@ -327,7 +326,6 @@ export default {
         enablePin: 'Enable PIN',
         requirePin: 'Require PIN',
         resetPin: 'Reset PIN',
-        revealWords: 'Reveal Words',
         title: 'Security',
       },
     },

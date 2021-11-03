@@ -8,7 +8,6 @@ import {
 import { Intervals } from '../../features/moreTab/more/useAuthIntervals'
 
 export type AppState = {
-  isBackedUp: boolean
   isSettingUpHotspot: boolean
   isRestored: boolean
   isPinRequired: boolean
@@ -16,9 +15,9 @@ export type AppState = {
   lastIdle: number | null
   isLocked: boolean
   isRequestingPermission: boolean
+  walletLinkToken?: string
 }
 const initialState: AppState = {
-  isBackedUp: false,
   isSettingUpHotspot: false,
   isRestored: false,
   isPinRequired: false,
@@ -33,23 +32,24 @@ type Restore = {
   isPinRequired: boolean
   authInterval: number
   isLocked: boolean
+  walletLinkToken?: string
 }
 
 export const restoreAppSettings = createAsyncThunk<Restore>(
   'app/restoreAppSettings',
   async () => {
-    const [isBackedUp, isPinRequired, authInterval] = await Promise.all([
-      getSecureItem('accountBackedUp'),
+    const [isPinRequired, authInterval, walletLinkToken] = await Promise.all([
       getSecureItem('requirePin'),
       getSecureItem('authInterval'),
+      getSecureItem('walletLinkToken'),
     ])
     return {
-      isBackedUp,
       isPinRequired,
       authInterval: authInterval
         ? parseInt(authInterval, 10)
         : Intervals.IMMEDIATELY,
       isLocked: isPinRequired,
+      walletLinkToken,
     } as Restore
   },
 )
@@ -60,10 +60,8 @@ const appSlice = createSlice({
   initialState,
   reducers: {
     backupAccount: (state, action: PayloadAction<string>) => {
-      setSecureItem('accountBackedUp', true)
       setSecureItem('requirePin', true)
       setSecureItem('userPin', action.payload)
-      state.isBackedUp = true
       state.isPinRequired = true
     },
     startHotspotSetup: (state) => {
@@ -84,6 +82,13 @@ const appSlice = createSlice({
     },
     updateLastIdle: (state) => {
       state.lastIdle = Date.now()
+    },
+    storeWalletLinkToken: (
+      state,
+      { payload: token }: PayloadAction<string>,
+    ) => {
+      state.walletLinkToken = token
+      setSecureItem('walletLinkToken', token)
     },
     lock: (state, action: PayloadAction<boolean>) => {
       state.isLocked = action.payload

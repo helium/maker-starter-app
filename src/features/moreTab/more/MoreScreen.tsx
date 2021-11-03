@@ -45,9 +45,6 @@ const MoreScreen = () => {
       case 'resetPin':
         navigation.push('AccountCreatePinScreen', { pinReset: true })
         break
-      case 'revealWords':
-        navigation.push('RevealWordsScreen')
-        break
     }
   }, [dispatch, params, navigation])
 
@@ -105,14 +102,6 @@ const MoreScreen = () => {
     [dispatch],
   )
 
-  const handleRevealWords = useCallback(() => {
-    if (app.isPinRequired) {
-      navigation.push('LockScreen', { requestType: 'revealWords' })
-    } else {
-      navigation.push('RevealWordsScreen')
-    }
-  }, [app.isPinRequired, navigation])
-
   const SectionData = useMemo(() => {
     let pin: MoreListItemType[] = [
       {
@@ -140,13 +129,6 @@ const MoreScreen = () => {
       ]
     }
 
-    pin = [
-      ...pin,
-      {
-        title: t('more.sections.security.revealWords'),
-        onPress: handleRevealWords,
-      },
-    ]
     return [
       {
         title: t('more.sections.security.title'),
@@ -176,7 +158,6 @@ const MoreScreen = () => {
     handlePinRequired,
     app.isPinRequired,
     app.authInterval,
-    handleRevealWords,
     language,
     handleLanguageChange,
     handleSignOut,
