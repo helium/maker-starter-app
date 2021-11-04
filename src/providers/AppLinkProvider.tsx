@@ -19,6 +19,7 @@ import {
   AppLinkCategories,
   AppLinkCategoryType,
   WalletLink,
+  HotspotLink,
 } from './appLinkTypes'
 import { useAppDispatch } from '../store/store'
 import appSlice from '../store/user/appSlice'
@@ -78,11 +79,16 @@ const useAppLink = () => {
         }
         case 'link_wallet': {
           const walletLink = record as WalletLink
-          if (walletLink.status === 'success') {
+          if (walletLink.status === 'success' && walletLink.token) {
             dispatch(appSlice.actions.storeWalletLinkToken(walletLink.token))
           } else {
             // TODO: handle error
           }
+          break
+        }
+        case 'sign_hotspot': {
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          const hotspotLink = record as HotspotLink
           break
         }
       }
@@ -120,7 +126,7 @@ const useAppLink = () => {
     }
 
     if (!record.type || !AppLinkCategories.find((k) => k === record.type)) {
-      throw new Error(`Unsupported QR Type: ${record.type}`)
+      throw new Error(`Unsupported Link: ${JSON.stringify(record)}`)
     }
     return record
   }, [])

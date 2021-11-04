@@ -107,7 +107,7 @@ const HotspotTxnsProgressScreen = () => {
       requestAppId: getBundleId(),
       requestAppName: getApplicationName(),
       token,
-    } as WalletLink.SignHotspot
+    } as WalletLink.SignHotspotRequest
 
     // check if add gateway needed
     const isOnChain = await hotspotOnChain(address)
@@ -122,30 +122,7 @@ const HotspotTxnsProgressScreen = () => {
           })
           return
         }
-        updateParams.qrAddGatewayTxn = qrAddGatewayTxn
-
-        // try {
-        //   const txn = AddGateway.txnFromString(qrAddGatewayTxn)
-
-        //   const keypair = await getKeypair()
-
-        //   const txnOwnerSigned = await txn.sign({
-        //     owner: keypair,
-        //   })
-
-        //   const stakingServerSignedTxnStr = await Onboarding.getOnboardingSignedTransaction(
-        //     address,
-        //     txnOwnerSigned.toString(),
-        //   )
-
-        //   const stakingServerSignedTxn = AddGateway.txnFromString(
-        //     stakingServerSignedTxnStr,
-        //   )
-
-        //   await submitTxn(stakingServerSignedTxn.toString())
-        // } catch (error) {
-        //   await handleError(error, 'add_gateway')
-        //   return
+        updateParams.addGatewayTxn = qrAddGatewayTxn
       }
     } else {
       // Gateway BLE scanned
@@ -219,13 +196,12 @@ const HotspotTxnsProgressScreen = () => {
         </Box>
       </Box>
       <DebouncedButton
-        onPress={submitOnboardingTxns}
-        // onPress={() => navigation.navigate('MainTabs')}
+        onPress={() => navigation.navigate('MainTabs')}
         variant="primary"
         width="100%"
         mode="contained"
         title={t('hotspot_setup.progress.next')}
-        // disabled={!finished}
+        disabled={!finished}
       />
     </SafeAreaBox>
   )
