@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { useHotspotBle } from '@helium/react-native-sdk'
+import { ActivityIndicator } from 'react-native'
 import Box from '../../../components/Box'
 import { DebouncedButton } from '../../../components/Button'
 import SafeAreaBox from '../../../components/SafeAreaBox'
@@ -11,14 +12,15 @@ import {
   HotspotSetupStackParamList,
 } from './hotspotSetupTypes'
 import sleep from '../../../utils/sleep'
+import { useColors } from '../../../theme/themeHooks'
 
 type Route = RouteProp<HotspotSetupStackParamList, 'HotspotSetupScanningScreen'>
 
 const SCAN_DURATION = 6000
 const HotspotSetupScanningScreen = () => {
   const { t } = useTranslation()
+  const { primaryText } = useColors()
   const { startScan, stopScan } = useHotspotBle()
-
   const { params } = useRoute<Route>()
   const navigation = useNavigation<HotspotSetupNavigationProp>()
 
@@ -56,7 +58,9 @@ const HotspotSetupScanningScreen = () => {
       >
         {t('hotspot_setup.ble_scan.title')}
       </Text>
-      <Box flex={1} />
+      <Box flex={1} justifyContent="center">
+        <ActivityIndicator color={primaryText} />
+      </Box>
       <DebouncedButton
         marginBottom="m"
         justifyContent="flex-end"

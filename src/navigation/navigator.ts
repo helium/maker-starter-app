@@ -48,6 +48,10 @@ const submitGatewayTxns = (params: HotspotLink) => {
   })
 }
 
+const goToMainTabs = () => {
+  navigationRef.current?.navigate('MainTabs')
+}
+
 export default {
   lock,
   send,
@@ -55,4 +59,5 @@ export default {
   viewValidator,
   confirmAddGateway,
   submitGatewayTxns,
+  goToMainTabs,
 }
