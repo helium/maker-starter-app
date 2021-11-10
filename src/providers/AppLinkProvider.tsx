@@ -87,8 +87,8 @@ const useAppLink = () => {
           break
         }
         case 'sign_hotspot': {
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           const hotspotLink = record as HotspotLink
+          navigator.submitGatewayTxns(hotspotLink)
           break
         }
       }

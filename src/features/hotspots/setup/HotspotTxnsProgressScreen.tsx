@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
 import { isString } from 'lodash'
@@ -8,10 +8,9 @@ import {
   WalletLink,
   Location,
 } from '@helium/react-native-sdk'
-import { getApplicationName, getBundleId } from 'react-native-device-info'
-import { Linking, Platform } from 'react-native'
+import { getBundleId } from 'react-native-device-info'
+import { ActivityIndicator, Linking, Platform } from 'react-native'
 import Box from '../../../components/Box'
-import { DebouncedButton } from '../../../components/Button'
 import Text from '../../../components/Text'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
 import SafeAreaBox from '../../../components/SafeAreaBox'
@@ -19,7 +18,7 @@ import { getHotspotDetails } from '../../../utils/appDataClient'
 import useAlert from '../../../utils/useAlert'
 import { HotspotSetupStackParamList } from './hotspotSetupTypes'
 import { getSecureItem } from '../../../utils/secureAccount'
-import { APP_LINK_PROTOCOL } from '../../../providers/AppLinkProvider'
+import { useColors } from '../../../theme/themeHooks'
 
 type Route = RouteProp<HotspotSetupStackParamList, 'HotspotTxnsProgressScreen'>
 
@@ -28,14 +27,15 @@ const HotspotTxnsProgressScreen = () => {
   const { params } = useRoute<Route>()
   const navigation = useNavigation<RootNavigationProp>()
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [finished, setFinished] = useState(false)
   const { showOKAlert } = useAlert()
   const { createGatewayTxn } = useHotspotBle()
+  const { primaryText } = useColors()
 
   const handleError = async (
     error: unknown,
     source: 'assert_location' | 'add_gateway',
   ) => {
+    // eslint-disable-next-line no-console
     console.error(error)
     let titleKey = 'generic.error'
     let messageKey =
@@ -92,7 +92,7 @@ const HotspotTxnsProgressScreen = () => {
 
     const address = params?.hotspotAddress
 
-    const requestApp = WalletLink.supportedApps.find(
+    const requestApp = WalletLink.delegateApps.find(
       ({ androidPackage, iosBundleId }) => {
         const id = Platform.OS === 'android' ? androidPackage : iosBundleId
         return id === signingAppId
@@ -101,11 +101,8 @@ const HotspotTxnsProgressScreen = () => {
 
     if (!requestApp) return
     const updateParams = {
-      gateway: address,
       universalLink: requestApp.universalLink,
-      callbackUrl: APP_LINK_PROTOCOL,
       requestAppId: getBundleId(),
-      requestAppName: getApplicationName(),
       token,
     } as WalletLink.SignHotspotRequest
 
@@ -142,7 +139,6 @@ const HotspotTxnsProgressScreen = () => {
     if (params.coords) {
       const [lng, lat] = params.coords
       const onboardingRecord = params?.onboardingRecord
-      updateParams.makerName = onboardingRecord.maker.name
 
       try {
         const assertLocationTxn = await Location.createLocationTxn({
@@ -161,10 +157,7 @@ const HotspotTxnsProgressScreen = () => {
       } catch (error) {
         handleError(error, 'assert_location')
       }
-    } else {
-      // setFinished(true)
     }
-
     const url = WalletLink.createUpdateHotspotUrl(updateParams)
     if (!Linking.canOpenURL(url)) return
 
@@ -187,22 +180,10 @@ const HotspotTxnsProgressScreen = () => {
         <Text variant="subtitle1" marginBottom="l">
           {t('hotspot_setup.progress.title')}
         </Text>
-        <Box paddingHorizontal="l">
-          {finished && (
-            <Text variant="body1" textAlign="center" marginBottom="l">
-              {t('hotspot_setup.progress.subtitle')}
-            </Text>
-          )}
+        <Box flex={1} justifyContent="center">
+          <ActivityIndicator color={primaryText} />
         </Box>
       </Box>
-      <DebouncedButton
-        onPress={() => navigation.navigate('MainTabs')}
-        variant="primary"
-        width="100%"
-        mode="contained"
-        title={t('hotspot_setup.progress.next')}
-        disabled={!finished}
-      />
     </SafeAreaBox>
   )
 }

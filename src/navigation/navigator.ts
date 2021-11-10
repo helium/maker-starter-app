@@ -1,7 +1,7 @@
 import React from 'react'
 import { NavigationContainerRef } from '@react-navigation/native'
 import { LockScreenRequestType } from './main/tabTypes'
-import { AppLink } from '../providers/appLinkTypes'
+import { AppLink, HotspotLink } from '../providers/appLinkTypes'
 
 export const navigationRef = React.createRef<NavigationContainerRef>()
 
@@ -41,4 +41,18 @@ const confirmAddGateway = (addGatewayTxn: string) => {
   })
 }
 
-export default { lock, send, viewHotspot, viewValidator, confirmAddGateway }
+const submitGatewayTxns = (params: HotspotLink) => {
+  navigationRef.current?.navigate('HotspotSetup', {
+    screen: 'HotspotTxnsSubmitScreen',
+    params,
+  })
+}
+
+export default {
+  lock,
+  send,
+  viewHotspot,
+  viewValidator,
+  confirmAddGateway,
+  submitGatewayTxns,
+}

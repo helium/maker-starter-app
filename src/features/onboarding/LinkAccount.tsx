@@ -2,28 +2,25 @@ import React, { memo, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { WalletLink } from '@helium/react-native-sdk'
 import { Linking, Platform } from 'react-native'
-import { getApplicationName, getBundleId } from 'react-native-device-info'
+import { getBundleId } from 'react-native-device-info'
 import SafeAreaBox from '../../components/SafeAreaBox'
 import Text from '../../components/Text'
 import Box from '../../components/Box'
 import TouchableOpacityBox from '../../components/TouchableOpacityBox'
-import { APP_LINK_PROTOCOL } from '../../providers/AppLinkProvider'
 
 const LinkAccount = () => {
   const { t } = useTranslation()
-  const { supportedApps } = WalletLink
+  const { delegateApps } = WalletLink
 
   const handleAppSelection = useCallback(
-    (app: WalletLink.SupportedApp) => async () => {
+    (app: WalletLink.DelegateApp) => async () => {
       try {
         const canOpen = await Linking.canOpenURL(app.urlScheme)
         if (!canOpen) return
 
         const url = WalletLink.createWalletLinkUrl({
           universalLink: app.universalLink,
-          callbackUrl: APP_LINK_PROTOCOL,
           requestAppId: getBundleId(),
-          requestAppName: getApplicationName(),
         })
         Linking.openURL(url)
       } catch (error) {}
@@ -38,7 +35,7 @@ const LinkAccount = () => {
       </Text>
 
       <Box flexDirection="row" marginBottom="l">
-        {supportedApps.map((app) => (
+        {delegateApps.map((app) => (
           <TouchableOpacityBox
             key={
               Platform.OS === 'android' ? app.androidPackage : app.iosBundleId

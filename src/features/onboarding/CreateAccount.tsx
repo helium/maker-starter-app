@@ -11,11 +11,11 @@ import { locale } from '../../utils/i18n'
 
 const CreateAccount = () => {
   const { t } = useTranslation()
-  const { supportedApps } = WalletLink
+  const { delegateApps } = WalletLink
   const nav = useNavigation()
 
   const handleAppSelection = useCallback(
-    (app: WalletLink.SupportedApp) => async () => {
+    (app: WalletLink.DelegateApp) => async () => {
       if (Platform.OS === 'android') {
         Linking.openURL(`market://details?id=${app.androidPackage}`)
       } else if (Platform.OS === 'ios') {
@@ -35,9 +35,9 @@ const CreateAccount = () => {
       </Text>
 
       <Box flexDirection="row" marginBottom="l">
-        {supportedApps.map((app) => (
+        {delegateApps.map((app) => (
           <TouchableOpacityBox
-            key={app.id}
+            key={app.name}
             backgroundColor="surface"
             padding="s"
             paddingHorizontal="m"
