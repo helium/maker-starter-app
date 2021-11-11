@@ -27,6 +27,7 @@ const HotspotSetupBluetoothSuccess = () => {
   const {
     scannedDevices,
     connect,
+    isConnected,
     checkFirmwareCurrent,
     readWifiNetworks,
     getOnboardingAddress,
@@ -52,14 +53,17 @@ const HotspotSetupBluetoothSuccess = () => {
 
       setConnectStatus(hotspot.id)
       try {
-        await connect(hotspot)
+        const connected = await isConnected()
+        if (!connected) {
+          await connect(hotspot)
+        }
         setConnectStatus(true)
       } catch (e) {
         setConnectStatus(false)
         handleError(e)
       }
     },
-    [connect, connectStatus, handleError],
+    [connect, connectStatus, handleError, isConnected],
   )
 
   useEffect(() => {
