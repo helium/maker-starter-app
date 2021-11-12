@@ -19,6 +19,7 @@ import useAlert from '../../../utils/useAlert'
 import { HotspotSetupStackParamList } from './hotspotSetupTypes'
 import { getSecureItem } from '../../../utils/secureAccount'
 import { useColors } from '../../../theme/themeHooks'
+import { DebouncedButton } from '../../../components/Button'
 
 type Route = RouteProp<HotspotSetupStackParamList, 'HotspotTxnsProgressScreen'>
 
@@ -184,6 +185,13 @@ const HotspotTxnsProgressScreen = () => {
           <ActivityIndicator color={primaryText} />
         </Box>
       </Box>
+      <DebouncedButton
+        onPress={() => navigation.navigate('MainTabs')}
+        variant="primary"
+        width="100%"
+        mode="contained"
+        title={t('generic.cancel')}
+      />
     </SafeAreaBox>
   )
 }
