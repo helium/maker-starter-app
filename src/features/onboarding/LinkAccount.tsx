@@ -21,6 +21,8 @@ const LinkAccount = () => {
         const url = WalletLink.createWalletLinkUrl({
           universalLink: app.universalLink,
           requestAppId: getBundleId(),
+          callbackUrl: 'makerappscheme://',
+          appName: 'Maker App',
         })
         Linking.openURL(url)
       } catch (error) {}
