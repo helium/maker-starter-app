@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
 import { isString } from 'lodash'
@@ -8,18 +8,18 @@ import {
   WalletLink,
   Location,
 } from '@helium/react-native-sdk'
-import { getBundleId } from 'react-native-device-info'
-import { ActivityIndicator, Linking, Platform } from 'react-native'
+import { ActivityIndicator, Linking } from 'react-native'
 import Box from '../../../components/Box'
 import Text from '../../../components/Text'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
 import SafeAreaBox from '../../../components/SafeAreaBox'
-import { getHotspotDetails } from '../../../utils/appDataClient'
+import { hotspotOnChain } from '../../../utils/appDataClient'
 import useAlert from '../../../utils/useAlert'
 import { HotspotSetupStackParamList } from './hotspotSetupTypes'
 import { getSecureItem } from '../../../utils/secureAccount'
 import { useColors } from '../../../theme/themeHooks'
 import { DebouncedButton } from '../../../components/Button'
+import useMount from '../../../utils/useMount'
 
 type Route = RouteProp<HotspotSetupStackParamList, 'HotspotTxnsProgressScreen'>
 
@@ -27,29 +27,22 @@ const HotspotTxnsProgressScreen = () => {
   const { t } = useTranslation()
   const { params } = useRoute<Route>()
   const navigation = useNavigation<RootNavigationProp>()
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { showOKAlert } = useAlert()
   const { createGatewayTxn } = useHotspotBle()
   const { primaryText } = useColors()
 
-  const handleError = async (
-    error: unknown,
-    source: 'assert_location' | 'add_gateway',
-  ) => {
+  const handleError = async (error: unknown) => {
     // eslint-disable-next-line no-console
     console.error(error)
     let titleKey = 'generic.error'
-    let messageKey =
-      source === 'assert_location'
-        ? 'hotspot_setup.add_hotspot.assert_loc_error_body'
-        : 'hotspot_setup.add_hotspot.add_hotspot_error_body'
+    let messageKey = 'generice.something_went_wrong'
 
     if (isString(error)) {
       if (error === HotspotErrorCode.WAIT) {
         messageKey = t('hotspot_setup.add_hotspot.wait_error_body')
         titleKey = t('hotspot_setup.add_hotspot.wait_error_title')
       } else {
-        messageKey = `Got error code ${error} from ${source}`
+        messageKey = `Got error code ${error}`
       }
     }
 
@@ -57,82 +50,40 @@ const HotspotTxnsProgressScreen = () => {
     navigation.navigate('MainTabs')
   }
 
-  const hotspotOnChain = async (address: string): Promise<boolean> => {
-    try {
-      await getHotspotDetails(address)
-      return true
-    } catch (error) {
-      return false
-    }
-  }
-
   const submitOnboardingTxns = async () => {
     const token = await getSecureItem('walletLinkToken')
-    if (!token) return
+    if (!token) throw new Error('Token Not found')
+
     const parsed = WalletLink.parseWalletLinkToken(token)
-    if (!parsed?.address) return
-    const { address: ownerAddress, signingAppId } = parsed
+    if (!parsed?.address) throw new Error('Invalid Token')
 
-    const qrAddGatewayTxn = params?.addGatewayTxn
+    const { address: ownerAddress } = parsed
 
-    if (!params.hotspotAddress && !qrAddGatewayTxn) {
-      showOKAlert({
-        titleKey: 'hotspot_setup.onboarding_error.title',
-        messageKey: 'hotspot_setup.onboarding_error.disconnected',
-      })
-      return
+    const { hotspotAddress, addGatewayTxn: qrAddGatewayTxn } = params
+
+    if (!hotspotAddress) {
+      if (qrAddGatewayTxn) {
+        throw new Error('Hotspot not found')
+      } else {
+        throw new Error('Hotspot disconnected')
+      }
     }
 
-    if (qrAddGatewayTxn && !params?.hotspotAddress) {
-      showOKAlert({
-        titleKey: 'hotspot_setup.onboarding_error.title',
-        messageKey: 'hotspot_setup.onboarding_error.subtitle',
-      })
-      return
-    }
-
-    const address = params?.hotspotAddress
-
-    const requestApp = WalletLink.delegateApps.find(
-      ({ androidPackage, iosBundleId }) => {
-        const id = Platform.OS === 'android' ? androidPackage : iosBundleId
-        return id === signingAppId
-      },
-    )
-
-    if (!requestApp) return
     const updateParams = {
-      universalLink: requestApp.universalLink,
-      requestAppId: getBundleId(),
       token,
     } as WalletLink.SignHotspotRequest
 
     // check if add gateway needed
-    const isOnChain = await hotspotOnChain(address)
+    const isOnChain = await hotspotOnChain(hotspotAddress)
     if (!isOnChain) {
       // if so, construct and publish add gateway
       if (qrAddGatewayTxn) {
-        // Gateway Txn scanned from QR
-        if (!address) {
-          showOKAlert({
-            titleKey: 'hotspot_setup.onboarding_error.title',
-            messageKey: 'hotspot_setup.onboarding_error.disconnected',
-          })
-          return
-        }
+        // Gateway QR scanned
         updateParams.addGatewayTxn = qrAddGatewayTxn
-      }
-    } else {
-      // Gateway BLE scanned
-      if (!ownerAddress) {
-        throw new Error('User is not linked to wallet')
-      }
-      try {
+      } else {
+        // Gateway BLE scanned
         const addGatewayTxn = await createGatewayTxn(ownerAddress)
         updateParams.addGatewayTxn = addGatewayTxn
-      } catch (error) {
-        await handleError(error, 'add_gateway')
-        return
       }
     }
 
@@ -141,34 +92,34 @@ const HotspotTxnsProgressScreen = () => {
       const [lng, lat] = params.coords
       const onboardingRecord = params?.onboardingRecord
 
-      try {
-        const assertLocationTxn = await Location.createLocationTxn({
-          gateway: address,
-          lat,
-          lng,
-          decimalGain: params.gain,
-          elevation: params.elevation,
-          dataOnly: false,
-          owner: ownerAddress,
-          // currentLocation: '', // If reasserting location, put previous location here
-          makerAddress: onboardingRecord.maker.address,
-          locationNonceLimit: onboardingRecord.maker.locationNonceLimit || 0,
-        })
-        updateParams.assertLocationTxn = assertLocationTxn.toString()
-      } catch (error) {
-        handleError(error, 'assert_location')
-      }
+      const assertLocationTxn = await Location.createLocationTxn({
+        gateway: hotspotAddress,
+        lat,
+        lng,
+        decimalGain: params.gain,
+        elevation: params.elevation,
+        dataOnly: false,
+        owner: ownerAddress,
+        // currentLocation: '', // If reasserting location, put previous location here
+        makerAddress: onboardingRecord.maker.address,
+        locationNonceLimit: onboardingRecord.maker.locationNonceLimit || 0,
+      })
+      updateParams.assertLocationTxn = assertLocationTxn.toString()
     }
+
     const url = WalletLink.createUpdateHotspotUrl(updateParams)
-    if (!Linking.canOpenURL(url)) return
+    if (!url || !Linking.canOpenURL(url)) return
 
     Linking.openURL(url)
   }
 
-  useEffect(() => {
-    submitOnboardingTxns()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  useMount(() => {
+    try {
+      submitOnboardingTxns()
+    } catch (e) {
+      handleError(e)
+    }
+  })
 
   return (
     <SafeAreaBox

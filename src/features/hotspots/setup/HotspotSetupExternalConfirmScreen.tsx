@@ -3,7 +3,6 @@ import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
 import Fingerprint from '@assets/images/fingerprint.svg'
 import { ActivityIndicator } from 'react-native'
-import { useAsync } from 'react-async-hook'
 import { AddGateway, Onboarding } from '@helium/react-native-sdk'
 import BackScreen from '../../../components/BackScreen'
 import Box from '../../../components/Box'
@@ -17,6 +16,7 @@ import animateTransition from '../../../utils/animateTransition'
 import { DebouncedButton } from '../../../components/Button'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
 import { getAddress } from '../../../utils/secureAccount'
+import useMount from '../../../utils/useMount'
 
 type Route = RouteProp<
   HotspotSetupStackParamList,
@@ -29,7 +29,7 @@ const HotspotSetupExternalConfirmScreen = () => {
   const navigation = useNavigation<HotspotSetupNavigationProp>()
   const colors = useColors()
   const breakpoints = useBreakpoints()
-  const [address, setAddress] = useState('')
+  const [address, setAddress] = useState<string>()
   const [publicKey, setPublicKey] = useState('')
   const [macAddress, setMacAddress] = useState('')
   const [ownerAddress, setOwnerAddress] = useState('')
@@ -41,10 +41,9 @@ const HotspotSetupExternalConfirmScreen = () => {
 
   const handleClose = useCallback(() => rootNav.navigate('MainTabs'), [rootNav])
 
-  useAsync(async () => {
-    const accountAddress = await getAddress()
-    setAddress(accountAddress?.b58 || '')
-  }, [])
+  useMount(() => {
+    getAddress().then(setAddress)
+  })
 
   useEffect(() => {
     if (!publicKey) return

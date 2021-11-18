@@ -27,3 +27,12 @@ export const getCurrentOraclePrice = async () => {
 export const getPredictedOraclePrice = async () => {
   return heliumHttpClient.oracle.getPredictedPrice()
 }
+
+export const hotspotOnChain = async (address: string) => {
+  try {
+    await getHotspotDetails(address)
+    return true
+  } catch (error) {
+    return false
+  }
+}
