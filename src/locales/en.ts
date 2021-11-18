@@ -308,6 +308,7 @@ export default {
       app: {
         language: 'Language',
         signOut: 'Sign Out',
+        signOutWithLink: 'Sign Out - Linked as: {{address}}',
         signOutAlert: {
           body: 'You are signing out of your account.',
           title: 'Warning!',

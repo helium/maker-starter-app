@@ -1,10 +1,19 @@
-import React, { memo, ReactText, useCallback, useEffect, useMemo } from 'react'
+import React, {
+  memo,
+  ReactText,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert, SectionList } from 'react-native'
 import { useSelector } from 'react-redux'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { isEqual } from 'lodash'
 import { Edge } from 'react-native-safe-area-context'
+import { WalletLink } from '@helium/react-native-sdk'
+import { useAsync } from 'react-async-hook'
 import SafeAreaBox from '../../../components/SafeAreaBox'
 import Text from '../../../components/Text'
 import { RootState } from '../../../store/rootReducer'
@@ -21,6 +30,7 @@ import { useSpacing } from '../../../theme/themeHooks'
 import Box from '../../../components/Box'
 import { SUPPORTED_LANGUAGUES } from '../../../utils/i18n/i18nTypes'
 import { useLanguageContext } from '../../../providers/LanguageProvider'
+import { getSecureItem } from '../../../utils/secureAccount'
 
 type Route = RouteProp<RootStackParamList & MoreStackParamList, 'MoreScreen'>
 const MoreScreen = () => {
@@ -32,6 +42,19 @@ const MoreScreen = () => {
   const navigation = useNavigation<MoreNavigationProp & RootNavigationProp>()
   const spacing = useSpacing()
   const { changeLanguage, language } = useLanguageContext()
+  const [address, setAddress] = useState('')
+
+  useAsync(async () => {
+    const token = await getSecureItem('walletLinkToken')
+    if (!token) return ''
+    const parsedToken = WalletLink.parseWalletLinkToken(token)
+
+    const truncatedAddress = [
+      parsedToken.address.slice(0, 8),
+      parsedToken.address.slice(-8),
+    ].join('...')
+    setAddress(truncatedAddress)
+  }, [])
 
   useEffect(() => {
     if (!params?.pinVerifiedFor) return
@@ -146,7 +169,7 @@ const MoreScreen = () => {
             },
           },
           {
-            title: t('more.sections.app.signOut'),
+            title: t('more.sections.app.signOutWithLink', { address }),
             onPress: handleSignOut,
             destructive: true,
           },
@@ -160,6 +183,7 @@ const MoreScreen = () => {
     app.authInterval,
     language,
     handleLanguageChange,
+    address,
     handleSignOut,
     authIntervals,
     handleIntervalSelected,
