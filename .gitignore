@@ -34,6 +34,8 @@ local.properties
 #
 .vscode/
 
+*.hprof
+
 # node.js
 #
 node_modules/
@@ -67,3 +69,5 @@ buck-out/
 
 #
 .env
+
+.expo
