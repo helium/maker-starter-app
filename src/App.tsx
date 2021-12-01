@@ -95,10 +95,7 @@ const App = () => {
 
   // hide splash screen
   useAsync(async () => {
-    const loggedOut = isRestored
-    const loggedInAndLoaded = isRestored
-
-    if (loggedOut || loggedInAndLoaded) {
+    if (isRestored) {
       await SplashScreen.hideAsync()
     }
   }, [isRestored])
