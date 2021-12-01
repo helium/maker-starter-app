@@ -15,17 +15,18 @@ const LinkAccount = () => {
   const handleAppSelection = useCallback(
     (app: WalletLink.DelegateApp) => async () => {
       try {
-        const canOpen = await Linking.canOpenURL(app.urlScheme)
-        if (!canOpen) return
-
         const url = WalletLink.createWalletLinkUrl({
           universalLink: app.universalLink,
           requestAppId: getBundleId(),
           callbackUrl: 'makerappscheme://',
           appName: 'Maker App',
         })
+
         Linking.openURL(url)
-      } catch (error) {}
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error(error)
+      }
     },
     [],
   )

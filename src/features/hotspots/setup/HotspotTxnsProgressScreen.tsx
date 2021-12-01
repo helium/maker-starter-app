@@ -108,7 +108,11 @@ const HotspotTxnsProgressScreen = () => {
     }
 
     const url = WalletLink.createUpdateHotspotUrl(updateParams)
-    if (!url || !Linking.canOpenURL(url)) return
+    if (!url) {
+      // eslint-disable-next-line no-console
+      console.error('Link could not be created')
+      return
+    }
 
     Linking.openURL(url)
   }
