@@ -2,7 +2,11 @@ import React, { useCallback, useMemo, useState } from 'react'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
 import Icon from '@assets/images/placeholder.svg'
-import { BarCodeScanner, BarCodeScannerResult } from 'expo-barcode-scanner'
+import {
+  BarCodeScanner,
+  BarCodeScannerResult,
+  usePermissions,
+} from 'expo-barcode-scanner'
 import { Camera } from 'expo-camera'
 import { useDebouncedCallback } from 'use-debounce/lib'
 import Toast from 'react-native-simple-toast'
@@ -32,6 +36,10 @@ const HotspotSetupExternalScreen = () => {
   const { handleBarCode } = useAppLinkContext()
   const { triggerNotification } = useHaptic()
   const navigation = useNavigation<RootNavigationProp>()
+
+  const [perms] = usePermissions({
+    request: true,
+  })
 
   useMount(() => {
     getAddress().then(setAddress)
@@ -190,7 +198,7 @@ const HotspotSetupExternalScreen = () => {
           </Text>
         </TouchableOpacity>
 
-        {isQr && (
+        {isQr && perms?.granted && (
           <>
             <Box flex={1} />
             <Box
