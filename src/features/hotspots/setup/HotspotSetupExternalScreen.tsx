@@ -2,9 +2,12 @@ import React, { useCallback, useMemo, useState } from 'react'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
 import Icon from '@assets/images/placeholder.svg'
-import { BarCodeScanner, BarCodeScannerResult } from 'expo-barcode-scanner'
+import {
+  BarCodeScanner,
+  BarCodeScannerResult,
+  usePermissions,
+} from 'expo-barcode-scanner'
 import { Camera } from 'expo-camera'
-import { useAsync } from 'react-async-hook'
 import { useDebouncedCallback } from 'use-debounce/lib'
 import Toast from 'react-native-simple-toast'
 import { StyleSheet, Linking, ScrollView } from 'react-native'
@@ -20,6 +23,7 @@ import { useAppLinkContext } from '../../../providers/AppLinkProvider'
 import useHaptic from '../../../utils/useHaptic'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
 import { HotspotMakerModels } from '../../../makers'
+import useMount from '../../../utils/useMount'
 
 type Route = RouteProp<HotspotSetupStackParamList, 'HotspotSetupExternalScreen'>
 
@@ -28,15 +32,18 @@ const HotspotSetupExternalScreen = () => {
   const { params } = useRoute<Route>()
   const colors = useColors()
   const { xl } = useBorderRadii()
-  const [address, setAddress] = useState('')
+  const [address, setAddress] = useState<string>()
   const { handleBarCode } = useAppLinkContext()
   const { triggerNotification } = useHaptic()
   const navigation = useNavigation<RootNavigationProp>()
 
-  useAsync(async () => {
-    const accountAddress = await getAddress()
-    setAddress(accountAddress?.b58 || '')
-  }, [])
+  const [perms] = usePermissions({
+    request: true,
+  })
+
+  useMount(() => {
+    getAddress().then(setAddress)
+  })
 
   const isQr = useMemo(
     () => HotspotMakerModels[params.hotspotType].onboardType === 'QR',
@@ -191,7 +198,7 @@ const HotspotSetupExternalScreen = () => {
           </Text>
         </TouchableOpacity>
 
-        {isQr && (
+        {isQr && perms?.granted && (
           <>
             <Box flex={1} />
             <Box

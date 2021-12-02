@@ -13,7 +13,7 @@ import Text from '../../../components/Text'
 import Box from '../../../components/Box'
 import SafeAreaBox from '../../../components/SafeAreaBox'
 import { getHotspotDetails } from '../../../utils/appDataClient'
-import { getSecureItem } from '../../../utils/secureAccount'
+import { getAddress } from '../../../utils/secureAccount'
 
 type Route = RouteProp<
   HotspotSetupStackParamList,
@@ -55,7 +55,7 @@ const HotspotSetupWifiConnectingScreen = () => {
   )
 
   const goToNextStep = useCallback(async () => {
-    const address = await getSecureItem('address')
+    const address = await getAddress()
     const hotspot = await getHotspotDetails(hotspotAddress)
     if (hotspot && hotspot.owner === address) {
       navigation.replace('OwnedHotspotErrorScreen')

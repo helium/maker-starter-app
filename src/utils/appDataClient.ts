@@ -1,23 +1,8 @@
 import { Hotspot } from '@helium/http'
 import { heliumHttpClient } from '@helium/react-native-sdk'
-import { getAddress } from './secureAccount'
-
-const MAX = 100000
-
-export const getChainVars = async () => {
-  return heliumHttpClient.vars.get()
-}
 
 export const submitTxn = async (txn: string) => {
   return heliumHttpClient.transactions.submit(txn)
-}
-
-export const getHotspots = async () => {
-  const address = (await getAddress())?.b58
-  if (!address) return []
-
-  const newHotspotList = await heliumHttpClient.account(address).hotspots.list()
-  return newHotspotList.takeJSON(MAX)
 }
 
 export const getHotspotDetails = async (address: string): Promise<Hotspot> => {
@@ -25,10 +10,9 @@ export const getHotspotDetails = async (address: string): Promise<Hotspot> => {
 }
 
 export const getAccount = async (address?: string) => {
-  const accountAddress = address || (await getAddress())?.b58
-  if (!accountAddress) return
+  if (!address) return
 
-  const { data } = await heliumHttpClient.accounts.get(accountAddress)
+  const { data } = await heliumHttpClient.accounts.get(address)
   return data
 }
 
@@ -42,4 +26,13 @@ export const getCurrentOraclePrice = async () => {
 
 export const getPredictedOraclePrice = async () => {
   return heliumHttpClient.oracle.getPredictedPrice()
+}
+
+export const hotspotOnChain = async (address: string) => {
+  try {
+    await getHotspotDetails(address)
+    return true
+  } catch (error) {
+    return false
+  }
 }

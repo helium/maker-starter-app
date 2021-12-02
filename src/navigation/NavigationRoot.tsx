@@ -12,14 +12,14 @@ const OnboardingStack = createStackNavigator()
 const MainStack = createStackNavigator()
 
 const NavigationRoot = () => {
-  const { isBackedUp } = useSelector((state: RootState) => state.app)
+  const { walletLinkToken } = useSelector((state: RootState) => state.app)
   const colors = useColors()
 
   useEffect(() => {
     changeNavigationBarColor(colors.primaryBackground, true, false)
   }, [colors.primaryBackground])
 
-  if (!isBackedUp) {
+  if (!walletLinkToken) {
     return (
       <OnboardingStack.Navigator
         headerMode="none"

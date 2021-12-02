@@ -17,7 +17,7 @@ import { DebouncedButton } from '../../../components/Button'
 import TouchableOpacityBox from '../../../components/TouchableOpacityBox'
 import Checkmark from '../../../assets/images/check.svg'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
-import { getSecureItem } from '../../../utils/secureAccount'
+import { getAddress, getSecureItem } from '../../../utils/secureAccount'
 import { getHotspotDetails } from '../../../utils/appDataClient'
 
 const WifiItem = ({
@@ -88,7 +88,9 @@ const HotspotSetupPickWifiScreen = () => {
   }, [wifiNetworks])
 
   const navSkip = useCallback(async () => {
-    const address = await getSecureItem('address')
+    const token = await getSecureItem('walletLinkToken')
+    if (!token) return
+    const address = await getAddress()
     const hotspot = await getHotspotDetails(hotspotAddress)
 
     if (hotspot && hotspot.owner === address) {

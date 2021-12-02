@@ -15,7 +15,6 @@ export type LockScreenRequestType =
   | 'disablePinForPayments'
   | 'resetPin'
   | 'unlock'
-  | 'revealWords'
 
 export type RootStackParamList = {
   MainTabs: undefined | { pinVerifiedFor: LockScreenRequestType }

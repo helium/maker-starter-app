@@ -1,24 +1,17 @@
+import { WalletLink } from '@helium/react-native-sdk'
 import * as SecureStore from 'expo-secure-store'
-import { Account } from '@helium/react-native-sdk'
 
 type AccountStoreKey = BooleanKey | StringKey
 
 const stringKeys = [
-  'mnemonic',
-  'keypair',
-  'address',
   'userPin',
   'authInterval',
-  'walletApiToken',
   'language',
+  'walletLinkToken',
 ] as const
 type StringKey = typeof stringKeys[number]
 
-const boolKeys = [
-  'accountBackedUp',
-  'isSettingUpHotspot',
-  'requirePin',
-] as const
+const boolKeys = ['requirePin'] as const
 type BooleanKey = typeof boolKeys[number]
 
 export const setSecureItem = async (
@@ -36,54 +29,17 @@ export async function getSecureItem(key: AccountStoreKey) {
   return item
 }
 
+export const getAddress = async () => {
+  const token = await getSecureItem('walletLinkToken')
+  if (!token) return
+  const parsed = WalletLink.parseWalletLinkToken(token)
+  if (!parsed?.address) return
+  const { address } = parsed
+  return address
+}
+
 export const deleteSecureItem = async (key: AccountStoreKey) =>
   SecureStore.deleteItemAsync(key)
-
-export const createKeypair = async (givenMnemonic?: string[]) => {
-  const { keypairRaw, address, mnemonic } = await Account.createKeypair(
-    givenMnemonic,
-  )
-  await Promise.all([
-    setSecureItem('mnemonic', JSON.stringify(mnemonic.words)),
-    setSecureItem('keypair', JSON.stringify(keypairRaw)),
-    setSecureItem('address', address.b58),
-  ])
-}
-
-export const getAddress = async () => {
-  const addressB58 = await getSecureItem('address')
-  if (!addressB58) return
-
-  return Account.getAddress(addressB58)
-}
-
-export const getMnemonic = async () => {
-  const wordsStr = await getSecureItem('mnemonic')
-  if (!wordsStr) return
-
-  let words: string[] = []
-  try {
-    words = JSON.parse(wordsStr)
-  } catch (e) {
-    return
-  }
-  return Account.getMnemonic(words)
-}
-
-export const getKeypair = async () => {
-  const keypairRaw = await getSodiumKeypair()
-  if (keypairRaw) {
-    return Account.getKeypair(keypairRaw)
-  }
-}
-
-export const getSodiumKeypair = async (): Promise<
-  Account.SodiumKeyPair | undefined
-> => {
-  const keypairStr = await getSecureItem('keypair')
-  if (!keypairStr) return
-  return JSON.parse(keypairStr)
-}
 
 export const signOut = async () => {
   return Promise.all(

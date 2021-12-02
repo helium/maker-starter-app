@@ -48,11 +48,19 @@ export default {
       title: 'Creating\nSecure Account.',
     },
     welcome: {
-      create_account: 'Create an Account',
-      import_account: 'Import Existing Account',
+      create_account: 'Create an account on the Helium Network',
+      login_with_helium: 'Already have a Helium Wallet?\nTap to get started.',
       subtitle:
         'Lorem ipsum <b><errorText>$HNT</errorText></b> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
       title: 'Welcome\nto Maker App',
+    },
+    linkAccount: {
+      stepOne: '1. Download a supported Wallet App',
+      stepTwo: '2. Create account',
+      stepThree: '3. Come back to this app and sign in.',
+    },
+    createAccount: {
+      signInWith: 'Sign in with:',
     },
   },
   antennas: {
@@ -300,9 +308,9 @@ export default {
       app: {
         language: 'Language',
         signOut: 'Sign Out',
+        signOutWithLink: 'Sign Out - Linked as: {{address}}',
         signOutAlert: {
-          body:
-            'You are signing out of your account. Do you have your 12 recovery words? If you don’t, you will lose access to:\n\n- your Hotspots\n- your HNT\n- your Wallet',
+          body: 'You are signing out of your account.',
           title: 'Warning!',
         },
         title: 'App',
@@ -319,7 +327,6 @@ export default {
         enablePin: 'Enable PIN',
         requirePin: 'Require PIN',
         resetPin: 'Reset PIN',
-        revealWords: 'Reveal Words',
         title: 'Security',
       },
     },

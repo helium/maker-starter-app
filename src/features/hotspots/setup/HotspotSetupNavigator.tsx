@@ -21,6 +21,7 @@ import AntennaSetupScreen from './AntennaSetupScreen'
 import HotspotSetupExternalScreen from './HotspotSetupExternalScreen'
 import HotspotSetupExternalConfirmScreen from './HotspotSetupExternalConfirmScreen'
 import HotspotSetupInstructionsScreen from './HotspotSetupInstructionsScreen'
+import HotspotTxnsSubmitScreen from './HotspotTxnsSubmitScreen'
 
 const HotspotSetupStack = createStackNavigator()
 
@@ -110,6 +111,10 @@ const HotspotSetup = () => {
       <HotspotSetupStack.Screen
         name="OwnedHotspotErrorScreen"
         component={OwnedHotspotError}
+      />
+      <HotspotSetupStack.Screen
+        name="HotspotTxnsSubmitScreen"
+        component={HotspotTxnsSubmitScreen}
       />
     </HotspotSetupStack.Navigator>
   )

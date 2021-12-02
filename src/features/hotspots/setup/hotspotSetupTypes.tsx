@@ -101,6 +101,10 @@ export type HotspotSetupStackParamList = {
   }
   NotHotspotOwnerErrorScreen: undefined
   OwnedHotspotErrorScreen: undefined
+  HotspotTxnsSubmitScreen: {
+    assertTxn?: string
+    gatewayTxn?: string
+  }
 }
 
 export type HotspotSetupNavigationProp = StackNavigationProp<HotspotSetupStackParamList>
