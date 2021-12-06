@@ -51,7 +51,7 @@ PODS:
     - ReactCommon/turbomodule/core (= 0.66.3)
   - fmt (6.2.1)
   - glog (0.3.5)
-  - helium-react-native-sdk (0.1.1):
+  - helium-react-native-sdk (0.1.2):
     - React-Core
   - Mapbox-iOS-SDK (5.9.0):
     - MapboxMobileEvents (= 0.10.2)
@@ -635,7 +635,7 @@ SPEC CHECKSUMS:
   FBReactNativeSpec: 6192956c9e346013d5f1809ba049af720b11c6a4
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
   glog: 5337263514dd6f09803962437687240c5dc39aa4
-  helium-react-native-sdk: cf624f531c73325a97f4d295e1ed490aa0fc9c2e
+  helium-react-native-sdk: 7345ab77a2e67e8f7dc1940bb46196278e203873
   Mapbox-iOS-SDK: a5915700ec84bc1a7f8b3e746d474789e35b7956
   MapboxMobileEvents: 2bc0ca2eedb627b73cf403258dce2b2fa98074a6
   MultiplatformBleAdapter: 5a6a897b006764392f9cef785e4360f54fb9477d
