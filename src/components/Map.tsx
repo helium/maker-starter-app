@@ -28,6 +28,7 @@ import CurrentLocationButton from './CurrentLocationButton'
 import { theme, Theme } from '../theme/theme'
 import { useColors } from '../theme/themeHooks'
 import { distance } from '../utils/location'
+import LocationIcon from '../assets/images/location-icon.svg'
 
 const defaultLngLat = [-122.419418, 37.774929] // San Francisco
 
@@ -48,6 +49,7 @@ type Props = BoxProps<Theme> & {
   interactive?: boolean
   showUserLocation?: boolean
   showNoLocation?: boolean
+  markerLocation?: number[]
 }
 const Map = ({
   onMapMoved,
@@ -66,6 +68,7 @@ const Map = ({
   interactive = true,
   showNoLocation,
   cameraBottomOffset,
+  markerLocation,
   ...props
 }: Props) => {
   const colors = useColors()
@@ -254,6 +257,14 @@ const Map = ({
           animationDuration={animationDuration}
         />
         <MapboxGL.Images images={mapImages} />
+        {markerLocation !== undefined && (
+          <MapboxGL.PointAnnotation
+            id="locationCenterMarker"
+            coordinate={markerLocation}
+          >
+            <LocationIcon color="white" />
+          </MapboxGL.PointAnnotation>
+        )}
       </MapboxGL.MapView>
       {currentLocationEnabled && (
         <CurrentLocationButton onPress={centerUserLocation} />

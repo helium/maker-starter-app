@@ -17,14 +17,13 @@ import {
 } from './hotspotSetupTypes'
 import BackScreen from '../../../components/BackScreen'
 import Box from '../../../components/Box'
-import ImageBox from '../../../components/ImageBox'
 import { DebouncedButton } from '../../../components/Button'
-import Map from '../../../components/Map'
 import Text from '../../../components/Text'
 import { decimalSeparator, groupSeparator } from '../../../utils/i18n'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
 import { getAddress } from '../../../utils/secureAccount'
 import { getAccount } from '../../../utils/appDataClient'
+import HotspotLocationPreview from './HotspotLocationPreview'
 
 type Route = RouteProp<
   HotspotSetupStackParamList,
@@ -124,35 +123,15 @@ const HotspotSetupConfirmLocationScreen = () => {
             {t('hotspot_setup.location_fee.confirm_location')}
           </Text>
           <Box
-            height={{ smallPhone: 140, phone: 200 }}
+            height={200}
             borderRadius="l"
             overflow="hidden"
             marginBottom={{ phone: 'm', smallPhone: 'ms' }}
           >
-            <Box flex={1}>
-              <Map mapCenter={coords} zoomLevel={16} interactive={false} />
-              <Box
-                position="absolute"
-                top="50%"
-                left="50%"
-                style={{ marginTop: -29, marginLeft: -25 / 2 }}
-                width={25}
-                height={29}
-                justifyContent="flex-end"
-                alignItems="center"
-              >
-                <ImageBox
-                  source={require('../../../assets/images/map-pin.png')}
-                  width={25}
-                  height={29}
-                />
-              </Box>
-            </Box>
-            <Box padding="m" backgroundColor="secondaryBackground">
-              <Text variant="body2" numberOfLines={1} adjustsFontSizeToFit>
-                {params.locationName}
-              </Text>
-            </Box>
+            <HotspotLocationPreview
+              mapCenter={coords}
+              locationName={params.locationName}
+            />
           </Box>
 
           <Box
