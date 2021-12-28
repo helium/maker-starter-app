@@ -85,7 +85,7 @@ export const lightThemeColors = {
   secondary: palette.bobcatGrey,
   secondaryText: palette.bobcatDarkGrey,
   error: palette.bobcatRed,
-  surface: palette.white,
+  surface: palette.offWhite,
   surfaceText: palette.bobcatDarkGrey,
   surfaceSecondary: palette.offWhite,
   surfaceSecondaryText: palette.bobcatDarkGrey,
