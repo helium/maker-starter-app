@@ -20,6 +20,7 @@ import { useTranslation } from 'react-i18next'
 import { h3ToGeo } from 'h3-js'
 import Config from 'react-native-config'
 import { isFinite } from 'lodash'
+import LocationIcon from '@assets/images/location-icon.svg'
 import Box from './Box'
 import Text from './Text'
 import NoLocation from '../assets/images/no-location.svg'
@@ -28,7 +29,6 @@ import CurrentLocationButton from './CurrentLocationButton'
 import { theme, Theme } from '../theme/theme'
 import { useColors } from '../theme/themeHooks'
 import { distance } from '../utils/location'
-import LocationIcon from '../assets/images/location-icon.svg'
 
 const defaultLngLat = [-122.419418, 37.774929] // San Francisco
 

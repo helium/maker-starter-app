@@ -1,7 +1,7 @@
 import React, { memo, useCallback, useMemo, useRef, useState } from 'react'
 import MapboxGL from '@react-native-mapbox-gl/maps'
 import Config from 'react-native-config'
-import LocationIcon from '../../../../assets/images/location-icon.svg'
+import LocationIcon from '@assets/images/location-icon.svg'
 import Box from '../../../components/Box'
 import Text from '../../../components/Text'
 
@@ -49,7 +49,7 @@ const HotspotLocationPreview = ({
   const LocationName = useCallback(
     () =>
       hasLocationName ? (
-        <Box height="25%" padding="m" backgroundColor="offWhite">
+        <Box padding="m" backgroundColor="surface">
           <Text variant="h4" numberOfLines={1} maxFontSizeMultiplier={1.2}>
             {locationName ||
               `${geocode?.longStreet}, ${geocode?.shortCity}, ${geocode?.shortCountry}`}
