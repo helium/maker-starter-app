@@ -20,6 +20,7 @@ import { useTranslation } from 'react-i18next'
 import { h3ToGeo } from 'h3-js'
 import Config from 'react-native-config'
 import { isFinite } from 'lodash'
+import LocationIcon from '@assets/images/location-icon.svg'
 import Box from './Box'
 import Text from './Text'
 import NoLocation from '../assets/images/no-location.svg'
@@ -48,6 +49,7 @@ type Props = BoxProps<Theme> & {
   interactive?: boolean
   showUserLocation?: boolean
   showNoLocation?: boolean
+  markerLocation?: number[]
 }
 const Map = ({
   onMapMoved,
@@ -66,6 +68,7 @@ const Map = ({
   interactive = true,
   showNoLocation,
   cameraBottomOffset,
+  markerLocation,
   ...props
 }: Props) => {
   const colors = useColors()
@@ -254,6 +257,14 @@ const Map = ({
           animationDuration={animationDuration}
         />
         <MapboxGL.Images images={mapImages} />
+        {markerLocation !== undefined && (
+          <MapboxGL.PointAnnotation
+            id="locationCenterMarker"
+            coordinate={markerLocation}
+          >
+            <LocationIcon color="white" />
+          </MapboxGL.PointAnnotation>
+        )}
       </MapboxGL.MapView>
       {currentLocationEnabled && (
         <CurrentLocationButton onPress={centerUserLocation} />
