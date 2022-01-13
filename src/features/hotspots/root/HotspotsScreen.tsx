@@ -15,20 +15,24 @@ import { getAddress } from '../../../utils/secureAccount'
 const HotspotsScreen = () => {
   const { t } = useTranslation()
   const navigation = useNavigation<RootNavigationProp>()
-  const [accountB58, setAccountB58] = useState('')
+  const [accountAddress, setAccountAddress] = useState('')
 
   useAsync(async () => {
     const account = await getAddress()
-    setAccountB58(account?.b58 || '')
+    setAccountAddress(account || '')
   }, [])
 
-  const goToSetup = useCallback(() => navigation.push('HotspotSetup'), [
+  const addHotspot = useCallback(() => navigation.push('HotspotSetup'), [
+    navigation,
+  ])
+
+  const assertHotspot = useCallback(() => navigation.push('HotspotAssert'), [
     navigation,
   ])
 
   const openExplorer = useCallback(
-    () => Linking.openURL(`${EXPLORER_BASE_URL}/accounts/${accountB58}`),
-    [accountB58],
+    () => Linking.openURL(`${EXPLORER_BASE_URL}/accounts/${accountAddress}`),
+    [accountAddress],
   )
 
   return (
@@ -45,12 +49,19 @@ const HotspotsScreen = () => {
             {t('hotspots.empty.body')}
           </Text>
           <Button
-            onPress={goToSetup}
+            onPress={addHotspot}
             height={48}
             marginTop="l"
             mode="contained"
             title={t('hotspots.empty.hotspots.add')}
             Icon={AddIcon}
+          />
+          <Button
+            onPress={assertHotspot}
+            height={48}
+            marginTop="l"
+            mode="contained"
+            title={t('hotspots.empty.hotspots.assertLocation')}
           />
           <Text variant="body1" marginTop="l">
             {t('hotspots.view_activity')}

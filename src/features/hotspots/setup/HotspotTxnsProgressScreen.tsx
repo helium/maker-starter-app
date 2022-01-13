@@ -7,6 +7,7 @@ import {
   HotspotErrorCode,
   WalletLink,
   Location,
+  useOnboarding,
 } from '@helium/react-native-sdk'
 import { ActivityIndicator, Linking } from 'react-native'
 import Box from '../../../components/Box'
@@ -29,6 +30,7 @@ const HotspotTxnsProgressScreen = () => {
   const navigation = useNavigation<RootNavigationProp>()
   const { showOKAlert } = useAlert()
   const { createGatewayTxn } = useHotspotBle()
+  const { getOnboardingRecord } = useOnboarding()
   const { primaryText } = useColors()
 
   const handleError = async (error: unknown) => {
@@ -75,6 +77,8 @@ const HotspotTxnsProgressScreen = () => {
 
     // check if add gateway needed
     const isOnChain = await hotspotOnChain(hotspotAddress)
+    const onboardingRecord = await getOnboardingRecord(hotspotAddress)
+    if (!onboardingRecord) return
     if (!isOnChain) {
       // if so, construct and publish add gateway
       if (qrAddGatewayTxn) {
@@ -82,7 +86,10 @@ const HotspotTxnsProgressScreen = () => {
         updateParams.addGatewayTxn = qrAddGatewayTxn
       } else {
         // Gateway BLE scanned
-        const addGatewayTxn = await createGatewayTxn(ownerAddress)
+        const addGatewayTxn = await createGatewayTxn({
+          ownerAddress,
+          payerAddress: onboardingRecord.maker.address,
+        })
         updateParams.addGatewayTxn = addGatewayTxn
       }
     }
@@ -90,7 +97,6 @@ const HotspotTxnsProgressScreen = () => {
     // construct and publish assert location
     if (params.coords) {
       const [lng, lat] = params.coords
-      const onboardingRecord = params?.onboardingRecord
 
       const assertLocationTxn = await Location.createLocationTxn({
         gateway: hotspotAddress,

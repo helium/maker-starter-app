@@ -1,5 +1,4 @@
 import { StackNavigationProp } from '@react-navigation/stack'
-import { Onboarding } from '@helium/react-native-sdk'
 import { HotspotType } from '../../../makers'
 
 export type HotspotConnectStatus =
@@ -11,27 +10,42 @@ export type HotspotConnectStatus =
   | 'service_unavailable'
   | 'details_fetch_failure'
 
+type GatewayAction = 'addGateway' | 'assertLocation'
+
 export type HotspotSetupStackParamList = {
-  HotspotSetupSelectionScreen: undefined
-  HotspotSetupEducationScreen: { hotspotType: HotspotType }
-  HotspotSetupExternalScreen: { hotspotType: HotspotType }
+  HotspotSetupSelectionScreen: { gatewayAction: GatewayAction }
+  HotspotSetupEducationScreen: {
+    hotspotType: HotspotType
+    gatewayAction: GatewayAction
+  }
+  HotspotSetupExternalScreen: {
+    hotspotType: HotspotType
+    gatewayAction: GatewayAction
+  }
   HotspotSetupExternalConfirmScreen: {
     addGatewayTxn: string
     hotspotType: HotspotType
+    gatewayAction: GatewayAction
   }
   HotspotSetupInstructionsScreen: {
     slideIndex: number
     hotspotType: HotspotType
+    gatewayAction: GatewayAction
   }
-  HotspotSetupScanningScreen: { hotspotType: HotspotType }
-  HotspotSetupPickHotspotScreen: { hotspotType: HotspotType }
+  HotspotSetupScanningScreen: {
+    hotspotType: HotspotType
+    gatewayAction: GatewayAction
+  }
+  HotspotSetupPickHotspotScreen: {
+    hotspotType: HotspotType
+    gatewayAction: GatewayAction
+  }
   OnboardingErrorScreen: { connectStatus: HotspotConnectStatus }
   HotspotSetupPickWifiScreen: {
     networks: string[]
     connectedNetworks: string[]
     addGatewayTxn?: string
     hotspotAddress: string
-    onboardingRecord: Onboarding.OnboardingRecord
     hotspotType: HotspotType
   }
   FirmwareUpdateNeededScreen: {
@@ -43,7 +57,6 @@ export type HotspotSetupStackParamList = {
     network: string
     addGatewayTxn?: string
     hotspotAddress: string
-    onboardingRecord: Onboarding.OnboardingRecord
     hotspotType: HotspotType
   }
   HotspotSetupWifiConnectingScreen: {
@@ -51,33 +64,28 @@ export type HotspotSetupStackParamList = {
     password: string
     addGatewayTxn?: string
     hotspotAddress: string
-    onboardingRecord: Onboarding.OnboardingRecord
     hotspotType: HotspotType
   }
   HotspotSetupLocationInfoScreen: {
     hotspotType: HotspotType
     addGatewayTxn?: string
     hotspotAddress: string
-    onboardingRecord: Onboarding.OnboardingRecord
   }
   HotspotSetupPickLocationScreen: {
     hotspotType: HotspotType
     addGatewayTxn?: string
     hotspotAddress: string
-    onboardingRecord: Onboarding.OnboardingRecord
   }
   AntennaSetupScreen: {
     hotspotType: HotspotType
     addGatewayTxn?: string
     hotspotAddress: string
-    onboardingRecord: Onboarding.OnboardingRecord
     coords?: number[]
     locationName?: string
   }
   HotspotSetupConfirmLocationScreen: {
     addGatewayTxn?: string
     hotspotAddress: string
-    onboardingRecord: Onboarding.OnboardingRecord
     elevation?: number
     gain?: number
     coords?: number[]
@@ -86,14 +94,12 @@ export type HotspotSetupStackParamList = {
   HotspotSetupSkipLocationScreen: {
     addGatewayTxn?: string
     hotspotAddress: string
-    onboardingRecord: Onboarding.OnboardingRecord
     elevation?: number
     gain?: number
   }
   HotspotTxnsProgressScreen: {
     addGatewayTxn?: string
     hotspotAddress: string
-    onboardingRecord: Onboarding.OnboardingRecord
     elevation?: number
     gain?: number
     coords?: number[]
@@ -104,6 +110,7 @@ export type HotspotSetupStackParamList = {
   HotspotTxnsSubmitScreen: {
     assertTxn?: string
     gatewayTxn?: string
+    gatewayAddress?: string
   }
 }
 

@@ -23,6 +23,7 @@ export type RootStackParamList = {
     lock?: boolean
   }
   HotspotSetup: undefined
+  HotspotAssert: undefined
   ScanStack: undefined
 }
 

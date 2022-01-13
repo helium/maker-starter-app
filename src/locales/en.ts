@@ -296,6 +296,7 @@ export default {
       body: 'Your add hotspot\ninstructions',
       hotspots: {
         add: 'Add Hotspot',
+        assertLocation: 'Assert Location',
       },
       title: 'Add a\n[Placeholder] Miner',
     },

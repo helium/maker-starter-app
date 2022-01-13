@@ -34,6 +34,9 @@ const HotspotSetup = () => {
       <HotspotSetupStack.Screen
         name="HotspotSetupSelectionScreen"
         component={HotspotSetupSelectionScreen}
+        initialParams={{
+          gatewayAction: 'addGateway',
+        }}
       />
       <HotspotSetupStack.Screen
         name="HotspotSetupEducationScreen"

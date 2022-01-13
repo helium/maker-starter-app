@@ -3,7 +3,7 @@ import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
 import Fingerprint from '@assets/images/fingerprint.svg'
 import { ActivityIndicator } from 'react-native'
-import { AddGateway, Onboarding } from '@helium/react-native-sdk'
+import { AddGateway, useOnboarding } from '@helium/react-native-sdk'
 import BackScreen from '../../../components/BackScreen'
 import Box from '../../../components/Box'
 import Text from '../../../components/Text'
@@ -33,11 +33,8 @@ const HotspotSetupExternalConfirmScreen = () => {
   const [publicKey, setPublicKey] = useState('')
   const [macAddress, setMacAddress] = useState('')
   const [ownerAddress, setOwnerAddress] = useState('')
-  const [
-    onboardingRecord,
-    setOnboardingRecord,
-  ] = useState<Onboarding.OnboardingRecord>()
   const rootNav = useNavigation<RootNavigationProp>()
+  const { getOnboardingRecord } = useOnboarding()
 
   const handleClose = useCallback(() => rootNav.navigate('MainTabs'), [rootNav])
 
@@ -49,13 +46,13 @@ const HotspotSetupExternalConfirmScreen = () => {
     if (!publicKey) return
 
     const getRecord = async () => {
-      const record = await Onboarding.getOnboardingRecord(publicKey)
+      const onboardingRecord = await getOnboardingRecord(publicKey)
+      if (!onboardingRecord) return
       animateTransition('HotspotSetupExternalConfirmScreen.GetMac')
-      setMacAddress(record.macEth0 || t('generic.unknown'))
-      setOnboardingRecord(record)
+      setMacAddress(onboardingRecord.macEth0 || t('generic.unknown'))
     }
     getRecord()
-  }, [publicKey, t])
+  }, [getOnboardingRecord, publicKey, t])
 
   useEffect(() => {
     if (!params.addGatewayTxn) return
@@ -66,15 +63,13 @@ const HotspotSetupExternalConfirmScreen = () => {
     setOwnerAddress(addGatewayTxn.owner?.b58 || '')
   }, [params])
 
-  const navNext = useCallback(() => {
-    if (!onboardingRecord) return
+  const navNext = useCallback(async () => {
     navigation.push('HotspotSetupLocationInfoScreen', {
       addGatewayTxn: params.addGatewayTxn,
       hotspotAddress: publicKey,
-      onboardingRecord,
       hotspotType: params.hotspotType,
     })
-  }, [navigation, onboardingRecord, params, publicKey])
+  }, [navigation, params.addGatewayTxn, params.hotspotType, publicKey])
 
   return (
     <BackScreen
