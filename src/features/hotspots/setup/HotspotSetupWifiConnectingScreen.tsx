@@ -25,14 +25,7 @@ const HotspotSetupWifiConnectingScreen = () => {
   const navigation = useNavigation<HotspotSetupNavigationProp>()
 
   const {
-    params: {
-      network,
-      password,
-      hotspotAddress,
-      onboardingRecord,
-      addGatewayTxn,
-      hotspotType,
-    },
+    params: { network, password, hotspotAddress, addGatewayTxn, hotspotType },
   } = useRoute<Route>()
 
   const { readWifiNetworks, setWifi, removeConfiguredWifi } = useHotspotBle()
@@ -64,12 +57,11 @@ const HotspotSetupWifiConnectingScreen = () => {
     } else {
       navigation.replace('HotspotSetupLocationInfoScreen', {
         hotspotAddress,
-        onboardingRecord,
         addGatewayTxn,
         hotspotType,
       })
     }
-  }, [addGatewayTxn, hotspotAddress, hotspotType, navigation, onboardingRecord])
+  }, [addGatewayTxn, hotspotAddress, hotspotType, navigation])
 
   const connectToWifi = useCallback(async () => {
     const response = await setWifi(network, password)

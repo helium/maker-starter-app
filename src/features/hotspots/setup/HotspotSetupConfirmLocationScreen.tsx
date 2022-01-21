@@ -8,6 +8,7 @@ import {
   Location,
   NetworkTokens,
   USDollars,
+  useOnboarding,
 } from '@helium/react-native-sdk'
 import type { Account } from '@helium/http'
 import { useAsync } from 'react-async-hook'
@@ -45,7 +46,8 @@ const HotspotSetupConfirmLocationScreen = () => {
     totalStakingAmountUsd: Balance<USDollars>
   }>()
   const { params } = useRoute<Route>()
-  const { onboardingRecord, elevation, gain, coords } = params
+  const { elevation, gain, coords } = params
+  const { getOnboardingRecord } = useOnboarding()
 
   useAsync(async () => {
     const address = await getAddress()
@@ -58,7 +60,8 @@ const HotspotSetupConfirmLocationScreen = () => {
     getAccount(ownerAddress).then(setAccount)
   }, [ownerAddress])
 
-  useEffect(() => {
+  useAsync(async () => {
+    const onboardingRecord = await getOnboardingRecord(params.hotspotAddress)
     if (!onboardingRecord || !ownerAddress || !account?.balance) {
       return
     }
@@ -71,7 +74,7 @@ const HotspotSetupConfirmLocationScreen = () => {
       locationNonceLimit: onboardingRecord.maker.locationNonceLimit,
       makerAddress: onboardingRecord.maker.address,
     }).then(setFeeData)
-  }, [onboardingRecord, ownerAddress, account])
+  }, [ownerAddress, account, getOnboardingRecord, params.hotspotAddress])
 
   const navNext = useCallback(async () => {
     navigation.replace('HotspotTxnsProgressScreen', params)

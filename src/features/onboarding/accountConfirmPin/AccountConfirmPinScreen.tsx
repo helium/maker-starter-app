@@ -1,23 +1,17 @@
 import React, { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { RouteProp, useRoute, useNavigation } from '@react-navigation/native'
-import {
-  OnboardingNavigationProp,
-  OnboardingStackParamList,
-} from '../onboardingTypes'
+import { MoreNavigationProp, MoreStackParamList } from '../../moreTab/moreTypes'
 import appSlice from '../../../store/user/appSlice'
 import { useAppDispatch } from '../../../store/store'
 import ConfirmPinView from '../../../components/ConfirmPinView'
-import { MoreNavigationProp } from '../../moreTab/moreTypes'
 
-type Route = RouteProp<OnboardingStackParamList, 'AccountConfirmPinScreen'>
+type Route = RouteProp<MoreStackParamList, 'AccountConfirmPinScreen'>
 
 const AccountConfirmPinScreen = () => {
   const dispatch = useAppDispatch()
   const route = useRoute<Route>()
-  const navigation = useNavigation<
-    MoreNavigationProp & OnboardingNavigationProp
-  >()
+  const navigation = useNavigation<MoreNavigationProp>()
   const { pin: originalPin, pinReset } = route.params
   const { t } = useTranslation()
 

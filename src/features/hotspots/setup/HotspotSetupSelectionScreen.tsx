@@ -1,4 +1,4 @@
-import { useNavigation } from '@react-navigation/native'
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import React, { memo, useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList } from 'react-native-gesture-handler'
@@ -7,7 +7,10 @@ import BackScreen from '../../../components/BackScreen'
 import Box from '../../../components/Box'
 import Text from '../../../components/Text'
 import HotspotSetupSelectionListItem from './HotspotSetupSelectionListItem'
-import { HotspotSetupNavigationProp } from './hotspotSetupTypes'
+import {
+  HotspotSetupNavigationProp,
+  HotspotSetupStackParamList,
+} from './hotspotSetupTypes'
 import {
   HotspotType,
   HotspotModelKeys,
@@ -19,24 +22,34 @@ const ItemSeparatorComponent = () => (
   <Box height={1} backgroundColor="primaryBackground" />
 )
 
+type Route = RouteProp<
+  HotspotSetupStackParamList,
+  'HotspotSetupSelectionScreen'
+>
 const HotspotSetupSelectionScreen = () => {
   const { t } = useTranslation()
   const navigation = useNavigation<HotspotSetupNavigationProp>()
   const edges = useMemo((): Edge[] => ['top', 'left', 'right'], [])
   const radii = useBorderRadii()
 
+  const { params } = useRoute<Route>()
+
   const handlePress = useCallback(
     (hotspotType: HotspotType) => () => {
       const { onboardType } = HotspotMakerModels[hotspotType]
       if (onboardType === 'BLE') {
-        navigation.push('HotspotSetupEducationScreen', { hotspotType })
+        navigation.push('HotspotSetupEducationScreen', {
+          hotspotType,
+          ...params,
+        })
       } else {
         navigation.push('HotspotSetupExternalScreen', {
           hotspotType,
+          ...params,
         })
       }
     },
-    [navigation],
+    [navigation, params],
   )
 
   const keyExtractor = useCallback((item) => item, [])

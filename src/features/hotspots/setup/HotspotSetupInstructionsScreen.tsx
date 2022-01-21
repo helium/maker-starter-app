@@ -27,7 +27,7 @@ type Route = RouteProp<
 
 const HotspotSetupDiagnosticsScreen = () => {
   const {
-    params: { hotspotType, slideIndex },
+    params: { hotspotType, gatewayAction, slideIndex },
   } = useRoute<Route>()
   const { t, i18n } = useTranslation()
   const navigation = useNavigation<HotspotSetupNavigationProp>()
@@ -114,13 +114,25 @@ const HotspotSetupDiagnosticsScreen = () => {
       navigation.push('HotspotSetupInstructionsScreen', {
         hotspotType,
         slideIndex: nextSlideIndex,
+        gatewayAction,
       })
     } else {
       await checkBluetooth()
       await checkLocation()
-      navigation.push('HotspotSetupScanningScreen', { hotspotType })
+      navigation.push('HotspotSetupScanningScreen', {
+        hotspotType,
+        gatewayAction,
+      })
     }
-  }, [checkBluetooth, checkLocation, hotspotType, i18n, navigation, slideIndex])
+  }, [
+    checkBluetooth,
+    checkLocation,
+    gatewayAction,
+    hotspotType,
+    i18n,
+    navigation,
+    slideIndex,
+  ])
 
   return (
     <BackScreen backgroundColor="primaryBackground" onClose={handleClose}>

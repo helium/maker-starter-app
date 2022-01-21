@@ -5,6 +5,7 @@ import LockScreen from '../../features/lock/LockScreen'
 import defaultScreenOptions from '../defaultScreenOptions'
 import HotspotSetup from '../../features/hotspots/setup/HotspotSetupNavigator'
 import MainTabs from './MainTabNavigator'
+import HotspotAssert from '../../features/hotspots/setup/HotspotAssertNavigator'
 
 const HomeStack = createStackNavigator()
 
@@ -28,6 +29,11 @@ const HomeStackScreen = () => {
       <HomeStack.Screen
         name="HotspotSetup"
         component={HotspotSetup}
+        options={{ headerShown: false, gestureEnabled: false }}
+      />
+      <HomeStack.Screen
+        name="HotspotAssert"
+        component={HotspotAssert}
         options={{ headerShown: false, gestureEnabled: false }}
       />
       <HomeStack.Screen

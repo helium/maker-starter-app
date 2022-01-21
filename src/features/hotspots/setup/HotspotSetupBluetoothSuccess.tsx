@@ -2,7 +2,7 @@ import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { BleError, Device } from 'react-native-ble-plx'
-import { Onboarding, useHotspotBle } from '@helium/react-native-sdk'
+import { useHotspotBle, useOnboarding } from '@helium/react-native-sdk'
 import { uniq } from 'lodash'
 import Box from '../../../components/Box'
 import HotspotPairingList from '../../../components/HotspotPairingList'
@@ -21,7 +21,7 @@ const HotspotSetupBluetoothSuccess = () => {
   const { t } = useTranslation()
   const [connectStatus, setConnectStatus] = useState<string | boolean>(false)
   const {
-    params: { hotspotType },
+    params: { hotspotType, gatewayAction },
   } = useRoute<Route>()
   const navigation = useNavigation<HotspotSetupNavigationProp>()
   const {
@@ -32,6 +32,7 @@ const HotspotSetupBluetoothSuccess = () => {
     readWifiNetworks,
     getOnboardingAddress,
   } = useHotspotBle()
+  const { getMinFirmware, getOnboardingRecord } = useOnboarding()
   const { showOKAlert } = useAlert()
 
   const handleError = useCallback(
@@ -72,7 +73,9 @@ const HotspotSetupBluetoothSuccess = () => {
 
       try {
         // check firmware
-        const firmwareDetails = await checkFirmwareCurrent()
+        const minFirmware = await getMinFirmware()
+        if (!minFirmware) return
+        const firmwareDetails = await checkFirmwareCurrent(minFirmware)
         if (!firmwareDetails.current) {
           navigation.navigate('FirmwareUpdateNeededScreen', firmwareDetails)
           return
@@ -82,18 +85,23 @@ const HotspotSetupBluetoothSuccess = () => {
         const networks = uniq((await readWifiNetworks(false)) || [])
         const connectedNetworks = uniq((await readWifiNetworks(true)) || [])
         const hotspotAddress = await getOnboardingAddress()
-        const onboardingRecord = await Onboarding.getOnboardingRecord(
-          hotspotAddress,
-        )
+        const onboardingRecord = await getOnboardingRecord(hotspotAddress)
+        if (!onboardingRecord) return
 
         // navigate to next screen
-        navigation.replace('HotspotSetupPickWifiScreen', {
-          networks,
-          connectedNetworks,
-          hotspotAddress,
-          onboardingRecord,
-          hotspotType,
-        })
+        if (gatewayAction === 'addGateway') {
+          navigation.replace('HotspotSetupPickWifiScreen', {
+            networks,
+            connectedNetworks,
+            hotspotAddress,
+            hotspotType,
+          })
+        } else {
+          navigation.replace('HotspotSetupPickLocationScreen', {
+            hotspotAddress,
+            hotspotType,
+          })
+        }
       } catch (e) {
         handleError(e)
       }
@@ -102,7 +110,10 @@ const HotspotSetupBluetoothSuccess = () => {
   }, [
     checkFirmwareCurrent,
     connectStatus,
+    gatewayAction,
+    getMinFirmware,
     getOnboardingAddress,
+    getOnboardingRecord,
     handleError,
     hotspotType,
     navigation,

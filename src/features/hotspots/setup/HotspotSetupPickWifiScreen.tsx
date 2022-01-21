@@ -67,7 +67,6 @@ const HotspotSetupPickWifiScreen = () => {
       networks,
       connectedNetworks,
       hotspotAddress,
-      onboardingRecord,
       addGatewayTxn,
       hotspotType,
     },
@@ -100,18 +99,16 @@ const HotspotSetupPickWifiScreen = () => {
     } else {
       navigation.replace('HotspotSetupLocationInfoScreen', {
         hotspotAddress,
-        onboardingRecord,
         addGatewayTxn,
         hotspotType,
       })
     }
-  }, [addGatewayTxn, hotspotAddress, navigation, onboardingRecord, hotspotType])
+  }, [addGatewayTxn, hotspotAddress, navigation, hotspotType])
 
   const navNext = (network: string) => {
     navigation.navigate('HotspotSetupWifiScreen', {
       network,
       hotspotAddress,
-      onboardingRecord,
       addGatewayTxn,
       hotspotType,
     })
