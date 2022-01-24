@@ -61,57 +61,40 @@ const textVariants = {
 }
 
 const palette = {
-  charcoal: '#264653',
-  peacockGreen: '#2A9D8F',
-  yellow: '#E9C46A',
-  deepOrange: '#F4A261',
-  burntSienna: '#E76F51',
-  black: '#000000',
+  blizzardWhite: '#F5F5F5',
+  boneBlack: '#2F2F2F',
+  citrine: '#EACE03',
+  ghost: '#C7CCCF',
   white: '#FFFFFF',
-  transparent: '#00000000',
-  offWhite: '#F9FAFC',
-  bobcatRed: '#EE2737',
-  bobcatDarkGrey: '#333333',
-  bobcatGrey: '#aeaeae',
+  greenBlue: '#00B196',
+  fadedRed: '#D3494E',
+  cornflowerBlue: '#4A85F7',
 }
 
-export const lightThemeColors = {
+export const themeColors = {
   ...palette,
 
-  primary: palette.bobcatRed,
-  primaryBackground: palette.white,
-  primaryText: palette.black,
-  secondaryBackground: palette.offWhite,
-  secondary: palette.bobcatGrey,
-  secondaryText: palette.bobcatDarkGrey,
-  error: palette.bobcatRed,
-  surface: palette.offWhite,
-  surfaceText: palette.bobcatDarkGrey,
-  surfaceSecondary: palette.offWhite,
-  surfaceSecondaryText: palette.bobcatDarkGrey,
-  surfaceContrast: palette.bobcatDarkGrey,
+  primary: palette.citrine,
+  primaryBackground: palette.blizzardWhite,
+  primaryText: palette.boneBlack,
+
+  secondaryBackground: palette.white,
+  secondary: palette.ghost,
+  secondaryText: palette.boneBlack,
+
+  error: palette.fadedRed,
+  linkText: palette.cornflowerBlue,
+
+  surface: palette.blizzardWhite,
+  surfaceText: palette.boneBlack,
+  surfaceSecondary: palette.white,
+  surfaceSecondaryText: palette.boneBlack,
+  surfaceContrast: palette.boneBlack,
   surfaceContrastText: palette.white,
-}
-export const darkThemeColors = {
-  ...palette,
-
-  primary: palette.bobcatRed,
-  primaryBackground: palette.black,
-  primaryText: palette.white,
-  secondaryBackground: palette.bobcatDarkGrey,
-  secondary: palette.bobcatDarkGrey,
-  secondaryText: palette.white,
-  error: palette.bobcatRed,
-  surface: palette.bobcatDarkGrey,
-  surfaceText: palette.white,
-  surfaceSecondary: palette.offWhite,
-  surfaceSecondaryText: palette.bobcatDarkGrey,
-  surfaceContrast: palette.white,
-  surfaceContrastText: palette.bobcatDarkGrey,
 }
 
 export const theme = createTheme({
-  colors: lightThemeColors,
+  colors: themeColors,
   spacing: {
     n_xxxxl: -240,
     n_xxxl: -120,

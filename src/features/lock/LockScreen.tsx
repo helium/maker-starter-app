@@ -6,25 +6,25 @@ import { useAsync } from 'react-async-hook'
 import { useStateWithCallbackLazy } from 'use-state-with-callback'
 import * as LocalAuthentication from 'expo-local-authentication'
 import {
-  RootNavigationProp,
-  RootStackParamList,
-} from '../../navigation/main/tabTypes'
+  SignedInStackNavigationProp,
+  SignedInStackParamList,
+} from '../../navigation/navigationRootTypes'
 import { getSecureItem } from '../../utils/secureAccount'
 import ConfirmPinView from '../../components/ConfirmPinView'
-import { MoreNavigationProp } from '../moreTab/moreTypes'
+import { MainTabNavigationProp } from '../../navigation/main/mainTabNavigatorTypes'
 import { useAppDispatch } from '../../store/store'
 import appSlice from '../../store/user/appSlice'
-import SafeAreaBox from '../../components/SafeAreaBox'
+import Box from '../../components/Box'
 
-type Route = RouteProp<RootStackParamList, 'LockScreen'>
+type Route = RouteProp<SignedInStackParamList, 'LockScreen'>
 
 const LockScreen = () => {
   const { t } = useTranslation()
   const {
     params: { lock: shouldLock, requestType },
   } = useRoute<Route>()
-  const rootNav = useNavigation<RootNavigationProp>()
-  const moreNav = useNavigation<MoreNavigationProp>()
+  const rootNav = useNavigation<SignedInStackNavigationProp>()
+  const tabNav = useNavigation<MainTabNavigationProp>()
   const [locked, setLocked] = useStateWithCallbackLazy(shouldLock)
   const dispatch = useAppDispatch()
 
@@ -37,19 +37,19 @@ const LockScreen = () => {
         rootNav.goBack()
       })
     } else {
-      moreNav.navigate('MoreScreen', {
+      tabNav.navigate('Settings', {
         pinVerifiedFor: requestType,
       })
     }
-  }, [shouldLock, requestType, setLocked, dispatch, rootNav, moreNav])
+  }, [shouldLock, requestType, setLocked, dispatch, rootNav, tabNav])
 
   const handleSignOut = useCallback(() => {
     Alert.alert(
-      t('more.sections.app.signOutAlert.title'),
-      t('more.sections.app.signOutAlert.body'),
+      t('settingsScreen.sections.app.signOutAlert.title'),
+      t('settingsScreen.sections.app.signOutAlert.body'),
       [
         {
-          text: t('more.sections.app.signOut'),
+          text: t('settingsScreen.sections.app.signOut'),
           style: 'destructive',
           onPress: () => {
             dispatch(appSlice.actions.signOut())
@@ -94,7 +94,7 @@ const LockScreen = () => {
   }, [])
 
   return (
-    <SafeAreaBox backgroundColor="primaryBackground" flex={1}>
+    <Box flex={1} backgroundColor="primaryBackground" paddingHorizontal="m">
       <ConfirmPinView
         originalPin={pin || ''}
         title={t('auth.title')}
@@ -103,7 +103,7 @@ const LockScreen = () => {
         onCancel={handleCancel}
         clearable={requestType === 'unlock'}
       />
-    </SafeAreaBox>
+    </Box>
   )
 }
 

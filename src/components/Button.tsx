@@ -1,119 +1,95 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React from 'react'
-import { ActivityIndicator, TextStyle } from 'react-native'
+import React, { useCallback } from 'react'
+import { StyleProp, ViewStyle } from 'react-native'
 import { BoxProps } from '@shopify/restyle'
-import { SvgProps } from 'react-native-svg'
+
 import Text from './Text'
-import { Colors, TextVariant, Theme } from '../theme/theme'
+import { Colors, Theme } from '../theme/theme'
 import TouchableOpacityBox from './TouchableOpacityBox'
-import Box from './Box'
 import WithDebounce from './WithDebounce'
-import { useColors } from '../theme/themeHooks'
+
+type ButtonColor = 'primary' | 'secondary'
+
+type ButtonVariant = 'contained' | 'text'
+
+type ButtonSize = 'small' | 'medium' | 'large'
 
 type Props = BoxProps<Theme> & {
-  mode?: 'text' | 'contained'
+  title: string
+  onPress: () => void
+  color: ButtonColor
   variant?: ButtonVariant
-  onPress?: () => void
+  size?: ButtonSize
   disabled?: boolean
-  title?: string
-  textStyle?: TextStyle
-  textVariant?: TextVariant
-  color?: Colors
-  backgroundColor?: Colors
-  Icon?: React.FC<SvgProps>
-  loading?: boolean
+  fullWidth?: boolean
 }
 
-type ButtonVariant = 'primary' | 'secondary' | 'destructive'
-
-const containedBackground = {
-  primary: 'surfaceContrast',
-  secondary: 'secondary',
-  destructive: 'error',
-} as Record<string, Colors>
-
-const Button = ({
-  onPress,
+export const Button = ({
   title,
-  mode = 'text',
-  variant = 'primary',
+  onPress,
   color,
-  textStyle,
-  textVariant,
-  disabled,
-  height,
-  Icon,
-  backgroundColor,
-  loading,
+  variant = 'contained',
+  size = 'medium',
+  disabled = false,
+  fullWidth = false,
   ...rest
 }: Props) => {
-  const colors = useColors()
-  const getBackground = (): Colors | undefined => {
-    if (backgroundColor) return backgroundColor
-    if (mode !== 'contained') return undefined
-    return containedBackground[variant]
-  }
+  const getSize = useCallback(() => {
+    switch (size) {
+      case 'small':
+        return 's'
 
-  const getTextColor = (): Colors => {
-    if (color) return color
+      case 'medium':
+        return 'm'
 
-    if (mode === 'contained') {
-      if (variant === 'secondary') {
-        return 'secondaryText'
-      }
-      return 'surfaceContrastText'
+      case 'large':
+        return 'l'
+
+      default:
+        throw new Error('Unknown button size')
     }
+  }, [size])
 
-    if (variant === 'secondary') {
-      return 'secondaryText'
+  const getBackground = useCallback((): Colors | undefined => {
+    if (variant === 'text') return undefined
+
+    switch (color) {
+      case 'primary':
+        return 'primary'
+
+      case 'secondary':
+        return 'secondary'
+
+      default:
+        throw new Error('Unknown button color')
     }
+  }, [color, variant])
 
-    return 'primaryText'
-  }
+  const getTextColor = useCallback((): Colors | undefined => {
+    return variant === 'text' ? 'linkText' : 'primaryText'
+  }, [variant])
 
-  const getTextVariant = () => {
-    if (textVariant) return textVariant
-    return 'subtitle2'
+  const style: StyleProp<ViewStyle> = {
+    opacity: disabled ? 0.2 : 1,
+    width: fullWidth ? '100%' : undefined,
   }
 
   return (
-    <Box style={{ opacity: disabled ? 0.2 : 1 }} {...rest} height={height}>
-      <TouchableOpacityBox
-        height={height}
-        backgroundColor={getBackground()}
-        borderRadius="m"
-        onPress={onPress}
-        disabled={disabled}
-        justifyContent="center"
-        flexDirection="row"
-        alignItems="center"
-        paddingHorizontal="ms"
-      >
-        {!!Icon && (
-          <Box marginEnd="xxs">
-            <Icon color={colors[getTextColor()]} height={10} />
-          </Box>
-        )}
-        <Text
-          maxFontSizeMultiplier={1.2}
-          alignSelf="center"
-          paddingVertical={height ? undefined : 'lm'}
-          variant={getTextVariant()}
-          color={getTextColor()}
-          style={textStyle}
-        >
-          {title}
-        </Text>
-        {loading && (
-          <Box marginStart="s">
-            <ActivityIndicator color={colors[getTextColor()]} />
-          </Box>
-        )}
-      </TouchableOpacityBox>
-    </Box>
+    <TouchableOpacityBox
+      onPress={onPress}
+      disabled={disabled}
+      backgroundColor={getBackground()}
+      borderRadius="m"
+      paddingHorizontal={getSize()}
+      paddingVertical={getSize()}
+      style={style}
+      {...rest}
+    >
+      <Text variant="button" color={getTextColor()}>
+        {title}
+      </Text>
+    </TouchableOpacityBox>
   )
 }
-
-export default Button
 
 export const DebouncedButton = WithDebounce(Button)

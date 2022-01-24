@@ -294,7 +294,7 @@ const makeStyles = (colors: typeof theme.colors) => ({
   } as StyleProp<FillLayerStyle>,
   witnessFill: {
     fillOpacity: 0.4,
-    fillColor: colors.yellow,
+    fillColor: colors.primary,
     fillOutlineColor: '#1C1E3B',
   } as StyleProp<FillLayerStyle>,
 })
