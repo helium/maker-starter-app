@@ -2,42 +2,71 @@ import React, { memo, useEffect } from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 import { useSelector } from 'react-redux'
 import changeNavigationBarColor from 'react-native-navigation-bar-color'
-import Onboarding from '../features/onboarding/OnboardingNavigator'
-import { RootState } from '../store/rootReducer'
-import defaultScreenOptions from './defaultScreenOptions'
-import HomeNav from './main/HomeNavigator'
-import { useColors } from '../theme/themeHooks'
 
-const OnboardingStack = createStackNavigator()
-const MainStack = createStackNavigator()
+import { RootState } from '../store/rootReducer'
+import LockScreen from '../features/lock/LockScreen'
+import GatewayOnboardingNavigator from './GatewayOnboardingNavigator'
+import MainTabs from './main/MainTabNavigator'
+import { useColors } from '../theme/themeHooks'
+import WelcomeScreen from '../features/notSignedIn/WelcomeScreen'
+import CreatePinScreen from '../features/pinManagement/CreatePinScreen'
+import ConfirmPinScreen from '../features/pinManagement/ConfirmPinScreen'
+import {
+  NotSignedInStackParamList,
+  SignedInStackParamList,
+} from './navigationRootTypes'
+import useDefaultScreenOptions from './useDefaultScreenOptions'
+
+const NotSignedInStack = createStackNavigator<NotSignedInStackParamList>()
+const SignedInStack = createStackNavigator<SignedInStackParamList>()
 
 const NavigationRoot = () => {
   const { walletLinkToken } = useSelector((state: RootState) => state.app)
   const colors = useColors()
+  const defaultScreenOptions = useDefaultScreenOptions()
 
   useEffect(() => {
-    changeNavigationBarColor(colors.primaryBackground, true, false)
-  }, [colors.primaryBackground])
+    changeNavigationBarColor(colors.primaryText, true, false)
+  }, [colors.primaryText])
 
-  if (!walletLinkToken) {
+  const notSignedIn = !walletLinkToken
+
+  if (notSignedIn) {
     return (
-      <OnboardingStack.Navigator
-        headerMode="none"
-        screenOptions={defaultScreenOptions}
+      <NotSignedInStack.Navigator
+        screenOptions={{
+          ...defaultScreenOptions,
+          gestureEnabled: false,
+          title: '',
+        }}
       >
-        <OnboardingStack.Screen
-          name="Onboarding"
-          component={Onboarding}
-          options={{ gestureEnabled: false }}
-        />
-      </OnboardingStack.Navigator>
+        <NotSignedInStack.Screen name="Welcome" component={WelcomeScreen} />
+      </NotSignedInStack.Navigator>
     )
   }
 
   return (
-    <MainStack.Navigator headerMode="none" screenOptions={defaultScreenOptions}>
-      <MainStack.Screen name="MainTab" component={HomeNav} />
-    </MainStack.Navigator>
+    <SignedInStack.Navigator
+      screenOptions={{ gestureEnabled: false, headerShown: false }}
+    >
+      <SignedInStack.Screen name="MainTabs" component={MainTabs} />
+
+      <SignedInStack.Screen
+        name="GatewayOnboarding"
+        component={GatewayOnboardingNavigator}
+      />
+
+      <SignedInStack.Screen
+        name="CreatePinScreen"
+        component={CreatePinScreen}
+      />
+      <SignedInStack.Screen
+        name="ConfirmPinScreen"
+        component={ConfirmPinScreen}
+      />
+
+      <SignedInStack.Screen name="LockScreen" component={LockScreen} />
+    </SignedInStack.Navigator>
   )
 }
 

@@ -1,13 +1,7 @@
 import 'react-native-gesture-handler'
-import React, { useEffect, useMemo } from 'react'
+import React, { useEffect } from 'react'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
-import {
-  LogBox,
-  Platform,
-  StatusBar,
-  UIManager,
-  useColorScheme,
-} from 'react-native'
+import { LogBox, Platform, StatusBar, UIManager } from 'react-native'
 import useAppState from 'react-native-appstate-hook'
 import { ThemeProvider } from '@shopify/restyle'
 import Config from 'react-native-config'
@@ -17,18 +11,15 @@ import { useAsync } from 'react-async-hook'
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
 import * as SplashScreen from 'expo-splash-screen'
 import { NavigationContainer } from '@react-navigation/native'
-import {
-  HotspotBleProvider,
-  OnboardingProvider,
-} from '@helium/react-native-sdk'
-import { theme, darkThemeColors, lightThemeColors } from './theme/theme'
+import { OnboardingProvider } from '@helium/react-native-sdk'
+
+import { navigationRef } from './navigation/navigator'
+import { theme } from './theme/theme'
 import NavigationRoot from './navigation/NavigationRoot'
 import { useAppDispatch } from './store/store'
 import appSlice, { restoreAppSettings } from './store/user/appSlice'
 import { RootState } from './store/rootReducer'
-import SecurityScreen from './features/security/SecurityScreen'
 import AppLinkProvider from './providers/AppLinkProvider'
-import { navigationRef } from './navigation/navigator'
 import useMount from './utils/useMount'
 
 SplashScreen.preventAutoHideAsync().catch(() => {
@@ -36,8 +27,6 @@ SplashScreen.preventAutoHideAsync().catch(() => {
 })
 
 const App = () => {
-  const colorScheme = useColorScheme()
-
   if (Platform.OS === 'android') {
     if (UIManager.setLayoutAnimationEnabledExperimental) {
       UIManager.setLayoutAnimationEnabledExperimental(true)
@@ -113,37 +102,28 @@ const App = () => {
     return () => clearInterval(timeout)
   }, [dispatch])
 
-  const colorAdaptedTheme = useMemo(
-    () => ({
-      ...theme,
-      colors: colorScheme === 'light' ? lightThemeColors : darkThemeColors,
-    }),
-    [colorScheme],
-  )
-
   return (
-    <OnboardingProvider baseUrl="https://onboarding.dewi.org/api/v2">
-      <HotspotBleProvider>
-        <ThemeProvider theme={colorAdaptedTheme}>
-          <BottomSheetModalProvider>
-            <SafeAreaProvider>
-              {/* TODO: Will need to adapt status bar for light/dark modes */}
-              {Platform.OS === 'ios' && <StatusBar barStyle="light-content" />}
-              {Platform.OS === 'android' && (
-                <StatusBar translucent backgroundColor="transparent" />
-              )}
-              <NavigationContainer ref={navigationRef}>
-                <AppLinkProvider>
-                  <NavigationRoot />
-                </AppLinkProvider>
-              </NavigationContainer>
-            </SafeAreaProvider>
-            <SecurityScreen
-              visible={appState !== 'active' && appState !== 'unknown'}
-            />
-          </BottomSheetModalProvider>
-        </ThemeProvider>
-      </HotspotBleProvider>
+    <OnboardingProvider baseUrl={Config.ONBOARDING_SERVER_URL}>
+      <ThemeProvider theme={theme}>
+        <BottomSheetModalProvider>
+          <SafeAreaProvider>
+            {Platform.OS === 'ios' && <StatusBar barStyle="dark-content" />}
+            {Platform.OS === 'android' && (
+              <StatusBar
+                barStyle="dark-content"
+                translucent
+                backgroundColor="transparent"
+              />
+            )}
+
+            <NavigationContainer ref={navigationRef}>
+              <AppLinkProvider>
+                <NavigationRoot />
+              </AppLinkProvider>
+            </NavigationContainer>
+          </SafeAreaProvider>
+        </BottomSheetModalProvider>
+      </ThemeProvider>
     </OnboardingProvider>
   )
 }

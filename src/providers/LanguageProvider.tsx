@@ -1,5 +1,5 @@
 import React, { createContext, ReactNode, useContext } from 'react'
-import { useLanguage } from '../utils/i18n'
+import { useLanguage } from '../i18n'
 
 const initialState = { language: 'en', changeLanguage: async () => undefined }
 

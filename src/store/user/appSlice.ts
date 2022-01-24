@@ -5,10 +5,9 @@ import {
   setSecureItem,
   signOut,
 } from '../../utils/secureAccount'
-import { Intervals } from '../../features/moreTab/more/useAuthIntervals'
+import { Intervals } from '../../features/settings/useAuthIntervals'
 
 export type AppState = {
-  isSettingUpHotspot: boolean
   isRestored: boolean
   isPinRequired: boolean
   authInterval: number
@@ -18,7 +17,6 @@ export type AppState = {
   walletLinkToken?: string
 }
 const initialState: AppState = {
-  isSettingUpHotspot: false,
   isRestored: false,
   isPinRequired: false,
   authInterval: Intervals.IMMEDIATELY,
@@ -63,9 +61,6 @@ const appSlice = createSlice({
       setSecureItem('requirePin', true)
       setSecureItem('userPin', action.payload)
       state.isPinRequired = true
-    },
-    startHotspotSetup: (state) => {
-      state.isSettingUpHotspot = false
     },
     signOut: () => {
       signOut()

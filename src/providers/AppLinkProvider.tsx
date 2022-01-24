@@ -7,12 +7,13 @@ import React, {
   useState,
 } from 'react'
 import { Linking } from 'react-native'
+import Config from 'react-native-config'
 import queryString from 'query-string'
-import { BarCodeScannerResult } from 'expo-barcode-scanner'
 import { useSelector } from 'react-redux'
+
 import useMount from '../utils/useMount'
 import { RootState } from '../store/rootReducer'
-import navigator from '../navigation/navigator'
+import { navigationRef } from '../navigation/navigator'
 import {
   AppLink,
   AppLinkFields,
@@ -24,12 +25,10 @@ import {
 import { useAppDispatch } from '../store/store'
 import appSlice from '../store/user/appSlice'
 
-export const APP_LINK_PROTOCOL = 'makerappscheme://'
-
 export const createAppLink = (
   resource: AppLinkCategoryType,
   resourceId: string,
-) => `${APP_LINK_PROTOCOL}${resource}/${resourceId}`
+) => `${Config.APP_LINK_PROTOCOL}${resource}/${resourceId}`
 
 const useAppLink = () => {
   const [unhandledAppLink, setUnhandledLink] = useState<
@@ -74,7 +73,10 @@ const useAppLink = () => {
           const { resource: txnStr } = record as AppLink
           if (!txnStr) return
 
-          navigator.confirmAddGateway(txnStr)
+          navigationRef.current?.navigate('GatewayOnboarding', {
+            screen: 'TxnConfirmScreen',
+            params: { addGatewayTxn: txnStr },
+          })
           break
         }
         case 'link_wallet': {
@@ -89,12 +91,15 @@ const useAppLink = () => {
         case 'sign_hotspot': {
           const hotspotLink = record as HotspotLink
           if (hotspotLink.status === 'success') {
-            navigator.submitGatewayTxns(hotspotLink)
+            navigationRef.current?.navigate('GatewayOnboarding', {
+              screen: 'TxnSubmitedScreen',
+              params: hotspotLink,
+            })
           } else {
             // TODO: handle failure status codes
             // eslint-disable-next-line no-console
             console.error(`Failed with status ${hotspotLink.status}`)
-            navigator.goToMainTabs()
+            navigationRef.current?.navigate('MainTabs')
           }
           break
         }
@@ -115,7 +120,7 @@ const useAppLink = () => {
     if (!url) return
 
     const parsed = queryString.parseUrl(url)
-    if (!parsed.url.includes(APP_LINK_PROTOCOL)) return
+    if (!parsed.url.includes(Config.APP_LINK_PROTOCOL)) return
 
     const params = queryString.parse(queryString.extract(url))
     const record = AppLinkFields.reduce(
@@ -123,7 +128,7 @@ const useAppLink = () => {
       params,
     ) as AppLink
 
-    const path = parsed.url.replace(APP_LINK_PROTOCOL, '')
+    const path = parsed.url.replace(Config.APP_LINK_PROTOCOL, '')
     const [resourceType, ...rest] = path.split('/')
     if (resourceType && AppLinkCategories.find((k) => k === resourceType)) {
       record.type = resourceType as AppLinkCategoryType
@@ -138,29 +143,18 @@ const useAppLink = () => {
     return record
   }, [])
 
-  const parseData = useCallback(
-    (data: string, _scanType: AppLinkCategoryType): AppLink => {
-      const urlParams = parseUrl(data)
-      if (!urlParams) {
-        throw new Error('Invalid Link')
-      }
-      return urlParams
-    },
-    [parseUrl],
-  )
+  // const parseData = useCallback(
+  //   (data: string, _scanType: AppLinkCategoryType): AppLink => {
+  //     const urlParams = parseUrl(data)
+  //     if (!urlParams) {
+  //       throw new Error('Invalid Link')
+  //     }
+  //     return urlParams
+  //   },
+  //   [parseUrl],
+  // )
 
-  const handleBarCode = useCallback(
-    (
-      { data }: BarCodeScannerResult,
-      scanType: AppLinkCategoryType,
-      opts?: Record<string, string>,
-    ) => {
-      const scanResult = parseData(data, scanType)
-
-      navToAppLink({ ...scanResult, ...opts })
-    },
-    [navToAppLink, parseData],
-  )
+  const handleBarCode = () => {}
 
   return { handleBarCode }
 }
