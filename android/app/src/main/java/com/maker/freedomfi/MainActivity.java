@@ -1,4 +1,4 @@
-package com.maker.makerapp;
+package com.maker.freedomfi;
 import expo.modules.ReactActivityDelegateWrapper;
 import com.facebook.react.ReactActivityDelegate;
 
@@ -8,7 +8,6 @@ import com.facebook.react.ReactRootView;
 import com.swmansion.gesturehandler.react.RNGestureHandlerEnabledRootView;
 
 import android.view.WindowManager;
-import expo.modules.ReactActivityDelegateWrapper;
 
 public class MainActivity extends ReactActivity {
     @Override
@@ -22,7 +21,7 @@ public class MainActivity extends ReactActivity {
    */
   @Override
   protected String getMainComponentName() {
-    return "MakerApp";
+    return "FreedomFi";
   }
 
   @Override

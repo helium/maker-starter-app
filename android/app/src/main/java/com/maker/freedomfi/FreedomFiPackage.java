@@ -1,4 +1,4 @@
-package com.maker.makerapp;
+package com.maker.freedomfi;
 
 import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.NativeModule;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class MakerAppPackage implements ReactPackage {
+public class FreedomFiPackage implements ReactPackage {
 
     @Override
     public List<ViewManager> createViewManagers(ReactApplicationContext reactContext) {

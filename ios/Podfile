@@ -7,7 +7,7 @@ platform :ios, '12.1'
 require 'json'
 podfile_properties = JSON.parse(File.read('./Podfile.properties.json')) rescue {}
 
-target 'MakerApp' do
+target 'FreedomFi' do
   use_expo_modules!
   config = use_native_modules!
 
@@ -16,7 +16,7 @@ target 'MakerApp' do
     :hermes_enabled => podfile_properties['expo.jsEngine'] == 'hermes'
   )
 
-  target 'MakerAppTests' do
+  target 'FreedomFiTests' do
     inherit! :complete
     # Pods for testing
   end
