@@ -46,12 +46,6 @@
 				</dict>
 			</dict>
 		</dict>
-		<key>NSBluetoothAlwaysUsageDescription</key>
-		<string>Allow Maker App to connect to and manage your Hotspots</string>
-		<key>NSBluetoothPeripheralUsageDescription</key>
-		<string>Allow Maker App to connect to and manage your Hotspots</string>
-		<key>NSCameraUsageDescription</key>
-		<string>Allow Maker App to use the camera to scan QR codes</string>
 		<key>NSFaceIDUsageDescription</key>
 		<string>Allow Maker App to authenticate with Face ID</string>
 		<key>NSLocationAlwaysUsageDescription</key>
