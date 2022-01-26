@@ -7,14 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		00E356F31AD99517003FC87E /* MakerAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* MakerAppTests.m */; };
+		00E356F31AD99517003FC87E /* FreedomFiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* FreedomFiTests.m */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		3AAA8194DB4D059944852532 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D65FC53696548063B0CA59 /* ExpoModulesProvider.swift */; };
-		3C2D26697DA9DE0D62775384 /* libPods-MakerApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C2C551342F5A01DDC30CEC /* libPods-MakerApp.a */; };
+		3C2D26697DA9DE0D62775384 /* libPods-FreedomFi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C2C551342F5A01DDC30CEC /* libPods-FreedomFi.a */; };
 		52DF7BF9B6F6812C987607E2 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7F384B36BEBF65291C3764 /* ExpoModulesProvider.swift */; };
-		78771B5356165C9F7AF63C78 /* libPods-MakerApp-MakerAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ED9B03F4EE6066C138C909EC /* libPods-MakerApp-MakerAppTests.a */; };
+		78771B5356165C9F7AF63C78 /* libPods-FreedomFi-FreedomFiTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ED9B03F4EE6066C138C909EC /* libPods-FreedomFi-FreedomFiTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		964E9C302638CD0C00CCBCCC /* bridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 964E9C2F2638CD0C00CCBCCC /* bridge.swift */; };
 /* End PBXBuildFile section */
@@ -25,7 +25,7 @@
 			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 13B07F861A680F5B00A75B9A;
-			remoteInfo = MakerApp;
+			remoteInfo = FreedomFi;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -44,29 +44,29 @@
 
 /* Begin PBXFileReference section */
 		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
-		00E356EE1AD99517003FC87E /* MakerAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MakerAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		00E356EE1AD99517003FC87E /* FreedomFiTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FreedomFiTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		00E356F21AD99517003FC87E /* MakerAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MakerAppTests.m; sourceTree = "<group>"; };
-		131B3F2792FC4EFA005595E1 /* Pods-MakerApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MakerApp.release.xcconfig"; path = "Target Support Files/Pods-MakerApp/Pods-MakerApp.release.xcconfig"; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* MakerApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MakerApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = MakerApp/AppDelegate.h; sourceTree = "<group>"; };
-		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = MakerApp/AppDelegate.m; sourceTree = "<group>"; };
-		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = MakerApp/Images.xcassets; sourceTree = "<group>"; };
-		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = MakerApp/Info.plist; sourceTree = "<group>"; };
-		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = MakerApp/main.m; sourceTree = "<group>"; };
-		1B7F384B36BEBF65291C3764 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-MakerApp-MakerAppTests/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
-		25340B7256A37E523AF6B776 /* Pods-MakerApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MakerApp.debug.xcconfig"; path = "Target Support Files/Pods-MakerApp/Pods-MakerApp.debug.xcconfig"; sourceTree = "<group>"; };
-		64D65FC53696548063B0CA59 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-MakerApp/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
-		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = MakerApp/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		964E9C2E2638CD0B00CCBCCC /* MakerApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MakerApp-Bridging-Header.h"; sourceTree = "<group>"; };
+		00E356F21AD99517003FC87E /* FreedomFiTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FreedomFiTests.m; sourceTree = "<group>"; };
+		131B3F2792FC4EFA005595E1 /* Pods-FreedomFi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreedomFi.release.xcconfig"; path = "Target Support Files/Pods-FreedomFi/Pods-FreedomFi.release.xcconfig"; sourceTree = "<group>"; };
+		13B07F961A680F5B00A75B9A /* FreedomFi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FreedomFi.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = FreedomFi/AppDelegate.h; sourceTree = "<group>"; };
+		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = FreedomFi/AppDelegate.m; sourceTree = "<group>"; };
+		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = FreedomFi/Images.xcassets; sourceTree = "<group>"; };
+		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = FreedomFi/Info.plist; sourceTree = "<group>"; };
+		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = FreedomFi/main.m; sourceTree = "<group>"; };
+		1B7F384B36BEBF65291C3764 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-FreedomFi-FreedomFiTests/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
+		25340B7256A37E523AF6B776 /* Pods-FreedomFi.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreedomFi.debug.xcconfig"; path = "Target Support Files/Pods-FreedomFi/Pods-FreedomFi.debug.xcconfig"; sourceTree = "<group>"; };
+		64D65FC53696548063B0CA59 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-FreedomFi/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
+		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = FreedomFi/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		964E9C2E2638CD0B00CCBCCC /* FreedomFi-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "FreedomFi-Bridging-Header.h"; sourceTree = "<group>"; };
 		964E9C2F2638CD0C00CCBCCC /* bridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bridge.swift; sourceTree = "<group>"; };
-		A8C2C551342F5A01DDC30CEC /* libPods-MakerApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MakerApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		BFB45BBD2A85DBD1301D84BC /* Pods-MakerApp-MakerAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MakerApp-MakerAppTests.debug.xcconfig"; path = "Target Support Files/Pods-MakerApp-MakerAppTests/Pods-MakerApp-MakerAppTests.debug.xcconfig"; sourceTree = "<group>"; };
-		DE9CC2ABA6BCC071224EC7DF /* Pods-MakerApp-MakerAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MakerApp-MakerAppTests.release.xcconfig"; path = "Target Support Files/Pods-MakerApp-MakerAppTests/Pods-MakerApp-MakerAppTests.release.xcconfig"; sourceTree = "<group>"; };
+		A8C2C551342F5A01DDC30CEC /* libPods-FreedomFi.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FreedomFi.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BFB45BBD2A85DBD1301D84BC /* Pods-FreedomFi-FreedomFiTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreedomFi-FreedomFiTests.debug.xcconfig"; path = "Target Support Files/Pods-FreedomFi-FreedomFiTests/Pods-FreedomFi-FreedomFiTests.debug.xcconfig"; sourceTree = "<group>"; };
+		DE9CC2ABA6BCC071224EC7DF /* Pods-FreedomFi-FreedomFiTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreedomFi-FreedomFiTests.release.xcconfig"; path = "Target Support Files/Pods-FreedomFi-FreedomFiTests/Pods-FreedomFi-FreedomFiTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
-		ED9B03F4EE6066C138C909EC /* libPods-MakerApp-MakerAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MakerApp-MakerAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		F8B0E2112563005D00EB1E73 /* MakerApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = MakerApp.entitlements; path = MakerApp/MakerApp.entitlements; sourceTree = "<group>"; };
+		ED9B03F4EE6066C138C909EC /* libPods-FreedomFi-FreedomFiTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FreedomFi-FreedomFiTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F8B0E2112563005D00EB1E73 /* FreedomFi.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = FreedomFi.entitlements; path = FreedomFi/FreedomFi.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,7 +74,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				78771B5356165C9F7AF63C78 /* libPods-MakerApp-MakerAppTests.a in Frameworks */,
+				78771B5356165C9F7AF63C78 /* libPods-FreedomFi-FreedomFiTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -82,20 +82,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3C2D26697DA9DE0D62775384 /* libPods-MakerApp.a in Frameworks */,
+				3C2D26697DA9DE0D62775384 /* libPods-FreedomFi.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		00E356EF1AD99517003FC87E /* MakerAppTests */ = {
+		00E356EF1AD99517003FC87E /* FreedomFiTests */ = {
 			isa = PBXGroup;
 			children = (
-				00E356F21AD99517003FC87E /* MakerAppTests.m */,
+				00E356F21AD99517003FC87E /* FreedomFiTests.m */,
 				00E356F01AD99517003FC87E /* Supporting Files */,
 			);
-			path = MakerAppTests;
+			path = FreedomFiTests;
 			sourceTree = "<group>";
 		};
 		00E356F01AD99517003FC87E /* Supporting Files */ = {
@@ -106,10 +106,10 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		13B07FAE1A68108700A75B9A /* MakerApp */ = {
+		13B07FAE1A68108700A75B9A /* FreedomFi */ = {
 			isa = PBXGroup;
 			children = (
-				F8B0E2112563005D00EB1E73 /* MakerApp.entitlements */,
+				F8B0E2112563005D00EB1E73 /* FreedomFi.entitlements */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -118,17 +118,17 @@
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
 				964E9C2F2638CD0C00CCBCCC /* bridge.swift */,
-				964E9C2E2638CD0B00CCBCCC /* MakerApp-Bridging-Header.h */,
+				964E9C2E2638CD0B00CCBCCC /* FreedomFi-Bridging-Header.h */,
 			);
-			name = MakerApp;
+			name = FreedomFi;
 			sourceTree = "<group>";
 		};
-		19535BEA8BAE3F89ABBA9005 /* MakerApp */ = {
+		19535BEA8BAE3F89ABBA9005 /* FreedomFi */ = {
 			isa = PBXGroup;
 			children = (
 				64D65FC53696548063B0CA59 /* ExpoModulesProvider.swift */,
 			);
-			name = MakerApp;
+			name = FreedomFi;
 			sourceTree = "<group>";
 		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
@@ -136,8 +136,8 @@
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
-				A8C2C551342F5A01DDC30CEC /* libPods-MakerApp.a */,
-				ED9B03F4EE6066C138C909EC /* libPods-MakerApp-MakerAppTests.a */,
+				A8C2C551342F5A01DDC30CEC /* libPods-FreedomFi.a */,
+				ED9B03F4EE6066C138C909EC /* libPods-FreedomFi-FreedomFiTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -149,12 +149,12 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
-		58E6235987F68EB20BB61A26 /* MakerAppTests */ = {
+		58E6235987F68EB20BB61A26 /* FreedomFiTests */ = {
 			isa = PBXGroup;
 			children = (
 				1B7F384B36BEBF65291C3764 /* ExpoModulesProvider.swift */,
 			);
-			name = MakerAppTests;
+			name = FreedomFiTests;
 			sourceTree = "<group>";
 		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
@@ -167,9 +167,9 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				13B07FAE1A68108700A75B9A /* MakerApp */,
+				13B07FAE1A68108700A75B9A /* FreedomFi */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
-				00E356EF1AD99517003FC87E /* MakerAppTests */,
+				00E356EF1AD99517003FC87E /* FreedomFiTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBB8A579C848048078120971 /* Pods */,
@@ -184,8 +184,8 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* MakerApp.app */,
-				00E356EE1AD99517003FC87E /* MakerAppTests.xctest */,
+				13B07F961A680F5B00A75B9A /* FreedomFi.app */,
+				00E356EE1AD99517003FC87E /* FreedomFiTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -193,8 +193,8 @@
 		B0765E311354073F9F5AC060 /* ExpoModulesProviders */ = {
 			isa = PBXGroup;
 			children = (
-				19535BEA8BAE3F89ABBA9005 /* MakerApp */,
-				58E6235987F68EB20BB61A26 /* MakerAppTests */,
+				19535BEA8BAE3F89ABBA9005 /* FreedomFi */,
+				58E6235987F68EB20BB61A26 /* FreedomFiTests */,
 			);
 			name = ExpoModulesProviders;
 			sourceTree = "<group>";
@@ -202,10 +202,10 @@
 		BBB8A579C848048078120971 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				25340B7256A37E523AF6B776 /* Pods-MakerApp.debug.xcconfig */,
-				131B3F2792FC4EFA005595E1 /* Pods-MakerApp.release.xcconfig */,
-				BFB45BBD2A85DBD1301D84BC /* Pods-MakerApp-MakerAppTests.debug.xcconfig */,
-				DE9CC2ABA6BCC071224EC7DF /* Pods-MakerApp-MakerAppTests.release.xcconfig */,
+				25340B7256A37E523AF6B776 /* Pods-FreedomFi.debug.xcconfig */,
+				131B3F2792FC4EFA005595E1 /* Pods-FreedomFi.release.xcconfig */,
+				BFB45BBD2A85DBD1301D84BC /* Pods-FreedomFi-FreedomFiTests.debug.xcconfig */,
+				DE9CC2ABA6BCC071224EC7DF /* Pods-FreedomFi-FreedomFiTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -213,9 +213,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		00E356ED1AD99517003FC87E /* MakerAppTests */ = {
+		00E356ED1AD99517003FC87E /* FreedomFiTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "MakerAppTests" */;
+			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "FreedomFiTests" */;
 			buildPhases = (
 				77C2A180FAF2ECEC031B2BFC /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
@@ -229,14 +229,14 @@
 			dependencies = (
 				00E356F51AD99517003FC87E /* PBXTargetDependency */,
 			);
-			name = MakerAppTests;
-			productName = MakerAppTests;
-			productReference = 00E356EE1AD99517003FC87E /* MakerAppTests.xctest */;
+			name = FreedomFiTests;
+			productName = FreedomFiTests;
+			productReference = 00E356EE1AD99517003FC87E /* FreedomFiTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		13B07F861A680F5B00A75B9A /* MakerApp */ = {
+		13B07F861A680F5B00A75B9A /* FreedomFi */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "MakerApp" */;
+			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "FreedomFi" */;
 			buildPhases = (
 				0103E73B626F0B8DC823B3E8 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
@@ -252,9 +252,9 @@
 			);
 			dependencies = (
 			);
-			name = MakerApp;
-			productName = MakerApp;
-			productReference = 13B07F961A680F5B00A75B9A /* MakerApp.app */;
+			name = FreedomFi;
+			productName = FreedomFi;
+			productReference = 13B07F961A680F5B00A75B9A /* FreedomFi.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -276,7 +276,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "MakerApp" */;
+			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "FreedomFi" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -289,8 +289,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				13B07F861A680F5B00A75B9A /* MakerApp */,
-				00E356ED1AD99517003FC87E /* MakerAppTests */,
+				13B07F861A680F5B00A75B9A /* FreedomFi */,
+				00E356ED1AD99517003FC87E /* FreedomFiTests */,
 			);
 		};
 /* End PBXProject section */
@@ -321,7 +321,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MakerApp-MakerAppTests/Pods-MakerApp-MakerAppTests-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-FreedomFi-FreedomFiTests/Pods-FreedomFi-FreedomFiTests-frameworks.sh",
 				"${PODS_ROOT}/Mapbox-iOS-SDK/dynamic/Mapbox.framework",
 				"${BUILT_PRODUCTS_DIR}/MapboxMobileEvents/MapboxMobileEvents.framework",
 			);
@@ -332,7 +332,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MakerApp-MakerAppTests/Pods-MakerApp-MakerAppTests-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FreedomFi-FreedomFiTests/Pods-FreedomFi-FreedomFiTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */ = {
@@ -364,7 +364,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-MakerApp-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-FreedomFi-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -377,7 +377,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MakerApp/Pods-MakerApp-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-FreedomFi/Pods-FreedomFi-frameworks.sh",
 				"${PODS_ROOT}/Mapbox-iOS-SDK/dynamic/Mapbox.framework",
 				"${BUILT_PRODUCTS_DIR}/MapboxMobileEvents/MapboxMobileEvents.framework",
 			);
@@ -388,7 +388,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MakerApp/Pods-MakerApp-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FreedomFi/Pods-FreedomFi-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		77C2A180FAF2ECEC031B2BFC /* [CP] Check Pods Manifest.lock */ = {
@@ -406,7 +406,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-MakerApp-MakerAppTests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-FreedomFi-FreedomFiTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -419,7 +419,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MakerApp-MakerAppTests/Pods-MakerApp-MakerAppTests-resources.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-FreedomFi-FreedomFiTests/Pods-FreedomFi-FreedomFiTests-resources.sh",
 				"${PODS_CONFIGURATION_BUILD_DIR}/EXConstants/EXConstants.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle",
 			);
@@ -430,7 +430,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MakerApp-MakerAppTests/Pods-MakerApp-MakerAppTests-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FreedomFi-FreedomFiTests/Pods-FreedomFi-FreedomFiTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		CD738B53C9E63C2BEE40515E /* [CP] Copy Pods Resources */ = {
@@ -439,7 +439,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MakerApp/Pods-MakerApp-resources.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-FreedomFi/Pods-FreedomFi-resources.sh",
 				"${PODS_CONFIGURATION_BUILD_DIR}/EXConstants/EXConstants.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle",
 			);
@@ -450,7 +450,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MakerApp/Pods-MakerApp-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FreedomFi/Pods-FreedomFi-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FD10A7F022414F080027D42C /* Start Packager */ = {
@@ -479,7 +479,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				00E356F31AD99517003FC87E /* MakerAppTests.m in Sources */,
+				00E356F31AD99517003FC87E /* FreedomFiTests.m in Sources */,
 				52DF7BF9B6F6812C987607E2 /* ExpoModulesProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -500,7 +500,7 @@
 /* Begin PBXTargetDependency section */
 		00E356F51AD99517003FC87E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 13B07F861A680F5B00A75B9A /* MakerApp */;
+			target = 13B07F861A680F5B00A75B9A /* FreedomFi */;
 			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -508,7 +508,7 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BFB45BBD2A85DBD1301D84BC /* Pods-MakerApp-MakerAppTests.debug.xcconfig */;
+			baseConfigurationReference = BFB45BBD2A85DBD1301D84BC /* Pods-FreedomFi-FreedomFiTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -516,7 +516,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = MakerAppTests/Info.plist;
+				INFOPLIST_FILE = FreedomFiTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -526,18 +526,18 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MakerApp.app/MakerApp";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FreedomFi.app/FreedomFi";
 			};
 			name = Debug;
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DE9CC2ABA6BCC071224EC7DF /* Pods-MakerApp-MakerAppTests.release.xcconfig */;
+			baseConfigurationReference = DE9CC2ABA6BCC071224EC7DF /* Pods-FreedomFi-FreedomFiTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
-				INFOPLIST_FILE = MakerAppTests/Info.plist;
+				INFOPLIST_FILE = FreedomFiTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -547,24 +547,24 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MakerApp.app/MakerApp";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FreedomFi.app/FreedomFi";
 			};
 			name = Release;
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 25340B7256A37E523AF6B776 /* Pods-MakerApp.debug.xcconfig */;
+			baseConfigurationReference = 25340B7256A37E523AF6B776 /* Pods-FreedomFi.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = MakerApp/MakerApp.entitlements;
+				CODE_SIGN_ENTITLEMENTS = FreedomFi/FreedomFi.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = PVM9KJZ2AD;
 				ENABLE_BITCODE = NO;
 				EXCLUDED_ARCHS = "";
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
-				INFOPLIST_FILE = MakerApp/Info.plist;
+				INFOPLIST_FILE = FreedomFi/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 1.0.0;
 				OTHER_LDFLAGS = (
@@ -572,9 +572,9 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.maker.makerapp;
-				PRODUCT_NAME = MakerApp;
-				SWIFT_OBJC_BRIDGING_HEADER = "MakerApp-Bridging-Header.h";
+				PRODUCT_BUNDLE_IDENTIFIER = com.maker.freedomfi;
+				PRODUCT_NAME = FreedomFi;
+				SWIFT_OBJC_BRIDGING_HEADER = "FreedomFi-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -584,17 +584,17 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 131B3F2792FC4EFA005595E1 /* Pods-MakerApp.release.xcconfig */;
+			baseConfigurationReference = 131B3F2792FC4EFA005595E1 /* Pods-FreedomFi.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = MakerApp/MakerApp.entitlements;
+				CODE_SIGN_ENTITLEMENTS = FreedomFi/FreedomFi.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = PVM9KJZ2AD;
 				EXCLUDED_ARCHS = "";
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
-				INFOPLIST_FILE = MakerApp/Info.plist;
+				INFOPLIST_FILE = FreedomFi/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 1.0.0;
 				OTHER_LDFLAGS = (
@@ -602,9 +602,9 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.maker.makerapp;
-				PRODUCT_NAME = MakerApp;
-				SWIFT_OBJC_BRIDGING_HEADER = "MakerApp-Bridging-Header.h";
+				PRODUCT_BUNDLE_IDENTIFIER = com.maker.freedomfi;
+				PRODUCT_NAME = FreedomFi;
+				SWIFT_OBJC_BRIDGING_HEADER = "FreedomFi-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -731,7 +731,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "MakerAppTests" */ = {
+		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "FreedomFiTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				00E356F61AD99517003FC87E /* Debug */,
@@ -740,7 +740,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "MakerApp" */ = {
+		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "FreedomFi" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				13B07F941A680F5B00A75B9A /* Debug */,
@@ -749,7 +749,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "MakerApp" */ = {
+		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "FreedomFi" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,

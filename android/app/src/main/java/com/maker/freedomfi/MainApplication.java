@@ -1,4 +1,4 @@
-package com.maker.makerapp;
+package com.maker.freedomfi;
 import android.content.res.Configuration;
 import expo.modules.ApplicationLifecycleDispatcher;
 import expo.modules.ReactNativeHostWrapper;
@@ -13,7 +13,7 @@ import com.facebook.react.ReactPackage;
 import com.facebook.soloader.SoLoader;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
-import java.util.Arrays;
+
 import com.facebook.react.bridge.JSIModulePackage;
 import com.swmansion.reanimated.ReanimatedJSIModulePackage;
 
@@ -29,7 +29,7 @@ public class MainApplication extends Application implements ReactApplication {
       @SuppressWarnings("UnnecessaryLocalVariable")
       List<ReactPackage> packages = new PackageList(this).getPackages();
 
-      packages.add((new MakerAppPackage()));
+      packages.add((new FreedomFiPackage()));
       return packages;
     }
 
@@ -72,7 +72,7 @@ public class MainApplication extends Application implements ReactApplication {
          * We use reflection here to pick up the class that initializes Flipper, since
          * Flipper library is not available in release mode
          */
-        Class<?> aClass = Class.forName("com.maker.makerapp.ReactNativeFlipper");
+        Class<?> aClass = Class.forName("com.maker.freedomfi.ReactNativeFlipper");
         aClass.getMethod("initializeFlipper", Context.class, ReactInstanceManager.class).invoke(null, context,
             reactInstanceManager);
       } catch (ClassNotFoundException e) {

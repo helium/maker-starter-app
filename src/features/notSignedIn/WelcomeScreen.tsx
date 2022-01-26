@@ -4,8 +4,9 @@ import { WalletLink } from '@helium/react-native-sdk'
 import { Linking, Platform } from 'react-native'
 import { getBundleId } from 'react-native-device-info'
 import Toast from 'react-native-simple-toast'
-import LogoIcon from '@assets/images/logo.svg'
+import Config from 'react-native-config'
 
+import LogoIcon from '@assets/images/logo.svg'
 import { locale } from '../../i18n'
 import Text from '../../components/Text'
 import Box from '../../components/Box'
@@ -21,8 +22,8 @@ const WelcomeScreen = () => {
     const url = WalletLink.createWalletLinkUrl({
       universalLink: heliumApp.universalLink,
       requestAppId: getBundleId(),
-      callbackUrl: 'freedomfihelium://',
-      appName: 'FreedomFi Helium App',
+      callbackUrl: Config.APP_LINK_PROTOCOL,
+      appName: Config.APP_NAME,
     })
 
     try {
