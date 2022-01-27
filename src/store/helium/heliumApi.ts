@@ -3,10 +3,27 @@ import { chain } from 'lodash'
 import Config from 'react-native-config'
 
 export type Hotspot = {
-  name: string
-  location: string
-  address: string
+  lng: number
+  lat: number
   status: string
+  payer: string
+  owner: string
+  name: string
+  locationName: string | null
+  geocode: {
+    shortStreet: string
+    shortState: string
+    shortCountry: string
+    shortCity: string
+    longStreet: string
+    longState: string
+    longCountry: string
+    longCity: string
+    cityId: string
+  }
+  gain: number
+  elevation: number
+  address: string
 }
 
 export const heliumApi = createApi({
@@ -23,11 +40,32 @@ export const heliumApi = createApi({
           chain(response?.data)
             // .filter((hotspot)=> hotspot.payer && hotspot.payer === Config.FREEDOMFI_MAKER_ID)
             .map((hotspot) => {
+              const locationName = hotspot.location
+                ? `${hotspot.geocode?.long_street}, ${hotspot.geocode?.short_city} ${hotspot.geocode?.short_country}`
+                : null
+
               return {
-                name: hotspot.name?.replaceAll('-', ' '),
-                location: hotspot.location,
-                address: hotspot.address,
+                lng: hotspot.lng,
+                lat: hotspot.lat,
                 status: hotspot.status?.online,
+                payer: hotspot.payer,
+                owner: hotspot.owner,
+                name: hotspot.name?.replaceAll('-', ' '),
+                locationName,
+                geocode: {
+                  shortStreet: hotspot.geocode?.short_street,
+                  shortState: hotspot.geocode?.short_state,
+                  shortCountry: hotspot.geocode?.short_country,
+                  shortCity: hotspot.geocode?.short_city,
+                  longStreet: hotspot.geocode?.long_street,
+                  longState: hotspot.geocode?.long_state,
+                  longCountry: hotspot.geocode?.long_country,
+                  longCity: hotspot.geocode?.long_city,
+                  cityId: hotspot.geocode?.city_id,
+                },
+                gain: hotspot.gain,
+                elevation: hotspot.elevation,
+                address: hotspot.address,
               }
             })
             .value()

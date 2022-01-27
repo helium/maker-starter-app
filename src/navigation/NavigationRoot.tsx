@@ -55,6 +55,12 @@ const NavigationRoot = () => {
       <SignedInStack.Screen
         name="HotspotDetails"
         component={HotspotDetailsScreen}
+        options={{
+          ...defaultScreenOptions,
+          gestureEnabled: false,
+          headerShown: true,
+          title: '',
+        }}
       />
 
       <SignedInStack.Screen

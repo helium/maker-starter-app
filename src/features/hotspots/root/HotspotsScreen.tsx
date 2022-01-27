@@ -120,7 +120,7 @@ const HotspotsList = ({ accountAddress }: WithAccountAddressProps) => {
               </Text>
 
               <Text variant="body2" marginBottom="xs">
-                {item.location || t('hotspotsScreen.locationNotSet')}
+                {item.locationName || t('hotspotsScreen.locationNotSet')}
               </Text>
 
               <Text variant="body2" style={listStyles.listItemStatus}>

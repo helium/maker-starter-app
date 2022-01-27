@@ -22,7 +22,7 @@ import {
   HotspotOnboardingNavigationProp,
   HotspotOnboardingStackParamList,
 } from '../../../navigation/hotspotOnboardingNavigatorTypes'
-import HotspotLocationPreview from './HotspotLocationPreview'
+import HotspotLocationPreview from '../../../components/HotspotLocationPreview'
 
 type Route = RouteProp<HotspotOnboardingStackParamList, 'ConfirmLocationScreen'>
 

@@ -31,7 +31,10 @@ export default {
     locationNotSet: 'Location not set',
   },
   hotspotDetailsScreen: {
-    // title: 'Hotspots',
+    noData: "Can't load data",
+    setLocationBtn: 'Set Location',
+    changeLocationBtn: 'Change Location',
+    openInExplorerBtn: 'Open in Helium Explorer',
   },
   settingsScreen: {
     title: 'Settings',
