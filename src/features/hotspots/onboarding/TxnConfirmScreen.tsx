@@ -12,16 +12,16 @@ import { getAddress } from '../../../utils/secureAccount'
 import useMount from '../../../utils/useMount'
 import Box from '../../../components/Box'
 import {
-  GatewayOnboardingNavigationProp,
-  GatewayOnboardingStackParamList,
-} from '../../../navigation/gatewayOnboardingNavigatorTypes'
+  HotspotOnboardingNavigationProp,
+  HotspotOnboardingStackParamList,
+} from '../../../navigation/hotspotOnboardingNavigatorTypes'
 
-type Route = RouteProp<GatewayOnboardingStackParamList, 'TxnConfirmScreen'>
+type Route = RouteProp<HotspotOnboardingStackParamList, 'TxnConfirmScreen'>
 
 const TxnConfirmScreen = () => {
   const { t } = useTranslation()
   const { params } = useRoute<Route>()
-  const navigation = useNavigation<GatewayOnboardingNavigationProp>()
+  const navigation = useNavigation<HotspotOnboardingNavigationProp>()
   const [address, setAddress] = useState<string>()
   const [publicKey, setPublicKey] = useState('')
   const [macAddress, setMacAddress] = useState('')
@@ -80,7 +80,7 @@ const TxnConfirmScreen = () => {
         numberOfLines={1}
         adjustsFontSizeToFit
       >
-        {t('gatewayOnboarding.txnConfirmScreen.title')}
+        {t('hotspotOnboarding.txnConfirmScreen.title')}
       </Text>
 
       <Box
@@ -91,7 +91,7 @@ const TxnConfirmScreen = () => {
         justifyContent="center"
       >
         <Text variant="body1">
-          {t('gatewayOnboarding.txnConfirmScreen.publicKey')}
+          {t('hotspotOnboarding.txnConfirmScreen.publicKey')}
         </Text>
         <Text
           variant="body1"
@@ -110,7 +110,7 @@ const TxnConfirmScreen = () => {
         justifyContent="center"
       >
         <Text variant="body1">
-          {t('gatewayOnboarding.txnConfirmScreen.macAddress')}
+          {t('hotspotOnboarding.txnConfirmScreen.macAddress')}
         </Text>
         {macAddress ? (
           <Text variant="body1" marginTop="xs">
@@ -132,7 +132,7 @@ const TxnConfirmScreen = () => {
         justifyContent="center"
       >
         <Text variant="body1">
-          {t('gatewayOnboarding.txnConfirmScreen.ownerAddress')}
+          {t('hotspotOnboarding.txnConfirmScreen.ownerAddress')}
         </Text>
         <Text
           variant="body1"

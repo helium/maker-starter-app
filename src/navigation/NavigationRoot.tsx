@@ -5,12 +5,13 @@ import changeNavigationBarColor from 'react-native-navigation-bar-color'
 
 import { RootState } from '../store/rootReducer'
 import LockScreen from '../features/lock/LockScreen'
-import GatewayOnboardingNavigator from './GatewayOnboardingNavigator'
+import HotspotOnboardingNavigator from './HotspotOnboardingNavigator'
 import MainTabs from './main/MainTabNavigator'
 import { useColors } from '../theme/themeHooks'
 import WelcomeScreen from '../features/notSignedIn/WelcomeScreen'
 import CreatePinScreen from '../features/pinManagement/CreatePinScreen'
 import ConfirmPinScreen from '../features/pinManagement/ConfirmPinScreen'
+import HotspotDetailsScreen from '../features/hotspots/root/HotspotDetailsScreen'
 import {
   NotSignedInStackParamList,
   SignedInStackParamList,
@@ -52,8 +53,13 @@ const NavigationRoot = () => {
       <SignedInStack.Screen name="MainTabs" component={MainTabs} />
 
       <SignedInStack.Screen
-        name="GatewayOnboarding"
-        component={GatewayOnboardingNavigator}
+        name="HotspotDetails"
+        component={HotspotDetailsScreen}
+      />
+
+      <SignedInStack.Screen
+        name="HotspotOnboarding"
+        component={HotspotOnboardingNavigator}
       />
 
       <SignedInStack.Screen

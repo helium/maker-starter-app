@@ -8,9 +8,9 @@ import { DebouncedButton } from '../../../components/Button'
 import Text from '../../../components/Text'
 import { submitTxn } from '../../../utils/appDataClient'
 import { SignedInStackNavigationProp } from '../../../navigation/navigationRootTypes'
-import { GatewayOnboardingStackParamList } from '../../../navigation/gatewayOnboardingNavigatorTypes'
+import { HotspotOnboardingStackParamList } from '../../../navigation/hotspotOnboardingNavigatorTypes'
 
-type Route = RouteProp<GatewayOnboardingStackParamList, 'TxnSubmitedScreen'>
+type Route = RouteProp<HotspotOnboardingStackParamList, 'TxnSubmitedScreen'>
 
 const TxnSubmitedScreen = () => {
   const { t } = useTranslation()
@@ -36,11 +36,11 @@ const TxnSubmitedScreen = () => {
     >
       <Box flex={1} alignItems="center">
         <Text variant="subtitle1" marginBottom="l">
-          {t('gatewayOnboarding.txnSubmitedScreen.title')}
+          {t('hotspotOnboarding.txnSubmitedScreen.title')}
         </Text>
 
         <Text variant="body1" textAlign="center" marginBottom="l">
-          {t('gatewayOnboarding.txnSubmitedScreen.subtitle')}
+          {t('hotspotOnboarding.txnSubmitedScreen.subtitle')}
         </Text>
       </Box>
 
@@ -48,7 +48,7 @@ const TxnSubmitedScreen = () => {
         onPress={() => navigation.navigate('MainTabs')}
         color="primary"
         fullWidth
-        title={t('gatewayOnboarding.txnSubmitedScreen.next')}
+        title={t('hotspotOnboarding.txnSubmitedScreen.next')}
       />
     </Box>
   )

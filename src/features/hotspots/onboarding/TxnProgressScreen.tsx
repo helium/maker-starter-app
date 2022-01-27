@@ -8,6 +8,7 @@ import {
   Location,
 } from '@helium/react-native-sdk'
 import { ActivityIndicator, Linking } from 'react-native'
+import Toast from 'react-native-simple-toast'
 
 import Text from '../../../components/Text'
 import Box from '../../../components/Box'
@@ -17,9 +18,9 @@ import { getSecureItem } from '../../../utils/secureAccount'
 import { useColors } from '../../../theme/themeHooks'
 import useMount from '../../../utils/useMount'
 import { SignedInStackNavigationProp } from '../../../navigation/navigationRootTypes'
-import { GatewayOnboardingStackParamList } from '../../../navigation/gatewayOnboardingNavigatorTypes'
+import { HotspotOnboardingStackParamList } from '../../../navigation/hotspotOnboardingNavigatorTypes'
 
-type Route = RouteProp<GatewayOnboardingStackParamList, 'TxnProgressScreen'>
+type Route = RouteProp<HotspotOnboardingStackParamList, 'TxnProgressScreen'>
 
 const TxnProgressScreen = () => {
   const { t } = useTranslation()
@@ -34,8 +35,8 @@ const TxnProgressScreen = () => {
 
     if (isString(error)) {
       if (error === HotspotErrorCode.WAIT) {
-        messageKey = t('gatewayOnboarding.txnProgressScreen.waitErrorBody')
-        titleKey = t('gatewayOnboarding.txnProgressScreen.waitErrorTitle')
+        messageKey = t('hotspotOnboarding.txnProgressScreen.waitErrorBody')
+        titleKey = t('hotspotOnboarding.txnProgressScreen.waitErrorTitle')
       } else {
         messageKey = `Got error code ${error}`
       }
@@ -96,12 +97,24 @@ const TxnProgressScreen = () => {
 
     const url = WalletLink.createUpdateHotspotUrl(updateParams)
     if (!url) {
-      // eslint-disable-next-line no-console
-      console.error('Link could not be created')
+      Toast.showWithGravity(
+        t('hotspotOnboarding.txnProgressScreen.linkCreationError'),
+        Toast.LONG,
+        Toast.CENTER,
+      )
       return
     }
 
-    Linking.openURL(url)
+    const supported = await Linking.canOpenURL(url)
+    if (supported) {
+      await Linking.openURL(url)
+    } else {
+      Toast.showWithGravity(
+        t('generic.openLinkError', { url }),
+        Toast.LONG,
+        Toast.CENTER,
+      )
+    }
   }
 
   useMount(() => {
@@ -121,7 +134,7 @@ const TxnProgressScreen = () => {
     >
       <Box flex={1} alignItems="center">
         <Text variant="subtitle1" marginBottom="l">
-          {t('gatewayOnboarding.txnProgressScreen.title')}
+          {t('hotspotOnboarding.txnProgressScreen.title')}
         </Text>
         <Box flex={1} justifyContent="center">
           <ActivityIndicator color={primaryText} />

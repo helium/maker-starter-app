@@ -1,7 +1,7 @@
 import { OnboardingRecord } from '@helium/onboarding'
 import { StackNavigationProp } from '@react-navigation/stack'
 
-export type GatewayOnboardingStackParamList = {
+export type HotspotOnboardingStackParamList = {
   TxnConfirmScreen: {
     addGatewayTxn: string
   }
@@ -53,4 +53,4 @@ export type GatewayOnboardingStackParamList = {
   }
 }
 
-export type GatewayOnboardingNavigationProp = StackNavigationProp<GatewayOnboardingStackParamList>
+export type HotspotOnboardingNavigationProp = StackNavigationProp<HotspotOnboardingStackParamList>

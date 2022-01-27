@@ -73,7 +73,7 @@ const useAppLink = () => {
           const { resource: txnStr } = record as AppLink
           if (!txnStr) return
 
-          navigationRef.current?.navigate('GatewayOnboarding', {
+          navigationRef.current?.navigate('HotspotOnboarding', {
             screen: 'TxnConfirmScreen',
             params: { addGatewayTxn: txnStr },
           })
@@ -91,7 +91,7 @@ const useAppLink = () => {
         case 'sign_hotspot': {
           const hotspotLink = record as HotspotLink
           if (hotspotLink.status === 'success') {
-            navigationRef.current?.navigate('GatewayOnboarding', {
+            navigationRef.current?.navigate('HotspotOnboarding', {
               screen: 'TxnSubmitedScreen',
               params: hotspotLink,
             })

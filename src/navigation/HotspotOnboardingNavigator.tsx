@@ -9,19 +9,19 @@ import { useNavigation } from '@react-navigation/native'
 import { Button } from '../components/Button'
 import { SignedInStackNavigationProp } from './navigationRootTypes'
 import useDefaultScreenOptions from './useDefaultScreenOptions'
-import AskSetLocationScreen from '../features/gateways/onboarding/AskSetLocationScreen'
-import PickLocationScreen from '../features/gateways/onboarding/PickLocationScreen'
-import TxnProgressScreen from '../features/gateways/onboarding/TxnProgressScreen'
-import ConfirmLocationScreen from '../features/gateways/onboarding/ConfirmLocationScreen'
-import SkipLocationScreen from '../features/gateways/onboarding/SkipLocationScreen'
-import AntennaSetupScreen from '../features/gateways/onboarding/AntennaSetupScreen'
-import TxnConfirmScreen from '../features/gateways/onboarding/TxnConfirmScreen'
-import TxnSubmitedScreen from '../features/gateways/onboarding/TxnSubmitedScreen'
-import { GatewayOnboardingStackParamList } from './gatewayOnboardingNavigatorTypes'
+import AskSetLocationScreen from '../features/hotspots/onboarding/AskSetLocationScreen'
+import PickLocationScreen from '../features/hotspots/onboarding/PickLocationScreen'
+import TxnProgressScreen from '../features/hotspots/onboarding/TxnProgressScreen'
+import ConfirmLocationScreen from '../features/hotspots/onboarding/ConfirmLocationScreen'
+import SkipLocationScreen from '../features/hotspots/onboarding/SkipLocationScreen'
+import AntennaSetupScreen from '../features/hotspots/onboarding/AntennaSetupScreen'
+import TxnConfirmScreen from '../features/hotspots/onboarding/TxnConfirmScreen'
+import TxnSubmitedScreen from '../features/hotspots/onboarding/TxnSubmitedScreen'
+import { HotspotOnboardingStackParamList } from './hotspotOnboardingNavigatorTypes'
 
-const Stack = createStackNavigator<GatewayOnboardingStackParamList>()
+const Stack = createStackNavigator<HotspotOnboardingStackParamList>()
 
-const GatewayOnboardingNavigator = () => {
+const HotspotOnboardingNavigator = () => {
   const { t } = useTranslation()
   const rootNavigation = useNavigation<SignedInStackNavigationProp>()
 
@@ -84,4 +84,4 @@ const GatewayOnboardingNavigator = () => {
   )
 }
 
-export default GatewayOnboardingNavigator
+export default HotspotOnboardingNavigator
