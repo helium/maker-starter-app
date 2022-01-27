@@ -49,8 +49,8 @@ const HotspotLocationPreview = ({
   const LocationName = useCallback(
     () =>
       hasLocationName ? (
-        <Box padding="m" backgroundColor="surface">
-          <Text variant="h4" numberOfLines={1} maxFontSizeMultiplier={1.2}>
+        <Box padding="m" backgroundColor="white">
+          <Text variant="body1" adjustsFontSizeToFit numberOfLines={2}>
             {locationName ||
               `${geocode?.longStreet}, ${geocode?.shortCity}, ${geocode?.shortCountry}`}
           </Text>
