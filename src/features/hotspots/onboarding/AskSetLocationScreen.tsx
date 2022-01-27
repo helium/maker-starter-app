@@ -6,17 +6,17 @@ import { DebouncedButton } from '../../../components/Button'
 import Text from '../../../components/Text'
 import useGetLocation from '../../../utils/useGetLocation'
 import {
-  GatewayOnboardingNavigationProp,
-  GatewayOnboardingStackParamList,
-} from '../../../navigation/gatewayOnboardingNavigatorTypes'
+  HotspotOnboardingNavigationProp,
+  HotspotOnboardingStackParamList,
+} from '../../../navigation/hotspotOnboardingNavigatorTypes'
 import Box from '../../../components/Box'
 
-type Route = RouteProp<GatewayOnboardingStackParamList, 'AskSetLocationScreen'>
+type Route = RouteProp<HotspotOnboardingStackParamList, 'AskSetLocationScreen'>
 
 const AskSetLocationScreen = () => {
   const { t } = useTranslation()
   const { params } = useRoute<Route>()
-  const navigation = useNavigation<GatewayOnboardingNavigationProp>()
+  const navigation = useNavigation<HotspotOnboardingNavigationProp>()
   const maybeGetLocation = useGetLocation()
 
   const checkLocationPermissions = async () => {
@@ -41,7 +41,7 @@ const AskSetLocationScreen = () => {
         adjustsFontSizeToFit
         marginBottom="l"
       >
-        {t('gatewayOnboarding.askSetLocationScreen.title')}
+        {t('hotspotOnboarding.askSetLocationScreen.title')}
       </Text>
 
       <Text
@@ -50,7 +50,7 @@ const AskSetLocationScreen = () => {
         numberOfLines={3}
         adjustsFontSizeToFit
       >
-        {t('gatewayOnboarding.askSetLocationScreen.subtitle')}
+        {t('hotspotOnboarding.askSetLocationScreen.subtitle')}
       </Text>
 
       <Text
@@ -59,7 +59,7 @@ const AskSetLocationScreen = () => {
         adjustsFontSizeToFit
         maxFontSizeMultiplier={1.2}
       >
-        {t('gatewayOnboarding.askSetLocationScreen.p1')}
+        {t('hotspotOnboarding.askSetLocationScreen.p1')}
       </Text>
 
       <Box flex={1} />
@@ -67,13 +67,13 @@ const AskSetLocationScreen = () => {
       <DebouncedButton
         onPress={checkLocationPermissions}
         color="primary"
-        title={t('gatewayOnboarding.askSetLocationScreen.next')}
+        title={t('hotspotOnboarding.askSetLocationScreen.next')}
         marginBottom="m"
       />
       <DebouncedButton
         onPress={skipLocationAssert}
         color="secondary"
-        title={t('gatewayOnboarding.askSetLocationScreen.cancel')}
+        title={t('hotspotOnboarding.askSetLocationScreen.cancel')}
       />
     </Box>
   )

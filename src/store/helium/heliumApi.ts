@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { map } from 'lodash'
+import { chain } from 'lodash'
+import Config from 'react-native-config'
 
 export type Hotspot = {
   name: string
@@ -10,7 +11,7 @@ export type Hotspot = {
 
 export const heliumApi = createApi({
   reducerPath: 'heliumApi',
-  baseQuery: fetchBaseQuery({ baseUrl: 'https://api.helium.io/v1' }),
+  baseQuery: fetchBaseQuery({ baseUrl: Config.HELIUM_API_URL }),
   endpoints: (builder) => ({
     getHostspots: builder.query<Hotspot[], string>({
       query: (accountAddress) => ({
@@ -18,14 +19,19 @@ export const heliumApi = createApi({
         method: 'GET',
       }),
       transformResponse: (response: { data: any }) => {
-        return map(response?.data, (hotspot) => {
-          return {
-            name: hotspot.name?.replaceAll('-', ' '),
-            location: hotspot.location,
-            address: hotspot.address,
-            status: hotspot.status?.online,
-          }
-        })
+        return (
+          chain(response?.data)
+            // .filter((hotspot)=> hotspot.payer && hotspot.payer === Config.FREEDOMFI_MAKER_ID)
+            .map((hotspot) => {
+              return {
+                name: hotspot.name?.replaceAll('-', ' '),
+                location: hotspot.location,
+                address: hotspot.address,
+                status: hotspot.status?.online,
+              }
+            })
+            .value()
+        )
       },
     }),
   }),

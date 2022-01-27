@@ -23,21 +23,21 @@ import Text from '../../../components/Text'
 import { reverseGeocode } from '../../../utils/location'
 import sleep from '../../../utils/sleep'
 import {
-  GatewayOnboardingNavigationProp,
-  GatewayOnboardingStackParamList,
-} from '../../../navigation/gatewayOnboardingNavigatorTypes'
+  HotspotOnboardingNavigationProp,
+  HotspotOnboardingStackParamList,
+} from '../../../navigation/hotspotOnboardingNavigatorTypes'
 import TouchableOpacityBox from '../../../components/TouchableOpacityBox'
 import { useColors, useSpacing } from '../../../theme/themeHooks'
 import BSHandle from '../../../components/BSHandle'
 import AddressSearchModal from './AddressSearchModal'
 import { PlaceGeography } from '../../../utils/googlePlaces'
 
-type Route = RouteProp<GatewayOnboardingStackParamList, 'PickLocationScreen'>
+type Route = RouteProp<HotspotOnboardingStackParamList, 'PickLocationScreen'>
 
 const PickLocationScreen = () => {
   const { t } = useTranslation()
   const { params } = useRoute<Route>()
-  const navigation = useNavigation<GatewayOnboardingNavigationProp>()
+  const navigation = useNavigation<HotspotOnboardingNavigationProp>()
   const [disabled, setDisabled] = useState(true)
   const [mapCenter, setMapCenter] = useState([-122.419, 37.775])
   const [markerCenter, setMarkerCenter] = useState([-122.419, 37.775])
@@ -123,7 +123,7 @@ const PickLocationScreen = () => {
         >
           <Box>
             <Text variant="body1" marginBottom="xs">
-              {t('gatewayOnboarding.pickLocationScreen.title')}
+              {t('hotspotOnboarding.pickLocationScreen.title')}
             </Text>
             <Text variant="body1">{locationName}</Text>
           </Box>
@@ -132,7 +132,7 @@ const PickLocationScreen = () => {
           onPress={navNext}
           color="primary"
           disabled={disabled || !hasGPSLocation}
-          title={t('gatewayOnboarding.pickLocationScreen.next')}
+          title={t('hotspotOnboarding.pickLocationScreen.next')}
         />
       </Box>
 

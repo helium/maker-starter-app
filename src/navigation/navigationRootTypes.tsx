@@ -1,7 +1,7 @@
 import { StackNavigationProp } from '@react-navigation/stack'
 import { NavigatorScreenParams } from '@react-navigation/native'
 
-import { GatewayOnboardingStackParamList } from './gatewayOnboardingNavigatorTypes'
+import { HotspotOnboardingStackParamList } from './hotspotOnboardingNavigatorTypes'
 
 export type LockScreenRequestType =
   | 'disablePin'
@@ -17,14 +17,15 @@ export type NotSignedInStackParamList = {
 export type NotSignedInStackNavigationProp = StackNavigationProp<NotSignedInStackParamList>
 
 export type SignedInStackParamList = {
-  Welcome: undefined
-
   MainTabs: undefined | { pinVerifiedFor: LockScreenRequestType }
+
+  HotspotDetails: { hotspotAddress: string }
+
   LockScreen: {
     requestType: LockScreenRequestType
     lock?: boolean
   }
-  GatewayOnboarding: NavigatorScreenParams<GatewayOnboardingStackParamList>
+  HotspotOnboarding: NavigatorScreenParams<HotspotOnboardingStackParamList>
 
   CreatePinScreen: { pinReset?: boolean } | undefined
   ConfirmPinScreen: {

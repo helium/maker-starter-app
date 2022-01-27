@@ -9,15 +9,15 @@ import { DebouncedButton } from '../../../components/Button'
 import HotspotConfigurationPicker from '../../../components/HotspotConfigurationPicker'
 import { Antenna, defaultAntenna } from '../../../types/Antenna'
 import {
-  GatewayOnboardingNavigationProp,
-  GatewayOnboardingStackParamList,
-} from '../../../navigation/gatewayOnboardingNavigatorTypes'
+  HotspotOnboardingNavigationProp,
+  HotspotOnboardingStackParamList,
+} from '../../../navigation/hotspotOnboardingNavigatorTypes'
 
-type Route = RouteProp<GatewayOnboardingStackParamList, 'AntennaSetupScreen'>
+type Route = RouteProp<HotspotOnboardingStackParamList, 'AntennaSetupScreen'>
 
 const AntennaSetupScreen = () => {
   const { t } = useTranslation()
-  const navigation = useNavigation<GatewayOnboardingNavigationProp>()
+  const navigation = useNavigation<HotspotOnboardingNavigationProp>()
   const { params } = useRoute<Route>()
 
   const [antenna, setAntenna] = useState<Antenna>(defaultAntenna)

@@ -1,12 +1,11 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import Config from 'react-native-config'
 import Toast from 'react-native-simple-toast'
 import { FlatList, Linking, StyleSheet } from 'react-native'
 
 import CarotRight from '@assets/images/carot-right.svg'
-import { EXPLORER_BASE_URL } from '../../../utils/config'
-import { getAddress } from '../../../utils/secureAccount'
+import { useNavigation } from '@react-navigation/native'
 import { Button } from '../../../components/Button'
 import Text from '../../../components/Text'
 import Box from '../../../components/Box'
@@ -14,29 +13,13 @@ import TouchableOpacityBox from '../../../components/TouchableOpacityBox'
 import { ActivityIndicatorCentered } from '../../../components/ActivityIndicator'
 import { useGetHostspotsQuery } from '../../../store/helium/heliumApi'
 import { useColors } from '../../../theme/themeHooks'
+import {
+  WithAccountAddress,
+  WithAccountAddressProps,
+} from '../../../hocs/WithAccountAddress'
+import { SignedInStackNavigationProp } from '../../../navigation/navigationRootTypes'
 
-export function WithAccountAddress<T>(Component: React.FC<T>) {
-  return function WithAccountB58Component(props: any) {
-    const [address, setAddress] = useState<string>()
-
-    useEffect(() => {
-      getAddress().then(setAddress)
-    }, [])
-
-    return !address ? (
-      <ActivityIndicatorCentered />
-    ) : (
-      // eslint-disable-next-line react/jsx-props-no-spreading
-      <Component {...props} accountAddress={address} />
-    )
-  }
-}
-
-type Props = {
-  accountAddress: string
-}
-
-const GatewaysScreen = ({ accountAddress }: Props) => {
+const HotspotsScreen = ({ accountAddress }: WithAccountAddressProps) => {
   const { t } = useTranslation()
 
   const openOnboardingSite = useCallback(async () => {
@@ -63,15 +46,15 @@ const GatewaysScreen = ({ accountAddress }: Props) => {
       paddingTop="l"
     >
       <Text variant="h2" textAlign="center">
-        {t('gatewaysScreen.title')}
+        {t('hotspotsScreen.title')}
       </Text>
 
       <Box flex={1} marginTop="l">
-        <GatewaysList accountAddress={accountAddress} />
+        <HotspotsList accountAddress={accountAddress} />
       </Box>
 
       <Button
-        title={t('gatewaysScreen.addBtn')}
+        title={t('hotspotsScreen.addBtn')}
         onPress={openOnboardingSite}
         color="primary"
         marginTop="s"
@@ -90,25 +73,30 @@ const listStyles = StyleSheet.create({
   },
 })
 
-const GatewaysList = ({ accountAddress }: Props) => {
+const HotspotsList = ({ accountAddress }: WithAccountAddressProps) => {
   const { t } = useTranslation()
   const colors = useColors()
 
-  const { data: hotspots, isLoading } = useGetHostspotsQuery(accountAddress)
+  const navigation = useNavigation<SignedInStackNavigationProp>()
+
+  const { data: hotspots, isLoading } = useGetHostspotsQuery(
+    accountAddress,
+    { pollingInterval: 60000 }, // refresh every minute
+  )
 
   if (isLoading) return <ActivityIndicatorCentered />
 
   if (!hotspots?.length)
     return (
       <Text variant="body1" textAlign="center">
-        {t('gatewaysScreen.noItems')}
+        {t('hotspotsScreen.noItems')}
       </Text>
     )
 
   const openHotspotDetails = (hotspotAddress: string) => {
     if (!hotspotAddress) return
 
-    Linking.openURL(`${EXPLORER_BASE_URL}/hotspots/${hotspotAddress}`)
+    navigation.push('HotspotDetails', { hotspotAddress })
   }
 
   return (
@@ -132,7 +120,7 @@ const GatewaysList = ({ accountAddress }: Props) => {
               </Text>
 
               <Text variant="body2" marginBottom="xs">
-                {item.location || t('gatewaysScreen.locationNotSet')}
+                {item.location || t('hotspotsScreen.locationNotSet')}
               </Text>
 
               <Text variant="body2" style={listStyles.listItemStatus}>
@@ -155,4 +143,4 @@ const GatewaysList = ({ accountAddress }: Props) => {
   )
 }
 
-export default WithAccountAddress(GatewaysScreen)
+export default WithAccountAddress(HotspotsScreen)

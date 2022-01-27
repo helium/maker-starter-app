@@ -19,16 +19,16 @@ import { decimalSeparator, groupSeparator } from '../../../i18n'
 import { getAddress } from '../../../utils/secureAccount'
 import { getAccount } from '../../../utils/appDataClient'
 import {
-  GatewayOnboardingNavigationProp,
-  GatewayOnboardingStackParamList,
-} from '../../../navigation/gatewayOnboardingNavigatorTypes'
+  HotspotOnboardingNavigationProp,
+  HotspotOnboardingStackParamList,
+} from '../../../navigation/hotspotOnboardingNavigatorTypes'
 import HotspotLocationPreview from './HotspotLocationPreview'
 
-type Route = RouteProp<GatewayOnboardingStackParamList, 'ConfirmLocationScreen'>
+type Route = RouteProp<HotspotOnboardingStackParamList, 'ConfirmLocationScreen'>
 
 const ConfirmLocationScreen = () => {
   const { t } = useTranslation()
-  const navigation = useNavigation<GatewayOnboardingNavigationProp>()
+  const navigation = useNavigation<HotspotOnboardingNavigationProp>()
   const [account, setAccount] = useState<Account>()
   const [ownerAddress, setOwnerAddress] = useState<string | null>(null)
   const [feeData, setFeeData] = useState<{

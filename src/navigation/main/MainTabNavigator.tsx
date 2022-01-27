@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { useNavigation } from '@react-navigation/native'
 import { useSelector } from 'react-redux'
 
-import GatewaysScreen from '../../features/gateways/root/GatewaysScreen'
+import HotspotsScreen from '../../features/hotspots/root/HotspotsScreen'
 import SettingsScreen from '../../features/settings/SettingsScreen'
 import { TabBarIconType, MainTabType } from './tabTypes'
 import TabBarIcon from './TabBarIcon'
@@ -63,7 +63,7 @@ const MainTabs = () => {
       initialRouteName="Hotspots"
       screenOptions={screenOptions}
     >
-      <MainTab.Screen name="Hotspots" component={GatewaysScreen} />
+      <MainTab.Screen name="Hotspots" component={HotspotsScreen} />
       <MainTab.Screen name="Settings" component={SettingsScreen} />
     </MainTab.Navigator>
   )

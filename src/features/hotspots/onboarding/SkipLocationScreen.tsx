@@ -6,15 +6,15 @@ import Box from '../../../components/Box'
 import { DebouncedButton } from '../../../components/Button'
 import Text from '../../../components/Text'
 import {
-  GatewayOnboardingNavigationProp,
-  GatewayOnboardingStackParamList,
-} from '../../../navigation/gatewayOnboardingNavigatorTypes'
+  HotspotOnboardingNavigationProp,
+  HotspotOnboardingStackParamList,
+} from '../../../navigation/hotspotOnboardingNavigatorTypes'
 
-type Route = RouteProp<GatewayOnboardingStackParamList, 'SkipLocationScreen'>
+type Route = RouteProp<HotspotOnboardingStackParamList, 'SkipLocationScreen'>
 
 const SkipLocationScreen = () => {
   const { t } = useTranslation()
-  const navigation = useNavigation<GatewayOnboardingNavigationProp>()
+  const navigation = useNavigation<HotspotOnboardingNavigationProp>()
 
   const { params } = useRoute<Route>()
 
@@ -30,21 +30,21 @@ const SkipLocationScreen = () => {
       paddingBottom="m"
     >
       <Text variant="h1" marginBottom="l" adjustsFontSizeToFit>
-        {t('gatewayOnboarding.skipLocationScreen.title')}
+        {t('hotspotOnboarding.skipLocationScreen.title')}
       </Text>
 
       <Text variant="subtitle1" adjustsFontSizeToFit marginBottom="l">
-        {t('gatewayOnboarding.skipLocationScreen.subtitle1')}
+        {t('hotspotOnboarding.skipLocationScreen.subtitle1')}
       </Text>
 
       <Text variant="subtitle2" adjustsFontSizeToFit marginBottom="l">
-        {t('gatewayOnboarding.skipLocationScreen.subtitle2')}
+        {t('hotspotOnboarding.skipLocationScreen.subtitle2')}
       </Text>
 
       <Box flex={1} />
 
       <DebouncedButton
-        title={t('gatewayOnboarding.skipLocationScreen.next')}
+        title={t('hotspotOnboarding.skipLocationScreen.next')}
         color="primary"
         onPress={navNext}
       />

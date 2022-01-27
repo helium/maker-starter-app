@@ -24,11 +24,14 @@ export default {
     signIn: 'Link Existing Wallet',
     createAccount: 'Create New Wallet',
   },
-  gatewaysScreen: {
+  hotspotsScreen: {
     title: 'Hotspots',
     addBtn: 'Add Hotspot',
     noItems: 'No Items',
     locationNotSet: 'Location not set',
+  },
+  hotspotDetailsScreen: {
+    // title: 'Hotspots',
   },
   settingsScreen: {
     title: 'Settings',
@@ -59,7 +62,7 @@ export default {
       },
     },
   },
-  gatewayOnboarding: {
+  hotspotOnboarding: {
     txnConfirmScreen: {
       title: 'Confirm Hotspot Info',
       publicKey: 'Public Key',
@@ -85,6 +88,7 @@ export default {
       waitErrorBody:
         'Hotspot miner is waiting to start. Please try again in a few minutes.',
       waitErrorTitle: 'Please Try Again',
+      linkCreationError: 'Can not create a transaction link',
     },
     txnSubmitedScreen: {
       title: 'REGISTERING HOTSPOT',
