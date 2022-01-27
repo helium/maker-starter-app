@@ -118,7 +118,7 @@ const ConfirmLocationScreen = () => {
           >
             {t('hotspot_setup.location_fee.confirm_location')}
           </Text>
-          <Box height={200} borderRadius="l" overflow="hidden" marginBottom="s">
+          <Box height={200} marginBottom="s">
             <HotspotLocationPreview
               mapCenter={coords}
               locationName={params.locationName}
