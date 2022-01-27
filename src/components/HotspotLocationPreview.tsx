@@ -1,9 +1,10 @@
 import React, { memo, useCallback, useMemo, useRef, useState } from 'react'
 import MapboxGL from '@react-native-mapbox-gl/maps'
 import Config from 'react-native-config'
+
 import LocationIcon from '@assets/images/location-icon.svg'
-import Box from '../../../components/Box'
-import Text from '../../../components/Text'
+import Box from './Box'
+import Text from './Text'
 
 const defaultLngLat = [-122.419418, 37.774929] // San Francisco
 
