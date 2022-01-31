@@ -1,9 +1,4 @@
-import {
-  Alert,
-  StyleSheet,
-  TextInput,
-  TouchableWithoutFeedback,
-} from 'react-native'
+import { Alert, TextInput, TouchableWithoutFeedback } from 'react-native'
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import HeliumActionSheet from './HeliumActionSheet'
@@ -152,7 +147,7 @@ const HotspotConfigurationPicker = ({
         paddingVertical="lm"
         maxModalHeight={700}
       />
-      <Box backgroundColor="primary" height={1} />
+      <Box backgroundColor="primaryBackground" height={1} />
       <TouchableWithoutFeedback onPress={focusGain}>
         <Box
           padding="m"
@@ -174,7 +169,6 @@ const HotspotConfigurationPicker = ({
             visible={gain !== undefined}
           >
             <TextInput
-              style={styles.textInput}
               ref={gainInputRef}
               keyboardType="numeric"
               value={gain}
@@ -187,7 +181,7 @@ const HotspotConfigurationPicker = ({
           </Box>
         </Box>
       </TouchableWithoutFeedback>
-      <Box backgroundColor="primary" height={1} />
+      <Box backgroundColor="primaryBackground" height={1} />
       <TouchableWithoutFeedback onPress={focusElevation}>
         <Box
           padding="m"
@@ -215,7 +209,5 @@ const HotspotConfigurationPicker = ({
     </Box>
   )
 }
-
-const styles = StyleSheet.create({ textInput: { color: 'boneBlack' } })
 
 export default HotspotConfigurationPicker

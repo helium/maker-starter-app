@@ -7,15 +7,15 @@ import {
   WalletLink,
   Location,
 } from '@helium/react-native-sdk'
-import { ActivityIndicator, Linking } from 'react-native'
+import { Linking } from 'react-native'
 import Toast from 'react-native-simple-toast'
 
+import { ActivityIndicatorCentered } from '../../../components/ActivityIndicator'
 import Text from '../../../components/Text'
 import Box from '../../../components/Box'
 import { hotspotOnChain } from '../../../utils/appDataClient'
 import useAlert from '../../../utils/useAlert'
 import { getSecureItem } from '../../../utils/secureAccount'
-import { useColors } from '../../../theme/themeHooks'
 import useMount from '../../../utils/useMount'
 import { SignedInStackNavigationProp } from '../../../navigation/navigationRootTypes'
 import { HotspotOnboardingStackParamList } from '../../../navigation/hotspotOnboardingNavigatorTypes'
@@ -27,7 +27,6 @@ const TxnProgressScreen = () => {
   const { params } = useRoute<Route>()
   const navigation = useNavigation<SignedInStackNavigationProp>()
   const { showOKAlert } = useAlert()
-  const { primaryText } = useColors()
 
   const handleError = async (error: unknown) => {
     let titleKey = 'generic.error'
@@ -136,8 +135,8 @@ const TxnProgressScreen = () => {
         <Text variant="subtitle1" marginBottom="l">
           {t('hotspotOnboarding.txnProgressScreen.title')}
         </Text>
-        <Box flex={1} justifyContent="center">
-          <ActivityIndicator color={primaryText} />
+        <Box flex={1}>
+          <ActivityIndicatorCentered />
         </Box>
       </Box>
     </Box>

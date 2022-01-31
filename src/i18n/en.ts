@@ -34,7 +34,10 @@ export default {
     noData: "Can't load data",
     setLocationBtn: 'Set Location',
     changeLocationBtn: 'Change Location',
-    openInExplorerBtn: 'Open in Helium Explorer',
+    viewOnHeliumExplorer: 'View on Helium Explorer',
+    statusLabel: 'Status: ',
+    locationLabel: 'Location: ',
+    locationNotSet: 'Location: Not set',
   },
   settingsScreen: {
     title: 'Settings',

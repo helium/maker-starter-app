@@ -38,6 +38,7 @@ export const heliumApi = createApi({
       transformResponse: (response: { data: any }) => {
         return (
           chain(response?.data)
+            // todo uncomment
             // .filter((hotspot)=> hotspot.payer && hotspot.payer === Config.FREEDOMFI_MAKER_ID)
             .map((hotspot) => {
               const locationName = hotspot.location

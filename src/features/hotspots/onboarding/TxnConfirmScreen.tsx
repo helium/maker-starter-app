@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
-import { ActivityIndicator } from 'react-native'
 import { AddGateway, useOnboarding } from '@helium/react-native-sdk'
 import { OnboardingRecord } from '@helium/onboarding'
 
@@ -15,6 +14,7 @@ import {
   HotspotOnboardingNavigationProp,
   HotspotOnboardingStackParamList,
 } from '../../../navigation/hotspotOnboardingNavigatorTypes'
+import { ActivityIndicator } from '../../../components/ActivityIndicator'
 
 type Route = RouteProp<HotspotOnboardingStackParamList, 'TxnConfirmScreen'>
 
@@ -118,7 +118,7 @@ const TxnConfirmScreen = () => {
           </Text>
         ) : (
           <Box marginTop="s">
-            <ActivityIndicator color="white" />
+            <ActivityIndicator />
           </Box>
         )}
       </Box>

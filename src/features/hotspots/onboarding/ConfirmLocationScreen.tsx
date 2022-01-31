@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { ActivityIndicator, ScrollView } from 'react-native'
+import { ScrollView } from 'react-native'
 import { useTranslation } from 'react-i18next'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import {
@@ -23,6 +23,7 @@ import {
   HotspotOnboardingStackParamList,
 } from '../../../navigation/hotspotOnboardingNavigatorTypes'
 import HotspotLocationPreview from '../../../components/HotspotLocationPreview'
+import { ActivityIndicatorCentered } from '../../../components/ActivityIndicator'
 
 type Route = RouteProp<HotspotOnboardingStackParamList, 'ConfirmLocationScreen'>
 
@@ -80,8 +81,8 @@ const ConfirmLocationScreen = () => {
         paddingHorizontal="m"
         paddingBottom="m"
       >
-        <Box flex={1} justifyContent="center" paddingBottom="xxl">
-          <ActivityIndicator color="#687A8C" />
+        <Box flex={1} paddingBottom="xxl">
+          <ActivityIndicatorCentered />
         </Box>
       </Box>
     )
