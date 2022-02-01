@@ -271,7 +271,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = PVM9KJZ2AD;
+						DevelopmentTeam = 245A23QAH7;
 						LastSwiftMigration = 1250;
 					};
 				};
@@ -560,7 +560,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = FreedomFi/FreedomFi.entitlements;
 				CURRENT_PROJECT_VERSION = 3;
-				DEVELOPMENT_TEAM = PVM9KJZ2AD;
+				DEVELOPMENT_TEAM = 245A23QAH7;
 				ENABLE_BITCODE = NO;
 				EXCLUDED_ARCHS = "";
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
@@ -591,7 +591,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = FreedomFi/FreedomFi.entitlements;
 				CURRENT_PROJECT_VERSION = 3;
-				DEVELOPMENT_TEAM = PVM9KJZ2AD;
+				DEVELOPMENT_TEAM = 245A23QAH7;
 				EXCLUDED_ARCHS = "";
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = FreedomFi/Info.plist;
