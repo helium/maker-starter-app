@@ -32,8 +32,8 @@ const ConfirmPinScreen = () => {
     <Box flex={1} backgroundColor="primaryBackground" paddingHorizontal="m">
       <ConfirmPinView
         originalPin={originalPin}
-        title={t('account_setup.confirm_pin.title')}
-        subtitle={t('account_setup.confirm_pin.subtitle')}
+        title={t('pinManagement.confirmPin.title')}
+        subtitle={t('pinManagement.confirmPin.subtitle')}
         pinSuccess={pinSuccess}
         onCancel={navigation.goBack}
       />

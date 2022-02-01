@@ -2,11 +2,11 @@ import React, { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import Config from 'react-native-config'
 import Toast from 'react-native-simple-toast'
-import { FlatList, Linking, StyleSheet } from 'react-native'
+import { FlatList, Linking } from 'react-native'
 
 import CarotRight from '@assets/images/carot-right.svg'
 import { useNavigation } from '@react-navigation/native'
-import { Button } from '../../../components/Button'
+import { DebouncedButton } from '../../../components/Button'
 import Text from '../../../components/Text'
 import Box from '../../../components/Box'
 import TouchableOpacityBox from '../../../components/TouchableOpacityBox'
@@ -53,7 +53,7 @@ const HotspotsScreen = ({ accountAddress }: WithAccountAddressProps) => {
         <HotspotsList accountAddress={accountAddress} />
       </Box>
 
-      <Button
+      <DebouncedButton
         title={t('hotspotsScreen.addBtn')}
         onPress={openOnboardingSite}
         color="primary"
@@ -62,16 +62,6 @@ const HotspotsScreen = ({ accountAddress }: WithAccountAddressProps) => {
     </Box>
   )
 }
-
-const listStyles = StyleSheet.create({
-  listItemName: {
-    textTransform: 'capitalize',
-    fontWeight: 'bold',
-  },
-  listItemStatus: {
-    textTransform: 'uppercase',
-  },
-})
 
 const HotspotsList = ({ accountAddress }: WithAccountAddressProps) => {
   const { t } = useTranslation()
@@ -113,7 +103,8 @@ const HotspotsList = ({ accountAddress }: WithAccountAddressProps) => {
             <Box flex={1} paddingVertical="m" paddingLeft="m">
               <Text
                 variant="body1"
-                style={listStyles.listItemName}
+                textTransform="capitalize"
+                fontWeight="bold"
                 marginBottom="xs"
               >
                 {item.name}
@@ -123,9 +114,11 @@ const HotspotsList = ({ accountAddress }: WithAccountAddressProps) => {
                 {item.locationName || t('hotspotsScreen.locationNotSet')}
               </Text>
 
-              <Text variant="body2" style={listStyles.listItemStatus}>
-                {item.status}
-              </Text>
+              {item.isLocationSet && (
+                <Text variant="body2" textTransform="capitalize">
+                  {item.status}
+                </Text>
+              )}
             </Box>
 
             <TouchableOpacityBox
