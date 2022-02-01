@@ -63,11 +63,11 @@ const AccountCreatePinScreen = () => {
         numberOfLines={1}
         adjustsFontSizeToFit
       >
-        {t('account_setup.create_pin.title')}
+        {t('pinManagement.createPin.title')}
       </Text>
 
       <Text variant="body1" maxFontSizeMultiplier={1.2}>
-        {t('account_setup.create_pin.subtitle')}
+        {t('pinManagement.createPin.subtitle')}
       </Text>
       <PinDisplay length={pin.length} marginVertical="xl" />
       <Keypad

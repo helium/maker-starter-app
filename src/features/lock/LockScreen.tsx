@@ -97,8 +97,8 @@ const LockScreen = () => {
     <Box flex={1} backgroundColor="primaryBackground" paddingHorizontal="m">
       <ConfirmPinView
         originalPin={pin || ''}
-        title={t('auth.title')}
-        subtitle={t('auth.enter_current')}
+        title={t('lockScreen.title')}
+        subtitle={t('lockScreen.enterCurrent')}
         pinSuccess={handleSuccess}
         onCancel={handleCancel}
         clearable={requestType === 'unlock'}

@@ -218,10 +218,10 @@ const Map = ({
         >
           <NoLocation color={colors.primary} />
           <Text variant="h2" color="white" marginTop="m">
-            {t('hotspot_details.no_location_title')}
+            {t('mapComponent.noLocationTitle')}
           </Text>
           <Text variant="body2" marginTop="s">
-            {t('hotspot_details.no_location_body')}
+            {t('mapComponent.noLocationBody')}
           </Text>
         </Box>
       )}

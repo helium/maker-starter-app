@@ -9,6 +9,7 @@ export type Hotspot = {
   payer: string
   owner: string
   name: string
+  isLocationSet: boolean
   locationName: string | null
   geocode: {
     shortStreet: string
@@ -41,7 +42,9 @@ export const heliumApi = createApi({
             // todo uncomment
             // .filter((hotspot)=> hotspot.payer && hotspot.payer === Config.FREEDOMFI_MAKER_ID)
             .map((hotspot) => {
-              const locationName = hotspot.location
+              const isLocationSet = !!hotspot.location
+
+              const locationName = isLocationSet
                 ? `${hotspot.geocode?.long_street}, ${hotspot.geocode?.short_city} ${hotspot.geocode?.short_country}`
                 : null
 
@@ -52,6 +55,7 @@ export const heliumApi = createApi({
                 payer: hotspot.payer,
                 owner: hotspot.owner,
                 name: hotspot.name?.replaceAll('-', ' '),
+                isLocationSet,
                 locationName,
                 geocode: {
                   shortStreet: hotspot.geocode?.short_street,

@@ -1,6 +1,7 @@
 import React, { useCallback, useMemo } from 'react'
+import { ScrollView, Linking } from 'react-native'
 import { useTranslation } from 'react-i18next'
-import { Linking, StyleSheet } from 'react-native'
+
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import Toast from 'react-native-simple-toast'
 import { useOnboarding } from '@helium/react-native-sdk'
@@ -17,8 +18,9 @@ import {
   WithAccountAddressProps,
 } from '../../../hocs/WithAccountAddress'
 import { useGetHostspotsQuery } from '../../../store/helium/heliumApi'
-import { Button } from '../../../components/Button'
+import { DebouncedButton } from '../../../components/Button'
 import HotspotLocationPreview from '../../../components/HotspotLocationPreview'
+import useGetLocation from '../../../utils/useGetLocation'
 
 type Route = RouteProp<SignedInStackParamList, 'HotspotDetails'>
 
@@ -29,6 +31,8 @@ const HotspotDetailsScreen = ({ accountAddress }: WithAccountAddressProps) => {
   } = useRoute<Route>()
 
   const navigation = useNavigation<SignedInStackNavigationProp>()
+
+  const maybeGetLocation = useGetLocation()
 
   const { data: hotspots } = useGetHostspotsQuery(
     accountAddress,
@@ -45,6 +49,7 @@ const HotspotDetailsScreen = ({ accountAddress }: WithAccountAddressProps) => {
     const onboardingRecord = await getOnboardingRecord(hotspotAddress)
     if (!onboardingRecord) return
 
+    await maybeGetLocation(true)
     navigation.navigate('HotspotOnboarding', {
       screen: 'PickLocationScreen',
       params: {
@@ -52,7 +57,7 @@ const HotspotDetailsScreen = ({ accountAddress }: WithAccountAddressProps) => {
         onboardingRecord,
       },
     })
-  }, [getOnboardingRecord, hotspotAddress, navigation])
+  }, [getOnboardingRecord, maybeGetLocation, hotspotAddress, navigation])
 
   const viewOnHeliumExplorer = useCallback(async () => {
     if (!hotspotAddress) return
@@ -85,60 +90,115 @@ const HotspotDetailsScreen = ({ accountAddress }: WithAccountAddressProps) => {
       ) : (
         <>
           <Text
-            variant="h1"
-            style={styles.name}
+            variant="h2"
+            textTransform="capitalize"
             marginBottom="xs"
             adjustsFontSizeToFit
             numberOfLines={1}
           >
             {hotspot.name}
           </Text>
-          <Text variant="body1" color="linkText" onPress={viewOnHeliumExplorer}>
+
+          <Text
+            variant="body1"
+            color="linkText"
+            textDecorationLine="underline"
+            onPress={viewOnHeliumExplorer}
+          >
             {t('hotspotDetailsScreen.viewOnHeliumExplorer')}
           </Text>
 
-          <Text variant="h3" marginTop="l" marginBottom="l">
-            {t('hotspotDetailsScreen.statusLabel')}
-            <Text style={styles.status}>{hotspot.status}</Text>
-          </Text>
+          <ScrollView>
+            <Box flex={1} marginTop="l">
+              <Box
+                flexDirection="row"
+                justifyContent="space-between"
+                marginBottom="l"
+              >
+                <Text variant="body1" fontWeight="bold">
+                  {t('hotspotDetailsScreen.statusLabel')}
+                </Text>
 
-          {hotspot.locationName ? (
-            <>
-              <Text variant="h3">
-                {t('hotspotDetailsScreen.locationLabel')}
-              </Text>
-              <Box height={200} marginBottom="s">
-                <HotspotLocationPreview geocode={hotspot.geocode} />
+                <Text
+                  variant="body1"
+                  fontWeight="bold"
+                  textTransform="capitalize"
+                >
+                  {hotspot.status}
+                </Text>
               </Box>
-            </>
-          ) : (
-            <Text variant="h3">{t('hotspotDetailsScreen.locationNotSet')}</Text>
-          )}
 
-          <Button
-            onPress={changeLocation}
-            color="primary"
-            fullWidth
-            marginBottom="m"
-            title={t(
-              `hotspotDetailsScreen.${
-                hotspot.locationName ? 'changeLocationBtn' : 'setLocationBtn'
-              }`,
-            )}
-          />
+              {hotspot.isLocationSet ? (
+                <Box height={200}>
+                  <HotspotLocationPreview geocode={hotspot.geocode} />
+                </Box>
+              ) : (
+                <Box flexDirection="row" justifyContent="space-between">
+                  <Text variant="body1" fontWeight="bold">
+                    {t('hotspotDetailsScreen.locationLabel')}
+                  </Text>
+
+                  <Text variant="body1" fontWeight="bold">
+                    {t('hotspotDetailsScreen.locationNotSet')}
+                  </Text>
+                </Box>
+              )}
+
+              {hotspot.isLocationSet && (
+                <>
+                  <Box
+                    flexDirection="row"
+                    justifyContent="space-between"
+                    marginTop="l"
+                  >
+                    <Text variant="body1" fontWeight="bold">
+                      {t('hotspot_setup.location_fee.gain_label')}
+                    </Text>
+
+                    <Text variant="body1" fontWeight="bold">
+                      {t('hotspot_setup.location_fee.gain', {
+                        gain: hotspot.gain,
+                      })}
+                    </Text>
+                  </Box>
+
+                  <Box
+                    flexDirection="row"
+                    justifyContent="space-between"
+                    marginTop="l"
+                  >
+                    <Text variant="body1" fontWeight="bold">
+                      {t('hotspot_setup.location_fee.elevation_label')}
+                    </Text>
+
+                    <Text variant="body1" fontWeight="bold">
+                      {t('hotspot_setup.location_fee.elevation', {
+                        count: hotspot.elevation,
+                      })}
+                    </Text>
+                  </Box>
+                </>
+              )}
+            </Box>
+          </ScrollView>
+
+          <Box>
+            <DebouncedButton
+              onPress={changeLocation}
+              color="primary"
+              fullWidth
+              marginBottom="m"
+              title={t(
+                `hotspotDetailsScreen.${
+                  hotspot.isLocationSet ? 'changeLocationBtn' : 'setLocationBtn'
+                }`,
+              )}
+            />
+          </Box>
         </>
       )}
     </Box>
   )
 }
-
-const styles = StyleSheet.create({
-  name: {
-    textTransform: 'capitalize',
-  },
-  status: {
-    textTransform: 'uppercase',
-  },
-})
 
 export default WithAccountAddress(HotspotDetailsScreen)
