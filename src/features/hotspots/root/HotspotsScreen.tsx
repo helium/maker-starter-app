@@ -114,11 +114,9 @@ const HotspotsList = ({ accountAddress }: WithAccountAddressProps) => {
                 {item.locationName || t('hotspotsScreen.locationNotSet')}
               </Text>
 
-              {item.isLocationSet && (
-                <Text variant="body2" textTransform="capitalize">
-                  {item.status}
-                </Text>
-              )}
+              <Text variant="body2" textTransform="capitalize">
+                {item.isLocationSet && item.status}
+              </Text>
             </Box>
 
             <TouchableOpacityBox
