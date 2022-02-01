@@ -145,11 +145,10 @@ export default {
     noLocationBody: 'Pair with the Hotspot to begin.',
     noLocationTitle: 'No Asserted Location',
   },
-  permissions: {
-    location: {
-      message:
-        'MakerApp needs access to your location for Bluetooth discovery and to enable location assertion. This information will never be sold or shared.',
-      title: 'Location Permission',
+  checkLocationPermission: {
+    error: {
+      title: 'Location Permission Not Granted',
+      message: 'The app needs access to your location to proceed',
     },
   },
 

@@ -16,7 +16,7 @@ export default function WithDebounce<T>(Component: React.FC<T>) {
   }: T & DebounceProps) {
     const debouncedHandler = useDebouncedCallback(
       (event: GestureResponderEvent) => onPress?.(event),
-      duration || 300,
+      duration || 700,
       { leading: true, trailing: false },
     )
 
