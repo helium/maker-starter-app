@@ -17,11 +17,9 @@ PODS:
     - ExpoModulesCore
   - EXLocalAuthentication (12.0.1):
     - ExpoModulesCore
-  - EXLocation (13.0.4):
+  - EXLocation (14.0.1):
     - ExpoModulesCore
     - UMTaskManagerInterface
-  - EXPermissions (13.0.3):
-    - ExpoModulesCore
   - Expo (43.0.3):
     - ExpoModulesCore
   - ExpoModulesCore (0.4.8):
@@ -385,7 +383,7 @@ PODS:
   - RNSVG (12.1.1):
     - React
   - Toast (4.0.0)
-  - UMTaskManagerInterface (7.0.3):
+  - UMTaskManagerInterface (7.1.0):
     - ExpoModulesCore
   - Yoga (1.14.0)
 
@@ -401,7 +399,6 @@ DEPENDENCIES:
   - EXKeepAwake (from `../node_modules/expo-keep-awake/ios`)
   - EXLocalAuthentication (from `../node_modules/expo-local-authentication/ios`)
   - EXLocation (from `../node_modules/expo-location/ios`)
-  - EXPermissions (from `../node_modules/expo-permissions/ios`)
   - Expo (from `../node_modules/expo/ios`)
   - ExpoModulesCore (from `../node_modules/expo-modules-core/ios`)
   - EXSecureStore (from `../node_modules/expo-secure-store/ios`)
@@ -485,8 +482,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/expo-local-authentication/ios"
   EXLocation:
     :path: "../node_modules/expo-location/ios"
-  EXPermissions:
-    :path: "../node_modules/expo-permissions/ios"
   Expo:
     :path: "../node_modules/expo/ios"
   ExpoModulesCore:
@@ -597,8 +592,7 @@ SPEC CHECKSUMS:
   EXHaptics: f52df335f17192e440d9639c971ebcbb3fb91dec
   EXKeepAwake: 8aa32396a5972d26e75e538603aad0f032396503
   EXLocalAuthentication: c0ec9379a81c3c823a362382b6a2145e880d9840
-  EXLocation: 192eaee761c159d1479111a0ced3bab7ad8475a3
-  EXPermissions: 7696f4c16e89981f84c04d96327f7e1e592373c0
+  EXLocation: 4bc1ea8086bc296aaba63d16bd194b0995c61cd4
   Expo: 5316c3ecdc34eb0cad340d01dc8beec97c7e879e
   ExpoModulesCore: a9a9bf32b2da35cd9b7299c80790c03a91ac7d15
   EXSecureStore: 919bf7c28472862020d2cd7b59b69aae160b5d40
@@ -606,12 +600,12 @@ SPEC CHECKSUMS:
   FBLazyVector: de148e8310b8b878db304ceea2fec13f2c02e3a0
   FBReactNativeSpec: 6192956c9e346013d5f1809ba049af720b11c6a4
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
-  glog: 5337263514dd6f09803962437687240c5dc39aa4
+  glog: 43737235ae6a21de4f45297f4f73b6420fc2ecb2
   helium-react-native-sdk: a3e6739ad7fbafdb41a6bc976fee6055964269c0
   Mapbox-iOS-SDK: a5915700ec84bc1a7f8b3e746d474789e35b7956
   MapboxMobileEvents: 2bc0ca2eedb627b73cf403258dce2b2fa98074a6
   MultiplatformBleAdapter: 5a6a897b006764392f9cef785e4360f54fb9477d
-  RCT-Folly: a21c126816d8025b547704b777a2ba552f3d9fa9
+  RCT-Folly: e2636706cc3fded205cf0d380428ec0ea7455f80
   RCTRequired: 59d2b744d8c2bf2d9bc7032a9f654809adcf7d50
   RCTTypeSafety: d0aaf7ccae5c70a4aaa3a5c3e9e0db97efae760e
   React: fbe655dd1d12c052299b61abdc576720098d80fc
@@ -651,7 +645,7 @@ SPEC CHECKSUMS:
   RNScreens: 6e1ea5787989f92b0671049b808aef64fa1ef98c
   RNSVG: 551acb6562324b1d52a4e0758f7ca0ec234e278f
   Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
-  UMTaskManagerInterface: 5654c50e68af11b19b9d05452bacf23d19b3f30f
+  UMTaskManagerInterface: 6f7150f9ec9bc6f2760eeae532a70de71ff951c1
   Yoga: 32a18c0e845e185f4a2a66ec76e1fd1f958f22fa
 
 PODFILE CHECKSUM: a71020512310441950b6a28775048d67223768e1

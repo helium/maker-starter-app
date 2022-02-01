@@ -20,7 +20,7 @@ import {
 import { useGetHostspotsQuery } from '../../../store/helium/heliumApi'
 import { DebouncedButton } from '../../../components/Button'
 import HotspotLocationPreview from '../../../components/HotspotLocationPreview'
-import useGetLocation from '../../../utils/useGetLocation'
+import { checkLocationPermissions } from '../../../utils/permissions'
 
 type Route = RouteProp<SignedInStackParamList, 'HotspotDetails'>
 
@@ -31,8 +31,6 @@ const HotspotDetailsScreen = ({ accountAddress }: WithAccountAddressProps) => {
   } = useRoute<Route>()
 
   const navigation = useNavigation<SignedInStackNavigationProp>()
-
-  const maybeGetLocation = useGetLocation()
 
   const { data: hotspots } = useGetHostspotsQuery(
     accountAddress,
@@ -49,7 +47,9 @@ const HotspotDetailsScreen = ({ accountAddress }: WithAccountAddressProps) => {
     const onboardingRecord = await getOnboardingRecord(hotspotAddress)
     if (!onboardingRecord) return
 
-    await maybeGetLocation(true)
+    const isGranted = await checkLocationPermissions()
+    if (!isGranted) return
+
     navigation.navigate('HotspotOnboarding', {
       screen: 'PickLocationScreen',
       params: {
@@ -57,7 +57,7 @@ const HotspotDetailsScreen = ({ accountAddress }: WithAccountAddressProps) => {
         onboardingRecord,
       },
     })
-  }, [getOnboardingRecord, maybeGetLocation, hotspotAddress, navigation])
+  }, [getOnboardingRecord, hotspotAddress, navigation])
 
   const viewOnHeliumExplorer = useCallback(async () => {
     if (!hotspotAddress) return

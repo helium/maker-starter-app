@@ -114,7 +114,9 @@ const ConfirmPinView = ({
       <Box flex={1} justifyContent="center">
         {clearable && onCancel && (
           <TouchableOpacityBox padding="l" onPress={onCancel}>
-            <Text variant="body1">{t('more.sections.app.signOut')}</Text>
+            <Text variant="body1">
+              {t('settingsScreen.sections.app.signOut')}
+            </Text>
           </TouchableOpacityBox>
         )}
       </Box>

@@ -4,12 +4,12 @@ import { useTranslation } from 'react-i18next'
 
 import { DebouncedButton } from '../../../components/Button'
 import Text from '../../../components/Text'
-import useGetLocation from '../../../utils/useGetLocation'
 import {
   HotspotOnboardingNavigationProp,
   HotspotOnboardingStackParamList,
 } from '../../../navigation/hotspotOnboardingNavigatorTypes'
 import Box from '../../../components/Box'
+import { checkLocationPermissions } from '../../../utils/permissions'
 
 type Route = RouteProp<HotspotOnboardingStackParamList, 'AskSetLocationScreen'>
 
@@ -17,10 +17,11 @@ const AskSetLocationScreen = () => {
   const { t } = useTranslation()
   const { params } = useRoute<Route>()
   const navigation = useNavigation<HotspotOnboardingNavigationProp>()
-  const maybeGetLocation = useGetLocation()
 
-  const checkLocationPermissions = async () => {
-    await maybeGetLocation(true)
+  const locationAssert = async () => {
+    const isGranted = await checkLocationPermissions()
+    if (!isGranted) return
+
     navigation.navigate('PickLocationScreen', params)
   }
 
@@ -65,7 +66,7 @@ const AskSetLocationScreen = () => {
       <Box flex={1} />
 
       <DebouncedButton
-        onPress={checkLocationPermissions}
+        onPress={locationAssert}
         color="primary"
         title={t('hotspotOnboarding.askSetLocationScreen.next')}
         marginBottom="m"

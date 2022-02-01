@@ -53,7 +53,6 @@ const App = () => {
     isPinRequired,
     authInterval,
     isRestored,
-    isRequestingPermission,
     isLocked,
   } = useSelector((state: RootState) => state.app)
 
@@ -78,8 +77,7 @@ const App = () => {
     const lastIdleExpired = lastIdle && expiration > lastIdle
 
     // pin is required and last idle is past user interval, lock the screen
-    const shouldLock =
-      isActive && isPinRequired && !isRequestingPermission && lastIdleExpired
+    const shouldLock = isActive && isPinRequired && lastIdleExpired
 
     if (shouldLock) {
       dispatch(appSlice.actions.lock(true))
