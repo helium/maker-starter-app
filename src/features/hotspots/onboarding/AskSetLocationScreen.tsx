@@ -9,7 +9,7 @@ import {
   HotspotOnboardingStackParamList,
 } from '../../../navigation/hotspotOnboardingNavigatorTypes'
 import Box from '../../../components/Box'
-import { checkLocationPermissions } from '../../../utils/permissions'
+import useCheckLocationPermission from '../../../utils/useCheckLocationPermission'
 
 type Route = RouteProp<HotspotOnboardingStackParamList, 'AskSetLocationScreen'>
 
@@ -18,8 +18,13 @@ const AskSetLocationScreen = () => {
   const { params } = useRoute<Route>()
   const navigation = useNavigation<HotspotOnboardingNavigationProp>()
 
+  const {
+    isRequestingPermission,
+    requestPermission,
+  } = useCheckLocationPermission()
+
   const locationAssert = async () => {
-    const isGranted = await checkLocationPermissions()
+    const isGranted = await requestPermission()
     if (!isGranted) return
 
     navigation.navigate('PickLocationScreen', params)
@@ -67,6 +72,7 @@ const AskSetLocationScreen = () => {
 
       <DebouncedButton
         onPress={locationAssert}
+        disabled={isRequestingPermission}
         color="primary"
         title={t('hotspotOnboarding.askSetLocationScreen.next')}
         marginBottom="m"

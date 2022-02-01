@@ -1,32 +1,33 @@
 PODS:
   - boost (1.76.0)
   - DoubleConversion (1.1.6)
-  - EXApplication (4.0.0):
+  - EXApplication (4.0.1):
     - ExpoModulesCore
-  - EXConstants (12.1.3):
+  - EXConstants (13.0.1):
     - ExpoModulesCore
-  - EXErrorRecovery (3.0.3):
+  - EXErrorRecovery (3.0.4):
     - ExpoModulesCore
-  - EXFileSystem (13.0.3):
+  - EXFileSystem (13.1.2):
     - ExpoModulesCore
-  - EXFont (10.0.3):
+  - EXFont (10.0.4):
     - ExpoModulesCore
-  - EXHaptics (11.0.3):
+  - EXKeepAwake (10.0.1):
     - ExpoModulesCore
-  - EXKeepAwake (10.0.0):
-    - ExpoModulesCore
-  - EXLocalAuthentication (12.0.1):
+  - EXLocalAuthentication (12.1.0):
     - ExpoModulesCore
   - EXLocation (14.0.1):
     - ExpoModulesCore
     - UMTaskManagerInterface
-  - Expo (43.0.3):
+  - Expo (44.0.5):
     - ExpoModulesCore
-  - ExpoModulesCore (0.4.8):
+  - ExpoHaptics (11.1.0):
+    - ExpoModulesCore
+  - ExpoModulesCore (0.6.4):
     - React-Core
-  - EXSecureStore (11.0.3):
+    - ReactCommon/turbomodule/core
+  - EXSecureStore (11.1.0):
     - ExpoModulesCore
-  - EXSplashScreen (0.13.5):
+  - EXSplashScreen (0.14.1):
     - ExpoModulesCore
     - React-Core
   - FBLazyVector (0.66.3)
@@ -395,11 +396,11 @@ DEPENDENCIES:
   - EXErrorRecovery (from `../node_modules/expo-error-recovery/ios`)
   - EXFileSystem (from `../node_modules/expo-file-system/ios`)
   - EXFont (from `../node_modules/expo-font/ios`)
-  - EXHaptics (from `../node_modules/expo-haptics/ios`)
   - EXKeepAwake (from `../node_modules/expo-keep-awake/ios`)
   - EXLocalAuthentication (from `../node_modules/expo-local-authentication/ios`)
   - EXLocation (from `../node_modules/expo-location/ios`)
   - Expo (from `../node_modules/expo/ios`)
+  - ExpoHaptics (from `../node_modules/expo-haptics/ios`)
   - ExpoModulesCore (from `../node_modules/expo-modules-core/ios`)
   - EXSecureStore (from `../node_modules/expo-secure-store/ios`)
   - EXSplashScreen (from `../node_modules/expo-splash-screen/ios`)
@@ -474,8 +475,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/expo-file-system/ios"
   EXFont:
     :path: "../node_modules/expo-font/ios"
-  EXHaptics:
-    :path: "../node_modules/expo-haptics/ios"
   EXKeepAwake:
     :path: "../node_modules/expo-keep-awake/ios"
   EXLocalAuthentication:
@@ -484,6 +483,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/expo-location/ios"
   Expo:
     :path: "../node_modules/expo/ios"
+  ExpoHaptics:
+    :path: "../node_modules/expo-haptics/ios"
   ExpoModulesCore:
     :path: "../node_modules/expo-modules-core/ios"
   EXSecureStore:
@@ -584,28 +585,28 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   boost: a7c83b31436843459a1961bfd74b96033dc77234
   DoubleConversion: 831926d9b8bf8166fd87886c4abab286c2422662
-  EXApplication: 0e15240e4d125b62f1cae48759ffbbd32b9286a6
-  EXConstants: 6d585d93723b18d7a8c283591a335609e3bc153e
-  EXErrorRecovery: ac2622400a32be84604591f70d0efff416e4b9a2
-  EXFileSystem: 99aac7962c11c680681819dd9cbca24e20e5b1e7
-  EXFont: 2e1c6fe726d008a039db80df95f48b4921b7fe59
-  EXHaptics: f52df335f17192e440d9639c971ebcbb3fb91dec
-  EXKeepAwake: 8aa32396a5972d26e75e538603aad0f032396503
-  EXLocalAuthentication: c0ec9379a81c3c823a362382b6a2145e880d9840
+  EXApplication: bdc8dc27713235565da1029a34385229f31b8e08
+  EXConstants: 6966f4fa7a22770dd240a66d029819ff94c748c9
+  EXErrorRecovery: deea88a01d38f8b1c1181b4e1d179b0ba0e4bb5b
+  EXFileSystem: e8013deaa114cab168a6f53be956b9334c3d02cf
+  EXFont: 1fb13af43dc517c01c0ff21a6e32f9f9bf2ea602
+  EXKeepAwake: b571c2ad8323b2fced6e907766e2549f75119471
+  EXLocalAuthentication: 4c7166ed3133d2c75586093833936652e7d2c7fc
   EXLocation: 4bc1ea8086bc296aaba63d16bd194b0995c61cd4
-  Expo: 5316c3ecdc34eb0cad340d01dc8beec97c7e879e
-  ExpoModulesCore: a9a9bf32b2da35cd9b7299c80790c03a91ac7d15
-  EXSecureStore: 919bf7c28472862020d2cd7b59b69aae160b5d40
-  EXSplashScreen: 57f329dbf25c5c12800feed79068a056453dc772
+  Expo: 337c72b7e9314e93023af79c875930db8e008275
+  ExpoHaptics: c62a5fc7bba0184d0165d559fc2b0fc46168ef40
+  ExpoModulesCore: 64abda7af7cf659d2fa092934e29c6f4ea7e849f
+  EXSecureStore: fa0fdde1c81ceee2a3cb0519e649feae42767969
+  EXSplashScreen: 7872675b95bb07c25f922b3d3dfae70c76fb5a00
   FBLazyVector: de148e8310b8b878db304ceea2fec13f2c02e3a0
   FBReactNativeSpec: 6192956c9e346013d5f1809ba049af720b11c6a4
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
-  glog: 43737235ae6a21de4f45297f4f73b6420fc2ecb2
+  glog: 5337263514dd6f09803962437687240c5dc39aa4
   helium-react-native-sdk: a3e6739ad7fbafdb41a6bc976fee6055964269c0
   Mapbox-iOS-SDK: a5915700ec84bc1a7f8b3e746d474789e35b7956
   MapboxMobileEvents: 2bc0ca2eedb627b73cf403258dce2b2fa98074a6
   MultiplatformBleAdapter: 5a6a897b006764392f9cef785e4360f54fb9477d
-  RCT-Folly: e2636706cc3fded205cf0d380428ec0ea7455f80
+  RCT-Folly: a21c126816d8025b547704b777a2ba552f3d9fa9
   RCTRequired: 59d2b744d8c2bf2d9bc7032a9f654809adcf7d50
   RCTTypeSafety: d0aaf7ccae5c70a4aaa3a5c3e9e0db97efae760e
   React: fbe655dd1d12c052299b61abdc576720098d80fc
