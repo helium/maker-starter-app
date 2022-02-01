@@ -13,7 +13,6 @@ export type AppState = {
   authInterval: number
   lastIdle: number | null
   isLocked: boolean
-  isRequestingPermission: boolean
   walletLinkToken?: string
 }
 const initialState: AppState = {
@@ -22,7 +21,6 @@ const initialState: AppState = {
   authInterval: Intervals.IMMEDIATELY,
   lastIdle: null,
   isLocked: false,
-  isRequestingPermission: false,
 }
 
 type Restore = {
@@ -90,9 +88,6 @@ const appSlice = createSlice({
       if (!state.isLocked) {
         state.lastIdle = null
       }
-    },
-    requestingPermission: (state, action: PayloadAction<boolean>) => {
-      state.isRequestingPermission = action.payload
     },
   },
   extraReducers: (builder) => {
