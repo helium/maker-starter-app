@@ -2,6 +2,7 @@ import React from 'react'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
 
+import AskLocationIcon from '@assets/images/ask-location-icon.svg'
 import { DebouncedButton } from '../../../components/Button'
 import Text from '../../../components/Text'
 import {
@@ -42,33 +43,34 @@ const AskSetLocationScreen = () => {
       paddingBottom="l"
     >
       <Text
-        variant="h1"
+        variant="h2"
         numberOfLines={1}
         adjustsFontSizeToFit
         marginBottom="l"
+        textAlign="center"
       >
         {t('hotspotOnboarding.askSetLocationScreen.title')}
       </Text>
 
-      <Text
-        variant="subtitle1"
-        marginBottom="l"
-        numberOfLines={3}
-        adjustsFontSizeToFit
+      <Box
+        flex={1}
+        alignItems="center"
+        justifyContent="center"
+        marginBottom="s"
       >
-        {t('hotspotOnboarding.askSetLocationScreen.subtitle')}
-      </Text>
+        <AskLocationIcon width={100} height={100} />
 
-      <Text
-        variant="body1"
-        numberOfLines={2}
-        adjustsFontSizeToFit
-        maxFontSizeMultiplier={1.2}
-      >
-        {t('hotspotOnboarding.askSetLocationScreen.p1')}
-      </Text>
+        <Text variant="subtitle1" marginTop="l">
+          {t('hotspotOnboarding.askSetLocationScreen.subtitle1')}
+        </Text>
+        <Text variant="subtitle1" marginBottom="l">
+          {t('hotspotOnboarding.askSetLocationScreen.subtitle2')}
+        </Text>
 
-      <Box flex={1} />
+        <Text variant="subtitle2">
+          {t('hotspotOnboarding.askSetLocationScreen.p1')}
+        </Text>
+      </Box>
 
       <DebouncedButton
         onPress={locationAssert}
@@ -76,11 +78,13 @@ const AskSetLocationScreen = () => {
         color="primary"
         title={t('hotspotOnboarding.askSetLocationScreen.next')}
         marginBottom="m"
+        fullWidth
       />
       <DebouncedButton
         onPress={skipLocationAssert}
         color="secondary"
         title={t('hotspotOnboarding.askSetLocationScreen.cancel')}
+        fullWidth
       />
     </Box>
   )
