@@ -135,7 +135,7 @@ const TxnProgressScreen = () => {
     >
       <Text
         variant="h3"
-        marginBottom="xxxl"
+        marginBottom="xl"
         numberOfLines={1}
         adjustsFontSizeToFit
       >

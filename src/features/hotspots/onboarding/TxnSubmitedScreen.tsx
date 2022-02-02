@@ -34,12 +34,17 @@ const TxnSubmitedScreen = () => {
       paddingHorizontal="m"
       paddingBottom="l"
     >
-      <Box flex={1} alignItems="center">
-        <Text variant="subtitle1" marginBottom="l">
+      <Box flex={1} alignItems="center" justifyContent="center">
+        <Text
+          variant="h3"
+          marginBottom="xl"
+          numberOfLines={1}
+          adjustsFontSizeToFit
+        >
           {t('hotspotOnboarding.txnSubmitedScreen.title')}
         </Text>
 
-        <Text variant="body1" textAlign="center" marginBottom="l">
+        <Text variant="body1" textAlign="center">
           {t('hotspotOnboarding.txnSubmitedScreen.subtitle')}
         </Text>
       </Box>
@@ -47,8 +52,8 @@ const TxnSubmitedScreen = () => {
       <DebouncedButton
         onPress={() => navigation.navigate('MainTabs')}
         color="primary"
-        fullWidth
         title={t('hotspotOnboarding.txnSubmitedScreen.next')}
+        fullWidth
       />
     </Box>
   )

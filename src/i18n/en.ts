@@ -97,7 +97,7 @@ export default {
       linkCreationError: 'Can not create a transaction link',
     },
     txnSubmitedScreen: {
-      title: 'REGISTERING HOTSPOT',
+      title: 'Registering Hotspot',
       subtitle:
         'This can take a few minutes so feel free to close this screen.',
       next: 'Go to Hotspots List',
