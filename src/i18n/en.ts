@@ -77,8 +77,8 @@ export default {
     },
     askSetLocationScreen: {
       title: 'Set Hotspot Location',
-      subtitle:
-        'We need to set a location for your Hotspot. We can use your phone to do this.',
+      subtitle1: 'We need to set a location for your Hotspot.',
+      subtitle2: 'We can use your phone to do this.',
       p1: 'First, we’ll ask for permission to access your phone’s location.',
       next: 'Ask for Permissions',
       cancel: "No thanks, I'll set it up later",
