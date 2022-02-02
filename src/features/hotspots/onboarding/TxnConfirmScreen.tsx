@@ -75,10 +75,11 @@ const TxnConfirmScreen = () => {
       paddingBottom="l"
     >
       <Text
-        variant="h1"
+        variant="h2"
         marginBottom="l"
         numberOfLines={1}
         adjustsFontSizeToFit
+        textAlign="center"
       >
         {t('hotspotOnboarding.txnConfirmScreen.title')}
       </Text>
@@ -89,13 +90,14 @@ const TxnConfirmScreen = () => {
         borderTopLeftRadius="s"
         borderTopRightRadius="s"
         justifyContent="center"
+        marginBottom="m"
       >
-        <Text variant="body1">
+        <Text variant="body1" fontWeight="bold">
           {t('hotspotOnboarding.txnConfirmScreen.publicKey')}
         </Text>
         <Text
           variant="body1"
-          marginTop="xs"
+          marginTop="s"
           numberOfLines={2}
           adjustsFontSizeToFit
         >
@@ -106,14 +108,14 @@ const TxnConfirmScreen = () => {
       <Box
         backgroundColor="secondaryBackground"
         padding="m"
-        marginTop="xs"
         justifyContent="center"
+        marginBottom="m"
       >
-        <Text variant="body1">
+        <Text variant="body1" fontWeight="bold">
           {t('hotspotOnboarding.txnConfirmScreen.macAddress')}
         </Text>
         {macAddress ? (
-          <Text variant="body1" marginTop="xs">
+          <Text variant="body1" marginTop="s">
             {macAddress}
           </Text>
         ) : (
@@ -128,15 +130,15 @@ const TxnConfirmScreen = () => {
         padding="m"
         borderBottomLeftRadius="s"
         borderBottomRightRadius="s"
-        marginTop="xs"
         justifyContent="center"
+        marginBottom="m"
       >
-        <Text variant="body1">
+        <Text variant="body1" fontWeight="bold">
           {t('hotspotOnboarding.txnConfirmScreen.ownerAddress')}
         </Text>
         <Text
           variant="body1"
-          marginTop="xs"
+          marginTop="s"
           numberOfLines={2}
           adjustsFontSizeToFit
         >
