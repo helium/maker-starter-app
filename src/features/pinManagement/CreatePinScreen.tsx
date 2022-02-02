@@ -55,7 +55,6 @@ const AccountCreatePinScreen = () => {
       justifyContent="center"
       alignItems="center"
     >
-      <Box flex={1} />
       <Text
         marginBottom="m"
         variant="h1"
@@ -76,7 +75,6 @@ const AccountCreatePinScreen = () => {
         onCustomButtonPress={pinReset ? navigation.goBack : undefined}
         customButtonTitle={t('generic.cancel')}
       />
-      <Box flex={1} />
     </Box>
   )
 }
