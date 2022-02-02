@@ -69,6 +69,10 @@ export const Button = ({
     return variant === 'text' ? 'linkText' : 'primaryText'
   }, [variant])
 
+  const getTextWeight = useCallback(() => {
+    return variant === 'text' ? undefined : 'bold'
+  }, [variant])
+
   const style: StyleProp<ViewStyle> = {
     opacity: disabled ? 0.2 : 1,
     width: fullWidth ? '100%' : undefined,
@@ -85,7 +89,11 @@ export const Button = ({
       style={style}
       {...rest}
     >
-      <Text variant="button" color={getTextColor()}>
+      <Text
+        variant="button"
+        color={getTextColor()}
+        fontWeight={getTextWeight()}
+      >
         {title}
       </Text>
     </TouchableOpacityBox>
