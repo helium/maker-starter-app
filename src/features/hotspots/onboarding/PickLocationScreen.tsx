@@ -114,7 +114,7 @@ const PickLocationScreen = () => {
           currentLocationEnabled
         />
       </Box>
-      <Box padding="m">
+      <Box padding="m" paddingBottom="l">
         <Box
           flexDirection="row"
           justifyContent="space-between"

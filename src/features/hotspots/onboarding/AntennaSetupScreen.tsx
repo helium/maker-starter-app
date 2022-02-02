@@ -39,7 +39,7 @@ const AntennaSetupScreen = () => {
       flex={1}
       backgroundColor="primaryBackground"
       paddingHorizontal="m"
-      paddingBottom="m"
+      paddingBottom="l"
     >
       <KeyboardAvoidingView
         style={styles.keyboardAvoidingView}

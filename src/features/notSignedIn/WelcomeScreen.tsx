@@ -59,7 +59,7 @@ const WelcomeScreen = () => {
       flex={1}
       backgroundColor="primaryBackground"
       paddingHorizontal="m"
-      paddingBottom="m"
+      paddingBottom="l"
       alignItems="center"
     >
       <Box flex={1} justifyContent="center" alignItems="center">

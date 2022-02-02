@@ -95,7 +95,7 @@ const ConfirmLocationScreen = () => {
       flex={1}
       backgroundColor="primaryBackground"
       paddingHorizontal="m"
-      paddingBottom="m"
+      paddingBottom="l"
     >
       <ScrollView>
         <Box flex={1} paddingBottom="m">

@@ -39,7 +39,7 @@ const AskSetLocationScreen = () => {
       flex={1}
       backgroundColor="primaryBackground"
       paddingHorizontal="m"
-      paddingBottom="m"
+      paddingBottom="l"
     >
       <Text
         variant="h1"
