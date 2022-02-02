@@ -86,7 +86,7 @@ const HotspotDetailsScreen = ({ accountAddress }: WithAccountAddressProps) => {
       flex={1}
       backgroundColor="primaryBackground"
       paddingHorizontal="m"
-      paddingBottom="m"
+      paddingBottom="l"
     >
       {!hotspot ? (
         <Text variant="body1" textAlign="center">
@@ -193,7 +193,6 @@ const HotspotDetailsScreen = ({ accountAddress }: WithAccountAddressProps) => {
               disabled={isRequestingPermission}
               color="primary"
               fullWidth
-              marginBottom="m"
               title={t(
                 `hotspotDetailsScreen.${
                   hotspot.isLocationSet ? 'changeLocationBtn' : 'setLocationBtn'

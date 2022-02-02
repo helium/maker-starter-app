@@ -42,13 +42,13 @@ const HotspotsScreen = ({ accountAddress }: WithAccountAddressProps) => {
       flex={1}
       backgroundColor="primaryBackground"
       paddingHorizontal="m"
-      paddingBottom="m"
+      paddingBottom="s"
     >
-      <Text variant="h2" textAlign="center">
+      <Text variant="h2" textAlign="center" marginBottom="m">
         {t('hotspotsScreen.title')}
       </Text>
 
-      <Box flex={1} marginTop="l">
+      <Box flex={1} marginBottom="s">
         <HotspotsList accountAddress={accountAddress} />
       </Box>
 
@@ -56,7 +56,6 @@ const HotspotsScreen = ({ accountAddress }: WithAccountAddressProps) => {
         title={t('hotspotsScreen.addBtn')}
         onPress={openOnboardingSite}
         color="primary"
-        marginTop="s"
       />
     </Box>
   )
