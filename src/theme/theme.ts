@@ -53,7 +53,6 @@ const textVariants = {
     color: 'primaryText',
     textAlign: 'center',
     fontSize: 17,
-    fontWeight: 'bold',
   } as TextProps,
   keypad: {
     fontSize: 40,
