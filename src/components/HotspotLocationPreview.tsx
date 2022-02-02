@@ -3,6 +3,7 @@ import MapboxGL from '@react-native-mapbox-gl/maps'
 import Config from 'react-native-config'
 
 import LocationIcon from '@assets/images/location-icon.svg'
+import { useColors } from '../theme/themeHooks'
 import Box from './Box'
 import Text from './Text'
 
@@ -32,6 +33,8 @@ const HotspotLocationPreview = ({
   movable = false,
   onMapMoved = () => {},
 }: Props) => {
+  const colors = useColors()
+
   const map = useRef<MapboxGL.MapView>(null)
   const [coords, setCoords] = useState(mapCenter)
 
@@ -91,7 +94,7 @@ const HotspotLocationPreview = ({
           id="locationMarker"
           coordinate={coords || defaultLngLat}
         >
-          <LocationIcon color="white" />
+          <LocationIcon color={colors.linkText} />
         </MapboxGL.PointAnnotation>
       </MapboxGL.MapView>
       <LocationName />
