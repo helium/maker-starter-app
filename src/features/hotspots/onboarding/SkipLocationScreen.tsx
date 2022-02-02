@@ -2,6 +2,7 @@ import React, { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 
+import SkipLocationIcon from '@assets/images/skip-location-icon.svg'
 import Box from '../../../components/Box'
 import { DebouncedButton } from '../../../components/Button'
 import Text from '../../../components/Text'
@@ -29,24 +30,38 @@ const SkipLocationScreen = () => {
       paddingHorizontal="m"
       paddingBottom="l"
     >
-      <Text variant="h1" marginBottom="l" adjustsFontSizeToFit>
+      <Text
+        variant="h2"
+        numberOfLines={1}
+        adjustsFontSizeToFit
+        marginBottom="l"
+        textAlign="center"
+      >
         {t('hotspotOnboarding.skipLocationScreen.title')}
       </Text>
 
-      <Text variant="subtitle1" adjustsFontSizeToFit marginBottom="l">
-        {t('hotspotOnboarding.skipLocationScreen.subtitle1')}
-      </Text>
+      <Box
+        flex={1}
+        alignItems="center"
+        justifyContent="center"
+        marginBottom="s"
+      >
+        <SkipLocationIcon width={100} height={100} />
 
-      <Text variant="subtitle2" adjustsFontSizeToFit marginBottom="l">
-        {t('hotspotOnboarding.skipLocationScreen.subtitle2')}
-      </Text>
+        <Text variant="subtitle1" marginTop="l" marginBottom="l">
+          {t('hotspotOnboarding.skipLocationScreen.subtitle1')}
+        </Text>
 
-      <Box flex={1} />
+        <Text variant="subtitle2">
+          {t('hotspotOnboarding.skipLocationScreen.subtitle2')}
+        </Text>
+      </Box>
 
       <DebouncedButton
         title={t('hotspotOnboarding.skipLocationScreen.next')}
         color="primary"
         onPress={navNext}
+        fullWidth
       />
     </Box>
   )

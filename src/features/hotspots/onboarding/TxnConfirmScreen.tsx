@@ -153,6 +153,7 @@ const TxnConfirmScreen = () => {
         color="primary"
         onPress={navNext}
         disabled={ownerAddress !== address}
+        fullWidth
       />
     </Box>
   )
