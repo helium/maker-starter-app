@@ -143,7 +143,7 @@ const Map = ({
 
   const mapImages = useMemo(
     () => ({
-      markerLocation: require('../assets/images/locationPurple.png'),
+      markerLocation: require('../assets/images/selectedLocation.png'),
     }),
     [],
   )
@@ -262,7 +262,7 @@ const Map = ({
             id="locationCenterMarker"
             coordinate={markerLocation}
           >
-            <LocationIcon color="white" />
+            <LocationIcon color={colors.primaryText} />
           </MapboxGL.PointAnnotation>
         )}
       </MapboxGL.MapView>
