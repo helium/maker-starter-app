@@ -89,13 +89,7 @@ const ConfirmPinView = ({
   }, [])
 
   return (
-    <Box
-      backgroundColor="primaryBackground"
-      flex={1}
-      paddingHorizontal="lx"
-      justifyContent="center"
-      alignItems="center"
-    >
+    <Box flex={1} justifyContent="center" alignItems="center">
       <Box flex={1} />
       <Text marginBottom="m" variant="h1" maxFontSizeMultiplier={1}>
         {title}
