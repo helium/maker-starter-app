@@ -39,6 +39,7 @@ const MainTabs = () => {
   const screenOptions = useCallback(
     ({ route }) => ({
       ...defaultScreenOptions,
+      headerTitle: '',
       tabBarStyle: {
         backgroundColor: colors.primaryBackground,
       },

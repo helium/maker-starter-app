@@ -230,7 +230,6 @@ const SettingsScreen = () => {
       backgroundColor="primaryBackground"
       paddingHorizontal="m"
       paddingBottom="m"
-      paddingTop="l"
     >
       <Text variant="h2" textAlign="center">
         {t('settingsScreen.title')}

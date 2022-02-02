@@ -43,7 +43,6 @@ const HotspotsScreen = ({ accountAddress }: WithAccountAddressProps) => {
       backgroundColor="primaryBackground"
       paddingHorizontal="m"
       paddingBottom="m"
-      paddingTop="l"
     >
       <Text variant="h2" textAlign="center">
         {t('hotspotsScreen.title')}
