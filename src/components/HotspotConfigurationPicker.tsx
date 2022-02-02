@@ -149,13 +149,20 @@ const HotspotConfigurationPicker = ({
         onValueSelected={onSelectAntenna}
         buttonProps={{ justifyContent: 'space-between' }}
         padding="m"
-        paddingVertical="lm"
+        paddingVertical="l"
         maxModalHeight={700}
       />
-      <Box backgroundColor="primaryBackground" height={1} />
+
+      <Box
+        backgroundColor="primaryBackground"
+        height={1}
+        paddingVertical="xxs"
+      />
+
       <TouchableWithoutFeedback onPress={focusGain}>
         <Box
           padding="m"
+          paddingVertical="l"
           flexDirection="row"
           justifyContent="space-between"
           alignItems="center"
@@ -186,10 +193,17 @@ const HotspotConfigurationPicker = ({
           </Box>
         </Box>
       </TouchableWithoutFeedback>
-      <Box backgroundColor="primaryBackground" height={1} />
+
+      <Box
+        backgroundColor="primaryBackground"
+        height={1}
+        paddingVertical="xxs"
+      />
+
       <TouchableWithoutFeedback onPress={focusElevation}>
         <Box
           padding="m"
+          paddingVertical="l"
           flexDirection="row"
           justifyContent="space-between"
           alignItems="center"
