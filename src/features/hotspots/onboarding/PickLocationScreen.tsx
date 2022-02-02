@@ -15,6 +15,7 @@ import {
   BottomSheetModal,
   BottomSheetModalProvider,
 } from '@gorhom/bottom-sheet'
+import { Image } from 'react-native'
 
 import Box from '../../../components/Box'
 import { DebouncedButton } from '../../../components/Button'
@@ -28,7 +29,6 @@ import {
 } from '../../../navigation/hotspotOnboardingNavigatorTypes'
 import TouchableOpacityBox from '../../../components/TouchableOpacityBox'
 import { useColors, useSpacing } from '../../../theme/themeHooks'
-import BSHandle from '../../../components/BSHandle'
 import AddressSearchModal from './AddressSearchModal'
 import { PlaceGeography } from '../../../utils/googlePlaces'
 
@@ -45,7 +45,7 @@ const PickLocationScreen = () => {
   const [locationName, setLocationName] = useState('')
   const spacing = useSpacing()
   const searchModal = useRef<BottomSheetModal>(null)
-  const { surface } = useColors()
+  const colors = useColors()
 
   useEffect(() => {
     const sleepThenEnable = async () => {
@@ -60,8 +60,16 @@ const PickLocationScreen = () => {
       setMarkerCenter(newCoords)
 
       const [longitude, latitude] = newCoords
-      const [{ street, city }] = await reverseGeocode(latitude, longitude)
-      const name = street && city ? [street, city].join(', ') : 'Loading...'
+      const adresses = await reverseGeocode(latitude, longitude)
+
+      let name = 'Loading...'
+      if (adresses && adresses[0]) {
+        const { street, city, country } = adresses[0]
+
+        if (street && city && country) {
+          name = [street, city, country].join(', ')
+        }
+      }
       setLocationName(name)
     }
   }, [])
@@ -91,7 +99,7 @@ const PickLocationScreen = () => {
     searchModal.current?.dismiss()
   }, [])
 
-  const searchSnapPoints = useMemo(() => ['85%'], [])
+  const searchSnapPoints = useMemo(() => ['85%', '100%'], [])
 
   return (
     <Box flex={1} backgroundColor="primaryBackground">
@@ -115,17 +123,18 @@ const PickLocationScreen = () => {
         />
       </Box>
       <Box padding="m" paddingBottom="l">
-        <Box
-          flexDirection="row"
-          justifyContent="space-between"
-          alignItems="center"
-          marginBottom="lm"
-        >
-          <Box>
-            <Text variant="body1" marginBottom="xs">
-              {t('hotspotOnboarding.pickLocationScreen.title')}
+        <Box alignItems="center" marginBottom="m">
+          <Text variant="subtitle1" fontWeight="bold" marginBottom="s">
+            {t('hotspotOnboarding.pickLocationScreen.title')}
+          </Text>
+
+          <Box flexDirection="row" alignItems="center">
+            <Image
+              source={require('../../../assets/images/selectedLocation.png')}
+            />
+            <Text variant="subtitle2" marginLeft="m">
+              {locationName}
             </Text>
-            <Text variant="body1">{locationName}</Text>
           </Box>
         </Box>
         <DebouncedButton
@@ -140,9 +149,14 @@ const PickLocationScreen = () => {
         <BottomSheetModal
           ref={searchModal}
           snapPoints={searchSnapPoints}
-          handleComponent={BSHandle}
           backdropComponent={BottomSheetBackdrop}
-          backgroundStyle={{ backgroundColor: surface }}
+          backgroundStyle={{
+            backgroundColor: colors.primaryBackground,
+          }}
+          handleIndicatorStyle={{
+            backgroundColor: colors.primaryText,
+            opacity: 0.5,
+          }}
         >
           <AddressSearchModal onSelectPlace={handleSelectPlace} />
         </BottomSheetModal>
