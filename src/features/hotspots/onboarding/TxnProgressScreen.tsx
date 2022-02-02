@@ -129,7 +129,7 @@ const TxnProgressScreen = () => {
       flex={1}
       backgroundColor="primaryBackground"
       paddingHorizontal="m"
-      paddingBottom="m"
+      paddingBottom="l"
     >
       <Box flex={1} alignItems="center">
         <Text variant="subtitle1" marginBottom="l">
