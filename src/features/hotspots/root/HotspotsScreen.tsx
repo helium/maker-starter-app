@@ -93,7 +93,7 @@ const HotspotsList = ({ accountAddress }: WithAccountAddressProps) => {
       renderItem={({ item }) => {
         return (
           <Box
-            backgroundColor="white"
+            backgroundColor="secondaryBackground"
             borderRadius="l"
             flexDirection="row"
             marginBottom="s"
