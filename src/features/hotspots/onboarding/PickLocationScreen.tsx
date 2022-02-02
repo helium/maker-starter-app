@@ -142,6 +142,7 @@ const PickLocationScreen = () => {
           color="primary"
           disabled={disabled || !hasGPSLocation}
           title={t('hotspotOnboarding.pickLocationScreen.next')}
+          fullWidth
         />
       </Box>
 
