@@ -99,35 +99,46 @@ const ConfirmLocationScreen = () => {
     >
       <ScrollView>
         <Box flex={1} paddingBottom="m">
-          <Text variant="h1" marginBottom="s">
+          <Text
+            variant="h2"
+            numberOfLines={1}
+            adjustsFontSizeToFit
+            marginBottom="l"
+            textAlign="center"
+          >
             {t('hotspot_setup.location_fee.title')}
           </Text>
-          {isFree ? (
-            <Text variant="subtitle1" marginBottom="s">
-              {t('hotspot_setup.location_fee.subtitle_free')}
-            </Text>
-          ) : (
-            <Text variant="subtitle1" marginBottom="s">
-              {t('hotspot_setup.location_fee.subtitle_fee')}
-            </Text>
-          )}
+
+          <Text variant="subtitle1" marginBottom="s" textAlign="center">
+            {t(
+              isFree
+                ? 'hotspot_setup.location_fee.subtitle_free'
+                : 'hotspot_setup.location_fee.subtitle_fee',
+            )}
+          </Text>
+
           <Text
             variant="subtitle1"
-            marginBottom="s"
+            marginBottom={{ phone: 'm', smallPhone: 'ms' }}
             numberOfLines={2}
             adjustsFontSizeToFit
           >
             {t('hotspot_setup.location_fee.confirm_location')}
           </Text>
-          <Box height={200} marginBottom="s">
+
+          <Box height={200} marginBottom={{ phone: 'm', smallPhone: 'ms' }}>
             <HotspotLocationPreview
               mapCenter={coords}
               locationName={params.locationName}
             />
           </Box>
 
-          <Box flexDirection="row" justifyContent="space-between" marginTop="s">
-            <Text variant="body1" color="secondaryText">
+          <Box
+            flexDirection="row"
+            justifyContent="space-between"
+            marginBottom={{ phone: 'm', smallPhone: 'ms' }}
+          >
+            <Text variant="body1" color="primaryText">
               {t('hotspot_setup.location_fee.gain_label')}
             </Text>
             <Text variant="body1" color="primaryText">
@@ -135,8 +146,12 @@ const ConfirmLocationScreen = () => {
             </Text>
           </Box>
 
-          <Box flexDirection="row" justifyContent="space-between" marginTop="s">
-            <Text variant="body1" color="secondaryText">
+          <Box
+            flexDirection="row"
+            justifyContent="space-between"
+            marginBottom={{ phone: 'm', smallPhone: 'ms' }}
+          >
+            <Text variant="body1" color="primaryText">
               {t('hotspot_setup.location_fee.elevation_label')}
             </Text>
             <Text variant="body1" color="primaryText">
@@ -149,15 +164,14 @@ const ConfirmLocationScreen = () => {
               <Box
                 flexDirection="row"
                 justifyContent="space-between"
-                paddingTop="s"
-                marginTop="s"
+                marginBottom={{ phone: 'm', smallPhone: 'ms' }}
               >
-                <Text variant="body1" color="secondaryText">
+                <Text variant="body1" color="primaryText">
                   {t('hotspot_setup.location_fee.balance')}
                 </Text>
                 <Text
                   variant="body1"
-                  color={hasSufficientBalance ? 'secondaryText' : 'error'}
+                  color={hasSufficientBalance ? 'primaryText' : 'error'}
                 >
                   {account?.balance?.toString(2, {
                     groupSeparator,
@@ -169,9 +183,9 @@ const ConfirmLocationScreen = () => {
               <Box
                 flexDirection="row"
                 justifyContent="space-between"
-                marginTop="s"
+                marginBottom={{ phone: 'm', smallPhone: 'ms' }}
               >
-                <Text variant="body1" color="secondaryText">
+                <Text variant="body1" color="primaryText">
                   {t('hotspot_setup.location_fee.fee')}
                 </Text>
                 <Text variant="body1" color="primaryText">
@@ -180,11 +194,9 @@ const ConfirmLocationScreen = () => {
               </Box>
 
               {!hasSufficientBalance && (
-                <Box marginTop="s">
-                  <Text variant="body2" color="error" textAlign="center">
-                    {t('hotspot_setup.location_fee.no_funds')}
-                  </Text>
-                </Box>
+                <Text variant="body2" color="error" textAlign="center">
+                  {t('hotspot_setup.location_fee.no_funds')}
+                </Text>
               )}
             </>
           )}
