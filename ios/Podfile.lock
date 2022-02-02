@@ -344,7 +344,7 @@ PODS:
     - React-Core
   - RNDeviceInfo (8.4.4):
     - React-Core
-  - RNGestureHandler (1.10.3):
+  - RNGestureHandler (2.2.0):
     - React-Core
   - RNLocalize (1.4.3):
     - React-Core
@@ -639,7 +639,7 @@ SPEC CHECKSUMS:
   ReactCommon: 9bac022ab71596f2b0fde1268272543184c63971
   RNCClipboard: 41d8d918092ae8e676f18adada19104fa3e68495
   RNDeviceInfo: 98cc93d4b3b09b33e784b751f04d414065a61fd4
-  RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
+  RNGestureHandler: bf572f552ea324acd5b5464b8d30755b2d8c1de6
   RNLocalize: 7c7aeda16c01db7a0918981c14875c0a53be9b79
   RNReanimated: 65583befd5706cc9c86ae9a081786181ced37b93
   RNScreens: 6e1ea5787989f92b0671049b808aef64fa1ef98c
