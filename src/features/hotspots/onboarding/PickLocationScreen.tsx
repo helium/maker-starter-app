@@ -111,7 +111,7 @@ const PickLocationScreen = () => {
           right={spacing.m}
           zIndex={1}
         >
-          <Search width={30} height={30} color="white" />
+          <Search width={30} height={30} color={colors.primaryText} />
         </TouchableOpacityBox>
         <Map
           maxZoomLevel={17}

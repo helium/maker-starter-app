@@ -217,7 +217,7 @@ const Map = ({
           alignItems="center"
         >
           <NoLocation color={colors.primary} />
-          <Text variant="h2" color="white" marginTop="m">
+          <Text variant="h2" marginTop="m">
             {t('mapComponent.noLocationTitle')}
           </Text>
           <Text variant="body2" marginTop="s">
