@@ -1,19 +1,29 @@
 import React from 'react'
-import { ActivityIndicator as ActivityIndicatorNative } from 'react-native'
+import {
+  ActivityIndicator as NativeActivityIndicator,
+  ActivityIndicatorProps as NativeActivityIndicatorProps,
+} from 'react-native'
 
 import { useColors } from '../theme/themeHooks'
 import Box from './Box'
 
-const ActivityIndicator = () => {
+const ActivityIndicator = (props: NativeActivityIndicatorProps) => {
   const { primary } = useColors()
 
-  return <ActivityIndicatorNative color={primary} />
+  const propsWithDefaults = {
+    ...props,
+    color: props.color || primary,
+  }
+
+  // eslint-disable-next-line react/jsx-props-no-spreading
+  return <NativeActivityIndicator {...propsWithDefaults} />
 }
 
-const ActivityIndicatorCentered = () => {
+const ActivityIndicatorCentered = (props: NativeActivityIndicatorProps) => {
   return (
     <Box flex={1} justifyContent="center">
-      <ActivityIndicator />
+      {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+      <ActivityIndicator {...props} />
     </Box>
   )
 }

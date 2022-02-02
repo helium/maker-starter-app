@@ -10,7 +10,7 @@ import {
 import { Linking } from 'react-native'
 import Toast from 'react-native-simple-toast'
 
-import { ActivityIndicatorCentered } from '../../../components/ActivityIndicator'
+import { ActivityIndicator } from '../../../components/ActivityIndicator'
 import Text from '../../../components/Text'
 import Box from '../../../components/Box'
 import { hotspotOnChain } from '../../../utils/appDataClient'
@@ -130,15 +130,19 @@ const TxnProgressScreen = () => {
       backgroundColor="primaryBackground"
       paddingHorizontal="m"
       paddingBottom="l"
+      alignItems="center"
+      justifyContent="center"
     >
-      <Box flex={1} alignItems="center">
-        <Text variant="subtitle1" marginBottom="l">
-          {t('hotspotOnboarding.txnProgressScreen.title')}
-        </Text>
-        <Box flex={1}>
-          <ActivityIndicatorCentered />
-        </Box>
-      </Box>
+      <Text
+        variant="h3"
+        marginBottom="xxxl"
+        numberOfLines={1}
+        adjustsFontSizeToFit
+      >
+        {t('hotspotOnboarding.txnProgressScreen.title')}
+      </Text>
+
+      <ActivityIndicator size="large" />
     </Box>
   )
 }

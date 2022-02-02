@@ -90,7 +90,7 @@ export default {
       next: 'Register Hotspot',
     },
     txnProgressScreen: {
-      title: 'REGISTERING HOTSPOT',
+      title: 'Registering Hotspot',
       waitErrorBody:
         'Hotspot miner is waiting to start. Please try again in a few minutes.',
       waitErrorTitle: 'Please Try Again',
