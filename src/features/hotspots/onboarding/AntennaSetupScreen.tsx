@@ -47,13 +47,26 @@ const AntennaSetupScreen = () => {
       >
         <Box flex={1}>
           <Box>
-            <Text variant="h1" marginBottom="s" maxFontSizeMultiplier={1}>
+            <Text
+              variant="h2"
+              numberOfLines={1}
+              adjustsFontSizeToFit
+              marginBottom="l"
+              textAlign="center"
+            >
               {t('antennas.onboarding.title')}
             </Text>
-            <Text variant="subtitle2" numberOfLines={2} adjustsFontSizeToFit>
+
+            <Text
+              variant="subtitle2"
+              numberOfLines={2}
+              adjustsFontSizeToFit
+              textAlign="center"
+            >
               {t('antennas.onboarding.subtitle')}
             </Text>
           </Box>
+
           <HotspotConfigurationPicker
             selectedAntenna={antenna}
             onAntennaUpdated={setAntenna}
@@ -62,10 +75,12 @@ const AntennaSetupScreen = () => {
           />
         </Box>
       </KeyboardAvoidingView>
+
       <DebouncedButton
         title={t('generic.next')}
         onPress={navNext}
         color="primary"
+        fullWidth
       />
     </Box>
   )
