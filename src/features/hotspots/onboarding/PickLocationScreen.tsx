@@ -129,9 +129,11 @@ const PickLocationScreen = () => {
           </Text>
 
           <Box flexDirection="row" alignItems="center">
-            <Image
-              source={require('../../../assets/images/selectedLocation.png')}
-            />
+            {!!locationName && (
+              <Image
+                source={require('../../../assets/images/selectedLocation.png')}
+              />
+            )}
             <Text variant="subtitle2" marginLeft="m">
               {locationName}
             </Text>
