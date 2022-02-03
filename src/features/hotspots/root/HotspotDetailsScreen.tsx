@@ -135,7 +135,10 @@ const HotspotDetailsScreen = ({ accountAddress }: WithAccountAddressProps) => {
 
               {hotspot.isLocationSet ? (
                 <Box height={200}>
-                  <HotspotLocationPreview geocode={hotspot.geocode} />
+                  <HotspotLocationPreview
+                    mapCenter={[hotspot.lng, hotspot.lat]}
+                    geocode={hotspot.geocode}
+                  />
                 </Box>
               ) : (
                 <Box flexDirection="row" justifyContent="space-between">
