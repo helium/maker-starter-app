@@ -27,7 +27,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>freedomfihelium</string>
+				<string>freedomfi</string>
 			</array>
 		</dict>
 	</array>

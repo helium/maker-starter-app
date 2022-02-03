@@ -18,7 +18,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="freedomfihelium" />
+                <data android:scheme="freedomfi" />
             </intent-filter>
         </activity>
     </application>
