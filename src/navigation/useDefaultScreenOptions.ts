@@ -1,15 +1,19 @@
+import { useTranslation } from 'react-i18next'
+
 import { useColors } from '../theme/themeHooks'
 
 const useDefaultScreenOptions = () => {
-  const { primaryBackground, primaryText } = useColors()
+  const { t } = useTranslation()
+  const colors = useColors()
 
   return {
     headerStyle: {
-      backgroundColor: primaryBackground,
+      backgroundColor: colors.primaryBackground,
       elevation: 0, // remove shadow on Android
       shadowOpacity: 0, // remove shadow on iOS
     },
-    headerTintColor: primaryText,
+    headerTintColor: colors.primaryText,
+    headerBackTitle: t('generic.back'),
   }
 }
 
