@@ -2,6 +2,7 @@ export default {
   generic: {
     cancel: 'Cancel',
     clear: 'Clear',
+    back: 'Back',
     connect: 'Connect',
     continue: 'Continue',
     error: 'Error',
