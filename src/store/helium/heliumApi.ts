@@ -37,44 +37,44 @@ export const heliumApi = createApi({
         method: 'GET',
       }),
       transformResponse: (response: { data: any }) => {
-        return (
-          chain(response?.data)
-            // todo uncomment
-            // .filter((hotspot)=> hotspot.payer && hotspot.payer === Config.FREEDOMFI_MAKER_ID)
-            .map((hotspot) => {
-              const isLocationSet = !!hotspot.location
+        return chain(response?.data)
+          .filter(
+            (hotspot) =>
+              hotspot.payer && hotspot.payer === Config.FREEDOMFI_MAKER_ID,
+          )
+          .map((hotspot) => {
+            const isLocationSet = !!hotspot.location
 
-              const locationName = isLocationSet
-                ? `${hotspot.geocode?.long_street}, ${hotspot.geocode?.short_city} ${hotspot.geocode?.short_country}`
-                : null
+            const locationName = isLocationSet
+              ? `${hotspot.geocode?.long_street}, ${hotspot.geocode?.short_city} ${hotspot.geocode?.short_country}`
+              : null
 
-              return {
-                lng: hotspot.lng,
-                lat: hotspot.lat,
-                status: hotspot.status?.online,
-                payer: hotspot.payer,
-                owner: hotspot.owner,
-                name: hotspot.name?.replaceAll('-', ' '),
-                isLocationSet,
-                locationName,
-                geocode: {
-                  shortStreet: hotspot.geocode?.short_street,
-                  shortState: hotspot.geocode?.short_state,
-                  shortCountry: hotspot.geocode?.short_country,
-                  shortCity: hotspot.geocode?.short_city,
-                  longStreet: hotspot.geocode?.long_street,
-                  longState: hotspot.geocode?.long_state,
-                  longCountry: hotspot.geocode?.long_country,
-                  longCity: hotspot.geocode?.long_city,
-                  cityId: hotspot.geocode?.city_id,
-                },
-                gain: hotspot.gain,
-                elevation: hotspot.elevation,
-                address: hotspot.address,
-              }
-            })
-            .value()
-        )
+            return {
+              lng: hotspot.lng,
+              lat: hotspot.lat,
+              status: hotspot.status?.online,
+              payer: hotspot.payer,
+              owner: hotspot.owner,
+              name: hotspot.name?.replaceAll('-', ' '),
+              isLocationSet,
+              locationName,
+              geocode: {
+                shortStreet: hotspot.geocode?.short_street,
+                shortState: hotspot.geocode?.short_state,
+                shortCountry: hotspot.geocode?.short_country,
+                shortCity: hotspot.geocode?.short_city,
+                longStreet: hotspot.geocode?.long_street,
+                longState: hotspot.geocode?.long_state,
+                longCountry: hotspot.geocode?.long_country,
+                longCity: hotspot.geocode?.long_city,
+                cityId: hotspot.geocode?.city_id,
+              },
+              gain: hotspot.gain,
+              elevation: hotspot.elevation,
+              address: hotspot.address,
+            }
+          })
+          .value()
       },
     }),
   }),
