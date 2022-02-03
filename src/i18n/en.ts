@@ -88,17 +88,17 @@ export default {
       title: 'Add Location Later',
       subtitle1: 'You have decided to assert location later.',
       subtitle2: 'Update your location later from settings.',
-      next: 'Register Hotspot',
+      next: 'Register Transaction',
     },
     txnProgressScreen: {
-      title: 'Registering Hotspot',
+      title: 'Registering Transaction',
       waitErrorBody:
         'Hotspot miner is waiting to start. Please try again in a few minutes.',
       waitErrorTitle: 'Please Try Again',
       linkCreationError: 'Can not create a transaction link',
     },
     txnSubmitedScreen: {
-      title: 'Registering Hotspot',
+      title: 'Registering Transaction',
       subtitle:
         'This can take a few minutes so feel free to close this screen.',
       next: 'Go to Hotspots List',
@@ -157,15 +157,15 @@ export default {
     location_fee: {
       balance: 'Balance:',
       confirm_location:
-        'Confirm the location selected is correct and register your Hotspot.',
+        'Confirm the location selected is correct and register transaction.',
       elevation: '{{count}} meter',
       elevation_label: 'Height:',
       elevation_plural: '{{count}} meters',
       fee: 'Fee:',
-      fee_next: 'Pay Fee & Register Hotspot',
+      fee_next: 'Pay Fee & Register Transaction',
       gain: '{{gain}} dBi',
       gain_label: 'TX / RX Gain:',
-      next: 'Register Hotspot',
+      next: 'Register Transaction',
       no_funds: 'There is insufficient HNT in your account balance',
       subtitle_fee:
         'You need to pay a $10 Location Fee (in DC) to confirm this location.',
