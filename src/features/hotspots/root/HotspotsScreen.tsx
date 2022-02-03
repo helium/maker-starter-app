@@ -92,11 +92,12 @@ const HotspotsList = ({ accountAddress }: WithAccountAddressProps) => {
       data={hotspots}
       renderItem={({ item }) => {
         return (
-          <Box
+          <TouchableOpacityBox
             backgroundColor="secondaryBackground"
             borderRadius="l"
             flexDirection="row"
             marginBottom="s"
+            onPress={() => openHotspotDetails(item.address)}
           >
             <Box flex={1} paddingVertical="m" paddingLeft="m">
               <Text
@@ -117,15 +118,10 @@ const HotspotsList = ({ accountAddress }: WithAccountAddressProps) => {
               </Text>
             </Box>
 
-            <TouchableOpacityBox
-              width={60}
-              justifyContent="center"
-              alignItems="center"
-              onPress={() => openHotspotDetails(item.address)}
-            >
+            <Box width={60} justifyContent="center" alignItems="center">
               <CarotRight color={colors.boneBlack} />
-            </TouchableOpacityBox>
-          </Box>
+            </Box>
+          </TouchableOpacityBox>
         )
       }}
     />
