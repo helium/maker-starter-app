@@ -268,10 +268,11 @@
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
+						DevelopmentTeam = 4DNTNYK6A2;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = 245A23QAH7;
+						DevelopmentTeam = 4DNTNYK6A2;
 						LastSwiftMigration = 1250;
 					};
 				};
@@ -512,6 +513,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = 4DNTNYK6A2;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -537,6 +539,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = 4DNTNYK6A2;
 				INFOPLIST_FILE = FreedomFiTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -560,7 +563,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = FreedomFi/FreedomFi.entitlements;
 				CURRENT_PROJECT_VERSION = 3;
-				DEVELOPMENT_TEAM = 245A23QAH7;
+				DEVELOPMENT_TEAM = 4DNTNYK6A2;
 				ENABLE_BITCODE = NO;
 				EXCLUDED_ARCHS = "";
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
@@ -572,7 +575,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.maker.freedomfi;
+				PRODUCT_BUNDLE_IDENTIFIER = com.freedomfi.FreedomFiApp;
 				PRODUCT_NAME = FreedomFi;
 				SWIFT_OBJC_BRIDGING_HEADER = "FreedomFi-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -591,7 +594,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = FreedomFi/FreedomFi.entitlements;
 				CURRENT_PROJECT_VERSION = 3;
-				DEVELOPMENT_TEAM = 245A23QAH7;
+				DEVELOPMENT_TEAM = 4DNTNYK6A2;
 				EXCLUDED_ARCHS = "";
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = FreedomFi/Info.plist;
@@ -602,7 +605,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.maker.freedomfi;
+				PRODUCT_BUNDLE_IDENTIFIER = com.freedomfi.FreedomFiApp;
 				PRODUCT_NAME = FreedomFi;
 				SWIFT_OBJC_BRIDGING_HEADER = "FreedomFi-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
