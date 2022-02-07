@@ -274,6 +274,7 @@
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = 4DNTNYK6A2;
 						LastSwiftMigration = 1250;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -562,6 +563,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = FreedomFi/FreedomFi.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = 4DNTNYK6A2;
 				ENABLE_BITCODE = NO;
@@ -577,6 +580,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.freedomfi.FreedomFiApp;
 				PRODUCT_NAME = FreedomFi;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "FreedomFi-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -593,6 +597,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = FreedomFi/FreedomFi.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = 4DNTNYK6A2;
 				EXCLUDED_ARCHS = "";
@@ -607,6 +613,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.freedomfi.FreedomFiApp;
 				PRODUCT_NAME = FreedomFi;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "FreedomFi-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
