@@ -151,7 +151,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.maker.freedomfi"
+        applicationId "com.freedomfi.FreedomFiApp"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 4

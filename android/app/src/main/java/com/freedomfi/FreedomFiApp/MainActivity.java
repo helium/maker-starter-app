@@ -1,4 +1,4 @@
-package com.maker.freedomfi;
+package com.freedomfi.FreedomFiApp;
 import expo.modules.ReactActivityDelegateWrapper;
 import com.facebook.react.ReactActivityDelegate;
 

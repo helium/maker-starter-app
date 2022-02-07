@@ -1,4 +1,4 @@
-package com.maker.freedomfi;
+package com.freedomfi.FreedomFiApp;
 
 import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.NativeModule;
