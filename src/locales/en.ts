@@ -363,5 +363,6 @@ export default {
     enterHotspot: 'Enter Hotspot Address',
     enterOwner: 'Enter New Owner Address',
     submit: 'Submit Transaction',
+    submitComplete: 'Transfer Successfully Submitted!\n Pending Txn Hash:',
   },
 }

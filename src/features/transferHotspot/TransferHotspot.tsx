@@ -1,8 +1,9 @@
 import React, { useState, useCallback } from 'react'
 import { Transfer, WalletLink } from '@helium/react-native-sdk'
-import { useNavigation } from '@react-navigation/native'
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { ActivityIndicator, Linking } from 'react-native'
 import { useTranslation } from 'react-i18next'
+import { useAsync } from 'react-async-hook'
 import Text from '../../components/Text'
 import BackButton from '../../components/BackButton'
 import SafeAreaBox from '../../components/SafeAreaBox'
@@ -14,17 +15,34 @@ import {
   getChainVars,
   getHotspotDetails,
   getHotspotsLastChallengeActivity,
+  submitTxn,
 } from '../../utils/appDataClient'
+import { RootStackParamList } from '../../navigation/main/tabTypes'
 
+type Route = RouteProp<RootStackParamList, 'TransferHotspot'>
 const TransferHotspot = () => {
   const navigation = useNavigation()
   const { t } = useTranslation()
+  const { params } = useRoute<Route>()
 
   const [hotspotAddress, setHotspotAddress] = useState('')
   const [newOwnerAddress, setNewOwnerAddress] = useState('')
   const [loading, setLoading] = useState(false)
+  const [hash, setHash] = useState<string>()
 
-  const submitTxn = useCallback(async () => {
+  // handle callback from the Helium hotspot app
+  useAsync(async () => {
+    if (!params || !params.transferTxn) return
+
+    // submit the signed transaction to the blockchain API
+    setLoading(true)
+    const signedTxnString = params.transferTxn
+    const pendingTxn = await submitTxn(signedTxnString)
+    setHash(pendingTxn.hash)
+    setLoading(false)
+  }, [params])
+
+  const onSubmit = useCallback(async () => {
     setLoading(true)
 
     // get linked wallet token
@@ -131,10 +149,21 @@ const TransferHotspot = () => {
         mode="contained"
         marginVertical="l"
         height={48}
-        disabled={!hotspotAddress || !newOwnerAddress || loading}
-        onPress={submitTxn}
+        disabled={
+          !hotspotAddress || !newOwnerAddress || loading || hash !== undefined
+        }
+        onPress={onSubmit}
       />
       {loading && <ActivityIndicator size="small" color="white" />}
+
+      {hash !== undefined && (
+        <>
+          <Text variant="body1">{t('transferHotspot.submitComplete')}</Text>
+          <Text variant="body1" selectable>
+            {hash}
+          </Text>
+        </>
+      )}
     </SafeAreaBox>
   )
 }
