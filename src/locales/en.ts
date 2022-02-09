@@ -297,6 +297,7 @@ export default {
       hotspots: {
         add: 'Add Hotspot',
         assertLocation: 'Assert Location',
+        transfer: 'Transfer Hotspot',
       },
       title: 'Add a\n[Placeholder] Miner',
     },
@@ -356,5 +357,11 @@ export default {
   },
   wallet: {
     copiedToClipboard: 'Copied {{address}} to clipboard',
+  },
+  transferHotspot: {
+    title: 'Transfer Hotspot',
+    enterHotspot: 'Enter Hotspot Address',
+    enterOwner: 'Enter New Owner Address',
+    submit: 'Submit Transaction',
   },
 }

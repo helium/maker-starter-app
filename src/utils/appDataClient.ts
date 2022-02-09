@@ -1,5 +1,6 @@
-import { Hotspot } from '@helium/http'
+import { Hotspot, PocReceiptsV1 } from '@helium/http'
 import { heliumHttpClient } from '@helium/react-native-sdk'
+import { fromNow } from './timeUtils'
 
 export const submitTxn = async (txn: string) => {
   return heliumHttpClient.transactions.submit(txn)
@@ -35,4 +36,29 @@ export const hotspotOnChain = async (address: string) => {
   } catch (error) {
     return false
   }
+}
+
+export const getChainVars = async (keys?: string[]) => {
+  return heliumHttpClient.vars.get(keys)
+}
+
+export const getHotspotsLastChallengeActivity = async (
+  gatewayAddress: string,
+) => {
+  const hotspotActivityList = await heliumHttpClient
+    .hotspot(gatewayAddress)
+    .activity.list({
+      filterTypes: ['poc_receipts_v1', 'poc_request_v1'],
+    })
+  const [lastHotspotActivity] = hotspotActivityList
+    ? await hotspotActivityList?.take(1)
+    : []
+  if (lastHotspotActivity && lastHotspotActivity.time) {
+    const dateLastActive = new Date(lastHotspotActivity.time * 1000)
+    return {
+      block: (lastHotspotActivity as PocReceiptsV1).height,
+      text: fromNow(dateLastActive)?.toUpperCase(),
+    }
+  }
+  return {}
 }

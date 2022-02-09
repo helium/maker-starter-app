@@ -25,6 +25,7 @@ export type RootStackParamList = {
   HotspotSetup: undefined
   HotspotAssert: undefined
   ScanStack: undefined
+  TransferHotspot: undefined
 }
 
 export type RootNavigationProp = StackNavigationProp<RootStackParamList>
