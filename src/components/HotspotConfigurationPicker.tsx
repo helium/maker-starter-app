@@ -1,31 +1,32 @@
+import React, { useEffect, useRef, useState } from 'react'
 import { Alert, TextInput, TouchableWithoutFeedback } from 'react-native'
-import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+
 import HeliumActionSheet from './HeliumActionSheet'
 import Box from './Box'
 import Text from './Text'
 import TouchableOpacityBox from './TouchableOpacityBox'
 import InfoIcon from '../assets/images/info-hollow.svg'
 import { decimalSeparator, groupSeparator, locale } from '../i18n'
-import { useColors } from '../theme/themeHooks'
-import { Antenna, defaultAntenna } from '../types/Antenna'
+import { useColors, useTextVariants } from '../theme/themeHooks'
+import { Antenna, antennas, customAntenna } from '../types/Antenna'
 
 type Props = {
   onAntennaUpdated: (antenna: Antenna) => void
   onGainUpdated: (gain: number) => void
   onElevationUpdated: (elevation: number) => void
   selectedAntenna?: Antenna
-  outline?: boolean
 }
+
 const HotspotConfigurationPicker = ({
   selectedAntenna,
   onAntennaUpdated,
   onGainUpdated,
   onElevationUpdated,
-  outline,
 }: Props) => {
   const { t } = useTranslation()
   const colors = useColors()
+  const textVariants = useTextVariants()
 
   const gainInputRef = useRef<TextInput | null>(null)
   const elevationInputRef = useRef<TextInput | null>(null)
@@ -37,17 +38,6 @@ const HotspotConfigurationPicker = ({
           minimumFractionDigits: 1,
         })
       : undefined,
-  )
-
-  const antennas = useMemo(
-    () => [
-      {
-        ...defaultAntenna,
-        label: defaultAntenna.name,
-        value: defaultAntenna.name,
-      },
-    ],
-    [],
   )
 
   const onSelectAntenna = (_value: string | number, index: number) => {
@@ -127,25 +117,19 @@ const HotspotConfigurationPicker = ({
   }, [selectedAntenna])
 
   return (
-    <Box
-      backgroundColor="surfaceSecondary"
-      borderRadius="m"
-      marginVertical="l"
-      borderWidth={outline ? 1 : 0}
-      borderColor="primary"
-    >
+    <Box backgroundColor="surfaceSecondary" borderRadius="m" marginVertical="l">
       <HeliumActionSheet
         title={t('antennas.onboarding.select')}
         textProps={{
-          variant: 'body1',
-          fontSize: 16,
+          variant: 'body2',
+          fontSize: textVariants.body2.fontSize,
           fontWeight: 'bold',
           color: 'primaryText',
         }}
         initialValue={t('antennas.onboarding.select')}
         data={antennas}
         iconColor="primaryText"
-        selectedValue={selectedAntenna?.name}
+        selectedValue={selectedAntenna?.id}
         onValueSelected={onSelectAntenna}
         buttonProps={{ justifyContent: 'space-between' }}
         padding="m"
@@ -168,7 +152,12 @@ const HotspotConfigurationPicker = ({
           alignItems="center"
         >
           <Box flexDirection="row" alignItems="center">
-            <Text color="primaryText" fontWeight="bold" marginRight="xs">
+            <Text
+              variant="body2"
+              color="primaryText"
+              fontWeight="bold"
+              marginRight="xs"
+            >
               {t('antennas.onboarding.gain')}
             </Text>
             <TouchableOpacityBox onPress={showGainInfo} padding="xs">
@@ -187,7 +176,7 @@ const HotspotConfigurationPicker = ({
               returnKeyType="done"
               onChangeText={onChangeGain}
               onEndEditing={onDoneEditingGain}
-              editable={selectedAntenna?.name === 'Custom Antenna'}
+              editable={selectedAntenna?.id === customAntenna.id}
             />
             <Text marginLeft="xxs">{t('antennas.onboarding.dbi')}</Text>
           </Box>
@@ -209,7 +198,12 @@ const HotspotConfigurationPicker = ({
           alignItems="center"
         >
           <Box flexDirection="row" alignItems="center">
-            <Text color="primaryText" fontWeight="bold" marginRight="xs">
+            <Text
+              variant="body2"
+              color="primaryText"
+              fontWeight="bold"
+              marginRight="xs"
+            >
               {t('antennas.onboarding.elevation')}
             </Text>
             <TouchableOpacityBox onPress={showElevationInfo} padding="xs">
