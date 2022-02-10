@@ -10,7 +10,7 @@ export type Hotspot = {
   owner: string
   name: string
   isLocationSet: boolean
-  locationName: string | null
+  locationName: string | undefined
   geocode: {
     shortStreet: string
     shortState: string
@@ -22,7 +22,7 @@ export type Hotspot = {
     longCity: string
     cityId: string
   }
-  gain: number
+  gain: number | undefined
   elevation: number
   address: string
 }
@@ -47,7 +47,9 @@ export const heliumApi = createApi({
 
             const locationName = isLocationSet
               ? `${hotspot.geocode?.long_street}, ${hotspot.geocode?.short_city} ${hotspot.geocode?.short_country}`
-              : null
+              : undefined
+
+            const gain = hotspot.gain ? hotspot.gain / 10 : undefined
 
             return {
               lng: hotspot.lng,
@@ -69,7 +71,7 @@ export const heliumApi = createApi({
                 longCity: hotspot.geocode?.long_city,
                 cityId: hotspot.geocode?.city_id,
               },
-              gain: hotspot.gain,
+              gain,
               elevation: hotspot.elevation,
               address: hotspot.address,
             }
