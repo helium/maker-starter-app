@@ -43,7 +43,7 @@
     "@helium/http": "^3.63.0",
     "@helium/onboarding": "^3.59.0",
     "@helium/proto-ble": "^3.37.0",
-    "@helium/react-native-sdk": "/Users/tylerwhitman/Documents/repos/react-native-helium/helium-react-native-sdk-0.2.0-dev.2.tgz",
+    "@helium/react-native-sdk": "^0.2.1",
     "@helium/transactions": "^3.62.0",
     "@react-native-community/blur": "^3.6.0",
     "@react-native-community/clipboard": "^1.5.1",
