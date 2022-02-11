@@ -1,5 +1,6 @@
 import { StackNavigationProp } from '@react-navigation/stack'
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs'
+import { HotspotLink } from '../../providers/appLinkTypes'
 
 export type MainTabType = 'Hotspots' | 'More'
 
@@ -25,6 +26,7 @@ export type RootStackParamList = {
   HotspotSetup: undefined
   HotspotAssert: undefined
   ScanStack: undefined
+  TransferHotspot: HotspotLink | undefined
 }
 
 export type RootNavigationProp = StackNavigationProp<RootStackParamList>

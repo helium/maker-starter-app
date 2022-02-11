@@ -30,6 +30,11 @@ const HotspotsScreen = () => {
     navigation,
   ])
 
+  const transferHotspot = useCallback(
+    () => navigation.push('TransferHotspot'),
+    [navigation],
+  )
+
   const openExplorer = useCallback(
     () => Linking.openURL(`${EXPLORER_BASE_URL}/accounts/${accountAddress}`),
     [accountAddress],
@@ -62,6 +67,13 @@ const HotspotsScreen = () => {
             marginTop="l"
             mode="contained"
             title={t('hotspots.empty.hotspots.assertLocation')}
+          />
+          <Button
+            onPress={transferHotspot}
+            height={48}
+            marginTop="l"
+            mode="contained"
+            title={t('hotspots.empty.hotspots.transfer')}
           />
           <Text variant="body1" marginTop="l">
             {t('hotspots.view_activity')}

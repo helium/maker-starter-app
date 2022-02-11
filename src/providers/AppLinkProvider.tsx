@@ -89,7 +89,11 @@ const useAppLink = () => {
         case 'sign_hotspot': {
           const hotspotLink = record as HotspotLink
           if (hotspotLink.status === 'success') {
-            navigator.submitGatewayTxns(hotspotLink)
+            if (hotspotLink.transferTxn !== undefined) {
+              navigator.submitTransferTxn(hotspotLink)
+            } else {
+              navigator.submitGatewayTxns(hotspotLink)
+            }
           } else {
             // TODO: handle failure status codes
             // eslint-disable-next-line no-console
