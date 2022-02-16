@@ -7,7 +7,7 @@ export type Antenna = {
 export const defaultAntenna: Antenna = {
   id: 'freedomfi',
   name: 'FreedomFi Antenna',
-  gain: 1.7,
+  gain: 1.2,
 }
 
 export const customAntenna: Antenna = {
