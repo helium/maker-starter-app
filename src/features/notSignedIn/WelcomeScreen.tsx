@@ -1,5 +1,6 @@
 import React, { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { KeyboardAvoidingView } from 'react-native'
 
 import LogoIcon from '@assets/images/logo.svg'
 import CarotRightIcon from '@assets/images/carot-right.svg'
@@ -34,58 +35,60 @@ const WelcomeScreen = () => {
   const linkWallet = useLinkWallet()
 
   return (
-    <Box
-      flex={1}
-      backgroundColor="primaryBackground"
-      paddingHorizontal="m"
-      paddingBottom="l"
-      alignItems="center"
-    >
-      <Box flex={1} justifyContent="center" alignItems="center">
-        <LogoIcon height={80} width={80} />
+    <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
+      <Box
+        flex={1}
+        backgroundColor="primaryBackground"
+        paddingHorizontal="m"
+        paddingBottom="l"
+        alignItems="center"
+      >
+        <Box flex={1} justifyContent="center" alignItems="center">
+          <LogoIcon height={80} width={80} />
 
-        <Text variant="h1">{t('welcomeScreen.title')}</Text>
-      </Box>
+          <Text variant="h1">{t('welcomeScreen.title')}</Text>
+        </Box>
 
-      <Button
-        onPress={linkWallet}
-        color="primary"
-        fullWidth
-        marginBottom="s"
-        title={t('welcomeScreen.signIn')}
-      />
-
-      <Text variant="body2" textAlign="center" marginBottom="s">
-        {t('welcomeScreen.or')}
-      </Text>
-
-      <Box flexDirection="row" marginBottom="m">
-        <TextInput
-          onChangeText={setWalletAddress}
-          flex={4}
-          padding="ms"
-          placeholder={t('welcomeScreen.enterWallet')}
-          autoCorrect={false}
-          variant="regular"
-          borderTopRightRadius="none"
-          borderBottomRightRadius="none"
+        <Button
+          onPress={linkWallet}
+          color="primary"
+          fullWidth
+          marginBottom="s"
+          title={t('welcomeScreen.signIn')}
         />
 
-        <TouchableOpacityBox
-          onPress={submitWalletAddress}
-          disabled={isWalletAddressEmpty}
-          opacity={isWalletAddressEmpty ? 0.2 : 1}
-          flex={1}
-          justifyContent="center"
-          alignItems="center"
-          backgroundColor="primary"
-          borderTopRightRadius="m"
-          borderBottomRightRadius="m"
-        >
-          <CarotRightIcon height="20" width="20" color={colors.primaryText} />
-        </TouchableOpacityBox>
+        <Text variant="body2" textAlign="center" marginBottom="s">
+          {t('welcomeScreen.or')}
+        </Text>
+
+        <Box flexDirection="row" marginBottom="m">
+          <TextInput
+            onChangeText={setWalletAddress}
+            flex={4}
+            padding="ms"
+            placeholder={t('welcomeScreen.enterWallet')}
+            autoCorrect={false}
+            variant="regular"
+            borderTopRightRadius="none"
+            borderBottomRightRadius="none"
+          />
+
+          <TouchableOpacityBox
+            onPress={submitWalletAddress}
+            disabled={isWalletAddressEmpty}
+            opacity={isWalletAddressEmpty ? 0.2 : 1}
+            flex={1}
+            justifyContent="center"
+            alignItems="center"
+            backgroundColor="primary"
+            borderTopRightRadius="m"
+            borderBottomRightRadius="m"
+          >
+            <CarotRightIcon height="20" width="20" color={colors.primaryText} />
+          </TouchableOpacityBox>
+        </Box>
       </Box>
-    </Box>
+    </KeyboardAvoidingView>
   )
 }
 
