@@ -3,12 +3,12 @@ import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
 import { AddGateway, useOnboarding } from '@helium/react-native-sdk'
 import { OnboardingRecord } from '@helium/onboarding'
+import { useSelector } from 'react-redux'
 
 import Text from '../../../components/Text'
 import animateTransition from '../../../utils/animateTransition'
 import { DebouncedButton } from '../../../components/Button'
-import { getAddress } from '../../../utils/secureAccount'
-import useMount from '../../../utils/useMount'
+import { RootState } from '../../../store/rootReducer'
 import Box from '../../../components/Box'
 import {
   HotspotOnboardingNavigationProp,
@@ -22,15 +22,13 @@ const TxnConfirmScreen = () => {
   const { t } = useTranslation()
   const { params } = useRoute<Route>()
   const navigation = useNavigation<HotspotOnboardingNavigationProp>()
-  const [address, setAddress] = useState<string>()
+  const { walletAddress: address } = useSelector(
+    (state: RootState) => state.app,
+  )
   const [publicKey, setPublicKey] = useState('')
   const [macAddress, setMacAddress] = useState('')
   const [ownerAddress, setOwnerAddress] = useState('')
   const [onboardingRecord, setOnboardingRecord] = useState<OnboardingRecord>()
-
-  useMount(() => {
-    getAddress().then(setAddress)
-  })
 
   const { getOnboardingRecord } = useOnboarding()
 

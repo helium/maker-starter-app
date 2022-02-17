@@ -1,18 +1,9 @@
-import React, {
-  memo,
-  ReactText,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react'
+import React, { memo, ReactText, useCallback, useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert, SectionList } from 'react-native'
 import { useSelector } from 'react-redux'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { isEqual } from 'lodash'
-import { WalletLink } from '@helium/react-native-sdk'
-import { useAsync } from 'react-async-hook'
 
 import Text from '../../components/Text'
 import { RootState } from '../../store/rootReducer'
@@ -25,7 +16,7 @@ import useAuthIntervals from './useAuthIntervals'
 import Box from '../../components/Box'
 import { SUPPORTED_LANGUAGUES } from '../../i18n/i18nTypes'
 import { useLanguageContext } from '../../providers/LanguageProvider'
-import { getSecureItem } from '../../utils/secureAccount'
+import useLinkWallet from '../../utils/useLinkWallet'
 
 type Route = RouteProp<MainTabParamList, 'Settings'>
 
@@ -37,19 +28,16 @@ const SettingsScreen = () => {
   const authIntervals = useAuthIntervals()
   const navigation = useNavigation<SignedInStackNavigationProp>()
   const { changeLanguage, language } = useLanguageContext()
-  const [address, setAddress] = useState('')
 
-  useAsync(async () => {
-    const token = await getSecureItem('walletLinkToken')
-    if (!token) return ''
-    const parsedToken = WalletLink.parseWalletLinkToken(token)
+  const { walletAddress, walletToken } = useSelector(
+    (state: RootState) => state.app,
+  )
 
-    const truncatedAddress = [
-      parsedToken.address.slice(0, 8),
-      parsedToken.address.slice(-8),
-    ].join('...')
-    setAddress(truncatedAddress)
-  }, [])
+  const truncatedAddress = useMemo(() => {
+    if (!walletAddress) return
+
+    return [walletAddress.slice(0, 8), walletAddress.slice(-8)].join('...')
+  }, [walletAddress])
 
   useEffect(() => {
     if (!params?.pinVerifiedFor) return
@@ -112,6 +100,8 @@ const SettingsScreen = () => {
     )
   }, [t, dispatch])
 
+  const linkWallet = useLinkWallet()
+
   const handleIntervalSelected = useCallback(
     (value: ReactText) => {
       const number = typeof value === 'number' ? value : parseInt(value, 10)
@@ -147,6 +137,31 @@ const SettingsScreen = () => {
       ]
     }
 
+    const appSections = [
+      {
+        title: t('settingsScreen.sections.app.language'),
+        value: language,
+        select: {
+          items: SUPPORTED_LANGUAGUES,
+          onValueSelect: handleLanguageChange,
+        },
+      },
+      {
+        title: t('settingsScreen.sections.app.signOutWithLink', {
+          address: truncatedAddress,
+        }),
+        onPress: handleSignOut,
+        destructive: true,
+      },
+    ] as SettingListItemType[]
+
+    if (!walletToken) {
+      appSections.splice(1, 0, {
+        title: t('settingsScreen.sections.app.linkWallet'),
+        onPress: linkWallet,
+      })
+    }
+
     return [
       {
         title: t('settingsScreen.sections.security.title'),
@@ -154,23 +169,7 @@ const SettingsScreen = () => {
       },
       {
         title: t('settingsScreen.sections.app.title'),
-        data: [
-          {
-            title: t('settingsScreen.sections.app.language'),
-            value: language,
-            select: {
-              items: SUPPORTED_LANGUAGUES,
-              onValueSelect: handleLanguageChange,
-            },
-          },
-          {
-            title: t('settingsScreen.sections.app.signOutWithLink', {
-              address,
-            }),
-            onPress: handleSignOut,
-            destructive: true,
-          },
-        ] as SettingListItemType[],
+        data: appSections,
       },
     ]
   }, [
@@ -180,11 +179,13 @@ const SettingsScreen = () => {
     app.authInterval,
     language,
     handleLanguageChange,
-    address,
+    truncatedAddress,
     handleSignOut,
     authIntervals,
     handleIntervalSelected,
     handleResetPin,
+    linkWallet,
+    walletToken,
   ])
 
   const renderItem = useCallback(

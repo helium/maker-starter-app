@@ -19,7 +19,10 @@ export type NotSignedInStackNavigationProp = StackNavigationProp<NotSignedInStac
 export type SignedInStackParamList = {
   MainTabs: undefined | { pinVerifiedFor: LockScreenRequestType }
 
-  HotspotDetails: { hotspotAddress: string }
+  HotspotDetails: {
+    walletAddress: string
+    hotspotAddress: string
+  }
 
   LockScreen: {
     requestType: LockScreenRequestType

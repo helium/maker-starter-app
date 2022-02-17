@@ -53,8 +53,12 @@ const HotspotLocationPreview = ({
   const LocationName = useCallback(
     () =>
       hasLocationName ? (
-        <Box padding="m" backgroundColor="secondaryBackground">
-          <Text variant="body1" adjustsFontSizeToFit numberOfLines={2}>
+        <Box
+          paddingHorizontal="m"
+          paddingVertical="s"
+          backgroundColor="secondaryBackground"
+        >
+          <Text variant="body2" adjustsFontSizeToFit numberOfLines={2}>
             {locationName ||
               `${geocode?.longStreet}, ${geocode?.shortCity}, ${geocode?.shortCountry}`}
           </Text>
@@ -73,7 +77,7 @@ const HotspotLocationPreview = ({
     <Box borderRadius="l" overflow="hidden" height="100%">
       <MapboxGL.MapView
         ref={map}
-        style={{ height: hasLocationName ? '75%' : '100%' }}
+        style={{ flex: 1 }}
         styleURL={Config.MAPBOX_STYLE_URL}
         logoEnabled={false}
         rotateEnabled={movable}

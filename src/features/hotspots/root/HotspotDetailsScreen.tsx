@@ -1,7 +1,6 @@
 import React, { useCallback, useMemo } from 'react'
 import { ScrollView, Linking } from 'react-native'
 import { useTranslation } from 'react-i18next'
-
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import Toast from 'react-native-simple-toast'
 import { useOnboarding } from '@helium/react-native-sdk'
@@ -13,10 +12,6 @@ import {
   SignedInStackParamList,
   SignedInStackNavigationProp,
 } from '../../../navigation/navigationRootTypes'
-import {
-  WithAccountAddress,
-  WithAccountAddressProps,
-} from '../../../hocs/WithAccountAddress'
 import { useGetHostspotsQuery } from '../../../store/helium/heliumApi'
 import { DebouncedButton } from '../../../components/Button'
 import HotspotLocationPreview from '../../../components/HotspotLocationPreview'
@@ -24,10 +19,10 @@ import useCheckLocationPermission from '../../../utils/useCheckLocationPermissio
 
 type Route = RouteProp<SignedInStackParamList, 'HotspotDetails'>
 
-const HotspotDetailsScreen = ({ accountAddress }: WithAccountAddressProps) => {
+const HotspotDetailsScreen = () => {
   const { t } = useTranslation()
   const {
-    params: { hotspotAddress },
+    params: { walletAddress, hotspotAddress },
   } = useRoute<Route>()
 
   const navigation = useNavigation<SignedInStackNavigationProp>()
@@ -38,7 +33,7 @@ const HotspotDetailsScreen = ({ accountAddress }: WithAccountAddressProps) => {
   } = useCheckLocationPermission()
 
   const { data: hotspots } = useGetHostspotsQuery(
-    accountAddress,
+    walletAddress,
     { pollingInterval: 60000 }, // refresh every minute
   )
 
@@ -209,4 +204,4 @@ const HotspotDetailsScreen = ({ accountAddress }: WithAccountAddressProps) => {
   )
 }
 
-export default WithAccountAddress(HotspotDetailsScreen)
+export default HotspotDetailsScreen
