@@ -565,7 +565,7 @@
 				CODE_SIGN_ENTITLEMENTS = FreedomFi/FreedomFi.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = 4DNTNYK6A2;
 				ENABLE_BITCODE = NO;
 				EXCLUDED_ARCHS = "";
@@ -599,7 +599,7 @@
 				CODE_SIGN_ENTITLEMENTS = FreedomFi/FreedomFi.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = 4DNTNYK6A2;
 				EXCLUDED_ARCHS = "";
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
