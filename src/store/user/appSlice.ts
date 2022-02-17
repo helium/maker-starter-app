@@ -3,6 +3,10 @@ import {
   deleteSecureItem,
   getSecureItem,
   setSecureItem,
+  getWalletAddress,
+  setWalletAddress,
+  getWalletToken,
+  setWalletToken,
   signOut,
 } from '../../utils/secureAccount'
 import { Intervals } from '../../features/settings/useAuthIntervals'
@@ -13,7 +17,8 @@ export type AppState = {
   authInterval: number
   lastIdle: number | null
   isLocked: boolean
-  walletLinkToken?: string
+  walletAddress?: string
+  walletToken?: string
 }
 const initialState: AppState = {
   isRestored: false,
@@ -28,16 +33,23 @@ type Restore = {
   isPinRequired: boolean
   authInterval: number
   isLocked: boolean
-  walletLinkToken?: string
+  walletAddress?: string
+  walletToken?: string
 }
 
 export const restoreAppSettings = createAsyncThunk<Restore>(
   'app/restoreAppSettings',
   async () => {
-    const [isPinRequired, authInterval, walletLinkToken] = await Promise.all([
+    const [
+      isPinRequired,
+      authInterval,
+      walletAddress,
+      walletToken,
+    ] = await Promise.all([
       getSecureItem('requirePin'),
       getSecureItem('authInterval'),
-      getSecureItem('walletLinkToken'),
+      getWalletAddress(),
+      getWalletToken(),
     ])
     return {
       isPinRequired,
@@ -45,7 +57,8 @@ export const restoreAppSettings = createAsyncThunk<Restore>(
         ? parseInt(authInterval, 10)
         : Intervals.IMMEDIATELY,
       isLocked: isPinRequired,
-      walletLinkToken,
+      walletAddress,
+      walletToken,
     } as Restore
   },
 )
@@ -76,12 +89,18 @@ const appSlice = createSlice({
     updateLastIdle: (state) => {
       state.lastIdle = Date.now()
     },
-    storeWalletLinkToken: (
+    storeWalletInfo: (
       state,
-      { payload: token }: PayloadAction<string>,
+      {
+        payload: { address, token },
+      }: PayloadAction<{ address: string; token?: string }>,
     ) => {
-      state.walletLinkToken = token
-      setSecureItem('walletLinkToken', token)
+      state.walletAddress = address
+      setWalletAddress(address)
+      if (token) {
+        state.walletToken = token
+        setWalletToken(token)
+      }
     },
     lock: (state, action: PayloadAction<boolean>) => {
       state.isLocked = action.payload

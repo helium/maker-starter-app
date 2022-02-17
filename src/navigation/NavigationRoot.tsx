@@ -22,7 +22,7 @@ const NotSignedInStack = createStackNavigator<NotSignedInStackParamList>()
 const SignedInStack = createStackNavigator<SignedInStackParamList>()
 
 const NavigationRoot = () => {
-  const { walletLinkToken } = useSelector((state: RootState) => state.app)
+  const { walletAddress } = useSelector((state: RootState) => state.app)
   const colors = useColors()
   const defaultScreenOptions = useDefaultScreenOptions()
 
@@ -30,7 +30,7 @@ const NavigationRoot = () => {
     changeNavigationBarColor(colors.primaryText, true, false)
   }, [colors.primaryText])
 
-  const notSignedIn = !walletLinkToken
+  const notSignedIn = !walletAddress
 
   if (notSignedIn) {
     return (

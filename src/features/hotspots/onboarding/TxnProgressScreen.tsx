@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
 import { isString } from 'lodash'
@@ -9,16 +9,17 @@ import {
 } from '@helium/react-native-sdk'
 import { Linking } from 'react-native'
 import Toast from 'react-native-simple-toast'
+import { useSelector } from 'react-redux'
 
 import { ActivityIndicator } from '../../../components/ActivityIndicator'
 import Text from '../../../components/Text'
 import Box from '../../../components/Box'
 import { hotspotOnChain } from '../../../utils/appDataClient'
 import useAlert from '../../../utils/useAlert'
-import { getSecureItem } from '../../../utils/secureAccount'
 import useMount from '../../../utils/useMount'
 import { SignedInStackNavigationProp } from '../../../navigation/navigationRootTypes'
 import { HotspotOnboardingStackParamList } from '../../../navigation/hotspotOnboardingNavigatorTypes'
+import { RootState } from '../../../store/rootReducer'
 
 type Route = RouteProp<HotspotOnboardingStackParamList, 'TxnProgressScreen'>
 
@@ -45,11 +46,12 @@ const TxnProgressScreen = () => {
     navigation.navigate('MainTabs')
   }
 
-  const submitOnboardingTxns = async () => {
-    const token = await getSecureItem('walletLinkToken')
-    if (!token) throw new Error('Token Not found')
+  const { walletToken } = useSelector((state: RootState) => state.app)
 
-    const parsed = WalletLink.parseWalletLinkToken(token)
+  const submitOnboardingTxns = useCallback(async () => {
+    if (!walletToken) return
+
+    const parsed = WalletLink.parseWalletLinkToken(walletToken)
     if (!parsed?.address) throw new Error('Invalid Token')
 
     const { address: ownerAddress } = parsed
@@ -65,7 +67,7 @@ const TxnProgressScreen = () => {
     }
 
     const updateParams = {
-      token,
+      token: walletToken,
     } as WalletLink.SignHotspotRequest
 
     // check if add gateway needed
@@ -114,7 +116,7 @@ const TxnProgressScreen = () => {
         Toast.CENTER,
       )
     }
-  }
+  }, [t, params, walletToken])
 
   useMount(() => {
     try {

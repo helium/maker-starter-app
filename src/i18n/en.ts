@@ -22,11 +22,14 @@ export default {
   },
   welcomeScreen: {
     title: 'Welcome',
-    signIn: 'Link Existing Wallet',
-    createAccount: 'Create New Wallet',
+    enterWallet: 'Enter Your Wallet Address',
+    or: 'OR',
+    signIn: 'Link with Helium',
   },
   hotspotsScreen: {
     title: 'Hotspots',
+    notLinkedWalletError:
+      'Link your wallet to procced with onboarding. \nGo to Settings -> Link Wallet',
     addBtn: 'Add Hotspot',
     noItems: 'No Items',
     locationNotSet: 'Location not set',
@@ -45,6 +48,7 @@ export default {
     sections: {
       app: {
         language: 'Language',
+        linkWallet: 'Link Wallet',
         signOut: 'Sign Out',
         signOutWithLink: 'Sign Out - Linked as: {{address}}',
         signOutAlert: {

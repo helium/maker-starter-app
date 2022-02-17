@@ -77,14 +77,11 @@ const SettingListItem = ({
       borderBottomLeftRadius={isBottom ? 'm' : 'none'}
       borderBottomRightRadius={isBottom ? 'm' : 'none'}
     >
-      <Text
-        variant="body2"
-        color={destructive ? 'secondaryText' : 'primaryText'}
-      >
+      <Text variant="body2" color={destructive ? 'error' : 'primaryText'}>
         {title}
       </Text>
       {!onToggle && !select && onPress && (
-        <CarotRight color={colors.secondaryBackground} />
+        <CarotRight color={colors.primaryText} />
       )}
       {openUrl && <LinkImg />}
       {onToggle && (

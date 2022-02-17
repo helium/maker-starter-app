@@ -10,6 +10,7 @@ import { Linking } from 'react-native'
 import Config from 'react-native-config'
 import queryString from 'query-string'
 import { useSelector } from 'react-redux'
+import { WalletLink as HeliumWalletLink } from '@helium/react-native-sdk'
 
 import useMount from '../utils/useMount'
 import { RootState } from '../store/rootReducer'
@@ -24,6 +25,7 @@ import {
 } from './appLinkTypes'
 import { useAppDispatch } from '../store/store'
 import appSlice from '../store/user/appSlice'
+import useAlert from '../utils/useAlert'
 
 export const createAppLink = (
   resource: AppLinkCategoryType,
@@ -31,6 +33,8 @@ export const createAppLink = (
 ) => `${Config.APP_LINK_PROTOCOL}${resource}/${resourceId}`
 
 const useAppLink = () => {
+  const { showOKAlert } = useAlert()
+
   const [unhandledAppLink, setUnhandledLink] = useState<
     AppLink | WalletLink | null
   >(null)
@@ -82,10 +86,20 @@ const useAppLink = () => {
         case 'link_wallet': {
           const walletLink = record as WalletLink
           if (walletLink.status === 'success' && walletLink.token) {
-            dispatch(appSlice.actions.storeWalletLinkToken(walletLink.token))
-          } else {
-            // TODO: handle error
+            const parsedToken = HeliumWalletLink.parseWalletLinkToken(
+              walletLink.token,
+            )
+            if (parsedToken) {
+              dispatch(
+                appSlice.actions.storeWalletInfo({
+                  address: parsedToken.address,
+                  token: walletLink.token,
+                }),
+              )
+              return
+            }
           }
+          showOKAlert({ titleKey: "Can't link your wallet" })
           break
         }
         case 'sign_hotspot': {
@@ -105,7 +119,7 @@ const useAppLink = () => {
         }
       }
     },
-    [isLocked, dispatch],
+    [isLocked, dispatch, showOKAlert],
   )
 
   useEffect(() => {

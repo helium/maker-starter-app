@@ -3,9 +3,10 @@ import { useTranslation } from 'react-i18next'
 import Config from 'react-native-config'
 import Toast from 'react-native-simple-toast'
 import { FlatList, Linking } from 'react-native'
+import { useSelector } from 'react-redux'
+import { useNavigation } from '@react-navigation/native'
 
 import CarotRight from '@assets/images/carot-right.svg'
-import { useNavigation } from '@react-navigation/native'
 import { DebouncedButton } from '../../../components/Button'
 import Text from '../../../components/Text'
 import Box from '../../../components/Box'
@@ -13,17 +14,20 @@ import TouchableOpacityBox from '../../../components/TouchableOpacityBox'
 import { ActivityIndicatorCentered } from '../../../components/ActivityIndicator'
 import { useGetHostspotsQuery } from '../../../store/helium/heliumApi'
 import { useColors } from '../../../theme/themeHooks'
-import {
-  WithAccountAddress,
-  WithAccountAddressProps,
-} from '../../../hocs/WithAccountAddress'
 import { SignedInStackNavigationProp } from '../../../navigation/navigationRootTypes'
+import { RootState } from '../../../store/rootReducer'
 
-const HotspotsScreen = ({ accountAddress }: WithAccountAddressProps) => {
+const HotspotsScreen = () => {
   const { t } = useTranslation()
 
+  const { walletAddress, walletToken } = useSelector(
+    (state: RootState) => state.app,
+  )
+
   const openOnboardingSite = useCallback(async () => {
-    const url = Config.ONBOARD_URL.replace(/WALLET/, accountAddress)
+    if (!walletAddress) return
+
+    const url = Config.ONBOARD_URL.replace(/WALLET/, walletAddress)
 
     const supported = await Linking.canOpenURL(url)
     if (supported) {
@@ -35,7 +39,7 @@ const HotspotsScreen = ({ accountAddress }: WithAccountAddressProps) => {
         Toast.CENTER,
       )
     }
-  }, [t, accountAddress])
+  }, [t, walletAddress])
 
   return (
     <Box
@@ -49,11 +53,18 @@ const HotspotsScreen = ({ accountAddress }: WithAccountAddressProps) => {
       </Text>
 
       <Box flex={1} marginBottom="s">
-        <HotspotsList accountAddress={accountAddress} />
+        {walletAddress && <HotspotsList walletAddress={walletAddress} />}
       </Box>
+
+      {!walletToken && (
+        <Text variant="body2" color="error" textAlign="center">
+          {t('hotspotsScreen.notLinkedWalletError')}
+        </Text>
+      )}
 
       <DebouncedButton
         title={t('hotspotsScreen.addBtn')}
+        disabled={!walletToken}
         onPress={openOnboardingSite}
         color="primary"
       />
@@ -61,14 +72,18 @@ const HotspotsScreen = ({ accountAddress }: WithAccountAddressProps) => {
   )
 }
 
-const HotspotsList = ({ accountAddress }: WithAccountAddressProps) => {
+type HotspotsListProps = {
+  walletAddress: string
+}
+
+const HotspotsList = ({ walletAddress }: HotspotsListProps) => {
   const { t } = useTranslation()
   const colors = useColors()
 
   const navigation = useNavigation<SignedInStackNavigationProp>()
 
   const { data: hotspots, isLoading } = useGetHostspotsQuery(
-    accountAddress,
+    walletAddress,
     { pollingInterval: 60000 }, // refresh every minute
   )
 
@@ -82,9 +97,9 @@ const HotspotsList = ({ accountAddress }: WithAccountAddressProps) => {
     )
 
   const openHotspotDetails = (hotspotAddress: string) => {
-    if (!hotspotAddress) return
+    if (!walletAddress || !hotspotAddress) return
 
-    navigation.push('HotspotDetails', { hotspotAddress })
+    navigation.push('HotspotDetails', { walletAddress, hotspotAddress })
   }
 
   return (
@@ -128,4 +143,4 @@ const HotspotsList = ({ accountAddress }: WithAccountAddressProps) => {
   )
 }
 
-export default WithAccountAddress(HotspotsScreen)
+export default HotspotsScreen

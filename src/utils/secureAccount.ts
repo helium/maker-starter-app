@@ -1,48 +1,61 @@
-import { WalletLink } from '@helium/react-native-sdk'
 import * as SecureStore from 'expo-secure-store'
 
-type AccountStoreKey = BooleanKey | StringKey
+// BOOL AND STRING KEYS
+const boolValueKeys = ['requirePin'] as const
+type BoolValueKey = typeof boolValueKeys[number]
 
-const stringKeys = [
-  'userPin',
-  'authInterval',
-  'language',
-  'walletLinkToken',
-] as const
-type StringKey = typeof stringKeys[number]
+const stringValueKeys = ['userPin', 'authInterval', 'language'] as const
+type StringValueKey = typeof stringValueKeys[number]
 
-const boolKeys = ['requirePin'] as const
-type BooleanKey = typeof boolKeys[number]
-
-export const setSecureItem = async (
-  key: AccountStoreKey,
-  val: string | boolean,
-) => SecureStore.setItemAsync(key, String(val))
-
-export async function getSecureItem(key: BooleanKey): Promise<boolean>
-export async function getSecureItem(key: StringKey): Promise<string | null>
-export async function getSecureItem(key: AccountStoreKey) {
+export async function getSecureItem(key: BoolValueKey): Promise<boolean>
+export async function getSecureItem(key: StringValueKey): Promise<string | null>
+export async function getSecureItem(key: BoolValueKey | StringValueKey) {
   const item = await SecureStore.getItemAsync(key)
-  if (boolKeys.find((bk) => key === bk)) {
+  if (boolValueKeys.find((boolItem) => key === boolItem)) {
     return item === 'true'
   }
   return item
 }
 
-export const getAddress = async () => {
-  const token = await getSecureItem('walletLinkToken')
-  if (!token) return
-  const parsed = WalletLink.parseWalletLinkToken(token)
-  if (!parsed?.address) return
-  const { address } = parsed
-  return address
+export const setSecureItem = async (
+  key: BoolValueKey | StringValueKey,
+  val: string | boolean,
+) => SecureStore.setItemAsync(key, String(val))
+// !!! BOOL AND STRING KEYS
+
+// WALLET INFO KEYS
+const walletAddressKey = 'address'
+const walletTokenKey = 'token'
+const walletInfoKeys = [walletAddressKey, walletTokenKey] as const
+type WalletInfoKey = typeof walletInfoKeys[number]
+
+export const getWalletAddress = async () => {
+  return SecureStore.getItemAsync(walletAddressKey)
 }
 
-export const deleteSecureItem = async (key: AccountStoreKey) =>
-  SecureStore.deleteItemAsync(key)
+export const setWalletAddress = async (address: string) => {
+  await SecureStore.setItemAsync(walletAddressKey, address)
+}
+
+export const getWalletToken = async () => {
+  return SecureStore.getItemAsync(walletTokenKey)
+}
+
+export const setWalletToken = async (token: string) => {
+  await SecureStore.setItemAsync(walletTokenKey, token)
+}
+// !! WALLET INFO KEYS
+
+// COMMON METHODS
+export const deleteSecureItem = async (
+  key: BoolValueKey | StringValueKey | WalletInfoKey,
+) => SecureStore.deleteItemAsync(key)
 
 export const signOut = async () => {
   return Promise.all(
-    [...stringKeys, ...boolKeys].map((key) => deleteSecureItem(key)),
+    [...boolValueKeys, ...stringValueKeys, ...walletInfoKeys].map((key) =>
+      deleteSecureItem(key),
+    ),
   )
 }
+// !!! COMMON METHODS
