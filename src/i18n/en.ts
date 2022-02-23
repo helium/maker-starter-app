@@ -3,23 +3,19 @@ export default {
     cancel: 'Cancel',
     clear: 'Clear',
     back: 'Back',
-    connect: 'Connect',
-    continue: 'Continue',
+    submit: 'Submit',
     error: 'Error',
-    forget: 'Forget',
-    goToSettings: 'Go to Settings',
-    invalidPassword: 'You password is incorrect',
     next: 'Next',
     ok: 'OK',
-    scan_again: 'Scan Again',
     searchLocation: 'Search for an address or place',
-    skip: '[skip button]',
     somethingWentWrong: 'Something went wrong',
-    understand: 'I understand',
     unknown: 'Unknown',
     period: '.',
     openLinkError: "Don't know how to open this URL: {{url}}",
+    notAvailable: 'N/A',
   },
+  walletNotLinkedError:
+    'Link your wallet to procced with onboarding. \nGo to Settings -> Link Wallet',
   welcomeScreen: {
     title: 'Welcome',
     enterWallet: 'Enter Your Wallet Address',
@@ -28,20 +24,19 @@ export default {
   },
   hotspotsScreen: {
     title: 'Hotspots',
-    notLinkedWalletError:
-      'Link your wallet to procced with onboarding. \nGo to Settings -> Link Wallet',
     addBtn: 'Add Hotspot',
     noItems: 'No Items',
     locationNotSet: 'Location not set',
   },
   hotspotDetailsScreen: {
     noData: "Can't load data",
+    updateAntennaBtn: 'Update Antenna',
+    updateLocationBtn: 'Update Location',
     setLocationBtn: 'Set Location',
-    changeLocationBtn: 'Change Location',
     viewOnHeliumExplorer: 'View on Helium Explorer',
     statusLabel: 'Status: ',
     locationLabel: 'Location: ',
-    locationNotSet: 'Not set',
+    notSet: 'Not set',
   },
   settingsScreen: {
     title: 'Settings',
@@ -156,7 +151,6 @@ export default {
       message: 'The app needs access to your location to proceed',
     },
   },
-
   hotspot_setup: {
     location_fee: {
       balance: 'Balance:',
@@ -176,5 +170,19 @@ export default {
       subtitle_free: 'Your Location Fee ($10) has been prepaid.',
       title: 'Location Fee',
     },
+  },
+  pickNewAntennaScreen: {
+    title: 'Update Antenna',
+    subtitle: 'Update antenna and height details for your Hotspot.',
+  },
+  confirmAntennaUpdateScreen: {
+    title: 'Update Antenna',
+    antennaLabel: 'Antenna Name:',
+  },
+  pickNewLocationScreen: {
+    title: 'New Hotspot Location',
+  },
+  confirmLocationUpdateScreen: {
+    title: 'Update Hotspot Location',
   },
 }

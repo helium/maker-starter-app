@@ -16,18 +16,6 @@ export const getAccount = async (address?: string) => {
   return data
 }
 
-export const getBlockHeight = (params?: { maxTime?: string }) => {
-  return heliumHttpClient.blocks.getHeight(params)
-}
-
-export const getCurrentOraclePrice = async () => {
-  return heliumHttpClient.oracle.getCurrentPrice()
-}
-
-export const getPredictedOraclePrice = async () => {
-  return heliumHttpClient.oracle.getPredictedPrice()
-}
-
 export const hotspotOnChain = async (address: string) => {
   try {
     await getHotspotDetails(address)
