@@ -1,7 +1,10 @@
 import { StackNavigationProp } from '@react-navigation/stack'
 import { NavigatorScreenParams } from '@react-navigation/native'
+import { OnboardingRecord } from '@helium/onboarding'
+import { Hotspot } from '@helium/http'
 
 import { HotspotOnboardingStackParamList } from './hotspotOnboardingNavigatorTypes'
+import { Antenna } from '../types/Antenna'
 
 export type LockScreenRequestType =
   | 'disablePin'
@@ -20,8 +23,29 @@ export type SignedInStackParamList = {
   MainTabs: undefined | { pinVerifiedFor: LockScreenRequestType }
 
   HotspotDetails: {
-    walletAddress: string
     hotspotAddress: string
+  }
+
+  PickNewLocationScreen: {
+    onboardingRecord: OnboardingRecord
+    hotspot: Hotspot
+  }
+  ConfirmLocationUpdateScreen: {
+    onboardingRecord: OnboardingRecord
+    hotspot: Hotspot
+    coords: number[]
+    locationName: string
+  }
+  PickNewAntennaScreen: {
+    onboardingRecord: OnboardingRecord
+    hotspot: Hotspot
+  }
+  ConfirmAntennaUpdateScreen: {
+    onboardingRecord: OnboardingRecord
+    hotspot: Hotspot
+    antenna: Antenna
+    gain: number
+    elevation: number
   }
 
   LockScreen: {

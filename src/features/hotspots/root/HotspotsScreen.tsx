@@ -9,6 +9,7 @@ import { useNavigation } from '@react-navigation/native'
 import CarotRight from '@assets/images/carot-right.svg'
 import { DebouncedButton } from '../../../components/Button'
 import Text from '../../../components/Text'
+import WalletNotLinkedError from '../../../components/WalletNotLinkedError'
 import Box from '../../../components/Box'
 import TouchableOpacityBox from '../../../components/TouchableOpacityBox'
 import { ActivityIndicatorCentered } from '../../../components/ActivityIndicator'
@@ -56,11 +57,7 @@ const HotspotsScreen = () => {
         {walletAddress && <HotspotsList walletAddress={walletAddress} />}
       </Box>
 
-      {!walletToken && (
-        <Text variant="body2" color="error" textAlign="center">
-          {t('hotspotsScreen.notLinkedWalletError')}
-        </Text>
-      )}
+      {!walletToken && <WalletNotLinkedError />}
 
       <DebouncedButton
         title={t('hotspotsScreen.addBtn')}
@@ -99,7 +96,7 @@ const HotspotsList = ({ walletAddress }: HotspotsListProps) => {
   const openHotspotDetails = (hotspotAddress: string) => {
     if (!walletAddress || !hotspotAddress) return
 
-    navigation.push('HotspotDetails', { walletAddress, hotspotAddress })
+    navigation.push('HotspotDetails', { hotspotAddress })
   }
 
   return (

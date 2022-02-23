@@ -12,6 +12,10 @@ import WelcomeScreen from '../features/notSignedIn/WelcomeScreen'
 import CreatePinScreen from '../features/pinManagement/CreatePinScreen'
 import ConfirmPinScreen from '../features/pinManagement/ConfirmPinScreen'
 import HotspotDetailsScreen from '../features/hotspots/root/HotspotDetailsScreen'
+import PickNewLocationScreen from '../features/hotspots/update/PickNewLocationScreen'
+import ConfirmLocationUpdateScreen from '../features/hotspots/update/ConfirmLocationUpdateScreen'
+import PickNewAntennaScreen from '../features/hotspots/update/PickNewAntennaScreen'
+import ConfirmAntennaUpdateScreen from '../features/hotspots/update/ConfirmAntennaUpdateScreen'
 import {
   NotSignedInStackParamList,
   SignedInStackParamList,
@@ -52,16 +56,35 @@ const NavigationRoot = () => {
     >
       <SignedInStack.Screen name="MainTabs" component={MainTabs} />
 
-      <SignedInStack.Screen
-        name="HotspotDetails"
-        component={HotspotDetailsScreen}
-        options={{
+      <SignedInStack.Group
+        screenOptions={{
           ...defaultScreenOptions,
           gestureEnabled: false,
           headerShown: true,
           title: '',
         }}
-      />
+      >
+        <SignedInStack.Screen
+          name="HotspotDetails"
+          component={HotspotDetailsScreen}
+        />
+        <SignedInStack.Screen
+          name="PickNewLocationScreen"
+          component={PickNewLocationScreen}
+        />
+        <SignedInStack.Screen
+          name="ConfirmLocationUpdateScreen"
+          component={ConfirmLocationUpdateScreen}
+        />
+        <SignedInStack.Screen
+          name="PickNewAntennaScreen"
+          component={PickNewAntennaScreen}
+        />
+        <SignedInStack.Screen
+          name="ConfirmAntennaUpdateScreen"
+          component={ConfirmAntennaUpdateScreen}
+        />
+      </SignedInStack.Group>
 
       <SignedInStack.Screen
         name="HotspotOnboarding"
