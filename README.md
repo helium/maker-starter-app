@@ -55,6 +55,22 @@ If you get an error like Cannot find module 'npmlog', try installing npm directl
 curl -0 -L https://npmjs.org/install.sh | sudo sh.
 ```
 
+### Environment Variables
+
+1. Copy the file `.env.sample` and rename it to `.env`.
+2. Once renamed update the values within the file.
+3. In order for maps to load you will need to create your own [Mapbox](https://account.mapbox.com) access token.
+
+### Dependencies
+
+Install 3rd party dependencies
+
+```
+yarn install
+```
+
+### Running Project on IOS
+
 #### Xcode
 
 The easiest way to install Xcode is via the [Mac App Store](https://itunes.apple.com/us/app/xcode/id497799835?mt=12). Installing Xcode will also install the iOS Simulator and all the necessary tools to build your iOS app.
@@ -64,6 +80,99 @@ If you have already installed Xcode on your system, make sure it is up to date.
 #### Command Line Tools
 
 You will also need to install the Xcode Command Line Tools. Open Xcode, then choose "Preferences..." from the Xcode menu. Go to the Locations panel and install the tools by selecting the most recent version in the Command Line Tools dropdown.
+
+#### Dependencies
+
+You need to install [cocoapods](https://cocoapods.org/) for iOS. CocoaPods manages library dependencies for your Xcode projects.
+
+```
+sudo gem install cocoapods
+```
+
+Then install the pods for iOS
+
+```
+yarn pod-install
+```
+
+If the app is not working you may want to clean your workspace and then follow the running the app section below
+
+```
+yarn clean-install
+yarn clean-start
+```
+
+#### Running The App
+
+The fastest way to run the app is on the iOS simulator. Just type:
+
+```
+yarn ios
+```
+
+You can also open the `MakerApp.xcworkspace` file in the `/ios` folder using xcode and run the app on your device or any other simulator.
+
+To run the app on a specific device, type:
+
+```
+yarn ios --device "Device Name"
+```
+
+To build a release version of the app:
+
+```
+yarn ios --configuration=release
+```
+
+#### Possible Issues
+
+##### 1. There are no accounts registered with Xcode.
+
+Error message "There are no accounts registered with Xcode. Add your developer account to Xcode" gets returned when no developer account has been set up in Xcode. #####[Solution]
+
+1. Open Xcode.
+2. Go to Preferences
+3. Go to Accounts tab then add your account with the + sign.
+
+##### 2. No profiles for 'com.maker.makerapp' were found.
+
+Error message "No profiles for 'com.maker.makerapp' were found: Xcode couldn't find any iOS App Development provisioning profiles matching 'com.maker.makerapp'." could be returned when no provisioning profile have been set for the bundle in xcode.
+
+#####[Solution]
+
+1. Open Xcode.
+2. Go to Signing and Capabilities
+3. Under Team, select your developer account/ Apple ID.
+
+#### 3. Could not get the simulator list from Xcode
+
+This error message gets returned when no simulator or device is detected.
+
+#####[Solution]
+Ensure that you have an ios simulator running, or you have an ios device plugged in.
+Use the command below to check for available devices or simulators.
+`xcrun simctl list --json devices`
+
+#### 4. Failed to install the app on the device because we couldn't execute the "ios-deploy" command
+
+This may be as a result of attempting to run the app on an IOS physical device such as iPhone without having "ios-deploy" installed.
+
+#####[Solution]
+Install ios-deploy
+`npm install -g ios-deploy`
+
+#### 5. Unable to launch com.maker.makerapp because it has an invalid code signature, inadequate entitlements or its profile has not been explicitly trusted by the user.
+
+You may need to trust the app on your IOS device.
+
+#####[Soultion]
+
+1. On your IOS device, go to Settings
+2. Go to General
+3. Go to Device Management
+4. You will see a profile for the developer. Tap the name of the developer profile to establish trust.
+
+### Running Project on Android
 
 #### Java Development Kit
 
@@ -115,53 +224,6 @@ export ANDROID_HOME=$HOME/Library/Android/sdk
 export PATH=$PATH:$ANDROID_HOME/tools
 export PATH=$PATH:$ANDROID_HOME/platform-tools
 ```
-
-## Installing
-
-### Environment Variables
-
-1. Copy the file `.env.sample` and rename it to `.env`.
-2. Once renamed update the values within the file.
-3. In order for maps to load you will need to create your own [Mapbox](https://account.mapbox.com) access token.
-
-### Dependencies
-
-Install 3rd party dependencies
-
-```
-yarn install
-```
-
-You also need [cocoapods](https://cocoapods.org/) for iOS
-
-```
-sudo gem install cocoapods
-```
-
-Then install the pods for iOS (Not needed for Android)
-
-```
-yarn pod-install
-```
-
-If the app is not working you may want to clean your workspace and then follow the running the app section below
-
-```
-yarn clean-install
-yarn clean-start
-```
-
-### Running The App
-
-#### iOS
-
-The fastest way to run the app is on the iOS simulator. Just type:
-
-```
-yarn ios
-```
-
-You can also open the `MakerApp.xcworkspace` file in the `/ios` folder using xcode and run the app on your device or any other simulator.
 
 #### Android
 
