@@ -124,11 +124,74 @@ To build a release version of the app:
 yarn ios --configuration=release
 ```
 
+#### Building and distributing to App store with Xcode
+
+To distribute your app on the App Store with Xcode, a few steps are required.
+App signing is done automatically.
+
+##### Uploading App to App Store for the first time
+
+Before you can upload a build of your app to App Store Connect, you must first create an app record in your [App Store Connect account](https://appstoreconnect.apple.com/).
+
+1. From My Apps, click the Add button (+) in the top-left corner.
+
+2. The My Apps page is blank until you create your first app record.
+
+3. From the pop-up menu, select New App.
+
+4. In the New App dialog, select one or more platform(s) and enter the app information. The bundle ID should match that of the app you want to deploy.
+
+5. Under User Access, choose Limited Access or Full Access. If you choose Limited Access, select the users that you would like to be able to access this app.
+
+6. Click Create, and look for messages that indicate missing information.
+
+##### Building
+
+To build the app for distribution:
+
+1. In Xcode first go to Product
+2. Go to Scheme
+3. Go to Edit scheme
+4. Change the Build configuration to Release
+
+##### Archiving
+
+To release the app, you first need to create an archive.
+
+1. In Xcode go to Product
+2. Click on Archive
+3. After the archive builds successfully, a new window will be opened with a list of all archives. The topmost one is what you just built.
+
+##### Distribution
+
+1. With the archive selected, click on the Distribute App button on the right.
+2. This will launch a wizard for selecting distribution method.
+3. Since you want to distribute the app to App Store, select "App Store Connect" and click on next.
+4. Within the "Select a destination" wizard, "upload" and click on next.
+5. In the next sheet, choose a signing option, then click Next. More on Distribution signing options can be found [here](https://help.apple.com/xcode/mac/current/#/devff5ececf8)
+6. If you are missing a required distribution certificate, follow the instructions in the next sheet to create it.
+7. Review the signing certificate, provisioning profile, and entitlements.
+8. Click Upload.
+
+##### TestFlight
+
+The TestFlight app allows testers to install and beta test your app on iOS, tvOS, and watchOS devices. Testers must receive an invite directly from you before they can begin testing with TestFlight. Once testers accept your invitation, they can install, test, send feedback, and get updates of your beta app.
+
+TestFlight can be used on App Store Connect after your build has been uploaded.
+
+##### App Store
+
+1. Choose your build.
+2. Set pricing and availability
+3. Submit your app for review. Before you submit an app, enter all the [required metadata](https://help.apple.com/itunes-connect/developer/#/devfc3066644) and choose if you want to release your app manually or automatically.
+
 #### Possible Issues
 
 ##### 1. There are no accounts registered with Xcode.
 
-Error message "There are no accounts registered with Xcode. Add your developer account to Xcode" gets returned when no developer account has been set up in Xcode. #####[Solution]
+Error message "There are no accounts registered with Xcode. Add your developer account to Xcode" gets returned when no developer account has been set up in Xcode.
+
+#####[Solution]
 
 1. Open Xcode.
 2. Go to Preferences
