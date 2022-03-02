@@ -51,8 +51,8 @@ export default {
       create_account: 'Create an account on the Helium Network',
       login_with_helium: 'Already have a Helium Wallet?\nTap to get started.',
       subtitle:
-        'Lorem ipsum <b><errorText>$HNT</errorText></b> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-      title: 'Welcome\nto Maker App',
+        'Use this app to onboard your miner for the first time and start earning HNT. <b>WARNING: You must also have the official Helium App installed in order to continue.</b>',
+      title: 'Welcome\nto The Nebra Helium App',
     },
     linkAccount: {
       stepOne: '1. Download a supported Wallet App',
@@ -101,7 +101,7 @@ export default {
     ok: 'OK',
     scan_again: 'Scan Again',
     search_location: 'Search for an address or place',
-    skip: '[skip button]',
+    skip: 'Skip',
     something_went_wrong: 'Something went wrong',
     understand: 'I understand',
     unknown: 'Unknown',
@@ -148,6 +148,7 @@ export default {
     diagnostics: {
       title: 'Diagnostics',
     },
+    // TODO
     education: {
       cards: [
         {
@@ -167,6 +168,7 @@ export default {
           title: '[Placeholder]',
         },
       ],
+      // TODO
       title: '[Your Hotspot\nSetup Instructions]',
     },
     enable_location: {
@@ -240,7 +242,7 @@ export default {
       },
       alert_no_permissions: {
         body:
-          'MakerApp needs permission to use Bluetooth. You can enable Bluetooth permission in Settings.',
+          'The Nebra Helium App needs permission to use Bluetooth. You can enable Bluetooth permission in Settings.',
         title: 'Authorize Bluetooth',
       },
       scan: 'Scan for my Hotspot',
@@ -257,7 +259,7 @@ export default {
       title: 'REGISTERING HOTSPOT',
     },
     selection: {
-      subtitle: '[Placeholder instructions]',
+      subtitle: 'Select the hotspot type below:',
       title: 'Add\nyour Hotspot.',
     },
     skip_location: {
@@ -299,11 +301,11 @@ export default {
         assertLocation: 'Assert Location',
         transfer: 'Transfer Hotspot',
       },
-      title: 'Add a\n[Placeholder] Miner',
+      title: 'Add a\nNebra Miner',
     },
   },
   learn: {
-    next: '[next button]',
+    next: 'Next',
   },
   more: {
     sections: {
@@ -351,7 +353,7 @@ export default {
   permissions: {
     location: {
       message:
-        'MakerApp needs access to your location for Bluetooth discovery and to enable location assertion. This information will never be sold or shared.',
+        'The Nebra Helium App needs access to your location for Bluetooth discovery and to enable location assertion. This information will never be sold or shared.',
       title: 'Location Permission',
     },
   },
