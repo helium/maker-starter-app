@@ -239,7 +239,20 @@ You may need to trust the app on your IOS device.
 
 #### Java Development Kit
 
-React Native requires the Java SE Development Kit (JDK). [Download and install JDK 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) if needed.
+React Native requires the Java SE Development Kit (JDK).
+Download and install [JDK 11](https://www.oracle.com/java/technologies/downloads/#java11) (versions 8-14 are supported).
+
+##### Install JDK on MacOS
+
+- Download OpenJDK from [Temurin](https://adoptium.net/?variant=openjdk11&jvmVariant=hotspot.
+- If you have several JDKs, you can select Temurin by disabling all others with the instructions below.
+
+```
+Leave all JDKs at their default location, under /Library/Java/JavaVirtualMachines. The system will pick the highest version by default.
+To exclude a JDK from being picked by default, rename its Contents/Info.plist to Info.plist.disabled.
+That JDK can still be used when $JAVA_HOME points to it, or explicitly referenced in a script or configuration.
+It will simply be ignored by system's java command.
+```
 
 #### Android development environment
 
@@ -294,6 +307,7 @@ Similar to iOS, run
 
 ```
 yarn android
+yarn android --deviceId <deviceId>
 ```
 
 You can also open the Android project in Android Studio by selecting `open an existing project` and selecting the `/android` folder.
