@@ -50,6 +50,7 @@ export type HotspotOnboardingStackParamList = {
   TxnSubmitedScreen: {
     assertTxn?: string
     gatewayTxn?: string
+    gatewayAddress?: string
   }
 }
 
