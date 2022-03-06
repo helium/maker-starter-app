@@ -1,4 +1,4 @@
-package com.maker.makerapp;
+package com.nebra.helium.app;
 import expo.modules.ReactActivityDelegateWrapper;
 import com.facebook.react.ReactActivityDelegate;
 
@@ -22,7 +22,7 @@ public class MainActivity extends ReactActivity {
    */
   @Override
   protected String getMainComponentName() {
-    return "MakerApp";
+    return "Nebra";
   }
 
   @Override

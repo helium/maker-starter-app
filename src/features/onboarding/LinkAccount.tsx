@@ -19,7 +19,7 @@ const LinkAccount = () => {
           universalLink: app.universalLink,
           requestAppId: getBundleId(),
           callbackUrl: 'makerappscheme://',
-          appName: 'Maker App',
+          appName: 'Nebra Hotspot',
         })
 
         Linking.openURL(url)
