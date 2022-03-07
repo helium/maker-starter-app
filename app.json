@@ -1,7 +1,7 @@
 {
-  "name": "MakerApp",
-  "displayName": "Maker App",
+  "name": "Illios",
+  "displayName": "Illios App",
   "expo": {
-    "scheme": "makerappscheme"
+    "scheme": "illios"
   }
 }

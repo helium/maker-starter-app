@@ -12,9 +12,9 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		3AAA8194DB4D059944852532 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D65FC53696548063B0CA59 /* ExpoModulesProvider.swift */; };
-		3C2D26697DA9DE0D62775384 /* libPods-MakerApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C2C551342F5A01DDC30CEC /* libPods-MakerApp.a */; };
+		3C2D26697DA9DE0D62775384 /* libPods-Illios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C2C551342F5A01DDC30CEC /* libPods-Illios.a */; };
 		52DF7BF9B6F6812C987607E2 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7F384B36BEBF65291C3764 /* ExpoModulesProvider.swift */; };
-		78771B5356165C9F7AF63C78 /* libPods-MakerApp-MakerAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ED9B03F4EE6066C138C909EC /* libPods-MakerApp-MakerAppTests.a */; };
+		78771B5356165C9F7AF63C78 /* libPods-Illios-MakerAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ED9B03F4EE6066C138C909EC /* libPods-Illios-MakerAppTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		964E9C302638CD0C00CCBCCC /* bridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 964E9C2F2638CD0C00CCBCCC /* bridge.swift */; };
 /* End PBXBuildFile section */
@@ -25,7 +25,7 @@
 			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 13B07F861A680F5B00A75B9A;
-			remoteInfo = MakerApp;
+			remoteInfo = Illios;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -47,26 +47,26 @@
 		00E356EE1AD99517003FC87E /* MakerAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MakerAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* MakerAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MakerAppTests.m; sourceTree = "<group>"; };
-		131B3F2792FC4EFA005595E1 /* Pods-MakerApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MakerApp.release.xcconfig"; path = "Target Support Files/Pods-MakerApp/Pods-MakerApp.release.xcconfig"; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* MakerApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MakerApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = MakerApp/AppDelegate.h; sourceTree = "<group>"; };
-		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = MakerApp/AppDelegate.m; sourceTree = "<group>"; };
-		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = MakerApp/Images.xcassets; sourceTree = "<group>"; };
-		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = MakerApp/Info.plist; sourceTree = "<group>"; };
-		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = MakerApp/main.m; sourceTree = "<group>"; };
-		1B7F384B36BEBF65291C3764 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-MakerApp-MakerAppTests/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
-		25340B7256A37E523AF6B776 /* Pods-MakerApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MakerApp.debug.xcconfig"; path = "Target Support Files/Pods-MakerApp/Pods-MakerApp.debug.xcconfig"; sourceTree = "<group>"; };
-		64D65FC53696548063B0CA59 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-MakerApp/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
-		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = MakerApp/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		964E9C2E2638CD0B00CCBCCC /* MakerApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MakerApp-Bridging-Header.h"; sourceTree = "<group>"; };
+		131B3F2792FC4EFA005595E1 /* Pods-Illios.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Illios.release.xcconfig"; path = "Target Support Files/Pods-Illios/Pods-Illios.release.xcconfig"; sourceTree = "<group>"; };
+		13B07F961A680F5B00A75B9A /* Illios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Illios.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Illios/AppDelegate.h; sourceTree = "<group>"; };
+		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Illios/AppDelegate.m; sourceTree = "<group>"; };
+		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Illios/Images.xcassets; sourceTree = "<group>"; };
+		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Illios/Info.plist; sourceTree = "<group>"; };
+		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Illios/main.m; sourceTree = "<group>"; };
+		1B7F384B36BEBF65291C3764 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-Illios-MakerAppTests/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
+		25340B7256A37E523AF6B776 /* Pods-Illios.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Illios.debug.xcconfig"; path = "Target Support Files/Pods-Illios/Pods-Illios.debug.xcconfig"; sourceTree = "<group>"; };
+		64D65FC53696548063B0CA59 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-Illios/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
+		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Illios/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		964E9C2E2638CD0B00CCBCCC /* Illios-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Illios-Bridging-Header.h"; sourceTree = "<group>"; };
 		964E9C2F2638CD0C00CCBCCC /* bridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bridge.swift; sourceTree = "<group>"; };
-		A8C2C551342F5A01DDC30CEC /* libPods-MakerApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MakerApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		BFB45BBD2A85DBD1301D84BC /* Pods-MakerApp-MakerAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MakerApp-MakerAppTests.debug.xcconfig"; path = "Target Support Files/Pods-MakerApp-MakerAppTests/Pods-MakerApp-MakerAppTests.debug.xcconfig"; sourceTree = "<group>"; };
-		DE9CC2ABA6BCC071224EC7DF /* Pods-MakerApp-MakerAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MakerApp-MakerAppTests.release.xcconfig"; path = "Target Support Files/Pods-MakerApp-MakerAppTests/Pods-MakerApp-MakerAppTests.release.xcconfig"; sourceTree = "<group>"; };
+		A8C2C551342F5A01DDC30CEC /* libPods-Illios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Illios.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BFB45BBD2A85DBD1301D84BC /* Pods-Illios-MakerAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Illios-MakerAppTests.debug.xcconfig"; path = "Target Support Files/Pods-Illios-MakerAppTests/Pods-Illios-MakerAppTests.debug.xcconfig"; sourceTree = "<group>"; };
+		DE9CC2ABA6BCC071224EC7DF /* Pods-Illios-MakerAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Illios-MakerAppTests.release.xcconfig"; path = "Target Support Files/Pods-Illios-MakerAppTests/Pods-Illios-MakerAppTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
-		ED9B03F4EE6066C138C909EC /* libPods-MakerApp-MakerAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MakerApp-MakerAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		F8B0E2112563005D00EB1E73 /* MakerApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = MakerApp.entitlements; path = MakerApp/MakerApp.entitlements; sourceTree = "<group>"; };
+		ED9B03F4EE6066C138C909EC /* libPods-Illios-MakerAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Illios-MakerAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F8B0E2112563005D00EB1E73 /* Illios.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Illios.entitlements; path = Illios/Illios.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,7 +74,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				78771B5356165C9F7AF63C78 /* libPods-MakerApp-MakerAppTests.a in Frameworks */,
+				78771B5356165C9F7AF63C78 /* libPods-Illios-MakerAppTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -82,7 +82,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3C2D26697DA9DE0D62775384 /* libPods-MakerApp.a in Frameworks */,
+				3C2D26697DA9DE0D62775384 /* libPods-Illios.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -106,10 +106,10 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		13B07FAE1A68108700A75B9A /* MakerApp */ = {
+		13B07FAE1A68108700A75B9A /* Illios */ = {
 			isa = PBXGroup;
 			children = (
-				F8B0E2112563005D00EB1E73 /* MakerApp.entitlements */,
+				F8B0E2112563005D00EB1E73 /* Illios.entitlements */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -118,17 +118,17 @@
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
 				964E9C2F2638CD0C00CCBCCC /* bridge.swift */,
-				964E9C2E2638CD0B00CCBCCC /* MakerApp-Bridging-Header.h */,
+				964E9C2E2638CD0B00CCBCCC /* Illios-Bridging-Header.h */,
 			);
-			name = MakerApp;
+			name = Illios;
 			sourceTree = "<group>";
 		};
-		19535BEA8BAE3F89ABBA9005 /* MakerApp */ = {
+		19535BEA8BAE3F89ABBA9005 /* Illios */ = {
 			isa = PBXGroup;
 			children = (
 				64D65FC53696548063B0CA59 /* ExpoModulesProvider.swift */,
 			);
-			name = MakerApp;
+			name = Illios;
 			sourceTree = "<group>";
 		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
@@ -136,8 +136,8 @@
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
-				A8C2C551342F5A01DDC30CEC /* libPods-MakerApp.a */,
-				ED9B03F4EE6066C138C909EC /* libPods-MakerApp-MakerAppTests.a */,
+				A8C2C551342F5A01DDC30CEC /* libPods-Illios.a */,
+				ED9B03F4EE6066C138C909EC /* libPods-Illios-MakerAppTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -167,7 +167,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				13B07FAE1A68108700A75B9A /* MakerApp */,
+				13B07FAE1A68108700A75B9A /* Illios */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* MakerAppTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
@@ -184,7 +184,7 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* MakerApp.app */,
+				13B07F961A680F5B00A75B9A /* Illios.app */,
 				00E356EE1AD99517003FC87E /* MakerAppTests.xctest */,
 			);
 			name = Products;
@@ -193,7 +193,7 @@
 		B0765E311354073F9F5AC060 /* ExpoModulesProviders */ = {
 			isa = PBXGroup;
 			children = (
-				19535BEA8BAE3F89ABBA9005 /* MakerApp */,
+				19535BEA8BAE3F89ABBA9005 /* Illios */,
 				58E6235987F68EB20BB61A26 /* MakerAppTests */,
 			);
 			name = ExpoModulesProviders;
@@ -202,10 +202,10 @@
 		BBB8A579C848048078120971 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				25340B7256A37E523AF6B776 /* Pods-MakerApp.debug.xcconfig */,
-				131B3F2792FC4EFA005595E1 /* Pods-MakerApp.release.xcconfig */,
-				BFB45BBD2A85DBD1301D84BC /* Pods-MakerApp-MakerAppTests.debug.xcconfig */,
-				DE9CC2ABA6BCC071224EC7DF /* Pods-MakerApp-MakerAppTests.release.xcconfig */,
+				25340B7256A37E523AF6B776 /* Pods-Illios.debug.xcconfig */,
+				131B3F2792FC4EFA005595E1 /* Pods-Illios.release.xcconfig */,
+				BFB45BBD2A85DBD1301D84BC /* Pods-Illios-MakerAppTests.debug.xcconfig */,
+				DE9CC2ABA6BCC071224EC7DF /* Pods-Illios-MakerAppTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -234,9 +234,9 @@
 			productReference = 00E356EE1AD99517003FC87E /* MakerAppTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		13B07F861A680F5B00A75B9A /* MakerApp */ = {
+		13B07F861A680F5B00A75B9A /* Illios */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "MakerApp" */;
+			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Illios" */;
 			buildPhases = (
 				0103E73B626F0B8DC823B3E8 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
@@ -252,9 +252,9 @@
 			);
 			dependencies = (
 			);
-			name = MakerApp;
-			productName = MakerApp;
-			productReference = 13B07F961A680F5B00A75B9A /* MakerApp.app */;
+			name = Illios;
+			productName = Illios;
+			productReference = 13B07F961A680F5B00A75B9A /* Illios.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -276,7 +276,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "MakerApp" */;
+			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "Illios" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -289,7 +289,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				13B07F861A680F5B00A75B9A /* MakerApp */,
+				13B07F861A680F5B00A75B9A /* Illios */,
 				00E356ED1AD99517003FC87E /* MakerAppTests */,
 			);
 		};
@@ -321,7 +321,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MakerApp-MakerAppTests/Pods-MakerApp-MakerAppTests-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-Illios-MakerAppTests/Pods-Illios-MakerAppTests-frameworks.sh",
 				"${PODS_ROOT}/Mapbox-iOS-SDK/dynamic/Mapbox.framework",
 				"${BUILT_PRODUCTS_DIR}/MapboxMobileEvents/MapboxMobileEvents.framework",
 			);
@@ -332,7 +332,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MakerApp-MakerAppTests/Pods-MakerApp-MakerAppTests-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Illios-MakerAppTests/Pods-Illios-MakerAppTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */ = {
@@ -364,7 +364,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-MakerApp-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-Illios-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -377,7 +377,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MakerApp/Pods-MakerApp-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-Illios/Pods-Illios-frameworks.sh",
 				"${PODS_ROOT}/Mapbox-iOS-SDK/dynamic/Mapbox.framework",
 				"${BUILT_PRODUCTS_DIR}/MapboxMobileEvents/MapboxMobileEvents.framework",
 			);
@@ -388,7 +388,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MakerApp/Pods-MakerApp-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Illios/Pods-Illios-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		77C2A180FAF2ECEC031B2BFC /* [CP] Check Pods Manifest.lock */ = {
@@ -406,7 +406,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-MakerApp-MakerAppTests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-Illios-MakerAppTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -419,7 +419,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MakerApp-MakerAppTests/Pods-MakerApp-MakerAppTests-resources.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-Illios-MakerAppTests/Pods-Illios-MakerAppTests-resources.sh",
 				"${PODS_CONFIGURATION_BUILD_DIR}/EXConstants/EXConstants.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle",
 			);
@@ -430,7 +430,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MakerApp-MakerAppTests/Pods-MakerApp-MakerAppTests-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Illios-MakerAppTests/Pods-Illios-MakerAppTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		CD738B53C9E63C2BEE40515E /* [CP] Copy Pods Resources */ = {
@@ -439,7 +439,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MakerApp/Pods-MakerApp-resources.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-Illios/Pods-Illios-resources.sh",
 				"${PODS_CONFIGURATION_BUILD_DIR}/EXConstants/EXConstants.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle",
 			);
@@ -450,7 +450,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MakerApp/Pods-MakerApp-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Illios/Pods-Illios-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FD10A7F022414F080027D42C /* Start Packager */ = {
@@ -500,7 +500,7 @@
 /* Begin PBXTargetDependency section */
 		00E356F51AD99517003FC87E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 13B07F861A680F5B00A75B9A /* MakerApp */;
+			target = 13B07F861A680F5B00A75B9A /* Illios */;
 			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -508,7 +508,7 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BFB45BBD2A85DBD1301D84BC /* Pods-MakerApp-MakerAppTests.debug.xcconfig */;
+			baseConfigurationReference = BFB45BBD2A85DBD1301D84BC /* Pods-Illios-MakerAppTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -526,13 +526,13 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MakerApp.app/MakerApp";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Illios.app/Illios";
 			};
 			name = Debug;
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DE9CC2ABA6BCC071224EC7DF /* Pods-MakerApp-MakerAppTests.release.xcconfig */;
+			baseConfigurationReference = DE9CC2ABA6BCC071224EC7DF /* Pods-Illios-MakerAppTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -547,24 +547,24 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MakerApp.app/MakerApp";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Illios.app/Illios";
 			};
 			name = Release;
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 25340B7256A37E523AF6B776 /* Pods-MakerApp.debug.xcconfig */;
+			baseConfigurationReference = 25340B7256A37E523AF6B776 /* Pods-Illios.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = MakerApp/MakerApp.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Illios/Illios.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = PVM9KJZ2AD;
 				ENABLE_BITCODE = NO;
 				EXCLUDED_ARCHS = "";
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
-				INFOPLIST_FILE = MakerApp/Info.plist;
+				INFOPLIST_FILE = Illios/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 1.0.0;
 				OTHER_LDFLAGS = (
@@ -572,9 +572,9 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.maker.makerapp;
-				PRODUCT_NAME = MakerApp;
-				SWIFT_OBJC_BRIDGING_HEADER = "MakerApp-Bridging-Header.h";
+				PRODUCT_BUNDLE_IDENTIFIER = com.maker.Illios;
+				PRODUCT_NAME = Illios;
+				SWIFT_OBJC_BRIDGING_HEADER = "Illios-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -584,17 +584,17 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 131B3F2792FC4EFA005595E1 /* Pods-MakerApp.release.xcconfig */;
+			baseConfigurationReference = 131B3F2792FC4EFA005595E1 /* Pods-Illios.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = MakerApp/MakerApp.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Illios/Illios.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = PVM9KJZ2AD;
 				EXCLUDED_ARCHS = "";
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
-				INFOPLIST_FILE = MakerApp/Info.plist;
+				INFOPLIST_FILE = Illios/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 1.0.0;
 				OTHER_LDFLAGS = (
@@ -602,9 +602,9 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.maker.makerapp;
-				PRODUCT_NAME = MakerApp;
-				SWIFT_OBJC_BRIDGING_HEADER = "MakerApp-Bridging-Header.h";
+				PRODUCT_BUNDLE_IDENTIFIER = com.maker.Illios;
+				PRODUCT_NAME = Illios;
+				SWIFT_OBJC_BRIDGING_HEADER = "Illios-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -740,7 +740,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "MakerApp" */ = {
+		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Illios" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				13B07F941A680F5B00A75B9A /* Debug */,
@@ -749,7 +749,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "MakerApp" */ = {
+		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "Illios" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,

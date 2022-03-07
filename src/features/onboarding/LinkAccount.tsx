@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { WalletLink } from '@helium/react-native-sdk'
 import { Linking, Platform } from 'react-native'
 import { getBundleId } from 'react-native-device-info'
+import { APP_LINK_PROTOCOL } from 'src/providers/AppLinkProvider'
 import SafeAreaBox from '../../components/SafeAreaBox'
 import Text from '../../components/Text'
 import Box from '../../components/Box'
@@ -18,8 +19,8 @@ const LinkAccount = () => {
         const url = WalletLink.createWalletLinkUrl({
           universalLink: app.universalLink,
           requestAppId: getBundleId(),
-          callbackUrl: 'makerappscheme://',
-          appName: 'Maker App',
+          callbackUrl: APP_LINK_PROTOCOL,
+          appName: 'Illios',
         })
 
         Linking.openURL(url)

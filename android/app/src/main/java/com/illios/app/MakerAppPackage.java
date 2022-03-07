@@ -1,4 +1,4 @@
-package com.maker.makerapp;
+package com.illios.app;
 
 import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.NativeModule;

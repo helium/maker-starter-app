@@ -5,7 +5,7 @@
 		<key>CFBundleDevelopmentRegion</key>
 		<string>en</string>
 		<key>CFBundleDisplayName</key>
-		<string>Maker App</string>
+		<string>Illios</string>
 		<key>CFBundleExecutable</key>
 		<string>$(EXECUTABLE_NAME)</string>
 		<key>CFBundleIdentifier</key>
@@ -47,19 +47,19 @@
 			</dict>
 		</dict>
 		<key>NSBluetoothAlwaysUsageDescription</key>
-		<string>Allow Maker App to connect to and manage your Hotspots</string>
+		<string>Allow Illios to connect to and manage your Hotspots</string>
 		<key>NSBluetoothPeripheralUsageDescription</key>
-		<string>Allow Maker App to connect to and manage your Hotspots</string>
+		<string>Allow Illios to connect to and manage your Hotspots</string>
 		<key>NSCameraUsageDescription</key>
-		<string>Allow Maker App to use the camera to scan QR codes</string>
+		<string>Allow Illios to use the camera to scan QR codes</string>
 		<key>NSFaceIDUsageDescription</key>
-		<string>Allow Maker App to authenticate with Face ID</string>
+		<string>Allow Illios to authenticate with Face ID</string>
 		<key>NSLocationAlwaysUsageDescription</key>
-		<string>Allow Maker App to use your location to add your Maker App Hotspots to the network</string>
+		<string>Allow Illios to use your location to add your Illios Hotspots to the network</string>
 		<key>NSLocationWhenInUseUsageDescription</key>
-		<string>Allow Maker App to use your location to add Hotspots to the network and explore Hotspots around you</string>
+		<string>Allow Illios to use your location to add Hotspots to the network and explore Hotspots around you</string>
 		<key>NSMicrophoneUsageDescription</key>
-		<string>Allow Maker App to use the microphone</string>
+		<string>Allow Illios to use the microphone</string>
 		<key>UIAppFonts</key>
 		<array />
 		<key>UILaunchStoryboardName</key>

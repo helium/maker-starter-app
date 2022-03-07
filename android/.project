@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>MakerApp</name>
+	<name>Illios</name>
 	<comment>Project android created by Buildship.</comment>
 	<projects>
 	</projects>
@@ -16,7 +16,7 @@
 	</natures>
 	<filteredResources>
 		<filter>
-			<id>1631559870343</id>
+			<id>0</id>
 			<name></name>
 			<type>30</type>
 			<matcher>

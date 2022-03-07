@@ -52,7 +52,7 @@ export default {
       login_with_helium: 'Already have a Helium Wallet?\nTap to get started.',
       subtitle:
         'Lorem ipsum <b><errorText>$HNT</errorText></b> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-      title: 'Welcome\nto Maker App',
+      title: 'Welcome\nto Illios',
     },
     linkAccount: {
       stepOne: '1. Download a supported Wallet App',
@@ -240,7 +240,7 @@ export default {
       },
       alert_no_permissions: {
         body:
-          'MakerApp needs permission to use Bluetooth. You can enable Bluetooth permission in Settings.',
+          'Illios needs permission to use Bluetooth. You can enable Bluetooth permission in Settings.',
         title: 'Authorize Bluetooth',
       },
       scan: 'Scan for my Hotspot',
@@ -351,7 +351,7 @@ export default {
   permissions: {
     location: {
       message:
-        'MakerApp needs access to your location for Bluetooth discovery and to enable location assertion. This information will never be sold or shared.',
+        'Illios needs access to your location for Bluetooth discovery and to enable location assertion. This information will never be sold or shared.',
       title: 'Location Permission',
     },
   },
