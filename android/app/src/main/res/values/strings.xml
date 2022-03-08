@@ -1,5 +1,7 @@
 <resources>
-  <!-- Below line is handled by '@expo/configure-splash-screen' command and it's discouraged to modify it manually -->
-  <string name="expo_splash_screen_resize_mode" translatable="false">contain</string>
-  <string name="app_name">Maker App</string>
+    <string name="app_name">Nebra</string>
+
+    <!-- Below line is handled by '@expo/configure-splash-screen' command and it's discouraged to modify it manually -->
+    <string name="expo_splash_screen_resize_mode" translatable="false">contain</string>
+
 </resources>
