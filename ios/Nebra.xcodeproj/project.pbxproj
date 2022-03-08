@@ -121,12 +121,9 @@
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
 				964E9C2F2638CD0C00CCBCCC /* bridge.swift */,
-<<<<<<< HEAD:ios/Nebra.xcodeproj/project.pbxproj
 				964E9C2E2638CD0B00CCBCCC /* Nebra-Bridging-Header.h */,
-=======
-				964E9C2E2638CD0B00CCBCCC /* MakerApp-Bridging-Header.h */,
 				AB5EFA40EEE5497BB8817E49 /* SplashScreen.storyboard */,
->>>>>>> main:ios/MakerApp.xcodeproj/project.pbxproj
+
 			);
 			name = Nebra;
 			sourceTree = "<group>";
