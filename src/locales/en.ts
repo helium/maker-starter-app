@@ -52,7 +52,7 @@ export default {
       login_with_helium: 'Already have a Helium Wallet?\nTap to get started.',
       subtitle:
         'Use this app to onboard your miner for the first time and start earning HNT. <b>WARNING: You must also have the official Helium App installed in order to continue.</b>',
-      title: 'Welcome\nto The Nebra Helium App',
+      title: 'Welcome\nto the Nebra Helium App',
     },
     linkAccount: {
       stepOne: '1. Download a supported Wallet App',
@@ -152,24 +152,27 @@ export default {
     education: {
       cards: [
         {
-          subtitle: '[Placeholder]',
-          title: '[Placeholder]',
+          subtitle:
+            'Hotspots love places where they can see plenty of sky and spaced at least 300 meters away from other hotspots.',
+          title: 'Give me a nice view',
         },
         {
-          subtitle: '[Placeholder]',
-          title: '[Placeholder]',
+          subtitle:
+            "Hotspots shouldn't hide in a nightstand or bookcase. Put it next to a window instead.",
+          title: "Don't hide me",
         },
         {
-          subtitle: '[Placeholder]',
-          title: '[Placeholder]',
+          subtitle: "Nearby buildings may decrease your hotspot's coverage.",
+          title: 'Buildings may block my signals',
         },
         {
-          subtitle: '[Placeholder]',
-          title: '[Placeholder]',
+          subtitle:
+            'Try to keep your hotspot away from metal meshes, which can block radio signals dramatically.',
+          title: 'Hotspots hate bug screens!',
         },
       ],
       // TODO
-      title: '[Your Hotspot\nSetup Instructions]',
+      title: 'How to place your hotspot',
     },
     enable_location: {
       cancel: "No thanks, I'll set it up later",
@@ -301,7 +304,7 @@ export default {
         assertLocation: 'Assert Location',
         transfer: 'Transfer Hotspot',
       },
-      title: 'Add a\nNebra Miner',
+      title: 'Add a\nNebra Hotspot',
     },
   },
   learn: {

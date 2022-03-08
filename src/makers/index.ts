@@ -1,19 +1,19 @@
-import example from './example'
+import nebra from './nebra'
 import customAntennas from './custom/antennas'
 import { LangType, supportedLangs } from '../utils/i18n/i18nTypes'
 import { HotspotMakerLangField } from './hotspotMakerTypes'
 
 export const Makers: Record<string, { id: number; supportEmail: string }> = {
-  example,
+  nebra,
 }
 
 export const AntennaModels = {
-  ...example.antennas,
+  ...nebra.antennas,
   ...customAntennas,
 }
 
 export const HotspotMakerModels = {
-  ...example.hotspots,
+  ...nebra.hotspots,
 }
 
 export type HotspotType = keyof typeof HotspotMakerModels
@@ -53,5 +53,5 @@ export const AntennaTypeCount = AntennaModelKeys.length
 
 export const getMakerSupportEmail = (makerId?: number): string => {
   const makerKey = Object.keys(Makers).find((m) => Makers[m].id === makerId)
-  return makerKey ? Makers[makerKey].supportEmail : 'support@helium.com'
+  return makerKey ? Makers[makerKey].supportEmail : 'support@nebra.com'
 }
