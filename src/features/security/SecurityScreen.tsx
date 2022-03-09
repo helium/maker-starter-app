@@ -69,7 +69,7 @@ const SecurityScreen = ({ visible }: Props) => {
     >
       <AnimatedImage
         style={style}
-        source={require('../../assets/images/SplashScreen.png')}
+        source={require('../../assets/images/splashscreen.png')}
       />
     </Box>
   )
