@@ -1,10 +1,12 @@
-import HotspotIcon from './icon.svg'
+import IN1Icon from './in1.svg'
+import OUT1Icon from './out1.svg'
+import INROCKPIIcon from './inrockpi.svg'
 import { MakerHotspot } from '../hotspotMakerTypes'
 import ANTENNAS from './antennas'
 
-const NebraHotspotBLE = {
-  name: 'Nebra Hotspot',
-  icon: HotspotIcon,
+const IN1BLE = {
+  name: 'Nebra Indoor Original ',
+  icon: IN1Icon,
   onboardType: 'BLE',
   translations: {
     en: {
@@ -27,4 +29,54 @@ const NebraHotspotBLE = {
   },
 } as MakerHotspot
 
-export default { NebraHotspotBLE }
+const OUT1BLE = {
+  name: 'Nebra Outdoor Original',
+  icon: OUT1Icon,
+  onboardType: 'BLE',
+  translations: {
+    en: {
+      internal: [
+        {
+          title: 'Pair with hotspot',
+          body:
+            'Unplug your device and plug back in. It will be discoverable for 5min after powering back on.',
+          button: 'Continue',
+        },
+      ],
+    },
+    ja: {},
+    ko: {},
+    zh: {},
+  },
+  antenna: {
+    us: ANTENNAS.NEBRA_US_3,
+    default: ANTENNAS.NEBRA_US_3,
+  },
+} as MakerHotspot
+
+const HHRK4IN1BLE = {
+  name: 'Nebra Indoor ROCK Pi',
+  icon: INROCKPIIcon,
+  onboardType: 'BLE',
+  translations: {
+    en: {
+      internal: [
+        {
+          title: 'Pair with hotspot',
+          body:
+            'Press and hold the button on the side of your hotspot for 3 seconds to make it discoverable.',
+          button: 'Continue',
+        },
+      ],
+    },
+    ja: {},
+    ko: {},
+    zh: {},
+  },
+  antenna: {
+    us: ANTENNAS.NEBRA_US_3,
+    default: ANTENNAS.NEBRA_US_3,
+  },
+} as MakerHotspot
+
+export default { IN1BLE, OUT1BLE, HHRK4IN1BLE }
