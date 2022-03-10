@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
-        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -12,24 +12,28 @@
         <scene sceneID="EHf-IW-A2E">
             <objects>
                 <viewController id="01J-lp-oVM" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="kt8-hX-sFg"/>
+                        <viewControllerLayoutGuide type="bottom" id="1I4-rC-8Dd"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3" colorLabel="IBBuiltInLabel-Orange">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nebra Hotspot" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QnD-sN-Oc4">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SplashScreen" translatesAutoresizingMaskIntoConstraints="NO" id="Pba-ui-3IK">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="27"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                                <color key="backgroundColor" systemColor="linkColor"/>
+                            </imageView>
                         </subviews>
-                        <viewLayoutGuide key="safeArea" id="Bcu-3y-fUS"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <accessibility key="accessibilityConfiguration">
+                            <accessibilityTraits key="traits" image="YES"/>
+                        </accessibility>
                         <constraints>
-                            <constraint firstItem="Bcu-3y-fUS" firstAttribute="bottom" secondItem="QnD-sN-Oc4" secondAttribute="bottom" id="2Ok-Fo-tPa"/>
-                            <constraint firstItem="QnD-sN-Oc4" firstAttribute="top" secondItem="Bcu-3y-fUS" secondAttribute="top" id="FMY-yr-Suf"/>
-                            <constraint firstItem="Bcu-3y-fUS" firstAttribute="trailing" secondItem="QnD-sN-Oc4" secondAttribute="trailing" id="nnF-hX-xvu"/>
-                            <constraint firstItem="QnD-sN-Oc4" firstAttribute="leading" secondItem="Bcu-3y-fUS" secondAttribute="leading" id="vP5-Os-TBb"/>
+                            <constraint firstItem="1I4-rC-8Dd" firstAttribute="top" secondItem="Pba-ui-3IK" secondAttribute="bottom" id="c4J-rn-UvJ"/>
+                            <constraint firstItem="Pba-ui-3IK" firstAttribute="top" secondItem="kt8-hX-sFg" secondAttribute="bottom" id="d2G-Au-Wy6"/>
+                            <constraint firstAttribute="trailing" secondItem="Pba-ui-3IK" secondAttribute="trailing" id="jE9-U7-vgL"/>
+                            <constraint firstItem="Pba-ui-3IK" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="xtT-pH-TOa"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -38,4 +42,10 @@
             <point key="canvasLocation" x="52.173913043478265" y="375"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="SplashScreen" width="1285" height="2779"/>
+        <systemColor name="linkColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
 </document>
