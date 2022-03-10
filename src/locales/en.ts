@@ -51,8 +51,8 @@ export default {
       create_account: 'Create an account on the Helium Network',
       login_with_helium: 'Already have a Helium Wallet?\nTap to get started.',
       subtitle:
-        'Use this app to onboard your miner for the first time and start earning HNT. <b>WARNING: You must also have the official Helium App installed in order to continue.</b>',
-      title: 'Welcome\nto the Nebra Helium App',
+        'Nebra Helium currently supports hotspot onboarding, location assertion, and device transfers.\n\n<b>You must also have the official Helium App installed in order to continue.</b>',
+      title: 'Welcome\nto Nebra',
     },
     linkAccount: {
       stepOne: '1. Download a supported Wallet App',

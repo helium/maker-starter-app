@@ -16,7 +16,7 @@ const LinkAccount = () => {
     (app: WalletLink.DelegateApp) => async () => {
       try {
         const url = WalletLink.createWalletLinkUrl({
-          universalLink: app.universalLink,
+          universalLink: app.urlScheme,
           requestAppId: getBundleId(),
           callbackUrl: 'makerappscheme://',
           appName: 'Nebra Hotspot',
