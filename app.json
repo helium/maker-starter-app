@@ -1,6 +1,6 @@
 {
-  "name": "Illios",
-  "displayName": "Illios App",
+  "name": "Illios Hotspot",
+  "displayName": "Illios",
   "expo": {
     "scheme": "illios"
   }

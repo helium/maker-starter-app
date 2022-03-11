@@ -24,7 +24,7 @@ const HotspotAssert = () => {
         name="HotspotSetupScanningScreen"
         component={HotspotSetupScanningScreen}
         initialParams={{
-          hotspotType: 'ExampleHotspotBLE',
+          hotspotType: 'IlliosHotspotBLE',
           gatewayAction: 'assertLocation',
         }}
       />

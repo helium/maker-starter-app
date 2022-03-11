@@ -167,7 +167,7 @@ export default {
           title: '[Placeholder]',
         },
       ],
-      title: '[Your Hotspot\nSetup Instructions]',
+      title: 'Please select the hotspot you would like to add.',
     },
     enable_location: {
       cancel: "No thanks, I'll set it up later",
@@ -299,7 +299,7 @@ export default {
         assertLocation: 'Assert Location',
         transfer: 'Transfer Hotspot',
       },
-      title: 'Add a\n[Placeholder] Miner',
+      title: 'Choose your Hotspot',
     },
   },
   learn: {

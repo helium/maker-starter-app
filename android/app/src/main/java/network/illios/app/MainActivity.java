@@ -1,4 +1,4 @@
-package com.illios.app;
+package network.illios.app;
 import expo.modules.ReactActivityDelegateWrapper;
 import com.facebook.react.ReactActivityDelegate;
 
@@ -22,7 +22,7 @@ public class MainActivity extends ReactActivity {
    */
   @Override
   protected String getMainComponentName() {
-    return "Illios";
+    return "Illios Hotspot";
   }
 
   @Override

@@ -173,7 +173,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.illios.app"
+        applicationId "network.illios.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode getVersionCode()
