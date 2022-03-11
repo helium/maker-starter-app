@@ -65,10 +65,14 @@ const palette = {
   peacockGreen: '#2A9D8F',
   yellow: '#E9C46A',
   deepOrange: '#F4A261',
+  orange: '#f19820',
   burntSienna: '#E76F51',
   black: '#000000',
   white: '#FFFFFF',
+  grayLight: '#F5F5F5',
   transparent: '#00000000',
+  gainsboro: '#D8D8D8',
+  grayMedium: '#828282',
   offWhite: '#F9FAFC',
   bobcatRed: '#EE2737',
   bobcatDarkGrey: '#333333',
@@ -79,7 +83,7 @@ export const lightThemeColors = {
   ...palette,
 
   primary: palette.bobcatRed,
-  primaryBackground: palette.white,
+  primaryBackground: palette.grayLight,
   primaryText: palette.black,
   secondaryBackground: palette.offWhite,
   secondary: palette.bobcatGrey,
@@ -89,7 +93,7 @@ export const lightThemeColors = {
   surfaceText: palette.bobcatDarkGrey,
   surfaceSecondary: palette.offWhite,
   surfaceSecondaryText: palette.bobcatDarkGrey,
-  surfaceContrast: palette.bobcatDarkGrey,
+  surfaceContrast: palette.orange,
   surfaceContrastText: palette.white,
 }
 export const darkThemeColors = {

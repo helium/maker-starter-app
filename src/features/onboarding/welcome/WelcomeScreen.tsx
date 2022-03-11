@@ -4,7 +4,6 @@ import { useNavigation } from '@react-navigation/native'
 import Text from '../../../components/Text'
 import { OnboardingNavigationProp } from '../onboardingTypes'
 import Box from '../../../components/Box'
-import TextTransform from '../../../components/TextTransform'
 import SafeAreaBox from '../../../components/SafeAreaBox'
 import TouchableOpacityBox from '../../../components/TouchableOpacityBox'
 
@@ -29,11 +28,6 @@ const WelcomeScreen = () => {
       paddingTop="xxxl"
     >
       <Text variant="h1">{t('account_setup.welcome.title')}</Text>
-      <TextTransform
-        variant="subtitle1"
-        marginVertical="xxl"
-        i18nKey="account_setup.welcome.subtitle"
-      />
       <Box flex={1} />
 
       <TouchableOpacityBox onPress={createAccount} width="100%" padding="l">
