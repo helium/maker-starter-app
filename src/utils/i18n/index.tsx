@@ -6,6 +6,7 @@ import en from '../../locales/en'
 import ko from '../../locales/ko'
 import ja from '../../locales/ja'
 import zh from '../../locales/zh'
+import pt_BR from '../../locales/pt_BR'
 import { getSecureItem, setSecureItem } from '../secureAccount'
 import { getTranslations } from '../../makers'
 
@@ -17,7 +18,7 @@ export const { decimalSeparator } = numberFormatSettings
 export const [currencyType] = RNLocalize.getCurrencies() || ['USD']
 export const usesMetricSystem = RNLocalize.usesMetricSystem()
 
-let phoneLang = 'en'
+let phoneLang = 'pt_BR'
 let phoneLocale = 'en-US'
 if (Array.isArray(locales)) {
   phoneLang = locales[0].languageCode
@@ -32,15 +33,18 @@ i18n.use(initReactI18next).init({
     en: { translation: { ...en, makerHotspot: hotspotMakerTranslations.en } },
     zh: { translation: { ...zh, makerHotspot: hotspotMakerTranslations.zh } },
     ja: { translation: { ...ja, makerHotspot: hotspotMakerTranslations.ko } },
+    pt_BR: {
+      translation: { ...pt_BR, makerHotspot: hotspotMakerTranslations.pt_BR },
+    },
   },
   lng: phoneLang,
-  fallbackLng: ['en'],
+  fallbackLng: ['pt_BR', 'en'],
 })
 
 export const locale = phoneLocale
 
 export const useLanguage = () => {
-  const [language, setLanguage] = useState('en')
+  const [language, setLanguage] = useState('pt_BR')
 
   useEffect(() => {
     initLanguage()

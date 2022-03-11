@@ -1,7 +1,10 @@
 import React, { createContext, ReactNode, useContext } from 'react'
 import { useLanguage } from '../utils/i18n'
 
-const initialState = { language: 'en', changeLanguage: async () => undefined }
+const initialState = {
+  language: 'pt_BR',
+  changeLanguage: async () => undefined,
+}
 
 const LanguageContext = createContext<ReturnType<typeof useLanguage>>(
   initialState,

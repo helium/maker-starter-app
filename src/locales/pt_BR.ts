@@ -1,51 +1,12 @@
 export default {
-  account_import: {
-    alert: {
-      body: "This seed phrase doesn't correspond to an account",
-      title: 'Erro',
-    },
-    complete: {
-      title: 'Recuperando Conta...',
-    },
-    confirm: {
-      next: 'Submit Seed Phrase',
-      subtitle:
-        'Here are the 12 words you’ve entered. Tap on any of them if you need to edit.',
-      title: 'Please Confirm\nSeed Phrase',
-    },
-    word_entry: {
-      placeholder: '{{ordinal}} word',
-      subtitle: 'Recovery Seed Phrases are not\ncase-sensitive',
-      title: 'Enter Recovery\nSeed Phrase',
-    },
-  },
   account_setup: {
-    confirm: {
-      forgot: 'I forgot my words',
-      subtitle:
-        'Which word below was your <b><errorText>{{ordinal}} word?</errorText></b>',
-      title: 'Confirm\nYour Words',
-    },
     confirm_pin: {
-      subtitle: 'Re-enter your PIN',
-      title: 'Repeat PIN',
+      subtitle: 'Insira novamente seu PIN',
+      title: 'Reinsira o PIN',
     },
     create_pin: {
-      subtitle: 'Let’s secure your account with a PIN Code.',
-      title: 'Set PIN Code',
-    },
-    generating: 'GENERATING YOUR 12 WORDS...',
-    passphrase: {
-      next: 'I have written these down',
-      subtitle:
-        'It is crucial you <b>write all of these\n12 words down, in order</b>.\n\n<errorText>They cannot be recovered.</errorText>',
-      title: 'Your 12 Word\nPassword',
-    },
-    warning: {
-      generate: 'Generate my 12 words',
-      subtitle:
-        'Accounts are protected by\n<b><errorText>12 unique words</errorText></b>, that act as\na password for signing in or\nrecovering accounts.',
-      title: 'Criando\n uma conta segura.',
+      subtitle: 'Deixe sua conta mais segura com um PIN',
+      title: 'Configurar PIN de segurança',
     },
     welcome: {
       create_account: 'Criar uma conta na Rede Helium',
@@ -57,7 +18,7 @@ export default {
     linkAccount: {
       stepOne: '1. Download a supported Wallet App',
       stepTwo: '2. Criar uma conta',
-      stepThree: '3. Come back to this app and sign in.',
+      stepThree: '3. Volte ao app e vincule sua conta',
     },
     createAccount: {
       signInWith: 'Entrar com:',
@@ -84,8 +45,8 @@ export default {
     },
   },
   auth: {
-    enter_current: 'Insira sua senha atual',
-    title: 'Enter Your PIN',
+    enter_current: 'Insira seu PIN atual',
+    title: 'Insira seu PIN',
   },
   back: 'Voltar',
   generic: {
@@ -102,7 +63,7 @@ export default {
     scan_again: 'Scan Again',
     search_location: 'Search for an address or place',
     skip: '[skip button]',
-    something_went_wrong: 'SAlgo deu errado',
+    something_went_wrong: 'Algo deu errado',
     understand: 'Eu entendo',
     unknown: 'Desconhecido',
     period: '.',
@@ -131,19 +92,19 @@ export default {
     },
     ble_scan: {
       cancel: 'Cancelar Scan',
-      title: 'SCANNING FOR HOTSPOTS',
+      title: 'PROCURANDO HOTSPOTS',
     },
     ble_select: {
-      hotspots_found: '{{count}} Hotspot found.',
-      hotspots_found_plural: '{{count}} Hotspots found',
-      subtitle: 'Select your Hotspot to continue.',
+      hotspots_found: '{{count}} Hotspot encontrado.',
+      hotspots_found_plural: '{{count}} Hotspots encontrados.',
+      subtitle: 'Escolha o seu Hotspot para continuar.',
     },
     confirm: {
-      mac_address: 'MAC Address',
+      mac_address: 'Endereço MAC',
       owner_address: 'Owner Address',
-      public_key: 'Public Key',
-      title: 'Confirm\nInformation',
-      title_one_line: 'Confirm Information',
+      public_key: 'Chave Pública',
+      title: 'Confirmar\nInformação',
+      title_one_line: 'Confirmar Informação',
     },
     diagnostics: {
       title: 'Diagnósticos',
@@ -170,48 +131,48 @@ export default {
       title: '[Your Hotspot\nSetup Instructions]',
     },
     enable_location: {
-      cancel: "No thanks, I'll set it up later",
-      next: 'Ask for Permissions',
-      p_1: 'First, we’ll ask for permission to access your phone’s location.',
+      cancel: 'Não obrigado, configurarei mais tarde',
+      next: 'Pedir permissão',
+      p_1: 'Primeiro, precisamos da localização do seu dispositivo.',
       subtitle:
         'We need to set a location for your Hotspot. We can use your phone to do this.',
-      title: 'Set Hotspot\nLocation',
+      title: 'Configurar Hotspot\nLocalização',
     },
     external: {
-      qrTitle: 'Scan QR Code',
-      wallet_address: 'Your wallet address is:',
+      qrTitle: 'Escanear o QR Code',
+      wallet_address: 'O endereço da sua carteira é:',
       webTitle: 'Web Onboarding',
     },
     firmware_update: {
-      current_version: 'Current Version',
+      current_version: 'Versão atual',
       explanation:
-        'Your Hotspot will check for updates automatically. This can take about 10 minutes. Leave it plugged in and check back later.',
-      next: 'Got it',
-      required_version: 'Required Version',
-      subtitle: 'Your Hotspot needs a firmware update before you can continue.',
-      title: 'Update Available',
+        'Seu Hotspot se atualiza automaticamente. Isso pode demorar uns 10 minutos. Deixe o dispositivo ligado e cheque mais tarde.',
+      next: 'Entendi',
+      required_version: 'Versão necessária',
+      subtitle: 'Seu hotspot precisa ser atualizado para continuar.',
+      title: 'Atualização disponível',
     },
     location: {
-      next: 'Set Location',
-      title: 'Hotspot Location',
+      next: 'Configurar Localização',
+      title: 'Localização Hotspot',
     },
     location_fee: {
-      balance: 'Balance:',
+      balance: 'Saldo:',
       confirm_location:
-        'Confirm the location selected is correct and register your Hotspot.',
-      elevation: '{{count}} meter',
+        'Confirme se o local selecionado está correto e cadastre seu Hotspot.',
+      elevation: '{{count}} metro',
       elevation_label: 'Height:',
-      elevation_plural: '{{count}} meters',
-      fee: 'Fee:',
-      fee_next: 'Pay Fee & Register Hotspot',
+      elevation_plural: '{{count}} metros',
+      fee: 'Taxa:',
+      fee_next: 'Pagar taxa & Cadastrar Hotspot',
       gain: '{{gain}} dBi',
-      gain_label: 'TX / RX Gain:',
-      next: 'Register Hotspot',
-      no_funds: 'There is insufficient HNT in your account balance',
+      gain_label: 'TX / RX Ganho:',
+      next: 'Cadastrar Hotspot',
+      no_funds: 'Não há saldo suficiente HNT no saldo da sua conta',
       subtitle_fee:
-        'You need to pay a $10 Location Fee (in DC) to confirm this location.',
-      subtitle_free: 'Your Location Fee ($10) has been prepaid.',
-      title: 'Location Fee',
+        'Você precisa pagar uma taxa de $10 (em DC) para confirmar a localização.',
+      subtitle_free: 'Sua taxa de localização ($10) já foi paga.',
+      title: 'Taxa de Localização',
     },
     not_owner: {
       contact_manufacturer:

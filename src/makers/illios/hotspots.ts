@@ -32,6 +32,7 @@ const IlliosHotspotBLE = {
     ja: {},
     ko: {},
     zh: {},
+    pt_BR: {},
   },
   antenna: {
     us: ANTENNAS.ILLIOS_AU,
@@ -50,6 +51,7 @@ const IlliosHotspotQR = {
     ja: {},
     ko: {},
     zh: {},
+    pt_BR: {},
   },
   antenna: {
     us: ANTENNAS.ILLIOS_AU,
@@ -69,6 +71,7 @@ const IlliosHotspotWeb = {
     ja: {},
     ko: {},
     zh: {},
+    pt_BR: {},
   },
   antenna: {
     us: ANTENNAS.ILLIOS_AU,
