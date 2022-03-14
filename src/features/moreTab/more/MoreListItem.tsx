@@ -47,7 +47,7 @@ const MoreListItem = ({
 
   const trackColor = useMemo(
     () => ({
-      false: colors.secondaryBackground,
+      false: colors.white,
       true: colors.primaryBackground,
     }),
     [colors],
@@ -79,7 +79,7 @@ const MoreListItem = ({
     >
       <Text
         variant="body2"
-        color={destructive ? 'secondaryText' : 'primaryText'}
+        color={destructive ? 'secondaryText' : 'secondaryText'}
       >
         {title}
       </Text>

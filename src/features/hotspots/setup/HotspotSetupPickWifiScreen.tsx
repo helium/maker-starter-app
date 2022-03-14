@@ -226,7 +226,7 @@ const HotspotSetupPickWifiScreen = () => {
           }
         />
         <DebouncedButton
-          variant="primary"
+          variant="secondary"
           title={t('hotspot_setup.wifi_scan.ethernet')}
           marginVertical="m"
           onPress={navSkip}
