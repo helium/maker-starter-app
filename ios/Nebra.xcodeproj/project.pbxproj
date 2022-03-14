@@ -16,8 +16,8 @@
 		52DF7BF9B6F6812C987607E2 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7F384B36BEBF65291C3764 /* ExpoModulesProvider.swift */; };
 		78771B5356165C9F7AF63C78 /* libPods-Nebra-NebraTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ED9B03F4EE6066C138C909EC /* libPods-Nebra-NebraTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		964E9C302638CD0C00CCBCCC /* bridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 964E9C2F2638CD0C00CCBCCC /* bridge.swift */; };
 		94D04421FF644811AB74A577 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB5EFA40EEE5497BB8817E49 /* SplashScreen.storyboard */; };
+		964E9C302638CD0C00CCBCCC /* bridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 964E9C2F2638CD0C00CCBCCC /* bridge.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,14 +62,13 @@
 		964E9C2E2638CD0B00CCBCCC /* Nebra-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Nebra-Bridging-Header.h"; sourceTree = "<group>"; };
 		964E9C2F2638CD0C00CCBCCC /* bridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bridge.swift; sourceTree = "<group>"; };
 		A8C2C551342F5A01DDC30CEC /* libPods-Nebra.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Nebra.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AB5EFA40EEE5497BB8817E49 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = Nebra/SplashScreen.storyboard; sourceTree = "<group>"; };
 		BFB45BBD2A85DBD1301D84BC /* Pods-Nebra-NebraTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nebra-NebraTests.debug.xcconfig"; path = "Target Support Files/Pods-Nebra-NebraTests/Pods-Nebra-NebraTests.debug.xcconfig"; sourceTree = "<group>"; };
 		DE9CC2ABA6BCC071224EC7DF /* Pods-Nebra-NebraTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nebra-NebraTests.release.xcconfig"; path = "Target Support Files/Pods-Nebra-NebraTests/Pods-Nebra-NebraTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		ED9B03F4EE6066C138C909EC /* libPods-Nebra-NebraTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Nebra-NebraTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8B0E2112563005D00EB1E73 /* Nebra.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Nebra.entitlements; path = Nebra/Nebra.entitlements; sourceTree = "<group>"; };
-        AB5EFA40EEE5497BB8817E49 /* SplashScreen.storyboard */ = {isa = PBXFileReference; name = "SplashScreen.storyboard"; path = "Nebra/SplashScreen.storyboard"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = file.storyboard; };
-
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,7 +122,6 @@
 				964E9C2F2638CD0C00CCBCCC /* bridge.swift */,
 				964E9C2E2638CD0B00CCBCCC /* Nebra-Bridging-Header.h */,
 				AB5EFA40EEE5497BB8817E49 /* SplashScreen.storyboard */,
-
 			);
 			name = Nebra;
 			sourceTree = "<group>";
@@ -597,7 +595,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Nebra/Nebra.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = PVM9KJZ2AD;
+				DEVELOPMENT_TEAM = 9L5L9YJKV3;
 				EXCLUDED_ARCHS = "";
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = Nebra/Info.plist;
