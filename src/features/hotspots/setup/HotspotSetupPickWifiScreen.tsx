@@ -90,7 +90,14 @@ const HotspotSetupPickWifiScreen = () => {
     const token = await getSecureItem('walletLinkToken')
     if (!token) return
     const address = await getAddress()
-    const hotspot = await getHotspotDetails(hotspotAddress)
+
+    // Handle "404 not found" exception when onboarding new device
+    hotspot = undefined
+    try {
+      hotspot = await getHotspotDetails(hotspotAddress)
+    } catch (error) {
+      console.log('Hotspot not found')
+    }
 
     if (hotspot && hotspot.owner === address) {
       navigation.replace('OwnedHotspotErrorScreen')
