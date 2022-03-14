@@ -1,13 +1,13 @@
 import React, { memo, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { WalletLink } from '@helium/react-native-sdk'
-import { Linking, Platform } from 'react-native'
+import { Linking, Platform, Alert } from 'react-native'
 import { getBundleId } from 'react-native-device-info'
 import SafeAreaBox from '../../components/SafeAreaBox'
 import Text from '../../components/Text'
 import Box from '../../components/Box'
 import TouchableOpacityBox from '../../components/TouchableOpacityBox'
-// import { locale } from '../../utils/i18n'
+import { locale } from '../../utils/i18n'
 
 const LinkAccount = () => {
   const { t } = useTranslation()
@@ -22,34 +22,35 @@ const LinkAccount = () => {
           callbackUrl: 'makerappscheme://',
           appName: 'Nebra Hotspot',
         })
-        // Checking if the wallet URL scheme can be opened.
-        // const supported = await Linking.canOpenURL(url)
-        // if (supported) {
-        Linking.openURL(url)
-        // } else {
-        //   Alert.alert(
-        //     'Helium App Not Found',
-        //     'You must have the official Helium app installed.',
-        //     [
-        //       {
-        //         text: 'Cancel',
-        //         style: 'cancel',
-        //       },
-        //       {
-        //         text: 'Get Helium App',
-        //         onPress: () => {
-        //           if (Platform.OS === 'android') {
-        //             Linking.openURL(`market://details?id=${app.androidPackage}`)
-        //           } else if (Platform.OS === 'ios') {
-        //             Linking.openURL(
-        //               `https://apps.apple.com/${locale}/app/${app.name}/id${app.appStoreId}`,
-        //             )
-        //           }
-        //         },
-        //       },
-        //     ],
-        //   )
-        // }
+
+        // Check if the wallet URL scheme can be opened.
+        const supported = await Linking.canOpenURL(url)
+        if (supported) {
+          Linking.openURL(url)
+        } else {
+          Alert.alert(
+            'Helium App Not Found',
+            'You must have the official Helium app installed.',
+            [
+              {
+                text: 'Cancel',
+                style: 'cancel',
+              },
+              {
+                text: 'Get Helium App',
+                onPress: () => {
+                  if (Platform.OS === 'android') {
+                    Linking.openURL(`market://details?id=${app.androidPackage}`)
+                  } else if (Platform.OS === 'ios') {
+                    Linking.openURL(
+                      `https://apps.apple.com/${locale}/app/${app.name}/id${app.appStoreId}`,
+                    )
+                  }
+                },
+              },
+            ],
+          )
+        }
       } catch (error) {
         // eslint-disable-next-line no-console
         console.error(error)
