@@ -122,7 +122,7 @@ const App = () => {
   )
 
   return (
-    <OnboardingProvider baseUrl="https://2bbd-2607-fb90-a883-f79f-745f-7ac-ed18-abc5.ngrok.io/api/v2">
+    <OnboardingProvider baseUrl="https://onboarding.dewi.org/api/v2">
       <HotspotBleProvider>
         <ThemeProvider theme={colorAdaptedTheme}>
           <BottomSheetModalProvider>
