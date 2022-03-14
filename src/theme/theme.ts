@@ -70,27 +70,27 @@ const palette = {
   white: '#FFFFFF',
   transparent: '#00000000',
   offWhite: '#F9FAFC',
-  nebraBlue: '#727CF5',
+  nebraBlue: '#02A8F5',
   nebraDarkBlue: '#6169D0',
   nebraDarkGrey: '#5C636A',
-  nebraGrey: '#6C757D',
+  nebraGrey: '#424242',
 }
 
 export const lightThemeColors = {
   ...palette,
 
   primary: palette.nebraBlue,
-  primaryBackground: palette.nebraBlue,
-  primaryText: palette.white,
-  secondaryBackground: palette.nebraDarkBlue,
+  primaryBackground: palette.white,
+  primaryText: palette.nebraBlue,
+  secondaryBackground: palette.nebraBlue,
   secondary: palette.nebraGrey,
   secondaryText: palette.white,
   error: palette.nebraBlue,
-  surface: palette.nebraDarkBlue,
-  surfaceText: palette.black,
-  surfaceSecondary: palette.nebraDarkBlue,
+  surface: palette.nebraBlue,
+  surfaceText: palette.white,
+  surfaceSecondary: palette.nebraBlue,
   surfaceSecondaryText: palette.white,
-  surfaceContrast: palette.nebraDarkBlue,
+  surfaceContrast: palette.nebraBlue,
   surfaceContrastText: palette.white,
 }
 export const darkThemeColors = {

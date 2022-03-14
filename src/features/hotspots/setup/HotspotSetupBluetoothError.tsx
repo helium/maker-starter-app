@@ -40,10 +40,10 @@ const HotspotSetupBluetoothError = () => {
             borderBottomLeftRadius="m"
             padding="m"
           >
-            <Text variant="body2" marginBottom="xs">
+            <Text variant="body2" marginBottom="xs" color="secondaryText">
               {t('hotspot_setup.ble_error.enablePairing')}
             </Text>
-            <Text variant="body2">
+            <Text variant="body2" color="secondaryText">
               {t('hotspot_setup.ble_error.pairingInstructions')}
             </Text>
           </Box>
