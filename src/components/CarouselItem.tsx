@@ -1,7 +1,6 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { SvgProps } from 'react-native-svg'
-import { useColors } from '../theme/themeHooks'
+import { Image, StyleSheet } from 'react-native'
 import Box from './Box'
 import Card from './Card'
 import Text from './Text'
@@ -9,15 +8,14 @@ import Text from './Text'
 export type CarouselItemData = {
   title: string
   desc: string
-  Icon: React.FC<SvgProps>
+  image: ImageSourcePropType
 }
 
 const CarouselItem = ({
-  item: { Icon, title, desc },
+  item: { image, title, desc },
 }: {
   item: CarouselItemData
 }) => {
-  const { surfaceContrast } = useColors()
   const { t } = useTranslation()
   return (
     <Card
@@ -34,7 +32,7 @@ const CarouselItem = ({
         justifyContent="center"
         borderRadius="l"
       >
-        <Icon color={surfaceContrast} height={90} />
+        <Image source={image} style={styles.carouselImage} />
       </Box>
       <Box
         backgroundColor="surface"
@@ -65,5 +63,13 @@ const CarouselItem = ({
     </Card>
   )
 }
+
+const styles = StyleSheet.create({
+  carouselImage: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+  },
+})
 
 export default CarouselItem
