@@ -71,7 +71,7 @@ const HotspotSetupPickLocationScreen = () => {
   }, [])
 
   const navNext = useCallback(() => {
-    navigation.navigate('AntennaSetupScreen', {
+    navigation.navigate('HotspotSetupConfirmLocationScreen', {
       ...params,
       coords: markerCenter,
       locationName,
