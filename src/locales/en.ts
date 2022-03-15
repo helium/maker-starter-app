@@ -295,16 +295,16 @@ export default {
     },
   },
   hotspots: {
-    view_activity: 'After adding a Hotspot, you can view your account on the ',
-    explorer: 'Helium Explorer',
+    view_activity: 'After adding a hotspot, you can view your account on the ',
+    explorer: 'Helium Explorer or Helium Wallet',
     empty: {
-      body: 'Your add hotspot\ninstructions',
+      body: 'Follow these instructions to setup your hotspot.',
       hotspots: {
         add: 'Add Hotspot',
         assertLocation: 'Assert Location',
         transfer: 'Transfer Hotspot',
       },
-      title: 'Add a\nNebra Hotspot',
+      title: 'Nebra Hotspot Setup',
     },
   },
   learn: {

@@ -55,7 +55,7 @@ const HotspotEducationScreen = () => {
     }
     return (
       <DebouncedButton
-        variant="secondary"
+        variant="primary"
         mode="text"
         onPress={navNext}
         title={t('generic.skip')}
