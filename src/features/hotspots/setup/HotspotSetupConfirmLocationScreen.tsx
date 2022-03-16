@@ -66,14 +66,15 @@ const HotspotSetupConfirmLocationScreen = () => {
       return
     }
 
-    Location.loadLocationFeeData({
+    const feeParams = {
       nonce: 0,
       accountIntegerBalance: account.balance.integerBalance,
       dataOnly: false,
       owner: ownerAddress,
       locationNonceLimit: onboardingRecord.maker.locationNonceLimit,
       makerAddress: onboardingRecord.maker.address,
-    }).then(setFeeData)
+    }
+    Location.loadLocationFeeData(feeParams).then(setFeeData)
   }, [ownerAddress, account, getOnboardingRecord, params.hotspotAddress])
 
   const navNext = useCallback(async () => {
@@ -104,6 +105,7 @@ const HotspotSetupConfirmLocationScreen = () => {
           {isFree ? (
             <Text
               variant="subtitle1"
+              color="primaryText"
               marginBottom={{ phone: 'l', smallPhone: 'ms' }}
             >
               {t('hotspot_setup.location_fee.subtitle_free')}
@@ -111,6 +113,7 @@ const HotspotSetupConfirmLocationScreen = () => {
           ) : (
             <Text
               variant="subtitle1"
+              color="primaryText"
               marginBottom={{ phone: 'l', smallPhone: 'ms' }}
             >
               {t('hotspot_setup.location_fee.subtitle_fee')}
@@ -118,6 +121,7 @@ const HotspotSetupConfirmLocationScreen = () => {
           )}
           <Text
             variant="subtitle1"
+            color="primaryText"
             marginBottom={{ phone: 'xl', smallPhone: 'ms' }}
             numberOfLines={2}
             adjustsFontSizeToFit
@@ -142,7 +146,7 @@ const HotspotSetupConfirmLocationScreen = () => {
             justifyContent="space-between"
             marginTop={{ phone: 'm', smallPhone: 'xxs' }}
           >
-            <Text variant="body1" color="secondaryText">
+            <Text variant="body1" color="primaryText">
               {t('hotspot_setup.location_fee.gain_label')}
             </Text>
             <Text variant="body1" color="primaryText">
@@ -155,7 +159,7 @@ const HotspotSetupConfirmLocationScreen = () => {
             justifyContent="space-between"
             marginTop={{ phone: 'm', smallPhone: 'xxs' }}
           >
-            <Text variant="body1" color="secondaryText">
+            <Text variant="body1" color="primaryText">
               {t('hotspot_setup.location_fee.elevation_label')}
             </Text>
             <Text variant="body1" color="primaryText">

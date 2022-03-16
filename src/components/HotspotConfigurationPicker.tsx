@@ -141,10 +141,10 @@ const HotspotConfigurationPicker = ({
     >
       <HeliumActionSheet
         title={t('antennas.onboarding.select')}
-        textProps={{ variant: 'body1', fontSize: 16, color: 'black' }}
+        textProps={{ variant: 'body1', fontSize: 16, color: 'secondaryText' }}
         initialValue={t('antennas.onboarding.select')}
         data={antennas}
-        iconColor="black"
+        iconColor="secondaryText"
         selectedValue={selectedAntenna?.name}
         onValueSelected={onSelectAntenna}
         buttonProps={{ justifyContent: 'space-between' }}
@@ -161,11 +161,11 @@ const HotspotConfigurationPicker = ({
           alignItems="center"
         >
           <Box flexDirection="row" alignItems="center">
-            <Text color="surfaceSecondaryText" marginRight="xs">
+            <Text color="secondaryText" marginRight="xs">
               {t('antennas.onboarding.gain')}
             </Text>
             <TouchableOpacityBox onPress={showGainInfo} padding="xs">
-              <InfoIcon color={colors.primary} />
+              <InfoIcon color={colors.secondaryText} />
             </TouchableOpacityBox>
           </Box>
           <Box
@@ -200,7 +200,7 @@ const HotspotConfigurationPicker = ({
               {t('antennas.onboarding.elevation')}
             </Text>
             <TouchableOpacityBox onPress={showElevationInfo} padding="xs">
-              <InfoIcon color={colors.primary} />
+              <InfoIcon color={colors.secondaryText} />
             </TouchableOpacityBox>
           </Box>
           <TextInput
