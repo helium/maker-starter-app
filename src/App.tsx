@@ -122,7 +122,7 @@ const App = () => {
   )
 
   return (
-    <OnboardingProvider baseUrl="https://onboarding.dewi.org/api/v2">
+    <OnboardingProvider baseUrl="https://helium-onboarding.nebra.com/api/v2">
       <HotspotBleProvider>
         <ThemeProvider theme={colorAdaptedTheme}>
           <BottomSheetModalProvider>

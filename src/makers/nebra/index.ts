@@ -4,6 +4,6 @@ import hotspots from './hotspots'
 export default {
   antennas,
   hotspots,
-  id: 2, // TODO: Get maker id from onboarding server
+  id: 1,
   supportEmail: 'support@nebra.com',
 }
