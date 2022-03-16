@@ -54,8 +54,6 @@
 	<string>Allow Nebra Hotspot to connect to and manage your Hotspots</string>
 	<key>NSBluetoothPeripheralUsageDescription</key>
 	<string>Allow Nebra Hotspot to connect to and manage your Hotspots</string>
-	<key>NSCameraUsageDescription</key>
-	<string>Allow Nebra Hotspot to use the camera to scan QR codes</string>
 	<key>NSFaceIDUsageDescription</key>
 	<string>Allow Nebra Hotspot to authenticate with Face ID</string>
 	<key>NSLocationAlwaysUsageDescription</key>
