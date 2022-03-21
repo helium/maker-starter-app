@@ -1,39 +1,41 @@
-import React, { memo, useCallback, useState } from 'react'
+import React, { memo, useCallback, useMemo } from 'react'
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
-import { useTranslation } from 'react-i18next'
 import { useNavigation } from '@react-navigation/native'
 import AddIcon from '@assets/images/add.svg'
-import { Linking } from 'react-native'
-import { useAsync } from 'react-async-hook'
+import { useSelector } from 'react-redux'
 import Box from '../../../components/Box'
-import Text from '../../../components/Text'
-import Button from '../../../components/Button'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
-import { EXPLORER_BASE_URL } from '../../../utils/config'
-import { getAddress } from '../../../utils/secureAccount'
+import CircularButton from '../../../components/CircularButton'
+import HotspotsList from './HotspotsList'
+import { RootState } from '../../../store/rootReducer'
+import { isHotspot } from '../../../utils/hotspotUtils'
+import useMount from '../../../utils/useMount'
+import { fetchHotspotsData } from '../../../store/hotspots/hotspotsSlice'
+import { useAppDispatch } from '../../../store/store'
 
 const HotspotsScreen = () => {
-  const { t } = useTranslation()
   const navigation = useNavigation<RootNavigationProp>()
-  const [accountAddress, setAccountAddress] = useState('')
 
-  useAsync(async () => {
-    const account = await getAddress()
-    setAccountAddress(account || '')
-  }, [])
+  const dispatch = useAppDispatch()
+
+  const hotspots = useSelector((state: RootState) => state.hotspots.hotspots)
+
+  useMount(() => {
+    dispatch(fetchHotspotsData())
+  })
 
   const addHotspot = useCallback(() => navigation.push('HotspotSetup'), [
     navigation,
   ])
 
-  const assertHotspot = useCallback(() => navigation.push('HotspotAssert'), [
-    navigation,
+  const hasHotspots = useMemo(() => !!hotspots.data?.length, [
+    hotspots.data?.length,
   ])
 
-  const openExplorer = useCallback(
-    () => Linking.openURL(`${EXPLORER_BASE_URL}/accounts/${accountAddress}`),
-    [accountAddress],
-  )
+  const handlePresentHotspot = useCallback(async (gateway: Hotspot) => {
+    if (!isHotspot(gateway)) {
+    }
+  }, [])
 
   return (
     <Box backgroundColor="primaryBackground" flex={1}>
@@ -44,32 +46,19 @@ const HotspotsScreen = () => {
           justifyContent="center"
           backgroundColor="primaryBackground"
         >
-          <Text variant="h2">{t('hotspots.empty.title')}</Text>
-          <Text variant="body1" marginTop="ms">
-            {t('hotspots.empty.body')}
-          </Text>
-          <Button
+          <CircularButton
             onPress={addHotspot}
-            height={48}
-            marginTop="l"
+            height={90}
+            margin="l"
             mode="contained"
-            title={t('hotspots.empty.hotspots.add')}
             Icon={AddIcon}
+            marginBottom="l"
           />
-          <Button
-            onPress={assertHotspot}
-            height={48}
-            marginTop="l"
-            mode="contained"
-            title={t('hotspots.empty.hotspots.assertLocation')}
+
+          <HotspotsList
+            onSelectHotspot={handlePresentHotspot}
+            visible={hasHotspots}
           />
-          <Text variant="body1" marginTop="l">
-            {t('hotspots.view_activity')}
-            <Text variant="body1" color="primary" onPress={openExplorer}>
-              {t('hotspots.explorer')}
-            </Text>
-            {t('generic.period')}
-          </Text>
         </Box>
       </BottomSheetModalProvider>
     </Box>
