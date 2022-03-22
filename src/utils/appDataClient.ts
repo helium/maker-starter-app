@@ -1,7 +1,7 @@
 import { Hotspot, PocReceiptsV1 } from '@helium/http'
 import { heliumHttpClient } from '@helium/react-native-sdk'
 import { fromNow } from './timeUtils'
-import { getSecureItem } from './secureAccount'
+import { getAddress } from './secureAccount'
 
 export const submitTxn = async (txn: string) => {
   return heliumHttpClient.transactions.submit(txn)
@@ -9,10 +9,6 @@ export const submitTxn = async (txn: string) => {
 
 export const getHotspotDetails = async (address: string): Promise<Hotspot> => {
   return heliumHttpClient.hotspots.get(address)
-}
-
-export const getAddress = async () => {
-  return getSecureItem('walletLinkToken')
 }
 
 export const getHotspots = async () => {

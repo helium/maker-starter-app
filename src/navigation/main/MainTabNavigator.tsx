@@ -11,6 +11,7 @@ import { useColors } from '../../theme/themeHooks'
 import { useAppDispatch } from '../../store/store'
 import { wp } from '../../utils/layout'
 import appSlice from '../../store/user/appSlice'
+import { fetchHotspotsData } from '../../store/hotspots/hotspotsSlice'
 
 const MainTab = createBottomTabNavigator()
 
@@ -68,6 +69,10 @@ const MainTabs = () => {
     [],
   )
 
+  const fetchHotspotData = useCallback(() => dispatch(fetchHotspotsData()), [
+    dispatch,
+  ])
+
   return (
     <MainTab.Navigator
       sceneContainerStyle={sceneContainerStyle}
@@ -75,7 +80,13 @@ const MainTabs = () => {
       tabBarOptions={tabBarOptions}
       screenOptions={screenOptions}
     >
-      <MainTab.Screen name="Hotspots" component={Hotspots} />
+      <MainTab.Screen
+        name="Hotspots"
+        component={Hotspots}
+        listeners={{
+          tabPress: fetchHotspotData,
+        }}
+      />
       <MainTab.Screen name="More" component={More} />
     </MainTab.Navigator>
   )

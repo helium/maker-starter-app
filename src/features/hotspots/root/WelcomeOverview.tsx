@@ -8,6 +8,9 @@ import EmojiBlip from '../../../components/EmojiBlip'
 import Text from '../../../components/Text'
 import { RootState } from '../../../store/rootReducer'
 import animateTransition from '../../../utils/animateTransition'
+import { useAppDispatch } from '../../../store/store'
+import useMount from '../../../utils/useMount'
+import { fetchHotspotsData } from '../../../store/hotspots/hotspotsSlice'
 
 const TimeOfDayTitle = ({ date }: { date: Date }) => {
   const { t } = useTranslation()
@@ -41,7 +44,11 @@ const WelcomeOverview = () => {
     (state: RootState) => state.hotspots.hotspots.data,
     isEqual,
   )
+  const dispatch = useAppDispatch()
 
+  useMount(() => {
+    dispatch(fetchHotspotsData())
+  })
   const visibleHotspots = useMemo(() => {
     return hotspots
   }, [hotspots])
