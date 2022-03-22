@@ -1,4 +1,9 @@
 export default {
+  time: {
+    morning: 'Morning',
+    evening: 'Evening',
+    afternoon: 'Afternoon',
+  },
   account_import: {
     alert: {
       body: "This seed phrase doesn't correspond to an account",
@@ -106,10 +111,21 @@ export default {
     understand: 'I understand',
     unknown: 'Unknown',
     period: '.',
+    copy: 'Copy',
+    address: 'Address',
+    hotspot: 'Hotspot',
+    owner: 'Owner',
   },
   hotspot_details: {
     no_location_body: 'Pair with the Hotspot to begin.',
     no_location_title: 'No Asserted Location',
+    options: {
+      settings: 'Settings',
+      viewExplorer: 'View on Explorer',
+      share: 'Share',
+      transfer: 'Transfer Hotspot',
+      assert_location: 'Assert Location',
+    },
   },
   hotspot_settings: {
     wifi: {
@@ -297,6 +313,18 @@ export default {
   hotspots: {
     view_activity: 'After adding a hotspot, you can view your account on the ',
     explorer: 'Helium Explorer or Helium Wallet',
+    owned: {
+      title: 'My Hotspots',
+      title_no_hotspots: 'Hotspots',
+      hotspot_plural: 'You have {{count}} Hotspot(s)',
+      hotspot: 'Hotspot',
+    },
+    list: {
+      no_offline: 'NO OFFLINE HOTSPOTS',
+      online: 'ONLINE HOTSPOTS',
+      no_results: 'No Results',
+      devices: 'HOTSPOTS',
+    },
     empty: {
       body: 'Follow these instructions to setup your hotspot.',
       hotspots: {
@@ -304,6 +332,7 @@ export default {
         assertLocation: 'Assert Location',
         transfer: 'Transfer Hotspot',
       },
+
       title: 'Nebra Hotspot Setup',
     },
   },

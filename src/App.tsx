@@ -30,6 +30,8 @@ import SecurityScreen from './features/security/SecurityScreen'
 import AppLinkProvider from './providers/AppLinkProvider'
 import { navigationRef } from './navigation/navigator'
 import useMount from './utils/useMount'
+import usePrevious from './utils/usePrevious'
+import { fetchHotspotsData } from './store/hotspots/hotspotsSlice'
 
 SplashScreen.preventAutoHideAsync().catch(() => {
   /* reloading the app might trigger some race conditions, ignore them */
@@ -97,6 +99,21 @@ const App = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [appState])
+
+  const prevAppState = usePrevious(appState)
+
+  // update data when app comes into foreground from background and is logged in (only every 5 min)
+  useEffect(() => {
+    if (
+      (prevAppState === 'background' || prevAppState === 'inactive') &&
+      appState === 'active'
+    ) {
+      const fiveMinutesAgo = Date.now() - 300000
+      if (lastIdle && fiveMinutesAgo > lastIdle) {
+        dispatch(fetchHotspotsData())
+      }
+    }
+  }, [appState, dispatch, prevAppState, lastIdle, isLocked])
 
   // hide splash screen
   useAsync(async () => {

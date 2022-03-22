@@ -274,7 +274,7 @@ const HeliumActionSheet = ({
               justifyContent="space-between"
               alignItems="center"
             >
-              <Text color="surfaceText" variant="body2">
+              <Text color="white" variant="body2">
                 {title}
               </Text>
               <TouchableOpacityBox

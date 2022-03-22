@@ -1,6 +1,19 @@
 import { createTheme } from '@shopify/restyle'
 import { TextProps } from 'react-native'
 
+export const Font = {
+  main: {
+    light: 'Inter-Light',
+    regular: 'Inter-Regular',
+    medium: 'Inter-Medium',
+    semiBold: 'Inter-SemiBold',
+  },
+  mono: {
+    light: 'InputMono-Light',
+    regular: 'InputMono-Regular',
+  },
+}
+
 const textVariants = {
   h1: {
     fontSize: 40,
@@ -20,6 +33,14 @@ const textVariants = {
   h4: {
     fontSize: 22,
     fontWeight: 'bold',
+    color: 'primaryText',
+  },
+  light: {
+    fontFamily: Font.main.light,
+    color: 'primaryText',
+  },
+  regular: {
+    fontFamily: Font.main.regular,
     color: 'primaryText',
   },
   subtitle1: {
@@ -58,6 +79,24 @@ const textVariants = {
     fontSize: 40,
     color: 'primaryText',
   },
+  medium: {
+    fontFamily: Font.main.medium,
+    color: 'primaryText',
+  },
+  subtitle: {
+    fontFamily: Font.main.regular,
+    fontSize: 20,
+    lineHeight: 22,
+    color: 'purpleLight',
+  },
+  bold: {
+    fontFamily: Font.main.semiBold,
+    color: 'primaryText',
+  },
+  mono: {
+    fontFamily: Font.mono.regular,
+    color: 'primaryText',
+  },
 }
 
 const palette = {
@@ -74,6 +113,17 @@ const palette = {
   nebraDarkBlue: '#6169D0',
   nebraDarkGrey: '#5C636A',
   nebraGrey: '#424242',
+
+  grayDark: '#202B37',
+  grayBoxLight: '#F9FAFE',
+  greenOnline: '#29D344',
+  offblack: '#1C1E3B',
+  blueGrayLight: '#CDD7E5',
+  blueGray: '#33414E',
+  grayHighlight: '#EBEDF9',
+  purpleLight: '#A0A5DA',
+  purpleGray: '#BBBDD8',
+  purpleGrayLight: '#C2C5E4',
 }
 
 export const lightThemeColors = {
@@ -179,7 +229,38 @@ export const theme = createTheme({
       borderRadius: 'xl',
     },
   },
-  textVariants,
+  textVariants: {
+    ...textVariants,
+
+    buttonLight: { ...textVariants.button, ...textVariants.light },
+    buttonMedium: { ...textVariants.button, ...textVariants.medium },
+    buttonBold: { ...textVariants.button, ...textVariants.bold },
+    buttonMono: { ...textVariants.button, ...textVariants.mono },
+
+    body1Light: { ...textVariants.body1, ...textVariants.light },
+    body1Medium: { ...textVariants.body1, ...textVariants.medium },
+    body1Bold: { ...textVariants.body1, ...textVariants.bold },
+    body1Mono: { ...textVariants.body1, ...textVariants.mono },
+
+    body2Light: { ...textVariants.body2, ...textVariants.light },
+    body2Medium: { ...textVariants.body2, ...textVariants.medium },
+    body2Bold: { ...textVariants.body2, ...textVariants.bold },
+    body2Mono: { ...textVariants.body2, ...textVariants.mono },
+
+    body3Light: { ...textVariants.body3, ...textVariants.light },
+    body3Medium: { ...textVariants.body3, ...textVariants.medium },
+    body3Bold: { ...textVariants.body3, ...textVariants.bold },
+    body3Mono: { ...textVariants.body3, ...textVariants.mono },
+
+    subtitleLight: {
+      ...textVariants.subtitle,
+      fontFamily: textVariants.light.fontFamily,
+    },
+    subtitleRegular: { ...textVariants.subtitle, ...textVariants.regular },
+    subtitleMedium: { ...textVariants.subtitle, ...textVariants.medium },
+    subtitleBold: { ...textVariants.subtitle, ...textVariants.bold },
+    subtitleMono: { ...textVariants.subtitle, ...textVariants.mono },
+  },
   inputVariants: {
     regular: {
       backgroundColor: 'secondaryBackground',
