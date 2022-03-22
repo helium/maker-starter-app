@@ -22,14 +22,9 @@ const hotspotsConfig = {
 
 const rootReducer = combineReducers({
   app: appSlice.reducer,
-  // account: persistReducer(accountConfig, accountSlice.reducer),
-  // connectedHotspot: connectedHotspotSlice.reducer,
-  // heliumData: heliumDataSlice.reducer,
-  // hotspotDetails: hotspotDetailsSlice.reducer,
+
   hotspots: persistReducer(hotspotsConfig, hotspotsSlice.reducer),
   location: locationSlice.reducer,
-  // status: heliumStatusSlice.reducer,
-  // hotspotOnboarding: hotspotOnboardingSlice.reducer,
 })
 
 export type RootState = ReturnType<typeof rootReducer>
