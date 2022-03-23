@@ -58,7 +58,6 @@ const HotspotActionSheet = ({
   const [data, setData] = useState<Array<HeliumActionSheetItemType>>([])
   const { t } = useTranslation()
   const colors = useColors()
-  console.log(data)
 
   useEffect(() => {
     setData(propsData)
@@ -234,8 +233,8 @@ const HotspotActionSheet = ({
 }
 
 const styles = StyleSheet.create({
-  cancelContainer: { backgroundColor: '#F0F0F5' },
-  cancelText: { color: '#B3B4D6' },
+  cancelContainer: { backgroundColor: '#02A8F5' },
+  cancelText: { color: '#ffffff' },
   divider: { borderBottomColor: '#F0F0F5' },
 })
 
