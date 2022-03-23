@@ -73,7 +73,6 @@ const hotspotsSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchHotspotsData.fulfilled, (state, action) => {
       state.hotspots = handleCacheFulfilled({ data: action.payload.hotspots })
-      console.log(`sggs ${state.hotspots}`)
       state.hotspotsLoaded = true
       state.failure = false
     })

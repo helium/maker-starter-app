@@ -6,7 +6,7 @@ import { startCase } from 'lodash'
 import CopyIco from '@assets/images/copy.svg'
 import ShareHotspotIco from '@assets/images/shareHotspot.svg'
 import GlobeIco from '@assets/images/globe.svg'
-import TransferIco from '@assets/images/transfer_icon.svg'
+import TransferIco from '@assets/images/signal.svg'
 import AssertLocationIco from '@assets/images/location.svg'
 import Clipboard from '@react-native-community/clipboard'
 import { Linking, Share } from 'react-native'
@@ -47,12 +47,14 @@ const HotspotMenuSheet = ({ item }: Props) => {
         value: 'transfer',
         Icon: TransferIco,
         action: () => navigation.push('TransferHotspot', { hotspot: item }),
+        disabled: true,
       },
       {
         label: t('hotspot_details.options.assert_location'),
         value: 'assertLocation',
         Icon: AssertLocationIco,
         action: () => navigation.push('HotspotAssert', { hotspot: item }),
+        disabled: true,
       },
       {
         label: t('hotspot_details.options.viewExplorer'),

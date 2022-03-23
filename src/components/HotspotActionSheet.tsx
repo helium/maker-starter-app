@@ -58,6 +58,7 @@ const HotspotActionSheet = ({
   const [data, setData] = useState<Array<HeliumActionSheetItemType>>([])
   const { t } = useTranslation()
   const colors = useColors()
+  console.log(data)
 
   useEffect(() => {
     setData(propsData)
@@ -116,7 +117,7 @@ const HotspotActionSheet = ({
   )
 
   const renderItem = useCallback(
-    ({ index, item: { label, value, Icon, action } }: ListItem) => {
+    ({ index, item: { label, value, Icon, action, disabled } }: ListItem) => {
       return (
         <HotspotActionSheetItem
           label={label}
@@ -124,6 +125,7 @@ const HotspotActionSheet = ({
           onPress={handleItemSelected(value, index, action)}
           selected={selected(value)}
           Icon={Icon}
+          disabled={disabled}
         />
       )
     },
