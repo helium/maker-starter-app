@@ -12,6 +12,7 @@ import { isDataOnly, isRelay } from '../utils/hotspotUtils'
 import { useColors } from '../theme/themeHooks'
 import Signal from '../assets/images/signal.svg'
 import VisibilityOff from '../assets/images/visibility_off.svg'
+import HotspotMenuSheet from './HotspotMenuSheet'
 
 type HotspotListItemProps = {
   onPress?: (hotspot: Hotspot) => void
@@ -181,7 +182,11 @@ const HotspotListItem = ({
               alignItems="center"
               justifyContent="center"
             >
-              {showCarot && <Box marginStart="m" />}
+              {showCarot && (
+                <Box marginStart="m">
+                  <HotspotMenuSheet item={gateway} />
+                </Box>
+              )}
             </Box>
           </Box>
         )}
