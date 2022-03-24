@@ -32,7 +32,9 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>helium</string>
@@ -54,6 +56,8 @@
 	<string>Allow Nebra Hotspot to connect to and manage your Hotspots</string>
 	<key>NSBluetoothPeripheralUsageDescription</key>
 	<string>Allow Nebra Hotspot to connect to and manage your Hotspots</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Allow Nebra Hotspot to use your camera to add hotspots</string>
 	<key>NSFaceIDUsageDescription</key>
 	<string>Allow Nebra Hotspot to authenticate with Face ID</string>
 	<key>NSLocationAlwaysUsageDescription</key>
