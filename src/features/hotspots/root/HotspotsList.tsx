@@ -49,25 +49,14 @@ const HotspotsList = ({
     [onSelectHotspot, visibleHotspots.length],
   )
 
-  const hasOfflineHotspot = useMemo(() => {
-    return (visibleHotspots as Hotspot[]).some(
-      (h: Hotspot) => h.status?.online !== 'online',
-    )
-  }, [visibleHotspots])
-
   const sections = useMemo(() => {
-    let data = visibleHotspots
-    if (hasOfflineHotspot) {
-      data = (visibleHotspots as Hotspot[]).filter(
-        (h) => h.status?.online !== 'online',
-      )
-    }
+    const data = visibleHotspots
     return [
       {
         data,
       },
     ]
-  }, [hasOfflineHotspot, visibleHotspots])
+  }, [visibleHotspots])
 
   const renderHeader = useCallback(() => {
     const filterHasHotspots = visibleHotspots && visibleHotspots.length > 0
