@@ -76,13 +76,13 @@ const HotspotsList = ({
         paddingVertical="s"
         borderTopRightRadius="m"
         borderTopLeftRadius="m"
-        backgroundColor="white"
+        backgroundColor="primaryBackground"
       >
         {filterHasHotspots && (
           <Box paddingHorizontal="l">
             <Text
               variant="body3Medium"
-              color="grayDark"
+              color="HelperText"
               letterSpacing={1}
               maxFontSizeMultiplier={1.2}
             >
@@ -120,7 +120,7 @@ const HotspotsList = ({
 
   return (
     <Box
-      backgroundColor="white"
+      backgroundColor="primaryBackground"
       left={0}
       right={0}
       alignContent="center"
