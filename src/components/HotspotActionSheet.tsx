@@ -4,7 +4,6 @@ import { BoxProps } from '@shopify/restyle'
 import CarotDown from '@assets/images/carot-down.svg'
 import Kabob from '@assets/images/kabob.svg'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { FlatList } from 'react-native-gesture-handler'
 import { Colors, Theme } from '../theme/theme'
@@ -58,7 +57,6 @@ const HotspotActionSheet = ({
   const [data, setData] = useState<Array<HeliumActionSheetItemType>>([])
   const { t } = useTranslation()
   const colors = useColors()
-  console.log(data)
 
   useEffect(() => {
     setData(propsData)
@@ -137,7 +135,7 @@ const HotspotActionSheet = ({
       <Box marginBottom="xl">
         <TouchableOpacityBox
           onPress={handleClose}
-          style={styles.cancelContainer}
+          style={{ backgroundColor: colors.primary }}
           height={49}
           marginVertical="m"
           alignItems="center"
@@ -147,7 +145,7 @@ const HotspotActionSheet = ({
           <Text
             variant="medium"
             fontSize={18}
-            style={styles.cancelText}
+            style={{ color: colors.secondaryText }}
             maxFontSizeMultiplier={1.2}
           >
             {t('generic.cancel')}
@@ -155,7 +153,7 @@ const HotspotActionSheet = ({
         </TouchableOpacityBox>
       </Box>
     )
-  }, [handleClose, t])
+  }, [handleClose, t, colors])
 
   const icon = useMemo(() => {
     if (iconVariant === 'none') return
@@ -232,11 +230,5 @@ const HotspotActionSheet = ({
     </Box>
   )
 }
-
-const styles = StyleSheet.create({
-  cancelContainer: { backgroundColor: '#F0F0F5' },
-  cancelText: { color: '#B3B4D6' },
-  divider: { borderBottomColor: '#F0F0F5' },
-})
 
 export default memo(HotspotActionSheet)
