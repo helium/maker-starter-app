@@ -45,20 +45,27 @@ const HotspotsScreen = () => {
           flex={1}
           justifyContent="center"
           backgroundColor="primaryBackground"
+          style={{
+            flexDirection: 'column',
+          }}
         >
-          <CircularButton
-            onPress={addHotspot}
-            height={90}
-            margin="l"
-            mode="contained"
-            Icon={AddIcon}
-            marginBottom="l"
-          />
+          <Box style={{ flex: 1.5 }} justifyContent="center">
+            <CircularButton
+              onPress={addHotspot}
+              height={90}
+              margin="l"
+              mode="contained"
+              Icon={AddIcon}
+              marginBottom="l"
+            />
+          </Box>
 
-          <HotspotsList
-            onSelectHotspot={handlePresentHotspot}
-            visible={hasHotspots}
-          />
+          <Box style={{ flex: 3 }}>
+            <HotspotsList
+              onSelectHotspot={handlePresentHotspot}
+              visible={hasHotspots}
+            />
+          </Box>
         </Box>
       </BottomSheetModalProvider>
     </Box>
