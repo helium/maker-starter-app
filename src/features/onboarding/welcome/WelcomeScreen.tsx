@@ -1,6 +1,8 @@
 import React, { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigation } from '@react-navigation/native'
+import LogoSVG from '@assets/images/logo_main.svg'
+import { View } from 'react-native'
 import Text from '../../../components/Text'
 import { OnboardingNavigationProp } from '../onboardingTypes'
 import Box from '../../../components/Box'
@@ -28,7 +30,10 @@ const WelcomeScreen = () => {
       alignItems="center"
       paddingTop="xxxl"
     >
-      <Text variant="h1">{t('account_setup.welcome.title')}</Text>
+      <View>
+        <LogoSVG width="200" height="120" />
+      </View>
+
       <TextTransform
         variant="subtitle1"
         marginVertical="xxl"
