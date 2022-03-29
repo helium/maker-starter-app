@@ -113,6 +113,8 @@ const palette = {
   nebraDarkBlue: '#6169D0',
   nebraDarkGrey: '#5C636A',
   nebraGrey: '#424242',
+  nebraBrown: '#1D1D1D',
+  nebraRed: '#E74C3C',
 
   grayDark: '#202B37',
   grayBoxLight: '#F9FAFE',
@@ -142,23 +144,25 @@ export const lightThemeColors = {
   surfaceSecondaryText: palette.white,
   surfaceContrast: palette.nebraBlue,
   surfaceContrastText: palette.white,
+  HelperText: palette.black,
 }
 export const darkThemeColors = {
   ...palette,
 
-  primary: palette.nebraBlue,
-  primaryBackground: palette.black,
+  primary: palette.nebraGrey,
+  primaryBackground: palette.nebraGrey,
   primaryText: palette.white,
-  secondaryBackground: palette.nebraDarkGrey,
-  secondary: palette.nebraDarkGrey,
-  secondaryText: palette.black,
-  error: palette.nebraBlue,
+  secondaryBackground: palette.nebraBrown,
+  secondary: palette.nebraBrown,
+  secondaryText: palette.white,
+  error: palette.nebraRed,
   surface: palette.nebraDarkGrey,
   surfaceText: palette.white,
   surfaceSecondary: palette.offWhite,
-  surfaceSecondaryText: palette.nebraDarkGrey,
-  surfaceContrast: palette.white,
-  surfaceContrastText: palette.nebraDarkGrey,
+  surfaceSecondaryText: palette.nebraBrown,
+  surfaceContrast: palette.nebraDarkGrey,
+  surfaceContrastText: palette.white,
+  HelperText: palette.white,
 }
 
 export const theme = createTheme({

@@ -97,7 +97,7 @@ const WelcomeOverview = () => {
   })
 
   return (
-    <Box alignItems="center">
+    <Box alignItems="center" backgroundColor="primaryBackground">
       <EmojiBlip date={date} />
       <TimeOfDayTitle date={date} />
       <Box marginTop="m" marginBottom="xxl">
@@ -107,7 +107,7 @@ const WelcomeOverview = () => {
             fontSize={20}
             lineHeight={24}
             textAlign="center"
-            color="black"
+            color="HelperText"
             maxFontSizeMultiplier={1.2}
           >
             {bodyText}

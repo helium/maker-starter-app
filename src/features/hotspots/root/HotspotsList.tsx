@@ -49,25 +49,14 @@ const HotspotsList = ({
     [onSelectHotspot, visibleHotspots.length],
   )
 
-  const hasOfflineHotspot = useMemo(() => {
-    return (visibleHotspots as Hotspot[]).some(
-      (h: Hotspot) => h.status?.online !== 'online',
-    )
-  }, [visibleHotspots])
-
   const sections = useMemo(() => {
-    let data = visibleHotspots
-    if (hasOfflineHotspot) {
-      data = (visibleHotspots as Hotspot[]).filter(
-        (h) => h.status?.online !== 'online',
-      )
-    }
+    const data = visibleHotspots
     return [
       {
         data,
       },
     ]
-  }, [hasOfflineHotspot, visibleHotspots])
+  }, [visibleHotspots])
 
   const renderHeader = useCallback(() => {
     const filterHasHotspots = visibleHotspots && visibleHotspots.length > 0
@@ -76,13 +65,13 @@ const HotspotsList = ({
         paddingVertical="s"
         borderTopRightRadius="m"
         borderTopLeftRadius="m"
-        backgroundColor="white"
+        backgroundColor="primaryBackground"
       >
         {filterHasHotspots && (
           <Box paddingHorizontal="l">
             <Text
               variant="body3Medium"
-              color="grayDark"
+              color="HelperText"
               letterSpacing={1}
               maxFontSizeMultiplier={1.2}
             >
@@ -120,7 +109,7 @@ const HotspotsList = ({
 
   return (
     <Box
-      backgroundColor="white"
+      backgroundColor="primaryBackground"
       left={0}
       right={0}
       alignContent="center"
