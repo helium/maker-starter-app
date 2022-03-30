@@ -32,6 +32,7 @@ import { useColors, useSpacing } from '../../../theme/themeHooks'
 import BSHandle from '../../../components/BSHandle'
 import AddressSearchModal from './AddressSearchModal'
 import { PlaceGeography } from '../../../utils/googlePlaces'
+import useGetLocation from '../../../utils/useGetLocation'
 
 type Route = RouteProp<
   HotspotSetupStackParamList,
@@ -50,14 +51,21 @@ const HotspotSetupPickLocationScreen = () => {
   const insets = useSafeAreaInsets()
   const searchModal = useRef<BottomSheetModal>(null)
   const { surface } = useColors()
+  const maybeGetLocation = useGetLocation()
 
   useEffect(() => {
+    const checkLocationPermissions = () => {
+      maybeGetLocation(true)
+    }
+
     const sleepThenEnable = async () => {
       await sleep(3000)
       setDisabled(false)
     }
+
+    checkLocationPermissions()
     sleepThenEnable()
-  }, [])
+  }, [maybeGetLocation])
 
   const onMapMoved = useCallback(async (newCoords?: Position) => {
     if (newCoords) {

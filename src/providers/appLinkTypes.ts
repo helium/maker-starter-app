@@ -4,6 +4,7 @@ export const AppLinkCategories = [
   'add_gateway',
   'link_wallet',
   'sign_hotspot',
+  'hotspot',
 ] as const
 export type AppLinkCategoryType = typeof AppLinkCategories[number]
 

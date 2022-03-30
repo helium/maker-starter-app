@@ -13,9 +13,9 @@ import Text from '../../../components/Text'
 import { DebouncedButton } from '../../../components/Button'
 import HotspotConfigurationPicker from '../../../components/HotspotConfigurationPicker'
 import { MakerAntenna } from '../../../makers/antennaMakerTypes'
-import Example from '../../../makers/example'
-import { HotspotMakerModels } from '../../../makers'
+import nebra from '../../../makers/nebra'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
+import { isCN, isEU, isUS } from '../../../utils/countries'
 
 type Route = RouteProp<HotspotSetupStackParamList, 'AntennaSetupScreen'>
 
@@ -29,17 +29,13 @@ const AntennaSetupScreen = () => {
 
   const defaultAntenna = useMemo(() => {
     const country = getCountry()
-    const isUS = country === 'US'
-    const makerAntenna =
-      HotspotMakerModels[params.hotspotType || 'ExampleHotspotBLE'].antenna
-    const ant =
-      isUS && makerAntenna?.us ? makerAntenna.us : makerAntenna?.default
 
-    if (!ant)
-      return isUS ? Example.antennas.EXAMPLE_US : Example.antennas.EXAMPLE_US
+    if (isUS(country)) return nebra.antennas.NEBRA_STOCK_US
+    if (isEU(country)) return nebra.antennas.NEBRA_STOCK_EU
+    if (isCN(country)) return nebra.antennas.NEBRA_STOCK_CN
 
-    return ant
-  }, [params.hotspotType])
+    return nebra.antennas.NEBRA_STOCK_US
+  }, [])
 
   const [antenna, setAntenna] = useState<MakerAntenna>(defaultAntenna)
   const [gain, setGain] = useState<number>(defaultAntenna.gain)

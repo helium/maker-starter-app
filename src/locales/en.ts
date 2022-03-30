@@ -394,8 +394,8 @@ export default {
   },
   transferHotspot: {
     title: 'Transfer Hotspot',
-    enterHotspot: 'Enter Hotspot Address',
-    enterOwner: 'Enter New Owner Address',
+    hotspotAddress: 'Hotspot Address',
+    newOwnerAddress: 'New Owner Address',
     submit: 'Submit Transaction',
     submitComplete: 'Transfer Successfully Submitted!\n Pending Txn Hash:',
   },

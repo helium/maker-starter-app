@@ -31,8 +31,8 @@ const HeliumActionSheetItem = ({ label, onPress, selected, Icon }: Props) => {
       )}
       <Text
         marginLeft={Icon ? 'ms' : 'none'}
-        color={selected ? 'surfaceText' : 'secondaryText'}
         variant={selected ? 'body1' : 'body2'}
+        color={selected ? 'surfaceText' : 'secondaryText'}
         fontSize={18}
       >
         {label}

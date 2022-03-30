@@ -1,5 +1,6 @@
 import { StackNavigationProp } from '@react-navigation/stack'
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs'
+import { NavigatorScreenParams } from '@react-navigation/native'
 import { HotspotLink } from '../../providers/appLinkTypes'
 
 export type MainTabType = 'Hotspots' | 'More'
@@ -17,6 +18,14 @@ export type LockScreenRequestType =
   | 'resetPin'
   | 'unlock'
 
+export type HotspotAddressParam = {
+  hotspotAddress?: string
+}
+
+export type HotspotAssertNavParam = {
+  HotspotSetupPickLocationScreen: HotspotAddressParam
+}
+
 export type RootStackParamList = {
   MainTabs: undefined | { pinVerifiedFor: LockScreenRequestType }
   LockScreen: {
@@ -24,9 +33,9 @@ export type RootStackParamList = {
     lock?: boolean
   }
   HotspotSetup: undefined
-  HotspotAssert: undefined
+  HotspotAssert: NavigatorScreenParams<HotspotAssertNavParam>
   ScanStack: undefined
-  TransferHotspot: HotspotLink | undefined
+  TransferHotspot: HotspotLink | HotspotAddressParam | undefined
 }
 
 export type RootNavigationProp = StackNavigationProp<RootStackParamList>

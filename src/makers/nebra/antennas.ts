@@ -1,40 +1,22 @@
 import { MakerAntenna } from '../antennaMakerTypes'
 
-const NEBRA_US_3 = {
-  name: '(US 3dBi) Nebra Glass Fiber LoRa Antenna',
+const NEBRA_STOCK_US = {
+  name: 'Nebra Stock Antenna (915 MHz)',
   gain: 3,
 } as MakerAntenna
 
-const NEBRA_US_5 = {
-  name: '(US 5.8dBi) Nebra Glass Fiber LoRa Antenna',
-  gain: 5.8,
-} as MakerAntenna
-
-const NEBRA_US_8 = {
-  name: '(US 8dBi) Nebra Glass Fiber LoRa Antenna',
-  gain: 8,
-} as MakerAntenna
-
-const NEBRA_EU_3 = {
-  name: '(EU 3dBi) Nebra Glass Fiber LoRa Antenna',
+const NEBRA_STOCK_EU = {
+  name: 'Nebra Stock Antenna (868 MHz)',
   gain: 3,
 } as MakerAntenna
 
-const NEBRA_EU_5 = {
-  name: '(EU 5.8dBi) Nebra Glass Fiber LoRa Antenna',
-  gain: 5,
-} as MakerAntenna
-
-const NEBRA_EU_8 = {
-  name: '(EU 3dBi) Nebra Glass Fiber LoRa Antenna',
-  gain: 8,
+const NEBRA_STOCK_CN = {
+  name: 'Nebra Stock Antenna (470 MHz)',
+  gain: 3,
 } as MakerAntenna
 
 export default {
-  NEBRA_US_3,
-  NEBRA_US_5,
-  NEBRA_US_8,
-  NEBRA_EU_3,
-  NEBRA_EU_5,
-  NEBRA_EU_8,
+  NEBRA_STOCK_US,
+  NEBRA_STOCK_EU,
+  NEBRA_STOCK_CN,
 }

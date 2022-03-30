@@ -1,6 +1,5 @@
 import { SvgProps } from 'react-native-svg'
 import { LangType } from '../utils/i18n/i18nTypes'
-import { MakerAntenna } from './antennaMakerTypes'
 
 export type HotspotMakerLangField = 'internal' | 'externalOnboard'
 
@@ -15,7 +14,6 @@ export type MakerHotspot = {
   translations: MakerHotspotTranslations
   icon: React.FC<SvgProps>
   name: string
-  antenna?: { us?: MakerAntenna; default: MakerAntenna }
   onboardType: OnboardType
   onboardUrl?: string
 }

@@ -1,7 +1,11 @@
 import React, { useState, useCallback } from 'react'
-import { Transfer, WalletLink } from '@helium/react-native-sdk'
+import {
+  Transfer,
+  WalletLink as HeliumWalletLink,
+  WalletLink,
+} from '@helium/react-native-sdk'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
-import { ActivityIndicator, Linking } from 'react-native'
+import { ActivityIndicator, Linking, StyleSheet } from 'react-native'
 import { useTranslation } from 'react-i18next'
 import { useAsync } from 'react-async-hook'
 import Text from '../../components/Text'
@@ -17,26 +21,30 @@ import {
   getHotspotsLastChallengeActivity,
   submitTxn,
 } from '../../utils/appDataClient'
-import { RootStackParamList } from '../../navigation/main/tabTypes'
+import {
+  HotspotAddressParam,
+  RootStackParamList,
+} from '../../navigation/main/tabTypes'
 
 type Route = RouteProp<RootStackParamList, 'TransferHotspot'>
 const TransferHotspot = () => {
   const navigation = useNavigation()
   const { t } = useTranslation()
   const { params } = useRoute<Route>()
-
-  const [hotspotAddress, setHotspotAddress] = useState('')
   const [newOwnerAddress, setNewOwnerAddress] = useState('')
   const [loading, setLoading] = useState(false)
   const [hash, setHash] = useState<string>()
 
+  const hotspotAddress = (params as HotspotAddressParam)?.hotspotAddress || ''
+
   // handle callback from the Helium hotspot app
   useAsync(async () => {
-    if (!params || !params.transferTxn) return
+    const txnParams = params as HeliumWalletLink.SignHotspotResponse
+    if (!txnParams || !txnParams.transferTxn) return
 
     // submit the signed transaction to the blockchain API
     setLoading(true)
-    const signedTxnString = params.transferTxn
+    const signedTxnString = txnParams.transferTxn
     const pendingTxn = await submitTxn(signedTxnString)
     setHash(pendingTxn.hash)
     setLoading(false)
@@ -117,28 +125,21 @@ const TransferHotspot = () => {
       <Text variant="h1" marginBottom="l">
         {t('transferHotspot.title')}
       </Text>
+      <Text variant="subtitle2">{t('transferHotspot.hotspotAddress')}</Text>
+      <Text variant="body1" selectable>
+        {hotspotAddress}
+      </Text>
+
+      <Text variant="subtitle2" marginTop="m">
+        {t('transferHotspot.newOwnerAddress')}
+      </Text>
       <TextInput
+        variant="regular"
+        style={styles.textInput}
         borderRadius="s"
         padding="s"
-        marginBottom="m"
-        backgroundColor="white"
-        onChangeText={setHotspotAddress}
-        value={hotspotAddress}
-        placeholderTextColor="black"
-        placeholder={t('transferHotspot.enterHotspot')}
-        editable={!loading}
-        autoCapitalize="none"
-        autoCompleteType="off"
-        autoCorrect={false}
-      />
-      <TextInput
-        borderRadius="s"
-        padding="s"
-        backgroundColor="white"
         onChangeText={setNewOwnerAddress}
         value={newOwnerAddress}
-        placeholderTextColor="black"
-        placeholder={t('transferHotspot.enterOwner')}
         editable={!loading}
         autoCapitalize="none"
         autoCompleteType="off"
@@ -167,5 +168,13 @@ const TransferHotspot = () => {
     </SafeAreaBox>
   )
 }
+
+const styles = StyleSheet.create({
+  textInput: {
+    backgroundColor: 'white',
+    borderWidth: 1,
+    borderColor: '#CDD7E5',
+  },
+})
 
 export default TransferHotspot

@@ -1,8 +1,8 @@
 import { MakerAntenna } from '../antennaMakerTypes'
 
 const CUSTOM = {
-  name: 'Nebra Stock Antenna',
-  gain: 3,
+  name: 'Custom Antenna',
+  gain: 1,
 } as MakerAntenna
 
 export default { CUSTOM }
