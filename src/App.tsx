@@ -8,6 +8,7 @@ import {
   UIManager,
   useColorScheme,
 } from 'react-native'
+import * as Sentry from '@sentry/react-native'
 import useAppState from 'react-native-appstate-hook'
 import { ThemeProvider } from '@shopify/restyle'
 import Config from 'react-native-config'
@@ -35,6 +36,11 @@ import { fetchHotspotsData } from './store/hotspots/hotspotsSlice'
 
 SplashScreen.preventAutoHideAsync().catch(() => {
   /* reloading the app might trigger some race conditions, ignore them */
+})
+
+Sentry.init({
+  dsn:
+    'https://0916a8835be846b0b0c86313d41f02f7@o571444.ingest.sentry.io/6271747',
 })
 
 const App = () => {
@@ -165,4 +171,4 @@ const App = () => {
   )
 }
 
-export default App
+export default Sentry.wrap(App)

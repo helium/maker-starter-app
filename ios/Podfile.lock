@@ -398,8 +398,14 @@ PODS:
   - RNScreens (3.8.0):
     - React-Core
     - React-RCTImage
+  - RNSentry (3.4.0):
+    - React-Core
+    - Sentry (= 7.11.0)
   - RNSVG (12.1.1):
     - React
+  - Sentry (7.11.0):
+    - Sentry/Core (= 7.11.0)
+  - Sentry/Core (7.11.0)
   - Toast (4.0.0)
   - UMTaskManagerInterface (7.0.3):
     - ExpoModulesCore
@@ -477,6 +483,7 @@ DEPENDENCIES:
   - RNLocalize (from `../node_modules/react-native-localize`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
+  - "RNSentry (from `../node_modules/@sentry/react-native`)"
   - RNSVG (from `../node_modules/react-native-svg`)
   - UMTaskManagerInterface (from `../node_modules/unimodules-task-manager-interface/ios`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
@@ -487,6 +494,7 @@ SPEC REPOS:
     - Mapbox-iOS-SDK
     - MapboxMobileEvents
     - MultiplatformBleAdapter
+    - Sentry
     - Toast
     - ZXingObjC
 
@@ -619,6 +627,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
     :path: "../node_modules/react-native-screens"
+  RNSentry:
+    :path: "../node_modules/@sentry/react-native"
   RNSVG:
     :path: "../node_modules/react-native-svg"
   UMTaskManagerInterface:
@@ -650,12 +660,12 @@ SPEC CHECKSUMS:
   FBLazyVector: de148e8310b8b878db304ceea2fec13f2c02e3a0
   FBReactNativeSpec: 6192956c9e346013d5f1809ba049af720b11c6a4
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
-  glog: 43737235ae6a21de4f45297f4f73b6420fc2ecb2
+  glog: 5337263514dd6f09803962437687240c5dc39aa4
   helium-react-native-sdk: a5d944abc798ec30baace942cf1e9298c82ba782
   Mapbox-iOS-SDK: a5915700ec84bc1a7f8b3e746d474789e35b7956
   MapboxMobileEvents: 2bc0ca2eedb627b73cf403258dce2b2fa98074a6
   MultiplatformBleAdapter: 5a6a897b006764392f9cef785e4360f54fb9477d
-  RCT-Folly: e2636706cc3fded205cf0d380428ec0ea7455f80
+  RCT-Folly: a21c126816d8025b547704b777a2ba552f3d9fa9
   RCTRequired: 59d2b744d8c2bf2d9bc7032a9f654809adcf7d50
   RCTTypeSafety: d0aaf7ccae5c70a4aaa3a5c3e9e0db97efae760e
   React: fbe655dd1d12c052299b61abdc576720098d80fc
@@ -695,7 +705,9 @@ SPEC CHECKSUMS:
   RNLocalize: 7c7aeda16c01db7a0918981c14875c0a53be9b79
   RNReanimated: 65583befd5706cc9c86ae9a081786181ced37b93
   RNScreens: 6e1ea5787989f92b0671049b808aef64fa1ef98c
+  RNSentry: ec3c033c13bcb65c79f19d54ca54c514d1832bb5
   RNSVG: 551acb6562324b1d52a4e0758f7ca0ec234e278f
+  Sentry: 0c5cd63d714187b4a39c331c1f0eb04ba7868341
   Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
   UMTaskManagerInterface: 5654c50e68af11b19b9d05452bacf23d19b3f30f
   Yoga: 32a18c0e845e185f4a2a66ec76e1fd1f958f22fa

@@ -348,6 +348,7 @@
 				F8B0E225256300AD00EB1E73 /* Embed App Extensions */,
 				491486BDF219C0BBBBD02CF8 /* [CP] Embed Pods Frameworks */,
 				CD738B53C9E63C2BEE40515E /* [CP] Copy Pods Resources */,
+				CC16D632DFFF47FFB38FFA36 /* Upload Debug Symbols to Sentry */,
 			);
 			buildRules = (
 			);
@@ -481,7 +482,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\nexport EXTRA_PACKAGER_ARGS=\"--sourcemap-output $DERIVED_FILE_DIR/main.jsbundle.map\"\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
+			shellScript = "export SENTRY_PROPERTIES=sentry.properties\nexport EXTRA_PACKAGER_ARGS=\"--sourcemap-output $DERIVED_FILE_DIR/main.jsbundle.map\"\nexport NODE_BINARY=node\nexport EXTRA_PACKAGER_ARGS=\"--sourcemap-output $DERIVED_FILE_DIR/main.jsbundle.map\"\n../node_modules/@sentry/cli/bin/sentry-cli react-native xcode ../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
 		0103E73B626F0B8DC823B3E8 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -566,6 +567,20 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Nebra-NebraTests/Pods-Nebra-NebraTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		CC16D632DFFF47FFB38FFA36 /* Upload Debug Symbols to Sentry */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Upload Debug Symbols to Sentry";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export SENTRY_PROPERTIES=sentry.properties\n../node_modules/@sentry/cli/bin/sentry-cli upload-dsym";
 		};
 		CD738B53C9E63C2BEE40515E /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
