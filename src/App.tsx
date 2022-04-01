@@ -39,8 +39,7 @@ SplashScreen.preventAutoHideAsync().catch(() => {
 })
 
 Sentry.init({
-  dsn:
-    'https://0916a8835be846b0b0c86313d41f02f7@o571444.ingest.sentry.io/6271747',
+  dsn: Config.SENTRY_DSN,
 })
 
 const App = () => {
