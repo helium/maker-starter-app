@@ -1,4 +1,4 @@
-package com.nebra.helium.app;
+package com.nebra.helium.maker;
 import expo.modules.ReactActivityDelegateWrapper;
 import com.facebook.react.ReactActivityDelegate;
 

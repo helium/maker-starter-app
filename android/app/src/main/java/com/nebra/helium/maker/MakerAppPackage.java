@@ -1,4 +1,4 @@
-package com.nebra.helium.app;
+package com.nebra.helium.maker;
 
 import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.NativeModule;
