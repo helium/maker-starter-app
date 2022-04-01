@@ -35,12 +35,12 @@ android_library(
 
 android_build_config(
     name = "build_config",
-    package = "com.nebra.helium.app",
+    package = "com.nebra.helium.maker",
 )
 
 android_resource(
     name = "res",
-    package = "com.nebra.helium.app",
+    package = "com.nebra.helium.maker",
     res = "src/main/res",
 )
 
