@@ -372,7 +372,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = 9L5L9YJKV3;
+						DevelopmentTeam = SDV42U7N4S;
 						LastSwiftMigration = 1250;
 					};
 				};
@@ -693,8 +693,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Nebra/Nebra.entitlements;
-				CURRENT_PROJECT_VERSION = 6;
-				DEVELOPMENT_TEAM = 9L5L9YJKV3;
+				CURRENT_PROJECT_VERSION = 8;
+				DEVELOPMENT_TEAM = SDV42U7N4S;
 				ENABLE_BITCODE = NO;
 				EXCLUDED_ARCHS = "";
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
@@ -706,7 +706,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.nebra.helium.app;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nebra.helium.maker;
 				PRODUCT_NAME = Nebra;
 				SWIFT_OBJC_BRIDGING_HEADER = "Nebra-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -724,7 +724,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Nebra/NebraRelease.entitlements;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_TEAM = SDV42U7N4S;
 				EXCLUDED_ARCHS = "";
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
@@ -736,7 +736,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.nebra.helium;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nebra.helium.maker;
 				PRODUCT_NAME = Nebra;
 				SWIFT_OBJC_BRIDGING_HEADER = "Nebra-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
