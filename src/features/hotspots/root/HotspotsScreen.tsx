@@ -49,7 +49,7 @@ const HotspotsScreen = () => {
             flexDirection: 'column',
           }}
         >
-          <Box style={{ flex: 1.5 }} justifyContent="center">
+          <Box style={{ flex: 1.8 }} justifyContent="center">
             <CircularButton
               onPress={addHotspot}
               height={90}
