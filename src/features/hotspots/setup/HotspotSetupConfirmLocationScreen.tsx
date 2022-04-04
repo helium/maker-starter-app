@@ -46,8 +46,11 @@ const HotspotSetupConfirmLocationScreen = () => {
     totalStakingAmountUsd: Balance<USDollars>
   }>()
   const { params } = useRoute<Route>()
-  const { elevation, gain, coords } = params
+  const { hotspotType, elevation, gain, coords } = params
   const { getOnboardingRecord } = useOnboarding()
+
+  // Check if onboarding workflow or assert location workflow
+  const isAssertion = !hotspotType
 
   useAsync(async () => {
     const address = await getAddress()
@@ -214,17 +217,31 @@ const HotspotSetupConfirmLocationScreen = () => {
         </Box>
       </ScrollView>
       <Box>
-        <DebouncedButton
-          title={
-            isFree
-              ? t('hotspot_setup.location_fee.next')
-              : t('hotspot_setup.location_fee.fee_next')
-          }
-          mode="contained"
-          variant="secondary"
-          onPress={navNext}
-          disabled={isFree ? false : !hasSufficientBalance}
-        />
+        {isAssertion ? (
+          <DebouncedButton
+            title={
+              isFree
+                ? t('hotspot_setup.location_fee.assert')
+                : t('hotspot_setup.location_fee.fee_assert')
+            }
+            mode="contained"
+            variant="secondary"
+            onPress={navNext}
+            disabled={isFree ? false : !hasSufficientBalance}
+          />
+        ) : (
+          <DebouncedButton
+            title={
+              isFree
+                ? t('hotspot_setup.location_fee.register')
+                : t('hotspot_setup.location_fee.fee_register')
+            }
+            mode="contained"
+            variant="secondary"
+            onPress={navNext}
+            disabled={isFree ? false : !hasSufficientBalance}
+          />
+        )}
       </Box>
     </BackScreen>
   )

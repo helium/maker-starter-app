@@ -84,6 +84,7 @@ export type HotspotSetupStackParamList = {
     locationName?: string
   }
   HotspotSetupConfirmLocationScreen: {
+    hotspotType: HotspotType
     addGatewayTxn?: string
     hotspotAddress: string
     elevation?: number
@@ -114,4 +115,5 @@ export type HotspotSetupStackParamList = {
   }
 }
 
-export type HotspotSetupNavigationProp = StackNavigationProp<HotspotSetupStackParamList>
+export type HotspotSetupNavigationProp =
+  StackNavigationProp<HotspotSetupStackParamList>

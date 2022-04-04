@@ -70,13 +70,11 @@ export default {
   },
   antennas: {
     elevation_info: {
-      desc:
-        'Estimate how high the antenna is placed relative to the ground. An antenna located on the roof of a single-story house is typically 5 meters.',
+      desc: 'Estimate how high the antenna is placed relative to the ground. An antenna located on the roof of a single-story house is typically 5 meters.',
       title: 'Hotspot Height',
     },
     gain_info: {
-      desc:
-        'A value between 1 and 15 to one decimal point. This is provided by your hotspot or antenna manufacturer.',
+      desc: 'A value between 1 and 15 to one decimal point. This is provided by your hotspot or antenna manufacturer.',
       title: 'Antenna TX / RX Gain',
     },
     onboarding: {
@@ -224,10 +222,12 @@ export default {
       elevation_label: 'Height:',
       elevation_plural: '{{count}} meters',
       fee: 'Fee:',
-      fee_next: 'Pay Fee & Register Hotspot',
+      fee_register: 'Pay Fee & Register Hotspot',
+      fee_assert: 'Pay Fee & Assert Location',
       gain: '{{gain}} dBi',
       gain_label: 'TX / RX Gain:',
-      next: 'Register Hotspot',
+      register: 'Register Hotspot',
+      assert: 'Assert Location',
       no_funds: 'There is insufficient HNT in your account balance',
       subtitle_fee:
         'You need to pay a $10 Location Fee (in DC) to confirm this location.',
@@ -255,13 +255,11 @@ export default {
     },
     pair: {
       alert_ble_off: {
-        body:
-          'To start pairing, turn on Bluetooth. Keep Bluetooth on until you finish registration.',
+        body: 'To start pairing, turn on Bluetooth. Keep Bluetooth on until you finish registration.',
         title: 'Enable Bluetooth',
       },
       alert_no_permissions: {
-        body:
-          'The Nebra Helium App needs permission to use Bluetooth. You can enable Bluetooth permission in Settings.',
+        body: 'The Nebra Helium App needs permission to use Bluetooth. You can enable Bluetooth permission in Settings.',
         title: 'Authorize Bluetooth',
       },
       scan: 'Scan for my Hotspot',

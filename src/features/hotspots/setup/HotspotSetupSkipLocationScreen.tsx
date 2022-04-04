@@ -54,7 +54,7 @@ const HotspotSetupSkipLocationScreen = () => {
       </Box>
       <Box>
         <DebouncedButton
-          title={t('hotspot_setup.location_fee.next')}
+          title={t('hotspot_setup.location_fee.register')}
           mode="contained"
           variant="secondary"
           onPress={navNext}
