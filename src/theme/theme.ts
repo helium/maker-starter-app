@@ -145,6 +145,10 @@ export const lightThemeColors = {
   surfaceContrast: palette.nebraBlue,
   surfaceContrastText: palette.white,
   HelperText: palette.black,
+  cardBackground: palette.grayBoxLight,
+  cardBackgroundSecondary: palette.grayHighlight,
+  cardMainText: palette.offblack,
+  cardSecondaryText: palette.blueGray,
 }
 export const darkThemeColors = {
   ...palette,
@@ -160,9 +164,13 @@ export const darkThemeColors = {
   surfaceText: palette.white,
   surfaceSecondary: palette.offWhite,
   surfaceSecondaryText: palette.nebraBrown,
-  surfaceContrast: palette.nebraDarkGrey,
+  surfaceContrast: palette.nebraBlue,
   surfaceContrastText: palette.white,
   HelperText: palette.white,
+  cardBackground: palette.black,
+  cardBackgroundSecondary: palette.offblack,
+  cardMainText: palette.white,
+  cardSecondaryText: palette.offWhite,
 }
 
 export const theme = createTheme({

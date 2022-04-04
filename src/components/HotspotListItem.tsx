@@ -67,7 +67,9 @@ const HotspotListItem = ({
       <Pressable onPress={handlePress} disabled={!pressable}>
         {({ pressed }) => (
           <Box
-            backgroundColor={pressed ? 'grayHighlight' : 'grayBoxLight'}
+            backgroundColor={
+              pressed ? 'cardBackgroundSecondary' : 'cardBackground'
+            }
             flexDirection="row"
             justifyContent="space-between"
             alignItems="center"
@@ -84,7 +86,7 @@ const HotspotListItem = ({
                 />
                 <Text
                   variant="body2Medium"
-                  color={hidden ? 'grayLightText' : 'offblack'}
+                  color={hidden ? 'grayLightText' : 'cardMainText'}
                   paddingStart="s"
                   paddingEnd="s"
                   ellipsizeMode="tail"
@@ -99,7 +101,7 @@ const HotspotListItem = ({
               {showAddress && (
                 <Text
                   variant="body3Light"
-                  color={hidden ? 'grayLightText' : 'blueGray'}
+                  color={hidden ? 'grayLightText' : 'cardSecondaryText'}
                   marginTop="s"
                   maxFontSizeMultiplier={1.2}
                 >
