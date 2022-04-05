@@ -126,6 +126,7 @@ const palette = {
   purpleLight: '#A0A5DA',
   purpleGray: '#BBBDD8',
   purpleGrayLight: '#C2C5E4',
+  lowDark: '#242424',
 }
 
 export const lightThemeColors = {
@@ -167,7 +168,7 @@ export const darkThemeColors = {
   surfaceContrast: palette.nebraBlue,
   surfaceContrastText: palette.white,
   HelperText: palette.white,
-  cardBackground: palette.black,
+  cardBackground: palette.lowDark,
   cardBackgroundSecondary: palette.offblack,
   cardMainText: palette.white,
   cardSecondaryText: palette.offWhite,
