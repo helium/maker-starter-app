@@ -55,7 +55,7 @@
 	<key>NSBluetoothAlwaysUsageDescription</key>
 	<string>Allow Nebra Hotspot to connect to and manage your Hotspots</string>
 	<key>NSBluetoothPeripheralUsageDescription</key>
-	<string>Allow Nebra Hotspot to connect to and manage your Hotspots</string>
+	<string>Allow Nebra Hotspot App to use your Bluetooth to connect to and onboard your hotspot</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Allow Nebra Hotspot to use your camera to add hotspots</string>
 	<key>NSFaceIDUsageDescription</key>
