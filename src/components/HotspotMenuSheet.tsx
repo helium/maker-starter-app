@@ -64,7 +64,6 @@ const HotspotMenuSheet = ({ item }: Props) => {
             hotspotAddress: item?.address,
           })
         },
-        disabled: true,
       },
       {
         label: t('hotspot_details.options.viewExplorer'),

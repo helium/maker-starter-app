@@ -8,6 +8,7 @@ import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { ActivityIndicator, Linking, StyleSheet } from 'react-native'
 import { useTranslation } from 'react-i18next'
 import { useAsync } from 'react-async-hook'
+import Toast from 'react-native-simple-toast'
 import Text from '../../components/Text'
 import BackButton from '../../components/BackButton'
 import SafeAreaBox from '../../components/SafeAreaBox'
@@ -107,6 +108,8 @@ const TransferHotspot = () => {
     } catch (e) {
       // eslint-disable-next-line no-console
       console.error(e)
+
+      Toast.showWithGravity(e.message, Toast.LONG, Toast.CENTER)
     }
     setLoading(false)
   }, [hotspotAddress, newOwnerAddress])
