@@ -25,10 +25,10 @@ const WelcomeScreen = () => {
   const colors = useColors()
 
   return (
-    <SafeAreaBox backgroundColor="primaryBackground" flex={1}>
+    <SafeAreaBox backgroundColor="primary" flex={1}>
       <ImageBackground
         style={{ width: '100%', height: '100%' }}
-        source={require('../../../assets/images/Background.png')}
+        source={require('../../../assets/images/Map.png')}
       >
         <View
           style={{

@@ -128,8 +128,8 @@ const palette = {
   purpleGrayLight: '#C2C5E4',
   lowDark: '#242424',
 
-  nebraBlueTransparent: 'rgb(2, 168, 245, 0.5)',
-  nebraDarkTransparent: 'rgb(66, 66, 66, 0.8)',
+  nebraBlueTransparent: 'rgba(2, 168, 245, 0.4)',
+  nebraDarkTransparent: 'rgba(66, 66, 66, 0.5)',
 }
 
 export const lightThemeColors = {

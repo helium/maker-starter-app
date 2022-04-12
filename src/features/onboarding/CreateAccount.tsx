@@ -44,7 +44,9 @@ const CreateAccount = () => {
             borderRadius="l"
             onPress={handleAppSelection(app)}
           >
-            <Text variant="h4">{app.name}</Text>
+            <Text color="primaryBackground" variant="h4">
+              {app.name}
+            </Text>
           </TouchableOpacityBox>
         ))}
       </Box>
