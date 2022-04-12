@@ -1,4 +1,4 @@
-import React, { memo, useMemo } from 'react'
+import React, { memo, useState, useEffect, useMemo } from 'react'
 import { Hotspot } from '@helium/http'
 import { useTranslation } from 'react-i18next'
 import { useNavigation } from '@react-navigation/native'
@@ -19,11 +19,16 @@ import { createAppLink } from '../providers/AppLinkProvider'
 import HotspotActionSheet from './HotspotActionSheet'
 import { RootNavigationProp } from '../navigation/main/tabTypes'
 
-type Props = { item?: Hotspot }
-const HotspotMenuSheet = ({ item }: Props) => {
+type Props = { item?: Hotspot; modalVisibility?: boolean; onclose?: any }
+const HotspotMenuSheet = ({ item, modalVisibility, onclose }: Props) => {
   const { t } = useTranslation()
   const { triggerNotification } = useHaptic()
+  const [modalVisible, setModalVisible] = useState(modalVisibility)
   const navigation = useNavigation<RootNavigationProp>()
+  useEffect(() => {
+    setModalVisible(modalVisibility)
+  }, [setModalVisible, modalVisibility])
+
   const explorerUrl = useMemo(() => {
     if (!item) return ''
     const target = 'hotspots'
@@ -136,6 +141,8 @@ const HotspotMenuSheet = ({ item }: Props) => {
       title={startCase(item?.name)}
       data={actionSheetData}
       closeOnSelect={false}
+      modalVisibility={modalVisible}
+      onclose={onclose}
     />
   )
 }

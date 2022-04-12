@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useMemo } from 'react'
+import React, { memo, useCallback, useMemo, useState } from 'react'
 import { Hotspot } from '@helium/http'
 import animalName from 'angry-purple-tiger'
 import { useTranslation } from 'react-i18next'
@@ -43,7 +43,12 @@ const HotspotListItem = ({
 }: HotspotListItemProps) => {
   const { t } = useTranslation()
   const colors = useColors()
-  const handlePress = useCallback(() => onPress?.(gateway), [gateway, onPress])
+  const [modalVisible, setModalVisible] = useState(false)
+  const handlePress = useCallback(() => {
+    onPress?.(gateway)
+    setModalVisible(true)
+    console.log(modalVisible)
+  }, [gateway, onPress, setModalVisible, modalVisible])
 
   const locationText = useMemo(() => {
     const { geocode: geo } = gateway as Hotspot
@@ -186,7 +191,11 @@ const HotspotListItem = ({
             >
               {showCarot && (
                 <Box marginStart="m">
-                  <HotspotMenuSheet item={gateway} />
+                  <HotspotMenuSheet
+                    item={gateway}
+                    modalVisibility={modalVisible}
+                    onclose={setModalVisible}
+                  />
                 </Box>
               )}
             </Box>
