@@ -64,11 +64,15 @@ const HotspotTxnsSubmitScreen = () => {
     >
       <Box flex={1} alignItems="center" paddingTop="xxl">
         <Text variant="subtitle1" marginBottom="l">
-          {t('hotspot_setup.progress.title')}
+          {params.gatewayTxn
+            ? t('hotspot_setup.onboard.title')
+            : t('hotspot_setup.update.title')}
         </Text>
         <Box paddingHorizontal="l">
           <Text variant="body1" textAlign="center" marginBottom="l">
-            {t('hotspot_setup.progress.subtitle')}
+            {params.gatewayTxn
+              ? t('hotspot_setup.onboard.subtitle')
+              : t('hotspot_setup.update.subtitle')}
           </Text>
         </Box>
       </Box>
@@ -77,7 +81,11 @@ const HotspotTxnsSubmitScreen = () => {
         variant="primary"
         width="100%"
         mode="contained"
-        title={t('hotspot_setup.progress.next')}
+        title={
+          params.gatewayTxn
+            ? t('hotspot_setup.onboard.next')
+            : t('hotspot_setup.update.next')
+        }
       />
     </SafeAreaBox>
   )

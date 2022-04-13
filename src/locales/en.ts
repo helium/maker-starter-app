@@ -279,6 +279,18 @@ export default {
         'This can take a few minutes so feel free to close this screen.',
       title: 'REGISTERING HOTSPOT',
     },
+    onboard: {
+      next: 'Show My Hotspots',
+      subtitle:
+        'Press the button below to view your hotspots. But be patient, it can take a few minutes for your new hotspot to show',
+      title: 'REGISTERING HOTSPOT',
+    },
+    update: {
+      next: 'Show My Hotspots',
+      subtitle:
+        'Press the button below to view your hotspots. But be patient, it can take a few minutes for your new update to show',
+      title: 'UPDATING HOTSPOT',
+    },
     selection: {
       subtitle: 'Select the hotspot type below:',
       title: 'Add\nyour Hotspot.',

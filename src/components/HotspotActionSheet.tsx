@@ -32,6 +32,8 @@ type Props = BoxProps<Theme> & {
   iconVariant?: 'carot' | 'kabob' | 'none'
   closeOnSelect?: boolean
   maxModalHeight?: number
+  modalVisibility?: boolean
+  onclose?: any
 }
 type ListItem = { item: HeliumActionSheetItemType; index: number }
 
@@ -49,10 +51,12 @@ const HotspotActionSheet = ({
   prefixTextProps,
   closeOnSelect = true,
   maxModalHeight,
+  modalVisibility,
+  onclose,
   ...boxProps
 }: Props) => {
   const insets = useSafeAreaInsets()
-  const [modalVisible, setModalVisible] = useState(false)
+  const [modalVisible, setModalVisible] = useState(modalVisibility)
   const [sheetHeight, setSheetHeight] = useState(0)
   const [data, setData] = useState<Array<HeliumActionSheetItemType>>([])
   const { t } = useTranslation()
@@ -60,7 +64,8 @@ const HotspotActionSheet = ({
 
   useEffect(() => {
     setData(propsData)
-  }, [propsData])
+    setModalVisible(modalVisibility)
+  }, [propsData, setModalVisible, modalVisibility])
 
   useEffect(() => {
     let nextSheetHeight =
@@ -77,7 +82,8 @@ const HotspotActionSheet = ({
 
   const handleClose = useCallback(async () => {
     setModalVisible(false)
-  }, [])
+    onclose(false)
+  }, [onclose])
 
   const keyExtractor = useCallback((item) => item.value, [])
 
