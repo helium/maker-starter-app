@@ -47,8 +47,7 @@ const HotspotListItem = ({
   const handlePress = useCallback(() => {
     onPress?.(gateway)
     setModalVisible(true)
-    console.log(modalVisible)
-  }, [gateway, onPress, setModalVisible, modalVisible])
+  }, [gateway, onPress, setModalVisible])
 
   const locationText = useMemo(() => {
     const { geocode: geo } = gateway as Hotspot
