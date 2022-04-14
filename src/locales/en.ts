@@ -56,7 +56,7 @@ export default {
       create_account: 'Create an account on the Helium Network',
       login_with_helium: 'Already have a Helium Wallet?\nTap to get started.',
       subtitle:
-        'Nebra Helium currently supports hotspot onboarding, location assertion, and device transfers.\n\n<b>You must also have the official Helium App installed in order to continue.</b>',
+        'Nebra Hotspot currently supports hotspot onboarding, location assertion, and device transfers.\n\n<b>You must also have the official Helium App installed in order to continue.</b>',
       title: 'Welcome\nto Nebra',
     },
     linkAccount: {
@@ -263,7 +263,7 @@ export default {
       },
       alert_no_permissions: {
         body:
-          'The Nebra Helium App needs permission to use Bluetooth. You can enable Bluetooth permission in Settings.',
+          'The Nebra Hotspot App needs permission to use Bluetooth. You can enable Bluetooth permission in Settings.',
         title: 'Authorize Bluetooth',
       },
       scan: 'Scan for my Hotspot',
@@ -399,7 +399,7 @@ export default {
   permissions: {
     location: {
       message:
-        'The Nebra Helium App needs access to your location for Bluetooth discovery and to enable location assertion. This information will never be sold or shared.',
+        'The Nebra Hotspot App needs access to your location for Bluetooth discovery and to enable location assertion. This information will never be sold or shared.',
       title: 'Location Permission',
     },
   },

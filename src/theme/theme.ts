@@ -127,12 +127,16 @@ const palette = {
   purpleGray: '#BBBDD8',
   purpleGrayLight: '#C2C5E4',
   lowDark: '#242424',
+
+  nebraBlueTransparent: 'rgba(2, 168, 245, 0.4)',
+  nebraDarkTransparent: 'rgba(66, 66, 66, 0.5)',
 }
 
 export const lightThemeColors = {
   ...palette,
 
   primary: palette.nebraBlue,
+  primaryTransparent: palette.nebraBlueTransparent,
   primaryBackground: palette.white,
   primaryText: palette.nebraBlue,
   secondaryBackground: palette.nebraBlue,
@@ -155,6 +159,7 @@ export const darkThemeColors = {
   ...palette,
 
   primary: palette.nebraGrey,
+  primaryTransparent: palette.nebraDarkTransparent,
   primaryBackground: palette.nebraGrey,
   primaryText: palette.white,
   secondaryBackground: palette.nebraBrown,
