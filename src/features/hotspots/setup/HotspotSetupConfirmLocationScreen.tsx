@@ -5,7 +5,6 @@ import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import {
   Balance,
   DataCredits,
-  Location,
   NetworkTokens,
   USDollars,
   useOnboarding,
@@ -25,6 +24,7 @@ import { RootNavigationProp } from '../../../navigation/main/tabTypes'
 import { getAddress } from '../../../utils/secureAccount'
 import { getAccount } from '../../../utils/appDataClient'
 import HotspotLocationPreview from './HotspotLocationPreview'
+import { loadLocationFeeData } from '../../../utils/assertLocationUtils'
 
 type Route = RouteProp<
   HotspotSetupStackParamList,
@@ -77,7 +77,7 @@ const HotspotSetupConfirmLocationScreen = () => {
       locationNonceLimit: onboardingRecord.maker.locationNonceLimit,
       makerAddress: onboardingRecord.maker.address,
     }
-    Location.loadLocationFeeData(feeParams).then(setFeeData)
+    loadLocationFeeData(feeParams).then(setFeeData)
   }, [ownerAddress, account, getOnboardingRecord, params.hotspotAddress])
 
   const navNext = useCallback(async () => {
@@ -178,12 +178,12 @@ const HotspotSetupConfirmLocationScreen = () => {
                 paddingTop="m"
                 marginTop={{ phone: 'm', smallPhone: 'xxs' }}
               >
-                <Text variant="body1" color="secondaryText">
+                <Text variant="body1" color="primaryText">
                   {t('hotspot_setup.location_fee.balance')}
                 </Text>
                 <Text
                   variant="body1"
-                  color={hasSufficientBalance ? 'secondaryText' : 'error'}
+                  color={hasSufficientBalance ? 'primaryText' : 'error'}
                 >
                   {account?.balance?.toString(2, {
                     groupSeparator,
@@ -197,7 +197,7 @@ const HotspotSetupConfirmLocationScreen = () => {
                 justifyContent="space-between"
                 marginTop={{ phone: 'm', smallPhone: 'xxs' }}
               >
-                <Text variant="body1" color="secondaryText">
+                <Text variant="body1" color="primaryText">
                   {t('hotspot_setup.location_fee.fee')}
                 </Text>
                 <Text variant="body1" color="primaryText">
@@ -225,7 +225,7 @@ const HotspotSetupConfirmLocationScreen = () => {
                 : t('hotspot_setup.location_fee.fee_assert')
             }
             mode="contained"
-            variant="secondary"
+            variant="primary"
             onPress={navNext}
             disabled={isFree ? false : !hasSufficientBalance}
           />
@@ -237,7 +237,7 @@ const HotspotSetupConfirmLocationScreen = () => {
                 : t('hotspot_setup.location_fee.fee_register')
             }
             mode="contained"
-            variant="secondary"
+            variant="primary"
             onPress={navNext}
             disabled={isFree ? false : !hasSufficientBalance}
           />
