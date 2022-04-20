@@ -4,18 +4,17 @@ import { useTranslation } from 'react-i18next'
 import { useNavigation } from '@react-navigation/native'
 import { startCase } from 'lodash'
 import CopyIco from '@assets/images/copy.svg'
-import ShareHotspotIco from '@assets/images/shareHotspot.svg'
 import GlobeIco from '@assets/images/globe.svg'
 import TransferIco from '@assets/images/signal.svg'
 import AssertLocationIco from '@assets/images/location.svg'
 import Clipboard from '@react-native-community/clipboard'
-import { Linking, Share } from 'react-native'
+import { Linking } from 'react-native'
 import Toast from 'react-native-simple-toast'
 import { HeliumActionSheetItemType } from './HotspotActionSheetItem'
 import { TouchableOpacityBoxProps } from './TouchableOpacityBox'
 import useHaptic from '../utils/useHaptic'
 import { EXPLORER_BASE_URL } from '../utils/config'
-import { createAppLink } from '../providers/AppLinkProvider'
+
 import HotspotActionSheet from './HotspotActionSheet'
 import { RootNavigationProp } from '../navigation/main/tabTypes'
 
@@ -75,18 +74,6 @@ const HotspotMenuSheet = ({ item, modalVisibility, onclose }: Props) => {
         value: 'viewExplorer',
         Icon: GlobeIco,
         action: () => Linking.openURL(explorerUrl),
-      },
-      {
-        label: t('hotspot_details.options.share'),
-        value: 'share',
-        Icon: ShareHotspotIco,
-        action: () => {
-          if (!item?.address) return
-
-          Share.share({
-            message: createAppLink('hotspot', item.address),
-          })
-        },
       },
       {
         label: `${t('generic.copy')} ${t('generic.hotspot')} ${t(
