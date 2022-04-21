@@ -22,7 +22,7 @@ import Text from '../../../components/Text'
 import { decimalSeparator, groupSeparator } from '../../../utils/i18n'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
 import { getAddress } from '../../../utils/secureAccount'
-import { getAccount } from '../../../utils/appDataClient'
+import { getAccount, getHotspotDetails } from '../../../utils/appDataClient'
 import HotspotLocationPreview from './HotspotLocationPreview'
 import { loadLocationFeeData } from '../../../utils/assertLocationUtils'
 
@@ -65,18 +65,24 @@ const HotspotSetupConfirmLocationScreen = () => {
 
   useAsync(async () => {
     const onboardingRecord = await getOnboardingRecord(params.hotspotAddress)
+    const hotspot = await getHotspotDetails(params.hotspotAddress)
     if (!onboardingRecord || !ownerAddress || !account?.balance) {
       return
     }
 
     const feeParams = {
-      nonce: 0,
+      nonce: hotspot?.nonce || 0,
       accountIntegerBalance: account.balance.integerBalance,
+      onboardingRecord,
       dataOnly: false,
-      owner: ownerAddress,
-      locationNonceLimit: onboardingRecord.maker.locationNonceLimit,
-      makerAddress: onboardingRecord.maker.address,
     }
+    // nonce: 0,
+    // accountIntegerBalance: account.balance.integerBalance,
+    // dataOnly: false,
+    // owner: ownerAddress,
+    // locationNonceLimit: onboardingRecord.maker.locationNonceLimit,
+    // makerAddress: onboardingRecord.maker.address,
+
     loadLocationFeeData(feeParams).then(setFeeData)
   }, [ownerAddress, account, getOnboardingRecord, params.hotspotAddress])
 
