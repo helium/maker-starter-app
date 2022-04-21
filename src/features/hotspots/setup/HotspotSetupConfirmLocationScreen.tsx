@@ -76,12 +76,6 @@ const HotspotSetupConfirmLocationScreen = () => {
       onboardingRecord,
       dataOnly: false,
     }
-    // nonce: 0,
-    // accountIntegerBalance: account.balance.integerBalance,
-    // dataOnly: false,
-    // owner: ownerAddress,
-    // locationNonceLimit: onboardingRecord.maker.locationNonceLimit,
-    // makerAddress: onboardingRecord.maker.address,
 
     loadLocationFeeData(feeParams).then(setFeeData)
   }, [ownerAddress, account, getOnboardingRecord, params.hotspotAddress])
