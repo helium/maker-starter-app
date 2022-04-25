@@ -64,9 +64,13 @@ const HotspotSetupConfirmLocationScreen = () => {
   }, [ownerAddress])
 
   useAsync(async () => {
-    const onboardingRecord = await getOnboardingRecord(params.hotspotAddress)
+    let onboardingRecord
+    try {
+      onboardingRecord = await getOnboardingRecord(params.hotspotAddress)
+    } catch (error) {}
     const hotspot = await getHotspotDetails(params.hotspotAddress)
-    if (!onboardingRecord || !ownerAddress || !account?.balance) {
+
+    if (!ownerAddress || !account?.balance) {
       return
     }
 
