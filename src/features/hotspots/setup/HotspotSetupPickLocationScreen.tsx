@@ -33,6 +33,7 @@ import BSHandle from '../../../components/BSHandle'
 import AddressSearchModal from './AddressSearchModal'
 import { PlaceGeography } from '../../../utils/googlePlaces'
 import useGetLocation from '../../../utils/useGetLocation'
+import { getHotspotDetails } from '../../../utils/appDataClient'
 
 type Route = RouteProp<
   HotspotSetupStackParamList,
@@ -65,7 +66,7 @@ const HotspotSetupPickLocationScreen = () => {
 
     checkLocationPermissions()
     sleepThenEnable()
-  }, [maybeGetLocation])
+  }, [maybeGetLocation, params])
 
   const onMapMoved = useCallback(async (newCoords?: Position) => {
     if (newCoords) {
@@ -87,11 +88,16 @@ const HotspotSetupPickLocationScreen = () => {
   }, [locationName, markerCenter, navigation, params])
 
   const onDidFinishLoadingMap = useCallback(
-    (latitude: number, longitude: number) => {
+    async (latitude: number, longitude: number) => {
+      const hotspot = await getHotspotDetails(params.hotspotAddress)
+      const defaultLocation =
+        hotspot?.lng && hotspot?.lat
+          ? [hotspot?.lng, hotspot?.lat]
+          : [longitude, latitude]
       setHasGPSLocation(true)
-      setMapCenter([longitude, latitude])
+      setMapCenter(defaultLocation)
     },
-    [],
+    [params],
   )
 
   const handleSearchPress = useCallback(() => {
