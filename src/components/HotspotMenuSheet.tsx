@@ -7,6 +7,7 @@ import CopyIco from '@assets/images/copy.svg'
 import GlobeIco from '@assets/images/globe.svg'
 import TransferIco from '@assets/images/signal.svg'
 import AssertLocationIco from '@assets/images/location.svg'
+import AntennaIco from '@assets/images/discovery_mode_icon.svg'
 import Clipboard from '@react-native-community/clipboard'
 import { Linking } from 'react-native'
 import Toast from 'react-native-simple-toast'
@@ -58,6 +59,12 @@ const HotspotMenuSheet = ({ item, modalVisibility, onclose }: Props) => {
             },
           })
         },
+      },
+      {
+        label: t('hotspot_details.options.update_antenna'),
+        value: 'updateAntenna',
+        Icon: AntennaIco,
+        action: () => {},
       },
       {
         label: t('hotspot_details.options.transfer'),
