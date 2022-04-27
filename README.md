@@ -311,3 +311,19 @@ yarn android --deviceId <deviceId>
 ```
 
 You can also open the Android project in Android Studio by selecting `open an existing project` and selecting the `/android` folder.
+
+#### Android Release
+
+1. Set build version env vars. `VERSION_CODE_OFFSET` is using format `5xxyyzz`. Corresponding to major, minor, patch. So v1.0.1, equal to 5010001. `APPCENTER_BUILD_ID` is always `0000000`.
+
+```
+➜ export VERSION_CODE_OFFSET=5010001
+➜ export APPCENTER_BUILD_ID=0000000
+```
+
+2. Open Android Studio
+3. Update the version in `package.json` "version".
+4. Build > Generate Signed APK
+5. Use `com.nebra.helium.maker` keystore, `prod` key.
+6. Select `release` variant.
+7. Copy `/android/app/release/app-release.abb` to Google Play.
