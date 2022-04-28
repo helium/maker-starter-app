@@ -217,10 +217,16 @@ export default {
       next: 'Set Location',
       title: 'Hotspot Location',
     },
+    antenna_only_fee: {
+      title: 'Antenna Update',
+      confirm_antenna:
+        'Confirm the antenna gain and elevation selected is correct.',
+      fee_antenna: 'Pay Fee & Update Antenna',
+    },
     location_fee: {
       balance: 'Balance:',
       confirm_location:
-        'Confirm the location selected is correct and register your Hotspot.',
+        'Confirm the location selected is correct and register or update your Hotspot.',
       elevation: '{{count}} meter',
       elevation_label: 'Height:',
       elevation_plural: '{{count}} meters',
@@ -278,7 +284,7 @@ export default {
       next: 'Go to Wallet',
       subtitle:
         'This can take a few minutes so feel free to close this screen.',
-      title: 'REGISTERING HOTSPOT',
+      title: 'UPDATING HOTSPOT',
     },
     onboard: {
       next: 'Show My Hotspots',

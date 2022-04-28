@@ -33,6 +33,9 @@ const HotspotTxnsProgressScreen = () => {
   const { getOnboardingRecord } = useOnboarding()
   const { primaryText } = useColors()
 
+  console.log('params')
+  console.log(params)
+
   const handleError = async (error: unknown) => {
     // eslint-disable-next-line no-console
     console.error(error)
