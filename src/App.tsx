@@ -22,6 +22,7 @@ import {
   HotspotBleProvider,
   OnboardingProvider,
 } from '@helium/react-native-sdk'
+import { createClient } from '@segment/analytics-react-native'
 import { theme, darkThemeColors, lightThemeColors } from './theme/theme'
 import NavigationRoot from './navigation/NavigationRoot'
 import { useAppDispatch } from './store/store'
@@ -40,6 +41,11 @@ SplashScreen.preventAutoHideAsync().catch(() => {
 
 Sentry.init({
   dsn: Config.SENTRY_DSN,
+})
+
+export const segmentClient = createClient({
+  writeKey: Config.SEGMENT_ANALYTICS_KEY,
+  trackAppLifecycleEvents: true,
 })
 
 const App = () => {

@@ -54,6 +54,8 @@
     "@react-navigation/native": "^5.8.4",
     "@react-navigation/stack": "^5.12.1",
     "@reduxjs/toolkit": "^1.4.0",
+    "@segment/analytics-react-native": "^2.1.12",
+    "@segment/sovran-react-native": "^0.2.6",
     "@sentry/react-native": "^3.4.0",
     "@shopify/restyle": "^1.3.1",
     "@types/tinycolor2": "^1.4.3",
