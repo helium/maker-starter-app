@@ -19,20 +19,14 @@
     "clean-install": "watchman watch-del-all && rm -rf $TMPDIR/react-native-packager-cache-* && rm -rf $TMPDIR/metro-bundler-cache-* && rm -rf node_modules/ && yarn cache clean && yarn install && yarn android-clean && yarn ios-clean && yarn pod-install",
     "clean-start": "yarn start -- --reset-cache",
     "postinstall": "yarn patch-package",
-    "update-version": "npx react-native-version --never-amend"
+    "update-version": "npx react-native-version --never-amend",
+    "lint:prettier": "prettier --loglevel warn --check \"**/*.{scss,css,js,jsx,ts,tsx,html,md,json}\"",
+    "lint:prettier:fix": "prettier --loglevel warn --write \"**/*.{scss,css,js,jsx,ts,tsx,html,md,json}\""
   },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
     }
-  },
-  "lint-staged": {
-    "*.{js,ts,tsx,md,html}": [
-      "prettier --write ."
-    ],
-    "*.{js,ts,tsx}": [
-      "eslint --quiet --fix"
-    ]
   },
   "dependencies": {
     "@gorhom/bottom-sheet": "^4.1.5",
@@ -137,7 +131,7 @@
     "jest-expo": "^43.0.0",
     "lint-staged": "^10.5.1",
     "metro-react-native-babel-preset": "^0.66.2",
-    "prettier": "^2.0.5",
+    "prettier": "2.5.1",
     "prettier-eslint": "^11.0.0",
     "react-native-cli-bump-version": "^1.1.0",
     "react-native-svg-transformer": "^0.14.3",

@@ -31,7 +31,7 @@
     "default-case": "off",
     "quotes": [
       "error",
-      "single",
+      "double",
       {
         "avoidEscape": true
       }

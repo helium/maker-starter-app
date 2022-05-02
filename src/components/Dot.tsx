@@ -1,8 +1,8 @@
-import React from 'react'
-import Box from './Box'
+import React from "react";
+import Box from "./Box";
 
-type Props = { filled?: boolean }
-const dotSize = 16
+type Props = { filled?: boolean };
+const dotSize = 16;
 const Dot = ({ filled }: Props) => {
   return (
     <Box
@@ -12,9 +12,9 @@ const Dot = ({ filled }: Props) => {
       width={dotSize}
       height={dotSize}
       borderRadius="round"
-      backgroundColor={filled ? 'primaryText' : undefined}
+      backgroundColor={filled ? "primaryText" : undefined}
     />
-  )
-}
+  );
+};
 
-export default Dot
+export default Dot;

@@ -1,10 +1,10 @@
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from "react-i18next";
 
-import { useColors } from '../theme/themeHooks'
+import { useColors } from "../theme/themeHooks";
 
 const useDefaultScreenOptions = () => {
-  const { t } = useTranslation()
-  const colors = useColors()
+  const { t } = useTranslation();
+  const colors = useColors();
 
   return {
     headerStyle: {
@@ -13,8 +13,8 @@ const useDefaultScreenOptions = () => {
       shadowOpacity: 0, // remove shadow on iOS
     },
     headerTintColor: colors.primaryText,
-    headerBackTitle: t('generic.back'),
-  }
-}
+    headerBackTitle: t("generic.back"),
+  };
+};
 
-export default useDefaultScreenOptions
+export default useDefaultScreenOptions;

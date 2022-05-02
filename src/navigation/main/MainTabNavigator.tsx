@@ -1,45 +1,45 @@
-import React, { useEffect, memo, useMemo, useCallback } from 'react'
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { useNavigation } from '@react-navigation/native'
-import { useSelector } from 'react-redux'
+import React, { useEffect, memo, useMemo, useCallback } from "react";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { useNavigation } from "@react-navigation/native";
+import { useSelector } from "react-redux";
 
-import HotspotsScreen from '../../features/hotspots/root/HotspotsScreen'
-import SettingsScreen from '../../features/settings/SettingsScreen'
-import { TabBarIconType, MainTabType } from './tabTypes'
-import TabBarIcon from './TabBarIcon'
-import { RootState } from '../../store/rootReducer'
-import { SignedInStackNavigationProp } from '../navigationRootTypes'
-import { MainTabParamList } from './mainTabNavigatorTypes'
-import useDefaultScreenOptions from '../useDefaultScreenOptions'
-import { useColors } from '../../theme/themeHooks'
+import HotspotsScreen from "../../features/hotspots/root/HotspotsScreen";
+import SettingsScreen from "../../features/settings/SettingsScreen";
+import { TabBarIconType, MainTabType } from "./tabTypes";
+import TabBarIcon from "./TabBarIcon";
+import { RootState } from "../../store/rootReducer";
+import { SignedInStackNavigationProp } from "../navigationRootTypes";
+import { MainTabParamList } from "./mainTabNavigatorTypes";
+import useDefaultScreenOptions from "../useDefaultScreenOptions";
+import { useColors } from "../../theme/themeHooks";
 
-const MainTab = createBottomTabNavigator<MainTabParamList>()
+const MainTab = createBottomTabNavigator<MainTabParamList>();
 
 const MainTabs = () => {
-  const rootNavigation = useNavigation<SignedInStackNavigationProp>()
+  const rootNavigation = useNavigation<SignedInStackNavigationProp>();
   const {
     app: { isLocked },
-  } = useSelector((state: RootState) => state)
+  } = useSelector((state: RootState) => state);
 
-  const colors = useColors()
-  const defaultScreenOptions = useDefaultScreenOptions()
+  const colors = useColors();
+  const defaultScreenOptions = useDefaultScreenOptions();
 
   useEffect(() => {
-    if (!isLocked) return
-    rootNavigation.navigate('LockScreen', { requestType: 'unlock', lock: true })
-  }, [isLocked, rootNavigation])
+    if (!isLocked) return;
+    rootNavigation.navigate("LockScreen", { requestType: "unlock", lock: true });
+  }, [isLocked, rootNavigation]);
 
   const sceneContainerStyle = useMemo(
     () => ({
       opacity: isLocked ? 0 : 1,
     }),
     [isLocked],
-  )
+  );
 
   const screenOptions = useCallback(
     ({ route }) => ({
       ...defaultScreenOptions,
-      headerTitle: '',
+      headerTitle: "",
       tabBarStyle: {
         backgroundColor: colors.primaryBackground,
       },
@@ -50,13 +50,13 @@ const MainTabs = () => {
             focused={focused}
             size={Math.min(size, 22)}
           />
-        )
+        );
       },
       tabBarActiveTintColor: colors.linkText,
       tabBarInactiveTintColor: colors.ghost,
     }),
     [defaultScreenOptions, colors],
-  )
+  );
 
   return (
     <MainTab.Navigator
@@ -67,7 +67,7 @@ const MainTabs = () => {
       <MainTab.Screen name="Hotspots" component={HotspotsScreen} />
       <MainTab.Screen name="Settings" component={SettingsScreen} />
     </MainTab.Navigator>
-  )
-}
+  );
+};
 
-export default memo(MainTabs)
+export default memo(MainTabs);

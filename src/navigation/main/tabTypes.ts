@@ -1,6 +1,6 @@
-export type MainTabType = 'Hotspots' | 'Settings'
+export type MainTabType = "Hotspots" | "Settings";
 
 export type TabBarIconType = {
-  focused: boolean
-  size: number
-}
+  focused: boolean;
+  size: number;
+};

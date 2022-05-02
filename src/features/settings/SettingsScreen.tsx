@@ -1,145 +1,143 @@
-import React, { memo, ReactText, useCallback, useEffect, useMemo } from 'react'
-import { useTranslation } from 'react-i18next'
-import { Alert, SectionList } from 'react-native'
-import { useSelector } from 'react-redux'
-import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
-import { isEqual } from 'lodash'
+import React, { memo, ReactText, useCallback, useEffect, useMemo } from "react";
+import { useTranslation } from "react-i18next";
+import { Alert, SectionList } from "react-native";
+import { useSelector } from "react-redux";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
+import { isEqual } from "lodash";
 
-import Text from '../../components/Text'
-import { RootState } from '../../store/rootReducer'
-import { useAppDispatch } from '../../store/store'
-import appSlice from '../../store/user/appSlice'
-import { SignedInStackNavigationProp } from '../../navigation/navigationRootTypes'
-import { MainTabParamList } from '../../navigation/main/mainTabNavigatorTypes'
-import SettingListItem, { SettingListItemType } from './SettingListItem'
-import useAuthIntervals from './useAuthIntervals'
-import Box from '../../components/Box'
-import { SUPPORTED_LANGUAGUES } from '../../i18n/i18nTypes'
-import { useLanguageContext } from '../../providers/LanguageProvider'
-import useLinkWallet from '../../utils/useLinkWallet'
+import Text from "../../components/Text";
+import { RootState } from "../../store/rootReducer";
+import { useAppDispatch } from "../../store/store";
+import appSlice from "../../store/user/appSlice";
+import { SignedInStackNavigationProp } from "../../navigation/navigationRootTypes";
+import { MainTabParamList } from "../../navigation/main/mainTabNavigatorTypes";
+import SettingListItem, { SettingListItemType } from "./SettingListItem";
+import useAuthIntervals from "./useAuthIntervals";
+import Box from "../../components/Box";
+import { SUPPORTED_LANGUAGUES } from "../../i18n/i18nTypes";
+import { useLanguageContext } from "../../providers/LanguageProvider";
+import useLinkWallet from "../../utils/useLinkWallet";
 
-type Route = RouteProp<MainTabParamList, 'Settings'>
+type Route = RouteProp<MainTabParamList, "Settings">;
 
 const SettingsScreen = () => {
-  const { t } = useTranslation()
-  const { params } = useRoute<Route>()
-  const dispatch = useAppDispatch()
-  const app = useSelector((state: RootState) => state.app, isEqual)
-  const authIntervals = useAuthIntervals()
-  const navigation = useNavigation<SignedInStackNavigationProp>()
-  const { changeLanguage, language } = useLanguageContext()
+  const { t } = useTranslation();
+  const { params } = useRoute<Route>();
+  const dispatch = useAppDispatch();
+  const app = useSelector((state: RootState) => state.app, isEqual);
+  const authIntervals = useAuthIntervals();
+  const navigation = useNavigation<SignedInStackNavigationProp>();
+  const { changeLanguage, language } = useLanguageContext();
 
-  const { walletAddress, walletToken } = useSelector(
-    (state: RootState) => state.app,
-  )
+  const { walletAddress, walletToken } = useSelector((state: RootState) => state.app);
 
   const truncatedAddress = useMemo(() => {
-    if (!walletAddress) return
+    if (!walletAddress) return;
 
-    return [walletAddress.slice(0, 8), walletAddress.slice(-8)].join('...')
-  }, [walletAddress])
+    return [walletAddress.slice(0, 8), walletAddress.slice(-8)].join("...");
+  }, [walletAddress]);
 
   useEffect(() => {
-    if (!params?.pinVerifiedFor) return
+    if (!params?.pinVerifiedFor) return;
 
-    const { pinVerifiedFor } = params
+    const { pinVerifiedFor } = params;
 
     switch (pinVerifiedFor) {
-      case 'disablePin':
-        dispatch(appSlice.actions.disablePin())
-        break
-      case 'resetPin':
-        navigation.push('CreatePinScreen', { pinReset: true })
-        break
+      case "disablePin":
+        dispatch(appSlice.actions.disablePin());
+        break;
+      case "resetPin":
+        navigation.push("CreatePinScreen", { pinReset: true });
+        break;
     }
-  }, [dispatch, params, navigation])
+  }, [dispatch, params, navigation]);
 
   const handleLanguageChange = useCallback(
     (lng: string) => {
-      changeLanguage(lng)
+      changeLanguage(lng);
     },
     [changeLanguage],
-  )
+  );
 
   const handlePinRequired = useCallback(
     (value?: boolean) => {
       if (!app.isPinRequired && value) {
         // toggling on
-        navigation.push('CreatePinScreen', { pinReset: true })
+        navigation.push("CreatePinScreen", { pinReset: true });
       }
 
       if (app.isPinRequired && !value) {
         // toggling off, confirm pin before turning off
-        navigation.push('LockScreen', { requestType: 'disablePin' })
+        navigation.push("LockScreen", { requestType: "disablePin" });
       }
     },
     [app.isPinRequired, navigation],
-  )
+  );
 
   const handleResetPin = useCallback(() => {
-    navigation.push('LockScreen', { requestType: 'resetPin' })
-  }, [navigation])
+    navigation.push("LockScreen", { requestType: "resetPin" });
+  }, [navigation]);
 
   const handleSignOut = useCallback(() => {
     Alert.alert(
-      t('settingsScreen.sections.app.signOutAlert.title'),
-      t('settingsScreen.sections.app.signOutAlert.body'),
+      t("settingsScreen.sections.app.signOutAlert.title"),
+      t("settingsScreen.sections.app.signOutAlert.body"),
       [
         {
-          text: t('generic.cancel'),
-          style: 'cancel',
+          text: t("generic.cancel"),
+          style: "cancel",
         },
         {
-          text: t('settingsScreen.sections.app.signOut'),
-          style: 'destructive',
+          text: t("settingsScreen.sections.app.signOut"),
+          style: "destructive",
           onPress: () => {
-            dispatch(appSlice.actions.signOut())
+            dispatch(appSlice.actions.signOut());
           },
         },
       ],
-    )
-  }, [t, dispatch])
+    );
+  }, [t, dispatch]);
 
-  const linkWallet = useLinkWallet()
+  const linkWallet = useLinkWallet();
 
   const handleIntervalSelected = useCallback(
     (value: ReactText) => {
-      const number = typeof value === 'number' ? value : parseInt(value, 10)
-      dispatch(appSlice.actions.updateAuthInterval(number))
+      const number = typeof value === "number" ? value : parseInt(value, 10);
+      dispatch(appSlice.actions.updateAuthInterval(number));
     },
     [dispatch],
-  )
+  );
 
   const SectionData = useMemo(() => {
     let pin: SettingListItemType[] = [
       {
-        title: t('settingsScreen.sections.security.enablePin'),
+        title: t("settingsScreen.sections.security.enablePin"),
         onToggle: handlePinRequired,
         value: app.isPinRequired,
       },
-    ]
+    ];
 
     if (app.isPinRequired) {
       pin = [
         ...pin,
         {
-          title: t('settingsScreen.sections.security.requirePin'),
-          value: app.authInterval || '',
+          title: t("settingsScreen.sections.security.requirePin"),
+          value: app.authInterval || "",
           select: {
             items: authIntervals,
             onValueSelect: handleIntervalSelected,
           },
         },
         {
-          title: t('settingsScreen.sections.security.resetPin'),
+          title: t("settingsScreen.sections.security.resetPin"),
           onPress: handleResetPin,
         },
-      ]
+      ];
     }
 
     const appSections = [
       {
-        title: t('settingsScreen.sections.app.language'),
+        title: t("settingsScreen.sections.app.language"),
         value: language,
         select: {
           items: SUPPORTED_LANGUAGUES,
@@ -147,31 +145,31 @@ const SettingsScreen = () => {
         },
       },
       {
-        title: t('settingsScreen.sections.app.signOutWithLink', {
+        title: t("settingsScreen.sections.app.signOutWithLink", {
           address: truncatedAddress,
         }),
         onPress: handleSignOut,
         destructive: true,
       },
-    ] as SettingListItemType[]
+    ] as SettingListItemType[];
 
     if (!walletToken) {
       appSections.splice(1, 0, {
-        title: t('settingsScreen.sections.app.linkWallet'),
+        title: t("settingsScreen.sections.app.linkWallet"),
         onPress: linkWallet,
-      })
+      });
     }
 
     return [
       {
-        title: t('settingsScreen.sections.security.title'),
+        title: t("settingsScreen.sections.security.title"),
         data: pin,
       },
       {
-        title: t('settingsScreen.sections.app.title'),
+        title: t("settingsScreen.sections.app.title"),
         data: appSections,
       },
-    ]
+    ];
   }, [
     t,
     handlePinRequired,
@@ -186,7 +184,7 @@ const SettingsScreen = () => {
     handleResetPin,
     linkWallet,
     walletToken,
-  ])
+  ]);
 
   const renderItem = useCallback(
     ({ item, index, section }) => (
@@ -197,7 +195,7 @@ const SettingsScreen = () => {
       />
     ),
     [],
-  )
+  );
 
   const renderSectionHeader = useCallback(
     ({ section: { title, icon } }) => (
@@ -216,24 +214,16 @@ const SettingsScreen = () => {
       </Box>
     ),
     [],
-  )
+  );
 
-  const renderSectionFooter = useCallback(
-    ({ section: { footer } }) => footer,
-    [],
-  )
+  const renderSectionFooter = useCallback(({ section: { footer } }) => footer, []);
 
-  const keyExtractor = useCallback((item, index) => item.title + index, [])
+  const keyExtractor = useCallback((item, index) => item.title + index, []);
 
   return (
-    <Box
-      flex={1}
-      backgroundColor="primaryBackground"
-      paddingHorizontal="m"
-      paddingBottom="m"
-    >
+    <Box flex={1} backgroundColor="primaryBackground" paddingHorizontal="m" paddingBottom="m">
       <Text variant="h2" textAlign="center">
-        {t('settingsScreen.title')}
+        {t("settingsScreen.title")}
       </Text>
 
       <SectionList
@@ -247,7 +237,7 @@ const SettingsScreen = () => {
         // where it won't render all items right away. This seems to fix it.
       />
     </Box>
-  )
-}
+  );
+};
 
-export default memo(SettingsScreen)
+export default memo(SettingsScreen);

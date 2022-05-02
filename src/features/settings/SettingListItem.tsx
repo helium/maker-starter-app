@@ -1,49 +1,49 @@
-import React, { memo, ReactText, useMemo } from 'react'
-import { Linking, Switch } from 'react-native'
-import Text, { TextProps } from '../../components/Text'
-import TouchableOpacityBox from '../../components/TouchableOpacityBox'
-import { useColors } from '../../theme/themeHooks'
-import CarotRight from '../../assets/images/carot-right.svg'
-import LinkImg from '../../assets/images/link.svg'
-import HeliumActionSheet from '../../components/HeliumActionSheet'
-import { HeliumActionSheetItemType } from '../../components/HeliumActionSheetItem'
+import React, { memo, ReactText, useMemo } from "react";
+import { Linking, Switch } from "react-native";
+import Text, { TextProps } from "../../components/Text";
+import TouchableOpacityBox from "../../components/TouchableOpacityBox";
+import { useColors } from "../../theme/themeHooks";
+import CarotRight from "../../assets/images/carot-right.svg";
+import LinkImg from "../../assets/images/link.svg";
+import HeliumActionSheet from "../../components/HeliumActionSheet";
+import { HeliumActionSheetItemType } from "../../components/HeliumActionSheetItem";
 
 export type SelectProps = {
-  onDonePress?: () => void
-  onValueSelect: (value: ReactText, index: number) => void
-  items: HeliumActionSheetItemType[]
-}
+  onDonePress?: () => void;
+  onValueSelect: (value: ReactText, index: number) => void;
+  items: HeliumActionSheetItemType[];
+};
 
 export type SettingListItemType = {
-  title: string
-  destructive?: boolean
-  onPress?: () => void
-  onToggle?: (value: boolean) => void
-  value?: boolean | string | number
-  select?: SelectProps
-  openUrl?: string
-}
+  title: string;
+  destructive?: boolean;
+  onPress?: () => void;
+  onToggle?: (value: boolean) => void;
+  value?: boolean | string | number;
+  select?: SelectProps;
+  openUrl?: string;
+};
 
 const SettingListItem = ({
   item: { title, value, destructive, onToggle, onPress, select, openUrl },
   isTop = false,
   isBottom = false,
 }: {
-  item: SettingListItemType
-  isTop?: boolean
-  isBottom?: boolean
+  item: SettingListItemType;
+  isTop?: boolean;
+  isBottom?: boolean;
 }) => {
-  const colors = useColors()
+  const colors = useColors();
 
   const handlePress = () => {
     if (openUrl) {
-      Linking.openURL(openUrl)
+      Linking.openURL(openUrl);
     }
 
     if (onPress) {
-      onPress()
+      onPress();
     }
-  }
+  };
 
   const trackColor = useMemo(
     () => ({
@@ -51,15 +51,15 @@ const SettingListItem = ({
       true: colors.linkText,
     }),
     [colors],
-  )
+  );
 
   const actionSheetTextProps = useMemo(
     () =>
       ({
-        variant: 'body2',
+        variant: "body2",
       } as TextProps),
     [],
-  )
+  );
 
   return (
     <TouchableOpacityBox
@@ -72,17 +72,15 @@ const SettingListItem = ({
       marginBottom="xxxs"
       onPress={handlePress}
       disabled={!(onPress || openUrl)}
-      borderTopLeftRadius={isTop ? 'm' : 'none'}
-      borderTopRightRadius={isTop ? 'm' : 'none'}
-      borderBottomLeftRadius={isBottom ? 'm' : 'none'}
-      borderBottomRightRadius={isBottom ? 'm' : 'none'}
+      borderTopLeftRadius={isTop ? "m" : "none"}
+      borderTopRightRadius={isTop ? "m" : "none"}
+      borderBottomLeftRadius={isBottom ? "m" : "none"}
+      borderBottomRightRadius={isBottom ? "m" : "none"}
     >
-      <Text variant="body2" color={destructive ? 'error' : 'primaryText'}>
+      <Text variant="body2" color={destructive ? "error" : "primaryText"}>
         {title}
       </Text>
-      {!onToggle && !select && onPress && (
-        <CarotRight color={colors.primaryText} />
-      )}
+      {!onToggle && !select && onPress && <CarotRight color={colors.primaryText} />}
       {openUrl && <LinkImg />}
       {onToggle && (
         <Switch
@@ -103,7 +101,7 @@ const SettingListItem = ({
         />
       )}
     </TouchableOpacityBox>
-  )
-}
+  );
+};
 
-export default memo(SettingListItem)
+export default memo(SettingListItem);

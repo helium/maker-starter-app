@@ -1,17 +1,15 @@
-import React, { createContext, ReactNode, useContext } from 'react'
-import { useLanguage } from '../i18n'
+import React, { createContext, ReactNode, useContext } from "react";
+import { useLanguage } from "../i18n";
 
-const initialState = { language: 'en', changeLanguage: async () => undefined }
+const initialState = { language: "en", changeLanguage: async () => undefined };
 
-const LanguageContext = createContext<ReturnType<typeof useLanguage>>(
-  initialState,
-)
-const { Provider } = LanguageContext
+const LanguageContext = createContext<ReturnType<typeof useLanguage>>(initialState);
+const { Provider } = LanguageContext;
 
 const LanguageProvider = ({ children }: { children: ReactNode }) => {
-  return <Provider value={useLanguage()}>{children}</Provider>
-}
+  return <Provider value={useLanguage()}>{children}</Provider>;
+};
 
-export const useLanguageContext = () => useContext(LanguageContext)
+export const useLanguageContext = () => useContext(LanguageContext);
 
-export default LanguageProvider
+export default LanguageProvider;

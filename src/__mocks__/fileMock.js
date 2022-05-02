@@ -1,2 +1,2 @@
-module.exports = 'test-file-stub'
-module.exports.ReactComponent = 'SvgMock'
+module.exports = "test-file-stub";
+module.exports.ReactComponent = "SvgMock";

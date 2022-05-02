@@ -1,15 +1,11 @@
-import {
-  createRestyleComponent,
-  VariantProps,
-  createVariant,
-} from '@shopify/restyle'
+import { createRestyleComponent, VariantProps, createVariant } from "@shopify/restyle";
 
-import { Theme } from '../theme/theme'
-import Box from './Box'
+import { Theme } from "../theme/theme";
+import Box from "./Box";
 
 const Card = createRestyleComponent<
-  VariantProps<Theme, 'cardVariants'> & React.ComponentProps<typeof Box>,
+  VariantProps<Theme, "cardVariants"> & React.ComponentProps<typeof Box>,
   Theme
->([createVariant({ themeKey: 'cardVariants' })], Box)
+>([createVariant({ themeKey: "cardVariants" })], Box);
 
-export default Card
+export default Card;

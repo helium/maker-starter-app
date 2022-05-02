@@ -1,30 +1,24 @@
-import React, { useCallback, useMemo } from 'react'
-import useHaptic from '../utils/useHaptic'
-import Box from './Box'
-import Text from './Text'
-import TouchableCircle from './TouchableCircle'
-import Backspace from '../assets/images/backspace.svg'
-import { useColors } from '../theme/themeHooks'
+import React, { useCallback, useMemo } from "react";
+import useHaptic from "../utils/useHaptic";
+import Box from "./Box";
+import Text from "./Text";
+import TouchableCircle from "./TouchableCircle";
+import Backspace from "../assets/images/backspace.svg";
+import { useColors } from "../theme/themeHooks";
 
 type Props = {
-  onNumberPress: (value: number) => void
-  onBackspacePress: () => void
-  onCustomButtonPress?: () => void
-  customButtonTitle?: string
-}
-const Key = ({
-  children,
-  onPressIn,
-}: {
-  children: React.ReactNode
-  onPressIn: () => void
-}) => {
-  const { triggerImpact } = useHaptic()
+  onNumberPress: (value: number) => void;
+  onBackspacePress: () => void;
+  onCustomButtonPress?: () => void;
+  customButtonTitle?: string;
+};
+const Key = ({ children, onPressIn }: { children: React.ReactNode; onPressIn: () => void }) => {
+  const { triggerImpact } = useHaptic();
 
   const handlePressIn = useCallback(() => {
-    triggerImpact()
-    onPressIn()
-  }, [onPressIn, triggerImpact])
+    triggerImpact();
+    onPressIn();
+  }, [onPressIn, triggerImpact]);
 
   return (
     <TouchableCircle
@@ -35,8 +29,8 @@ const Key = ({
     >
       {children}
     </TouchableCircle>
-  )
-}
+  );
+};
 
 const Keypad = ({
   onNumberPress,
@@ -44,47 +38,36 @@ const Keypad = ({
   onBackspacePress,
   customButtonTitle,
 }: Props) => {
-  const { triggerImpact } = useHaptic()
-  const colors = useColors()
+  const { triggerImpact } = useHaptic();
+  const colors = useColors();
 
   const renderDynamicButton = useMemo(() => {
     if (onCustomButtonPress && customButtonTitle) {
       return (
         <Key onPressIn={onCustomButtonPress}>
-          <Text
-            variant="keypad"
-            fontSize={20}
-            numberOfLines={1}
-            adjustsFontSizeToFit
-            padding="s"
-          >
+          <Text variant="keypad" fontSize={20} numberOfLines={1} adjustsFontSizeToFit padding="s">
             {customButtonTitle}
           </Text>
         </Key>
-      )
+      );
     }
-    return <Box flexBasis="33%" />
-  }, [customButtonTitle, onCustomButtonPress])
+    return <Box flexBasis="33%" />;
+  }, [customButtonTitle, onCustomButtonPress]);
 
   const onPressIn = useCallback(
     (value: number) => () => {
-      triggerImpact()
-      onNumberPress(value)
+      triggerImpact();
+      onNumberPress(value);
     },
     [onNumberPress, triggerImpact],
-  )
+  );
   const handleBackspace = useCallback(() => {
-    triggerImpact()
-    onBackspacePress()
-  }, [onBackspacePress, triggerImpact])
+    triggerImpact();
+    onBackspacePress();
+  }, [onBackspacePress, triggerImpact]);
 
   return (
-    <Box
-      flexDirection="row"
-      flexWrap="wrap"
-      justifyContent="space-around"
-      alignContent="center"
-    >
+    <Box flexDirection="row" flexWrap="wrap" justifyContent="space-around" alignContent="center">
       {[...Array(9).keys()].map((idx) => (
         <TouchableCircle
           alignItems="center"
@@ -116,7 +99,7 @@ const Keypad = ({
         <Backspace color={colors.primaryText} height={24} width={24} />
       </TouchableCircle>
     </Box>
-  )
-}
+  );
+};
 
-export default Keypad
+export default Keypad;

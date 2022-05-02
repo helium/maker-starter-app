@@ -1,4 +1,4 @@
-const reverseGeocodeAsync = () => ({})
-const getCurrentPositionAsync = () => ({ latitude: 0, longitude: 0 })
+const reverseGeocodeAsync = () => ({});
+const getCurrentPositionAsync = () => ({ latitude: 0, longitude: 0 });
 
-export { getCurrentPositionAsync, reverseGeocodeAsync }
+export { getCurrentPositionAsync, reverseGeocodeAsync };

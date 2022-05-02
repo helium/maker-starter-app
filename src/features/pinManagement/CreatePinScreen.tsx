@@ -1,51 +1,49 @@
-import React, { useState, useEffect, useCallback } from 'react'
-import { useTranslation } from 'react-i18next'
-import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
+import React, { useState, useEffect, useCallback } from "react";
+import { useTranslation } from "react-i18next";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 
-import Text from '../../components/Text'
-import PinDisplay from '../../components/PinDisplay'
-import Keypad from '../../components/Keypad'
-import Box from '../../components/Box'
+import Text from "../../components/Text";
+import PinDisplay from "../../components/PinDisplay";
+import Keypad from "../../components/Keypad";
+import Box from "../../components/Box";
 import {
   SignedInStackNavigationProp,
   SignedInStackParamList,
-} from '../../navigation/navigationRootTypes'
+} from "../../navigation/navigationRootTypes";
 
-type Route = RouteProp<SignedInStackParamList, 'CreatePinScreen'>
+type Route = RouteProp<SignedInStackParamList, "CreatePinScreen">;
 
 const AccountCreatePinScreen = () => {
-  const { t } = useTranslation()
-  const {
-    params: { pinReset } = { fromImport: false, pinReset: false },
-  } = useRoute<Route>()
-  const navigation = useNavigation<SignedInStackNavigationProp>()
+  const { t } = useTranslation();
+  const { params: { pinReset } = { fromImport: false, pinReset: false } } = useRoute<Route>();
+  const navigation = useNavigation<SignedInStackNavigationProp>();
 
-  const [pin, setPin] = useState('')
+  const [pin, setPin] = useState("");
 
   useEffect(() => {
     if (pin.length === 6) {
-      navigation.push('ConfirmPinScreen', {
+      navigation.push("ConfirmPinScreen", {
         pin,
         pinReset,
-      })
+      });
     }
-  }, [pin, pinReset, navigation])
+  }, [pin, pinReset, navigation]);
 
   useEffect(() => {
-    const unsubscribe = navigation.addListener('blur', () => {
-      setPin('')
-    })
+    const unsubscribe = navigation.addListener("blur", () => {
+      setPin("");
+    });
 
-    return unsubscribe
-  }, [navigation])
+    return unsubscribe;
+  }, [navigation]);
 
   const handleBackspace = useCallback(() => {
-    setPin((val) => val.slice(0, -1))
-  }, [])
+    setPin((val) => val.slice(0, -1));
+  }, []);
 
   const handleNumber = useCallback((num: number) => {
-    setPin((val) => (val.length < 6 ? val + num : val))
-  }, [])
+    setPin((val) => (val.length < 6 ? val + num : val));
+  }, []);
 
   return (
     <Box
@@ -62,21 +60,21 @@ const AccountCreatePinScreen = () => {
         numberOfLines={1}
         adjustsFontSizeToFit
       >
-        {t('pinManagement.createPin.title')}
+        {t("pinManagement.createPin.title")}
       </Text>
 
       <Text variant="body1" maxFontSizeMultiplier={1.2}>
-        {t('pinManagement.createPin.subtitle')}
+        {t("pinManagement.createPin.subtitle")}
       </Text>
       <PinDisplay length={pin.length} marginVertical="xl" />
       <Keypad
         onBackspacePress={handleBackspace}
         onNumberPress={handleNumber}
         onCustomButtonPress={pinReset ? navigation.goBack : undefined}
-        customButtonTitle={t('generic.cancel')}
+        customButtonTitle={t("generic.cancel")}
       />
     </Box>
-  )
-}
+  );
+};
 
-export default AccountCreatePinScreen
+export default AccountCreatePinScreen;

@@ -11,12 +11,12 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		2DE337D4A6829AB1AD4261E2 /* libPods-FreedomFi-FreedomFiTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C99F5B4D6C271EA78777C55A /* libPods-FreedomFi-FreedomFiTests.a */; };
 		3AAA8194DB4D059944852532 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D65FC53696548063B0CA59 /* ExpoModulesProvider.swift */; };
-		3C2D26697DA9DE0D62775384 /* libPods-FreedomFi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C2C551342F5A01DDC30CEC /* libPods-FreedomFi.a */; };
 		52DF7BF9B6F6812C987607E2 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7F384B36BEBF65291C3764 /* ExpoModulesProvider.swift */; };
-		78771B5356165C9F7AF63C78 /* libPods-FreedomFi-FreedomFiTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ED9B03F4EE6066C138C909EC /* libPods-FreedomFi-FreedomFiTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		964E9C302638CD0C00CCBCCC /* bridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 964E9C2F2638CD0C00CCBCCC /* bridge.swift */; };
+		BFDBB12380E9FCFE8E817721 /* libPods-FreedomFi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 267513E9F99E37E6B5E5E0A5 /* libPods-FreedomFi.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,7 +47,6 @@
 		00E356EE1AD99517003FC87E /* FreedomFiTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FreedomFiTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* FreedomFiTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FreedomFiTests.m; sourceTree = "<group>"; };
-		131B3F2792FC4EFA005595E1 /* Pods-FreedomFi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreedomFi.release.xcconfig"; path = "Target Support Files/Pods-FreedomFi/Pods-FreedomFi.release.xcconfig"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* FreedomFi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FreedomFi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = FreedomFi/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = FreedomFi/AppDelegate.m; sourceTree = "<group>"; };
@@ -55,17 +54,18 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = FreedomFi/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = FreedomFi/main.m; sourceTree = "<group>"; };
 		1B7F384B36BEBF65291C3764 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-FreedomFi-FreedomFiTests/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
-		25340B7256A37E523AF6B776 /* Pods-FreedomFi.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreedomFi.debug.xcconfig"; path = "Target Support Files/Pods-FreedomFi/Pods-FreedomFi.debug.xcconfig"; sourceTree = "<group>"; };
+		267513E9F99E37E6B5E5E0A5 /* libPods-FreedomFi.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FreedomFi.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4F2349FD9EE45DDAB86965C5 /* Pods-FreedomFi-FreedomFiTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreedomFi-FreedomFiTests.debug.xcconfig"; path = "Target Support Files/Pods-FreedomFi-FreedomFiTests/Pods-FreedomFi-FreedomFiTests.debug.xcconfig"; sourceTree = "<group>"; };
 		64D65FC53696548063B0CA59 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-FreedomFi/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = FreedomFi/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		964E9C2E2638CD0B00CCBCCC /* FreedomFi-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "FreedomFi-Bridging-Header.h"; sourceTree = "<group>"; };
 		964E9C2F2638CD0C00CCBCCC /* bridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bridge.swift; sourceTree = "<group>"; };
-		A8C2C551342F5A01DDC30CEC /* libPods-FreedomFi.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FreedomFi.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		BFB45BBD2A85DBD1301D84BC /* Pods-FreedomFi-FreedomFiTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreedomFi-FreedomFiTests.debug.xcconfig"; path = "Target Support Files/Pods-FreedomFi-FreedomFiTests/Pods-FreedomFi-FreedomFiTests.debug.xcconfig"; sourceTree = "<group>"; };
-		DE9CC2ABA6BCC071224EC7DF /* Pods-FreedomFi-FreedomFiTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreedomFi-FreedomFiTests.release.xcconfig"; path = "Target Support Files/Pods-FreedomFi-FreedomFiTests/Pods-FreedomFi-FreedomFiTests.release.xcconfig"; sourceTree = "<group>"; };
+		BEB9F81239D15EC27C810CFB /* Pods-FreedomFi.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreedomFi.debug.xcconfig"; path = "Target Support Files/Pods-FreedomFi/Pods-FreedomFi.debug.xcconfig"; sourceTree = "<group>"; };
+		C45E401A92AAE1505F15CE0F /* Pods-FreedomFi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreedomFi.release.xcconfig"; path = "Target Support Files/Pods-FreedomFi/Pods-FreedomFi.release.xcconfig"; sourceTree = "<group>"; };
+		C99F5B4D6C271EA78777C55A /* libPods-FreedomFi-FreedomFiTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FreedomFi-FreedomFiTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E8A76609EAC64E8120DCC927 /* Pods-FreedomFi-FreedomFiTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreedomFi-FreedomFiTests.release.xcconfig"; path = "Target Support Files/Pods-FreedomFi-FreedomFiTests/Pods-FreedomFi-FreedomFiTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
-		ED9B03F4EE6066C138C909EC /* libPods-FreedomFi-FreedomFiTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FreedomFi-FreedomFiTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8B0E2112563005D00EB1E73 /* FreedomFi.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = FreedomFi.entitlements; path = FreedomFi/FreedomFi.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -74,7 +74,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				78771B5356165C9F7AF63C78 /* libPods-FreedomFi-FreedomFiTests.a in Frameworks */,
+				2DE337D4A6829AB1AD4261E2 /* libPods-FreedomFi-FreedomFiTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -82,7 +82,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3C2D26697DA9DE0D62775384 /* libPods-FreedomFi.a in Frameworks */,
+				BFDBB12380E9FCFE8E817721 /* libPods-FreedomFi.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -136,8 +136,8 @@
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
-				A8C2C551342F5A01DDC30CEC /* libPods-FreedomFi.a */,
-				ED9B03F4EE6066C138C909EC /* libPods-FreedomFi-FreedomFiTests.a */,
+				267513E9F99E37E6B5E5E0A5 /* libPods-FreedomFi.a */,
+				C99F5B4D6C271EA78777C55A /* libPods-FreedomFi-FreedomFiTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -202,10 +202,10 @@
 		BBB8A579C848048078120971 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				25340B7256A37E523AF6B776 /* Pods-FreedomFi.debug.xcconfig */,
-				131B3F2792FC4EFA005595E1 /* Pods-FreedomFi.release.xcconfig */,
-				BFB45BBD2A85DBD1301D84BC /* Pods-FreedomFi-FreedomFiTests.debug.xcconfig */,
-				DE9CC2ABA6BCC071224EC7DF /* Pods-FreedomFi-FreedomFiTests.release.xcconfig */,
+				BEB9F81239D15EC27C810CFB /* Pods-FreedomFi.debug.xcconfig */,
+				C45E401A92AAE1505F15CE0F /* Pods-FreedomFi.release.xcconfig */,
+				4F2349FD9EE45DDAB86965C5 /* Pods-FreedomFi-FreedomFiTests.debug.xcconfig */,
+				E8A76609EAC64E8120DCC927 /* Pods-FreedomFi-FreedomFiTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -217,12 +217,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "FreedomFiTests" */;
 			buildPhases = (
-				77C2A180FAF2ECEC031B2BFC /* [CP] Check Pods Manifest.lock */,
+				EA7B5A5D71E9C1FF4D928845 /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
-				0038EAC593322FA1EE8C387E /* [CP] Embed Pods Frameworks */,
-				9CC19600D1555DA5ED85B5F9 /* [CP] Copy Pods Resources */,
+				765729D8536BE4811CE40F04 /* [CP] Embed Pods Frameworks */,
+				60DC9EFC90828D4365AAF274 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -238,15 +238,15 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "FreedomFi" */;
 			buildPhases = (
-				0103E73B626F0B8DC823B3E8 /* [CP] Check Pods Manifest.lock */,
+				5416AA32E18A89CC644BEA47 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				F8B0E225256300AD00EB1E73 /* Embed App Extensions */,
-				491486BDF219C0BBBBD02CF8 /* [CP] Embed Pods Frameworks */,
-				CD738B53C9E63C2BEE40515E /* [CP] Copy Pods Resources */,
+				0FDBB6CF0B162872731D65A1 /* [CP] Embed Pods Frameworks */,
+				ABF99F14BC497D8437E98C36 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -317,26 +317,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0038EAC593322FA1EE8C387E /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-FreedomFi-FreedomFiTests/Pods-FreedomFi-FreedomFiTests-frameworks.sh",
-				"${PODS_ROOT}/Mapbox-iOS-SDK/dynamic/Mapbox.framework",
-				"${BUILT_PRODUCTS_DIR}/MapboxMobileEvents/MapboxMobileEvents.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Mapbox.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxMobileEvents.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FreedomFi-FreedomFiTests/Pods-FreedomFi-FreedomFiTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -351,7 +331,27 @@
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\nexport EXTRA_PACKAGER_ARGS=\"--sourcemap-output $DERIVED_FILE_DIR/main.jsbundle.map\"\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
-		0103E73B626F0B8DC823B3E8 /* [CP] Check Pods Manifest.lock */ = {
+		0FDBB6CF0B162872731D65A1 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-FreedomFi/Pods-FreedomFi-frameworks.sh",
+				"${PODS_ROOT}/Mapbox-iOS-SDK/dynamic/Mapbox.framework",
+				"${BUILT_PRODUCTS_DIR}/MapboxMobileEvents/MapboxMobileEvents.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Mapbox.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxMobileEvents.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FreedomFi/Pods-FreedomFi-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5416AA32E18A89CC644BEA47 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -373,49 +373,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		491486BDF219C0BBBBD02CF8 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-FreedomFi/Pods-FreedomFi-frameworks.sh",
-				"${PODS_ROOT}/Mapbox-iOS-SDK/dynamic/Mapbox.framework",
-				"${BUILT_PRODUCTS_DIR}/MapboxMobileEvents/MapboxMobileEvents.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Mapbox.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxMobileEvents.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FreedomFi/Pods-FreedomFi-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		77C2A180FAF2ECEC031B2BFC /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-FreedomFi-FreedomFiTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		9CC19600D1555DA5ED85B5F9 /* [CP] Copy Pods Resources */ = {
+		60DC9EFC90828D4365AAF274 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -435,7 +393,27 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FreedomFi-FreedomFiTests/Pods-FreedomFi-FreedomFiTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		CD738B53C9E63C2BEE40515E /* [CP] Copy Pods Resources */ = {
+		765729D8536BE4811CE40F04 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-FreedomFi-FreedomFiTests/Pods-FreedomFi-FreedomFiTests-frameworks.sh",
+				"${PODS_ROOT}/Mapbox-iOS-SDK/dynamic/Mapbox.framework",
+				"${BUILT_PRODUCTS_DIR}/MapboxMobileEvents/MapboxMobileEvents.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Mapbox.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxMobileEvents.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FreedomFi-FreedomFiTests/Pods-FreedomFi-FreedomFiTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		ABF99F14BC497D8437E98C36 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -453,6 +431,28 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FreedomFi/Pods-FreedomFi-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EA7B5A5D71E9C1FF4D928845 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-FreedomFi-FreedomFiTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FD10A7F022414F080027D42C /* Start Packager */ = {
@@ -510,7 +510,7 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BFB45BBD2A85DBD1301D84BC /* Pods-FreedomFi-FreedomFiTests.debug.xcconfig */;
+			baseConfigurationReference = 4F2349FD9EE45DDAB86965C5 /* Pods-FreedomFi-FreedomFiTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -535,7 +535,7 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DE9CC2ABA6BCC071224EC7DF /* Pods-FreedomFi-FreedomFiTests.release.xcconfig */;
+			baseConfigurationReference = E8A76609EAC64E8120DCC927 /* Pods-FreedomFi-FreedomFiTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -557,7 +557,7 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 25340B7256A37E523AF6B776 /* Pods-FreedomFi.debug.xcconfig */;
+			baseConfigurationReference = BEB9F81239D15EC27C810CFB /* Pods-FreedomFi.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -591,7 +591,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 131B3F2792FC4EFA005595E1 /* Pods-FreedomFi.release.xcconfig */;
+			baseConfigurationReference = C45E401A92AAE1505F15CE0F /* Pods-FreedomFi.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;

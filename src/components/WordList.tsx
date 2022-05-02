@@ -1,20 +1,20 @@
-import React, { useRef, useEffect } from 'react'
-import { Animated } from 'react-native'
-import Word from './Word'
-import Box from './Box'
+import React, { useRef, useEffect } from "react";
+import { Animated } from "react-native";
+import Word from "./Word";
+import Box from "./Box";
 
-type Props = { words: Array<string>; onPressWord?: (idx: number) => () => void }
+type Props = { words: Array<string>; onPressWord?: (idx: number) => () => void };
 
 const WordList = ({ words, onPressWord }: Props) => {
-  const opacity = useRef(new Animated.Value(0))
+  const opacity = useRef(new Animated.Value(0));
   useEffect(() => {
     Animated.timing(opacity.current, {
       toValue: 1,
       duration: 300,
       useNativeDriver: true,
-    }).start()
+    }).start();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [words])
+  }, [words]);
 
   return (
     <Box
@@ -47,7 +47,7 @@ const WordList = ({ words, onPressWord }: Props) => {
         ))}
       </Box>
     </Box>
-  )
-}
+  );
+};
 
-export default WordList
+export default WordList;

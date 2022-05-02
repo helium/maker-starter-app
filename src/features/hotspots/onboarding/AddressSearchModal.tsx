@@ -1,29 +1,27 @@
-import React, { memo, useCallback, useMemo, useState } from 'react'
-import { BottomSheetSectionList } from '@gorhom/bottom-sheet'
-import { Keyboard } from 'react-native'
-import { useDebouncedCallback } from 'use-debounce'
-import { useTranslation } from 'react-i18next'
-import Text from '../../../components/Text'
-import TextInput from '../../../components/TextInput'
-import TouchableOpacityBox from '../../../components/TouchableOpacityBox'
-import { useSpacing } from '../../../theme/themeHooks'
+import React, { memo, useCallback, useMemo, useState } from "react";
+import { BottomSheetSectionList } from "@gorhom/bottom-sheet";
+import { Keyboard } from "react-native";
+import { useDebouncedCallback } from "use-debounce";
+import { useTranslation } from "react-i18next";
+import Text from "../../../components/Text";
+import TextInput from "../../../components/TextInput";
+import TouchableOpacityBox from "../../../components/TouchableOpacityBox";
+import { useSpacing } from "../../../theme/themeHooks";
 import {
   autocompleteAddress,
   AutocompleteSearchResult,
   getPlaceGeography,
   PlaceGeography,
-} from '../../../utils/googlePlaces'
+} from "../../../utils/googlePlaces";
 
 type Props = {
-  onSelectPlace: (placeGeography: PlaceGeography) => void
-}
+  onSelectPlace: (placeGeography: PlaceGeography) => void;
+};
 
 const AddressSearchModal = ({ onSelectPlace }: Props) => {
-  const spacing = useSpacing()
-  const { t } = useTranslation()
-  const [searchResults, setSearchResults] = useState<
-    AutocompleteSearchResult[]
-  >([])
+  const spacing = useSpacing();
+  const { t } = useTranslation();
+  const [searchResults, setSearchResults] = useState<AutocompleteSearchResult[]>([]);
 
   const sections = useMemo(
     () => [
@@ -32,41 +30,41 @@ const AddressSearchModal = ({ onSelectPlace }: Props) => {
       },
     ],
     [searchResults],
-  )
+  );
 
   const triggerAutocompleteSearch = useDebouncedCallback(async (term) => {
-    const results = await autocompleteAddress(term)
-    setSearchResults(results)
-  }, 500)
+    const results = await autocompleteAddress(term);
+    setSearchResults(results);
+  }, 500);
 
   const handleSearchChange = useCallback(
     (term) => {
-      triggerAutocompleteSearch(term)
+      triggerAutocompleteSearch(term);
     },
     [triggerAutocompleteSearch],
-  )
+  );
 
   const handleSelectPlace = useCallback(
     (searchResult: AutocompleteSearchResult) => async () => {
-      const placeLocation = await getPlaceGeography(searchResult.placeId)
-      Keyboard.dismiss()
-      onSelectPlace(placeLocation)
+      const placeLocation = await getPlaceGeography(searchResult.placeId);
+      Keyboard.dismiss();
+      onSelectPlace(placeLocation);
     },
     [onSelectPlace],
-  )
+  );
 
   const renderHeader = useCallback(() => {
     return (
       <TextInput
         onChangeText={handleSearchChange}
         padding="m"
-        placeholder={t('generic.searchLocation')}
+        placeholder={t("generic.searchLocation")}
         autoFocus
         autoCorrect={false}
         variant="secondary"
       />
-    )
-  }, [handleSearchChange, t])
+    );
+  }, [handleSearchChange, t]);
 
   const renderItem = useCallback(
     ({ item: searchResult }) => {
@@ -84,17 +82,17 @@ const AddressSearchModal = ({ onSelectPlace }: Props) => {
             {searchResult.secondaryText}
           </Text>
         </TouchableOpacityBox>
-      )
+      );
     },
     [handleSelectPlace],
-  )
+  );
 
   const contentContainerStyle = useMemo(
     () => ({
       paddingHorizontal: spacing.m,
     }),
     [spacing],
-  )
+  );
 
   return (
     <BottomSheetSectionList
@@ -105,7 +103,7 @@ const AddressSearchModal = ({ onSelectPlace }: Props) => {
       contentContainerStyle={contentContainerStyle}
       keyboardShouldPersistTaps="handled"
     />
-  )
-}
+  );
+};
 
-export default memo(AddressSearchModal)
+export default memo(AddressSearchModal);
