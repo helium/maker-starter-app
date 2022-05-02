@@ -71,7 +71,7 @@ const HotspotSetupWifiScreen = () => {
           </Box>
           <TextInput
             padding="m"
-            variant="regular"
+            variant="secondary"
             placeholder={t('hotspot_setup.wifi_password.placeholder')}
             onChangeText={setPassword}
             value={password}
