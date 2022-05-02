@@ -222,6 +222,12 @@ export default {
       confirm_antenna:
         'Confirm the antenna gain and elevation selected is correct.',
       fee_antenna: 'Pay Fee & Update Antenna',
+      no_location_asserted: {
+        title: 'Location Not Asserted',
+        message:
+          'You are yet to assert any location for this hotspot. Please assert location first',
+        ok: 'OK',
+      },
     },
     location_fee: {
       balance: 'Balance:',

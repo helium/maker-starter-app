@@ -9,18 +9,20 @@ import {
   Location,
   useOnboarding,
 } from '@helium/react-native-sdk'
-import { ActivityIndicator, Linking } from 'react-native'
+import { ActivityIndicator, Linking, Alert } from 'react-native'
+
 import Box from '../../../components/Box'
 import Text from '../../../components/Text'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
 import SafeAreaBox from '../../../components/SafeAreaBox'
-import { hotspotOnChain } from '../../../utils/appDataClient'
+import { getHotspotDetails, hotspotOnChain } from '../../../utils/appDataClient'
 import useAlert from '../../../utils/useAlert'
 import { HotspotSetupStackParamList } from './hotspotSetupTypes'
 import { getSecureItem } from '../../../utils/secureAccount'
 import { useColors } from '../../../theme/themeHooks'
 import { DebouncedButton } from '../../../components/Button'
 import useMount from '../../../utils/useMount'
+import { getH3Location } from '../../../utils/h3Utils'
 
 type Route = RouteProp<HotspotSetupStackParamList, 'HotspotTxnsProgressScreen'>
 
@@ -32,9 +34,6 @@ const HotspotTxnsProgressScreen = () => {
   const { createGatewayTxn } = useHotspotBle()
   const { getOnboardingRecord } = useOnboarding()
   const { primaryText } = useColors()
-
-  console.log('params')
-  console.log(params)
 
   const handleError = async (error: unknown) => {
     // eslint-disable-next-line no-console
@@ -80,8 +79,12 @@ const HotspotTxnsProgressScreen = () => {
 
     // check if add gateway needed
     const isOnChain = await hotspotOnChain(hotspotAddress)
-    const onboardingRecord = await getOnboardingRecord(hotspotAddress)
-    if (!onboardingRecord) return
+
+    let onboardingRecord
+    try {
+      onboardingRecord = await getOnboardingRecord(hotspotAddress)
+    } catch (error) {}
+
     if (!isOnChain) {
       // if so, construct and publish add gateway
       if (qrAddGatewayTxn) {
@@ -89,6 +92,7 @@ const HotspotTxnsProgressScreen = () => {
         updateParams.addGatewayTxn = qrAddGatewayTxn
       } else {
         // Gateway BLE scanned
+        if (!onboardingRecord) return
         const addGatewayTxn = await createGatewayTxn({
           ownerAddress,
           payerAddress: onboardingRecord.maker.address,
@@ -98,6 +102,7 @@ const HotspotTxnsProgressScreen = () => {
     }
 
     // construct and publish assert location
+
     if (params.coords) {
       const [lng, lat] = params.coords
 
@@ -110,8 +115,38 @@ const HotspotTxnsProgressScreen = () => {
         dataOnly: false,
         owner: ownerAddress,
         // currentLocation: '', // If reasserting location, put previous location here
-        makerAddress: onboardingRecord.maker.address,
-        locationNonceLimit: onboardingRecord.maker.locationNonceLimit || 0,
+        makerAddress: onboardingRecord?.maker?.address || '',
+        locationNonceLimit: onboardingRecord?.maker?.locationNonceLimit || 0,
+      })
+      updateParams.assertLocationTxn = assertLocationTxn.toString()
+    } else if (params.updateAntennaOnly) {
+      const hotspot = await getHotspotDetails(params.hotspotAddress)
+      if (!hotspot.lat || !hotspot.lng) {
+        Alert.alert(
+          t('hotspot_setup.antenna_only_fee.no_location_asserted.title'),
+          t('hotspot_setup.antenna_only_fee.no_location_asserted.message'),
+          [
+            {
+              text: t('hotspot_setup.antenna_only_fee.no_location_asserted.ok'),
+              onPress: () => navigation.navigate('MainTabs'),
+            },
+          ],
+        )
+
+        return
+      }
+      const currentLocation = getH3Location(hotspot.lat, hotspot.lng)
+      const assertLocationTxn = await Location.createLocationTxn({
+        gateway: hotspotAddress,
+        lat: hotspot.lat,
+        lng: hotspot.lng,
+        decimalGain: params.gain,
+        elevation: params.elevation,
+        dataOnly: false,
+        owner: ownerAddress,
+        currentLocation,
+        makerAddress: onboardingRecord?.maker?.address || '',
+        locationNonceLimit: onboardingRecord?.maker?.locationNonceLimit || 0,
       })
       updateParams.assertLocationTxn = assertLocationTxn.toString()
     }
