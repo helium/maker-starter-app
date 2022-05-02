@@ -36,6 +36,8 @@ export const heliumApi = createApi({
         url: `/accounts/${accountAddress}/hotspots`,
         method: "GET",
       }),
+      // TODO: Provide types.
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       transformResponse: (response: { data: any }) => {
         return chain(response?.data)
           .filter((hotspot) => hotspot.payer && hotspot.payer === Config.FREEDOMFI_MAKER_ID)

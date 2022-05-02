@@ -9,6 +9,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 import { createStackNavigator } from "@react-navigation/stack";
 import { theme } from "../theme/theme";
+// TODO: No file? Fix tests.
+// eslint-disable-next-line
 import i18n from "./i18n";
 import rootReducer from "../store/rootReducer";
 

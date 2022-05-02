@@ -45,10 +45,10 @@ const HotspotLocationPreview = ({
     onMapMoved(center);
   }, [movable, onMapMoved]);
 
-  const hasLocationName = useMemo(() => locationName !== undefined || geocode !== undefined, [
-    geocode,
-    locationName,
-  ]);
+  const hasLocationName = useMemo(
+    () => locationName !== undefined || geocode !== undefined,
+    [geocode, locationName],
+  );
 
   const LocationName = useCallback(
     () =>

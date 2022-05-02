@@ -107,13 +107,11 @@ export default {
   },
   antennas: {
     elevation_info: {
-      desc:
-        "Estimate how high the antenna is placed relative to the ground. An antenna located on the roof of a single-story house is typically 5 meters.",
+      desc: "Estimate how high the antenna is placed relative to the ground. An antenna located on the roof of a single-story house is typically 5 meters.",
       title: "Hotspot Height",
     },
     gain_info: {
-      desc:
-        "A value between 1 and 15 to one decimal point. This is provided by your hotspot or antenna manufacturer.",
+      desc: "A value between 1 and 15 to one decimal point. This is provided by your hotspot or antenna manufacturer.",
       title: "Antenna TX / RX Gain",
     },
     onboarding: {

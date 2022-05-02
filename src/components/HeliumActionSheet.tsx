@@ -123,9 +123,10 @@ const HeliumActionSheet = ({
     return item?.label || "";
   }, [data, initialValue, selectedValue]);
 
-  const selected = useCallback((value: string | number) => value === selectedValue, [
-    selectedValue,
-  ]);
+  const selected = useCallback(
+    (value: string | number) => value === selectedValue,
+    [selectedValue],
+  );
 
   const handleItemSelected = useCallback(
     (value: string | number, index: number, action?: () => void) => async () => {
