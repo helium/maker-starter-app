@@ -125,6 +125,7 @@ export default {
       share: 'Share',
       transfer: 'Transfer Hotspot',
       assert_location: 'Assert Location',
+      update_antenna: 'Update Antenna',
     },
   },
   hotspot_settings: {
