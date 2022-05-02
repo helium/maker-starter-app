@@ -65,7 +65,7 @@ const LinkAccount = () => {
         {t('account_setup.createAccount.signInWith')}
       </Text>
 
-      <Box flexDirection="row" marginBottom="l">
+      <Box flexDirection="column" marginBottom="l">
         {delegateApps.map((app) => (
           <TouchableOpacityBox
             key={
@@ -73,6 +73,7 @@ const LinkAccount = () => {
             }
             backgroundColor="surface"
             padding="s"
+            marginBottom="m"
             paddingHorizontal="m"
             borderRadius="l"
             onPress={handleAppSelection(app)}
