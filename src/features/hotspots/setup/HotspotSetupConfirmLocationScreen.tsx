@@ -70,6 +70,7 @@ const HotspotSetupConfirmLocationScreen = () => {
   }, [ownerAddress])
 
   useAsync(async () => {
+    // handle exception when onboarding record is not found (Non Nebra hotspots)
     let onboardingRecord
     try {
       onboardingRecord = await getOnboardingRecord(params.hotspotAddress)
@@ -87,6 +88,7 @@ const HotspotSetupConfirmLocationScreen = () => {
       dataOnly: false,
     }
     if (params.updateAntennaOnly) {
+      // Generate Helium transaction fee
       const { fee, stakingFee } = calculateAssertLocFee(
         undefined,
         undefined,
