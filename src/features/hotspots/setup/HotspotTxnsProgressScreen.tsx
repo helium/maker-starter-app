@@ -80,6 +80,7 @@ const HotspotTxnsProgressScreen = () => {
     // check if add gateway needed
     const isOnChain = await hotspotOnChain(hotspotAddress)
 
+    // handle exception when onboarding record is not found (Non Nebra hotspots)
     let onboardingRecord
     try {
       onboardingRecord = await getOnboardingRecord(hotspotAddress)
@@ -122,6 +123,7 @@ const HotspotTxnsProgressScreen = () => {
     } else if (params.updateAntennaOnly) {
       const hotspot = await getHotspotDetails(params.hotspotAddress)
       if (!hotspot.lat || !hotspot.lng) {
+        // Show an alert if the hotspot location has never been asserted
         Alert.alert(
           t('hotspot_setup.antenna_only_fee.no_location_asserted.title'),
           t('hotspot_setup.antenna_only_fee.no_location_asserted.message'),
@@ -135,6 +137,9 @@ const HotspotTxnsProgressScreen = () => {
 
         return
       }
+      /*
+        when param currentLocation equal to Hex Location of lat and lng, fee will be equal to transaction fee only
+      */
       const currentLocation = getH3Location(hotspot.lat, hotspot.lng)
       const assertLocationTxn = await Location.createLocationTxn({
         gateway: hotspotAddress,
