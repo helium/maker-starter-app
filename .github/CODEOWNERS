@@ -1,0 +1,14 @@
+# CODEOWNERS file for auto-assigning reviews in GitHub
+
+# https://help.github.com/en/articles/about-code-owners#codeowners-syntax
+
+# Order is important; for each modified file, the last matching
+# pattern takes the most precedence.
+# That is, with the last pattern being
+
+* @IgoninVV @serhiislobodian @ivan-freedomfi
+
+Jenkinsfile @119Vik @IgoninVV @serhiislobodian @ivan-freedomfi
+Dockerfile @119Vik @IgoninVV @serhiislobodian @ivan-freedomfi
+*.yml @119Vik @IgoninVV @serhiislobodian @ivan-freedomfi
+*.yaml @119Vik @IgoninVV @serhiislobodian @ivan-freedomfi
