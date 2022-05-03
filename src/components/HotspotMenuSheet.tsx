@@ -64,7 +64,15 @@ const HotspotMenuSheet = ({ item, modalVisibility, onclose }: Props) => {
         label: t('hotspot_details.options.update_antenna'),
         value: 'updateAntenna',
         Icon: AntennaIco,
-        action: () => {},
+        action: () => {
+          navigation.push('HotspotAssert', {
+            screen: 'AntennaSetupScreen',
+            params: {
+              hotspotAddress: item?.address,
+              updateAntennaOnly: true,
+            },
+          })
+        },
       },
       {
         label: t('hotspot_details.options.transfer'),

@@ -11,6 +11,8 @@ import {
 } from '@helium/react-native-sdk'
 import type { Account } from '@helium/http'
 import { useAsync } from 'react-async-hook'
+import { CurrencyType } from '@helium/currency'
+import { calculateAssertLocFee } from '../../../utils/fees'
 import {
   HotspotSetupNavigationProp,
   HotspotSetupStackParamList,
@@ -45,6 +47,10 @@ const HotspotSetupConfirmLocationScreen = () => {
     totalStakingAmountDC: Balance<DataCredits>
     totalStakingAmountUsd: Balance<USDollars>
   }>()
+  const [transactionFeeData, setTransactionFeeData] = useState<{
+    fee: Balance<DataCredits>
+    stakingFee: Balance<DataCredits>
+  }>()
   const { params } = useRoute<Route>()
   const { hotspotType, elevation, gain, coords } = params
   const { getOnboardingRecord } = useOnboarding()
@@ -64,6 +70,7 @@ const HotspotSetupConfirmLocationScreen = () => {
   }, [ownerAddress])
 
   useAsync(async () => {
+    // handle exception when onboarding record is not found (Non Nebra hotspots)
     let onboardingRecord
     try {
       onboardingRecord = await getOnboardingRecord(params.hotspotAddress)
@@ -80,7 +87,18 @@ const HotspotSetupConfirmLocationScreen = () => {
       onboardingRecord,
       dataOnly: false,
     }
-
+    if (params.updateAntennaOnly) {
+      // Generate Helium transaction fee
+      const { fee, stakingFee } = calculateAssertLocFee(
+        undefined,
+        undefined,
+        undefined,
+      )
+      setTransactionFeeData({
+        fee: new Balance(fee, CurrencyType.dataCredit),
+        stakingFee: new Balance(stakingFee, CurrencyType.dataCredit),
+      })
+    }
     loadLocationFeeData(feeParams).then(setFeeData)
   }, [ownerAddress, account, getOnboardingRecord, params.hotspotAddress])
 
@@ -106,47 +124,70 @@ const HotspotSetupConfirmLocationScreen = () => {
     <BackScreen onClose={handleClose}>
       <ScrollView>
         <Box flex={1} justifyContent="center" paddingBottom="xxl">
-          <Text variant="h1" marginBottom="l" maxFontSizeMultiplier={1}>
-            {t('hotspot_setup.location_fee.title')}
-          </Text>
-          {isFree ? (
-            <Text
-              variant="subtitle1"
-              color="primaryText"
-              marginBottom={{ phone: 'l', smallPhone: 'ms' }}
-            >
-              {t('hotspot_setup.location_fee.subtitle_free')}
-            </Text>
+          {params.updateAntennaOnly ? (
+            <Box>
+              <Text variant="h1" marginBottom="l" maxFontSizeMultiplier={1}>
+                {t('hotspot_setup.antenna_only_fee.title')}
+              </Text>
+
+              <Text
+                variant="subtitle1"
+                color="primaryText"
+                marginBottom={{ phone: 'xl', smallPhone: 'ms' }}
+                numberOfLines={2}
+                adjustsFontSizeToFit
+                maxFontSizeMultiplier={1.3}
+                paddingBottom="xxl"
+              >
+                {t('hotspot_setup.antenna_only_fee.confirm_antenna')}
+              </Text>
+            </Box>
           ) : (
-            <Text
-              variant="subtitle1"
-              color="primaryText"
-              marginBottom={{ phone: 'l', smallPhone: 'ms' }}
-            >
-              {t('hotspot_setup.location_fee.subtitle_fee')}
-            </Text>
+            <Box>
+              <Text variant="h1" marginBottom="l" maxFontSizeMultiplier={1}>
+                {t('hotspot_setup.location_fee.title')}
+              </Text>
+              {isFree ? (
+                <Text
+                  variant="subtitle1"
+                  color="primaryText"
+                  marginBottom={{ phone: 'l', smallPhone: 'ms' }}
+                >
+                  {t('hotspot_setup.location_fee.subtitle_free')}
+                </Text>
+              ) : (
+                <Text
+                  variant="subtitle1"
+                  color="primaryText"
+                  marginBottom={{ phone: 'l', smallPhone: 'ms' }}
+                >
+                  {t('hotspot_setup.location_fee.subtitle_fee')}
+                </Text>
+              )}
+              <Text
+                variant="subtitle1"
+                color="primaryText"
+                marginBottom={{ phone: 'xl', smallPhone: 'ms' }}
+                numberOfLines={2}
+                adjustsFontSizeToFit
+                maxFontSizeMultiplier={1.3}
+              >
+                {t('hotspot_setup.location_fee.confirm_location')}
+              </Text>
+
+              <Box
+                height={200}
+                borderRadius="l"
+                overflow="hidden"
+                marginBottom={{ phone: 'm', smallPhone: 'ms' }}
+              >
+                <HotspotLocationPreview
+                  mapCenter={coords}
+                  locationName={params.locationName}
+                />
+              </Box>
+            </Box>
           )}
-          <Text
-            variant="subtitle1"
-            color="primaryText"
-            marginBottom={{ phone: 'xl', smallPhone: 'ms' }}
-            numberOfLines={2}
-            adjustsFontSizeToFit
-            maxFontSizeMultiplier={1.3}
-          >
-            {t('hotspot_setup.location_fee.confirm_location')}
-          </Text>
-          <Box
-            height={200}
-            borderRadius="l"
-            overflow="hidden"
-            marginBottom={{ phone: 'm', smallPhone: 'ms' }}
-          >
-            <HotspotLocationPreview
-              mapCenter={coords}
-              locationName={params.locationName}
-            />
-          </Box>
 
           <Box
             flexDirection="row"
@@ -204,9 +245,15 @@ const HotspotSetupConfirmLocationScreen = () => {
                 <Text variant="body1" color="primaryText">
                   {t('hotspot_setup.location_fee.fee')}
                 </Text>
-                <Text variant="body1" color="primaryText">
-                  {totalStakingAmount.toString(2)}
-                </Text>
+                {params.updateAntennaOnly ? (
+                  <Text variant="body1" color="primaryText">
+                    {transactionFeeData?.fee.toString(2)}
+                  </Text>
+                ) : (
+                  <Text variant="body1" color="primaryText">
+                    {totalStakingAmount.toString(2)}
+                  </Text>
+                )}
               </Box>
 
               {!hasSufficientBalance && (
@@ -221,30 +268,42 @@ const HotspotSetupConfirmLocationScreen = () => {
         </Box>
       </ScrollView>
       <Box>
-        {isAssertion ? (
+        {params.updateAntennaOnly ? (
           <DebouncedButton
-            title={
-              isFree
-                ? t('hotspot_setup.location_fee.assert')
-                : t('hotspot_setup.location_fee.fee_assert')
-            }
+            title={t('hotspot_setup.antenna_only_fee.fee_antenna')}
             mode="contained"
             variant="primary"
             onPress={navNext}
             disabled={isFree ? false : !hasSufficientBalance}
           />
         ) : (
-          <DebouncedButton
-            title={
-              isFree
-                ? t('hotspot_setup.location_fee.register')
-                : t('hotspot_setup.location_fee.fee_register')
-            }
-            mode="contained"
-            variant="primary"
-            onPress={navNext}
-            disabled={isFree ? false : !hasSufficientBalance}
-          />
+          <>
+            {isAssertion ? (
+              <DebouncedButton
+                title={
+                  isFree
+                    ? t('hotspot_setup.location_fee.assert')
+                    : t('hotspot_setup.location_fee.fee_assert')
+                }
+                mode="contained"
+                variant="primary"
+                onPress={navNext}
+                disabled={isFree ? false : !hasSufficientBalance}
+              />
+            ) : (
+              <DebouncedButton
+                title={
+                  isFree
+                    ? t('hotspot_setup.location_fee.register')
+                    : t('hotspot_setup.location_fee.fee_register')
+                }
+                mode="contained"
+                variant="primary"
+                onPress={navNext}
+                disabled={isFree ? false : !hasSufficientBalance}
+              />
+            )}
+          </>
         )}
       </Box>
     </BackScreen>
