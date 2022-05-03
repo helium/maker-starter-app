@@ -41,6 +41,7 @@ import { navigationRef } from './navigation/navigator'
 import useMount from './utils/useMount'
 import usePrevious from './utils/usePrevious'
 import { fetchHotspotsData } from './store/hotspots/hotspotsSlice'
+import { getAddress } from './utils/secureAccount'
 
 interface RouteInfo {
   name: string
@@ -184,7 +185,23 @@ const App = () => {
     [colorScheme],
   )
 
+  // Save previous route name for automatic screen tracking in segment
   const [routeName, setRouteName] = useState('Unknown')
+
+  useEffect(() => {
+    const setIdentity = async () => {
+      const address = await getAddress()
+      segmentClient.identify(address)
+    }
+
+    setIdentity().catch((err) => {
+      // eslint-disable-next-line no-console
+      console.error(
+        'Something went wrong while setting the segment identity',
+        err,
+      )
+    })
+  }, [])
 
   return (
     <AnalyticsProvider client={segmentClient}>
