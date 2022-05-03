@@ -42,6 +42,11 @@ import useMount from './utils/useMount'
 import usePrevious from './utils/usePrevious'
 import { fetchHotspotsData } from './store/hotspots/hotspotsSlice'
 
+interface RouteInfo {
+  name: string
+  params?: Record<string, any>
+}
+
 SplashScreen.preventAutoHideAsync().catch(() => {
   /* reloading the app might trigger some race conditions, ignore them */
 })
@@ -57,20 +62,25 @@ const segmentClient = createClient({
   debug: true,
 })
 
-const getActiveRouteName = (
+const getActiveRoute = (
   state: NavigationState | PartialState<NavigationState> | undefined,
-): string => {
+): RouteInfo => {
   if (!state || typeof state.index !== 'number') {
-    return 'Unknown'
+    return {
+      name: 'Unknown',
+    }
   }
 
   const route = state.routes[state.index]
 
   if (route.state) {
-    return getActiveRouteName(route.state)
+    return getActiveRoute(route.state)
   }
 
-  return route.name
+  return {
+    name: route.name,
+    params: route.params,
+  }
 }
 
 const App = () => {
@@ -193,12 +203,12 @@ const App = () => {
                 <NavigationContainer
                   ref={navigationRef}
                   onStateChange={(state) => {
-                    const newRouteName = getActiveRouteName(state)
+                    const newRoute = getActiveRoute(state)
 
-                    if (routeName !== newRouteName) {
-                      segmentClient.screen(newRouteName)
+                    if (routeName !== newRoute.name) {
+                      segmentClient.screen(newRoute.name, newRoute.params)
 
-                      setRouteName(newRouteName)
+                      setRouteName(newRoute.name)
                     }
                   }}
                 >
