@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler'
-import React, { useEffect, useMemo } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import {
   LogBox,
@@ -17,12 +17,19 @@ import MapboxGL from '@react-native-mapbox-gl/maps'
 import { useAsync } from 'react-async-hook'
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
 import * as SplashScreen from 'expo-splash-screen'
-import { NavigationContainer } from '@react-navigation/native'
+import {
+  NavigationContainer,
+  NavigationState,
+  PartialState,
+} from '@react-navigation/native'
 import {
   HotspotBleProvider,
   OnboardingProvider,
 } from '@helium/react-native-sdk'
-import { createClient } from '@segment/analytics-react-native'
+import {
+  createClient,
+  AnalyticsProvider,
+} from '@segment/analytics-react-native'
 import { theme, darkThemeColors, lightThemeColors } from './theme/theme'
 import NavigationRoot from './navigation/NavigationRoot'
 import { useAppDispatch } from './store/store'
@@ -43,10 +50,28 @@ Sentry.init({
   dsn: Config.SENTRY_DSN,
 })
 
-export const segmentClient = createClient({
+const segmentClient = createClient({
   writeKey: Config.SEGMENT_ANALYTICS_KEY,
   trackAppLifecycleEvents: true,
+  collectDeviceId: true,
+  debug: true,
 })
+
+const getActiveRouteName = (
+  state: NavigationState | PartialState<NavigationState> | undefined,
+): string => {
+  if (!state || typeof state.index !== 'number') {
+    return 'Unknown'
+  }
+
+  const route = state.routes[state.index]
+
+  if (route.state) {
+    return getActiveRouteName(route.state)
+  }
+
+  return route.name
+}
 
 const App = () => {
   const colorScheme = useColorScheme()
@@ -149,30 +174,47 @@ const App = () => {
     [colorScheme],
   )
 
+  const [routeName, setRouteName] = useState('Unknown')
+
   return (
-    <OnboardingProvider baseUrl="https://helium-onboarding.nebra.com/api/v2">
-      <HotspotBleProvider>
-        <ThemeProvider theme={colorAdaptedTheme}>
-          <BottomSheetModalProvider>
-            <SafeAreaProvider>
-              {/* TODO: Will need to adapt status bar for light/dark modes */}
-              {Platform.OS === 'ios' && <StatusBar barStyle="light-content" />}
-              {Platform.OS === 'android' && (
-                <StatusBar translucent backgroundColor="transparent" />
-              )}
-              <NavigationContainer ref={navigationRef}>
-                <AppLinkProvider>
-                  <NavigationRoot />
-                </AppLinkProvider>
-              </NavigationContainer>
-            </SafeAreaProvider>
-            <SecurityScreen
-              visible={appState !== 'active' && appState !== 'unknown'}
-            />
-          </BottomSheetModalProvider>
-        </ThemeProvider>
-      </HotspotBleProvider>
-    </OnboardingProvider>
+    <AnalyticsProvider client={segmentClient}>
+      <OnboardingProvider baseUrl="https://helium-onboarding.nebra.com/api/v2">
+        <HotspotBleProvider>
+          <ThemeProvider theme={colorAdaptedTheme}>
+            <BottomSheetModalProvider>
+              <SafeAreaProvider>
+                {/* TODO: Will need to adapt status bar for light/dark modes */}
+                {Platform.OS === 'ios' && (
+                  <StatusBar barStyle="light-content" />
+                )}
+                {Platform.OS === 'android' && (
+                  <StatusBar translucent backgroundColor="transparent" />
+                )}
+                <NavigationContainer
+                  ref={navigationRef}
+                  onStateChange={(state) => {
+                    const newRouteName = getActiveRouteName(state)
+
+                    if (routeName !== newRouteName) {
+                      segmentClient.screen(newRouteName)
+
+                      setRouteName(newRouteName)
+                    }
+                  }}
+                >
+                  <AppLinkProvider>
+                    <NavigationRoot />
+                  </AppLinkProvider>
+                </NavigationContainer>
+              </SafeAreaProvider>
+              <SecurityScreen
+                visible={appState !== 'active' && appState !== 'unknown'}
+              />
+            </BottomSheetModalProvider>
+          </ThemeProvider>
+        </HotspotBleProvider>
+      </OnboardingProvider>
+    </AnalyticsProvider>
   )
 }
 
