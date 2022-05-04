@@ -11,6 +11,7 @@ import {
 } from '@helium/react-native-sdk'
 import { ActivityIndicator, Linking, Alert } from 'react-native'
 
+import { useAnalytics } from '@segment/analytics-react-native'
 import Box from '../../../components/Box'
 import Text from '../../../components/Text'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
@@ -23,6 +24,7 @@ import { useColors } from '../../../theme/themeHooks'
 import { DebouncedButton } from '../../../components/Button'
 import useMount from '../../../utils/useMount'
 import { getH3Location } from '../../../utils/h3Utils'
+import { HotspotEvents } from '../../../utils/analytics/events'
 
 type Route = RouteProp<HotspotSetupStackParamList, 'HotspotTxnsProgressScreen'>
 
@@ -34,6 +36,8 @@ const HotspotTxnsProgressScreen = () => {
   const { createGatewayTxn } = useHotspotBle()
   const { getOnboardingRecord } = useOnboarding()
   const { primaryText } = useColors()
+
+  const { track } = useAnalytics()
 
   const handleError = async (error: unknown) => {
     // eslint-disable-next-line no-console
@@ -161,6 +165,30 @@ const HotspotTxnsProgressScreen = () => {
       // eslint-disable-next-line no-console
       console.error('Link could not be created')
       return
+    }
+
+    // Segment track for add gateway
+    if (updateParams.addGatewayTxn) {
+      track(HotspotEvents.ADD_GATEWAY_INITIATED, {
+        owner_address: ownerAddress,
+        payer_address: onboardingRecord?.maker.address,
+      })
+    }
+
+    // Segment track for assert location
+    if (updateParams.assertLocationTxn && params.coords) {
+      const [lng, lat] = params.coords
+
+      track(HotspotEvents.ASSERT_LOCATION_INITIATED, {
+        hotspot_address: hotspotAddress,
+        lat,
+        lng,
+        decimal_gain: params.gain,
+        elevation: params.elevation,
+        owner_address: ownerAddress,
+        maker_address: onboardingRecord?.maker.address,
+        location_nonce_limit: onboardingRecord?.maker.locationNonceLimit || 0,
+      })
     }
 
     Linking.openURL(url)
