@@ -1,8 +1,9 @@
-import React, { memo, useCallback, useMemo } from 'react'
+import React, { memo, useCallback, useEffect, useMemo, useState } from 'react'
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
 import { useNavigation } from '@react-navigation/native'
 import AddIcon from '@assets/images/add.svg'
 import { useSelector } from 'react-redux'
+import { useAnalytics } from '@segment/analytics-react-native'
 import Box from '../../../components/Box'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
 import CircularButton from '../../../components/CircularButton'
@@ -12,6 +13,7 @@ import { isHotspot } from '../../../utils/hotspotUtils'
 import useMount from '../../../utils/useMount'
 import { fetchHotspotsData } from '../../../store/hotspots/hotspotsSlice'
 import { useAppDispatch } from '../../../store/store'
+import { getAddress } from '../../../utils/secureAccount'
 
 const HotspotsScreen = () => {
   const navigation = useNavigation<RootNavigationProp>()
@@ -36,6 +38,20 @@ const HotspotsScreen = () => {
     if (!isHotspot(gateway)) {
     }
   }, [])
+
+  // Set segment identity
+  const { identify } = useAnalytics()
+  const [address, setAddress] = useState<string>()
+
+  useMount(() => {
+    getAddress().then(setAddress)
+  })
+
+  useEffect(() => {
+    if (address) {
+      identify(address)
+    }
+  }, [address, identify])
 
   return (
     <Box backgroundColor="primaryBackground" flex={1}>
