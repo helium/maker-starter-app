@@ -9,6 +9,7 @@ import { ActivityIndicator, Linking, StyleSheet } from 'react-native'
 import { useTranslation } from 'react-i18next'
 import { useAsync } from 'react-async-hook'
 import Toast from 'react-native-simple-toast'
+import { useAnalytics } from '@segment/analytics-react-native'
 import Text from '../../components/Text'
 import BackButton from '../../components/BackButton'
 import SafeAreaBox from '../../components/SafeAreaBox'
@@ -26,6 +27,7 @@ import {
   HotspotAddressParam,
   RootStackParamList,
 } from '../../navigation/main/tabTypes'
+import { HotspotEvents } from '../../utils/analytics/events'
 
 type Route = RouteProp<RootStackParamList, 'TransferHotspot'>
 const TransferHotspot = () => {
@@ -38,6 +40,8 @@ const TransferHotspot = () => {
 
   const hotspotAddress = (params as HotspotAddressParam)?.hotspotAddress || ''
 
+  const { track } = useAnalytics()
+
   // handle callback from the Helium hotspot app
   useAsync(async () => {
     const txnParams = params as HeliumWalletLink.SignHotspotResponse
@@ -49,6 +53,11 @@ const TransferHotspot = () => {
     const pendingTxn = await submitTxn(signedTxnString)
     setHash(pendingTxn.hash)
     setLoading(false)
+
+    // Segment track for Hotspot transfer
+    track(HotspotEvents.TRANSFER_SUBMITTED, {
+      pending_transaction_hash: pendingTxn.hash,
+    })
   }, [params])
 
   const onSubmit = useCallback(async () => {
@@ -103,6 +112,13 @@ const TransferHotspot = () => {
       })
       if (!url) throw new Error('Link could not be created')
 
+      // Segment track for Hotspot transfer
+      track(HotspotEvents.TRANSFER_REQUESTED, {
+        hotspot_address: hotspotAddress,
+        owner_address: ownerAddress,
+        new_owner_address: newOwnerAddress,
+      })
+
       // open in the Helium hotspot app
       await Linking.openURL(url)
     } catch (e) {
@@ -112,7 +128,7 @@ const TransferHotspot = () => {
       Toast.showWithGravity(e.message, Toast.LONG, Toast.CENTER)
     }
     setLoading(false)
-  }, [hotspotAddress, newOwnerAddress])
+  }, [hotspotAddress, newOwnerAddress, track])
 
   return (
     <SafeAreaBox
