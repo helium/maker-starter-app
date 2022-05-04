@@ -1,0 +1,21 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+TEXT_COLOR_RED="\033[0;31m"
+TEXT_NO_COLOR="\033[0m"
+
+LOCAL_BRANCH_NAME="$(git rev-parse --abbrev-ref HEAD)"
+VALID_BRANCH_REGEXP="^(chore|ci|docs|feat|fix|perf|refactor|revert|style|test)\/[a-z0-9._-]+$"
+
+if [[ ! $LOCAL_BRANCH_NAME =~ $VALID_BRANCH_REGEXP ]]
+then
+    echo "${TEXT_COLOR_RED}Branch name ${LOCAL_BRANCH_NAME} is incorrect.
+Branch names in this project must follow the pattern TYPE/DESCRIPTION with the following allowed values:
+- TYPE: One of chore|ci|docs|feat|fix|perf|refactor|revert|style|test.
+- DESCRIPTION: Short description in param-case format.
+Your commit will be rejected. You should rename your branch to a valid name and try again.${TEXT_NO_COLOR}"
+
+    exit 1
+fi
+
+yarn lint-staged
