@@ -103,8 +103,11 @@ const HotspotSetupConfirmLocationScreen = () => {
   }, [ownerAddress, account, getOnboardingRecord, params.hotspotAddress])
 
   const navNext = useCallback(async () => {
-    navigation.replace('HotspotTxnsProgressScreen', params)
-  }, [navigation, params])
+    navigation.replace('HotspotTxnsProgressScreen', {
+      ...params,
+      isAssertion,
+    })
+  }, [isAssertion, navigation, params])
 
   const handleClose = useCallback(() => rootNav.navigate('MainTabs'), [rootNav])
 

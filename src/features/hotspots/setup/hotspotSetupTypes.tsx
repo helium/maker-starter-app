@@ -105,6 +105,7 @@ export type HotspotSetupStackParamList = {
     gain?: number
     coords?: number[]
     locationName?: string
+    isAssertion?: boolean
   }
   NotHotspotOwnerErrorScreen: undefined
   OwnedHotspotErrorScreen: undefined
