@@ -1,38 +1,38 @@
-import React, { useCallback, useMemo, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { KeyboardAvoidingView } from 'react-native'
+import React, { useCallback, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { KeyboardAvoidingView } from "react-native";
 
-import LogoIcon from '@assets/images/logo.svg'
-import CarotRightIcon from '@assets/images/carot-right.svg'
-import Text from '../../components/Text'
-import Box from '../../components/Box'
-import { Button } from '../../components/Button'
-import TextInput from '../../components/TextInput'
-import TouchableOpacityBox from '../../components/TouchableOpacityBox'
-import { useColors } from '../../theme/themeHooks'
-import { useAppDispatch } from '../../store/store'
-import appSlice from '../../store/user/appSlice'
-import useLinkWallet from '../../utils/useLinkWallet'
+import LogoIcon from "@assets/images/logo.svg";
+import CarotRightIcon from "@assets/images/carot-right.svg";
+import Text from "../../components/Text";
+import Box from "../../components/Box";
+import { Button } from "../../components/Button";
+import TextInput from "../../components/TextInput";
+import TouchableOpacityBox from "../../components/TouchableOpacityBox";
+import { useColors } from "../../theme/themeHooks";
+import { useAppDispatch } from "../../store/store";
+import appSlice from "../../store/user/appSlice";
+import useLinkWallet from "../../utils/useLinkWallet";
 
 const WelcomeScreen = () => {
-  const { t } = useTranslation()
-  const colors = useColors()
-  const dispatch = useAppDispatch()
+  const { t } = useTranslation();
+  const colors = useColors();
+  const dispatch = useAppDispatch();
 
-  const [walletAddress, setWalletAddress] = useState<string>('')
-  const isWalletAddressEmpty = useMemo(() => !walletAddress, [walletAddress])
+  const [walletAddress, setWalletAddress] = useState<string>("");
+  const isWalletAddressEmpty = useMemo(() => !walletAddress, [walletAddress]);
 
   const submitWalletAddress = useCallback(async () => {
-    if (isWalletAddressEmpty) return
+    if (isWalletAddressEmpty) return;
 
     dispatch(
       appSlice.actions.storeWalletInfo({
         address: walletAddress,
       }),
-    )
-  }, [dispatch, isWalletAddressEmpty, walletAddress])
+    );
+  }, [dispatch, isWalletAddressEmpty, walletAddress]);
 
-  const linkWallet = useLinkWallet()
+  const linkWallet = useLinkWallet();
 
   return (
     <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
@@ -46,7 +46,7 @@ const WelcomeScreen = () => {
         <Box flex={1} justifyContent="center" alignItems="center">
           <LogoIcon height={80} width={80} />
 
-          <Text variant="h1">{t('welcomeScreen.title')}</Text>
+          <Text variant="h1">{t("welcomeScreen.title")}</Text>
         </Box>
 
         <Button
@@ -54,11 +54,11 @@ const WelcomeScreen = () => {
           color="primary"
           fullWidth
           marginBottom="s"
-          title={t('welcomeScreen.signIn')}
+          title={t("welcomeScreen.signIn")}
         />
 
         <Text variant="body2" textAlign="center" marginBottom="s">
-          {t('welcomeScreen.or')}
+          {t("welcomeScreen.or")}
         </Text>
 
         <Box flexDirection="row" marginBottom="m">
@@ -66,7 +66,7 @@ const WelcomeScreen = () => {
             onChangeText={setWalletAddress}
             flex={4}
             padding="ms"
-            placeholder={t('welcomeScreen.enterWallet')}
+            placeholder={t("welcomeScreen.enterWallet")}
             autoCorrect={false}
             variant="regular"
             borderTopRightRadius="none"
@@ -89,7 +89,7 @@ const WelcomeScreen = () => {
         </Box>
       </Box>
     </KeyboardAvoidingView>
-  )
-}
+  );
+};
 
-export default WelcomeScreen
+export default WelcomeScreen;

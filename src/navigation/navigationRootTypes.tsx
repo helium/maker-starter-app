@@ -1,64 +1,64 @@
-import { StackNavigationProp } from '@react-navigation/stack'
-import { NavigatorScreenParams } from '@react-navigation/native'
-import { OnboardingRecord } from '@helium/onboarding'
-import { Hotspot } from '@helium/http'
+import { StackNavigationProp } from "@react-navigation/stack";
+import { NavigatorScreenParams } from "@react-navigation/native";
+import { OnboardingRecord } from "@helium/onboarding";
+import { Hotspot } from "@helium/http";
 
-import { HotspotOnboardingStackParamList } from './hotspotOnboardingNavigatorTypes'
-import { Antenna } from '../types/Antenna'
+import { HotspotOnboardingStackParamList } from "./hotspotOnboardingNavigatorTypes";
+import { Antenna } from "../types/Antenna";
 
 export type LockScreenRequestType =
-  | 'disablePin'
-  | 'enablePinForPayments'
-  | 'disablePinForPayments'
-  | 'resetPin'
-  | 'unlock'
+  | "disablePin"
+  | "enablePinForPayments"
+  | "disablePinForPayments"
+  | "resetPin"
+  | "unlock";
 
 export type NotSignedInStackParamList = {
-  Welcome: undefined
-}
+  Welcome: undefined;
+};
 
-export type NotSignedInStackNavigationProp = StackNavigationProp<NotSignedInStackParamList>
+export type NotSignedInStackNavigationProp = StackNavigationProp<NotSignedInStackParamList>;
 
 export type SignedInStackParamList = {
-  MainTabs: undefined | { pinVerifiedFor: LockScreenRequestType }
+  MainTabs: undefined | { pinVerifiedFor: LockScreenRequestType };
 
   HotspotDetails: {
-    hotspotAddress: string
-  }
+    hotspotAddress: string;
+  };
 
   PickNewLocationScreen: {
-    onboardingRecord: OnboardingRecord
-    hotspot: Hotspot
-  }
+    onboardingRecord: OnboardingRecord;
+    hotspot: Hotspot;
+  };
   ConfirmLocationUpdateScreen: {
-    onboardingRecord: OnboardingRecord
-    hotspot: Hotspot
-    coords: number[]
-    locationName: string
-  }
+    onboardingRecord: OnboardingRecord;
+    hotspot: Hotspot;
+    coords: number[];
+    locationName: string;
+  };
   PickNewAntennaScreen: {
-    onboardingRecord: OnboardingRecord
-    hotspot: Hotspot
-  }
+    onboardingRecord: OnboardingRecord;
+    hotspot: Hotspot;
+  };
   ConfirmAntennaUpdateScreen: {
-    onboardingRecord: OnboardingRecord
-    hotspot: Hotspot
-    antenna: Antenna
-    gain: number
-    elevation: number
-  }
+    onboardingRecord: OnboardingRecord;
+    hotspot: Hotspot;
+    antenna: Antenna;
+    gain: number;
+    elevation: number;
+  };
 
   LockScreen: {
-    requestType: LockScreenRequestType
-    lock?: boolean
-  }
-  HotspotOnboarding: NavigatorScreenParams<HotspotOnboardingStackParamList>
+    requestType: LockScreenRequestType;
+    lock?: boolean;
+  };
+  HotspotOnboarding: NavigatorScreenParams<HotspotOnboardingStackParamList>;
 
-  CreatePinScreen: { pinReset?: boolean } | undefined
+  CreatePinScreen: { pinReset?: boolean } | undefined;
   ConfirmPinScreen: {
-    pin: string
-    pinReset?: boolean
-  }
-}
+    pin: string;
+    pinReset?: boolean;
+  };
+};
 
-export type SignedInStackNavigationProp = StackNavigationProp<SignedInStackParamList>
+export type SignedInStackNavigationProp = StackNavigationProp<SignedInStackParamList>;

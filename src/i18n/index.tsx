@@ -1,59 +1,59 @@
-import i18n from 'i18next'
-import { initReactI18next } from 'react-i18next'
-import * as RNLocalize from 'react-native-localize'
-import { useCallback, useEffect, useState } from 'react'
-import en from './en'
-import { getSecureItem, setSecureItem } from '../utils/secureAccount'
+import i18n from "i18next";
+import { initReactI18next } from "react-i18next";
+import * as RNLocalize from "react-native-localize";
+import { useCallback, useEffect, useState } from "react";
+import en from "./en";
+import { getSecureItem, setSecureItem } from "../utils/secureAccount";
 
-const locales = RNLocalize.getLocales()
+const locales = RNLocalize.getLocales();
 
-const numberFormatSettings = RNLocalize.getNumberFormatSettings()
-export const groupSeparator = numberFormatSettings.groupingSeparator
-export const { decimalSeparator } = numberFormatSettings
-export const [currencyType] = RNLocalize.getCurrencies() || ['USD']
-export const usesMetricSystem = RNLocalize.usesMetricSystem()
+const numberFormatSettings = RNLocalize.getNumberFormatSettings();
+export const groupSeparator = numberFormatSettings.groupingSeparator;
+export const { decimalSeparator } = numberFormatSettings;
+export const [currencyType] = RNLocalize.getCurrencies() || ["USD"];
+export const usesMetricSystem = RNLocalize.usesMetricSystem();
 
-let phoneLang = 'en'
-let phoneLocale = 'en-US'
+let phoneLang = "en";
+let phoneLocale = "en-US";
 if (Array.isArray(locales)) {
-  phoneLang = locales[0].languageCode
-  phoneLocale = locales[0].languageTag
+  phoneLang = locales[0].languageCode;
+  phoneLocale = locales[0].languageTag;
 }
 
 i18n.use(initReactI18next).init({
-  compatibilityJSON: 'v3',
+  compatibilityJSON: "v3",
   resources: {
     en: { translation: en },
   },
   lng: phoneLang,
-  fallbackLng: ['en'],
-})
+  fallbackLng: ["en"],
+});
 
-export const locale = phoneLocale
+export const locale = phoneLocale;
 
 export const useLanguage = () => {
-  const [language, setLanguage] = useState('en')
+  const [language, setLanguage] = useState("en");
 
   useEffect(() => {
-    initLanguage()
+    initLanguage();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, []);
 
   const changeLanguage = useCallback((lang: string) => {
-    setLanguage(lang)
-    setSecureItem('language', lang)
-    i18n.changeLanguage(lang)
-  }, [])
+    setLanguage(lang);
+    setSecureItem("language", lang);
+    i18n.changeLanguage(lang);
+  }, []);
 
   const initLanguage = useCallback(async () => {
-    const lang = await getSecureItem('language')
+    const lang = await getSecureItem("language");
     if (lang) {
-      changeLanguage(lang)
+      changeLanguage(lang);
     }
-    setLanguage(lang || phoneLang)
-  }, [changeLanguage])
+    setLanguage(lang || phoneLang);
+  }, [changeLanguage]);
 
-  return { language, changeLanguage }
-}
+  return { language, changeLanguage };
+};
 
-export default i18n
+export default i18n;

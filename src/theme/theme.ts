@@ -1,48 +1,48 @@
-import { createTheme } from '@shopify/restyle'
-import { TextProps } from 'react-native'
+import { createTheme } from "@shopify/restyle";
+import { TextProps } from "react-native";
 
 const textVariants = {
   h1: {
     fontSize: 40,
-    fontWeight: 'bold',
-    color: 'primaryText',
+    fontWeight: "bold",
+    color: "primaryText",
   },
   h2: {
     fontSize: 33,
-    fontWeight: 'bold',
-    color: 'primaryText',
+    fontWeight: "bold",
+    color: "primaryText",
   },
   h3: {
     fontSize: 27,
-    fontWeight: 'bold',
-    color: 'primaryText',
+    fontWeight: "bold",
+    color: "primaryText",
   },
   h4: {
     fontSize: 22,
-    fontWeight: 'bold',
-    color: 'primaryText',
+    fontWeight: "bold",
+    color: "primaryText",
   },
   subtitle1: {
     fontSize: 20,
-    fontWeight: '500',
-    color: 'primaryText',
+    fontWeight: "500",
+    color: "primaryText",
   },
   subtitle2: {
     fontSize: 17,
-    fontWeight: '500',
-    color: 'primaryText',
+    fontWeight: "500",
+    color: "primaryText",
   },
   body1: {
     fontSize: 17,
-    color: 'primaryText',
+    color: "primaryText",
   },
   body2: {
     fontSize: 14,
-    color: 'primaryText',
+    color: "primaryText",
   },
   body3: {
     fontSize: 11,
-    color: 'primaryText',
+    color: "primaryText",
   },
   input: {
     flex: 1,
@@ -50,26 +50,26 @@ const textVariants = {
     padding: 8,
   },
   button: {
-    color: 'primaryText',
-    textAlign: 'center',
+    color: "primaryText",
+    textAlign: "center",
     fontSize: 17,
   } as TextProps,
   keypad: {
     fontSize: 40,
-    color: 'primaryText',
+    color: "primaryText",
   },
-}
+};
 
 const palette = {
-  blizzardWhite: '#F5F5F5',
-  boneBlack: '#2F2F2F',
-  citrine: '#EACE03',
-  ghost: '#C7CCCF',
-  white: '#FFFFFF',
-  greenBlue: '#00B196',
-  fadedRed: '#D3494E',
-  cornflowerBlue: '#4A85F7',
-}
+  blizzardWhite: "#F5F5F5",
+  boneBlack: "#2F2F2F",
+  citrine: "#EACE03",
+  ghost: "#C7CCCF",
+  white: "#FFFFFF",
+  greenBlue: "#00B196",
+  fadedRed: "#D3494E",
+  cornflowerBlue: "#4A85F7",
+};
 
 export const themeColors = {
   ...palette,
@@ -91,7 +91,7 @@ export const themeColors = {
   surfaceSecondaryText: palette.boneBlack,
   surfaceContrast: palette.boneBlack,
   surfaceContrastText: palette.white,
-}
+};
 
 export const theme = createTheme({
   colors: themeColors,
@@ -141,13 +141,13 @@ export const theme = createTheme({
   },
   cardVariants: {
     regular: {
-      padding: 'ms',
-      borderRadius: 'ms',
-      backgroundColor: 'surface',
+      padding: "ms",
+      borderRadius: "ms",
+      backgroundColor: "surface",
     },
     elevated: {
-      shadowColor: 'secondaryBackground',
-      borderRadius: 'm',
+      shadowColor: "secondaryBackground",
+      borderRadius: "m",
       shadowOffset: {
         width: 0,
         height: 9,
@@ -157,30 +157,30 @@ export const theme = createTheme({
       elevation: 9,
     },
     modal: {
-      backgroundColor: 'surface',
-      borderRadius: 'xl',
+      backgroundColor: "surface",
+      borderRadius: "xl",
     },
   },
   textVariants,
   inputVariants: {
     regular: {
-      backgroundColor: 'secondaryBackground',
+      backgroundColor: "secondaryBackground",
       fontSize: 18,
-      color: 'primaryText',
-      borderRadius: 'm',
+      color: "primaryText",
+      borderRadius: "m",
     },
     secondary: {
-      backgroundColor: 'surfaceSecondary',
+      backgroundColor: "surfaceSecondary",
       height: 52,
-      paddingHorizontal: 'm',
+      paddingHorizontal: "m",
       fontSize: 18,
-      color: 'surfaceSecondaryText',
-      borderRadius: 'm',
+      color: "surfaceSecondaryText",
+      borderRadius: "m",
     },
   },
-})
+});
 
-export type Theme = typeof theme
-export type TextVariant = keyof Theme['textVariants']
-export type Spacing = keyof Theme['spacing']
-export type Colors = keyof Theme['colors']
+export type Theme = typeof theme;
+export type TextVariant = keyof Theme["textVariants"];
+export type Spacing = keyof Theme["spacing"];
+export type Colors = keyof Theme["colors"];

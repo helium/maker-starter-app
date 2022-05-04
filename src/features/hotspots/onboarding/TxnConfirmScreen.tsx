@@ -1,85 +1,72 @@
-import React, { useCallback, useEffect, useState } from 'react'
-import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
-import { useTranslation } from 'react-i18next'
-import { AddGateway, useOnboarding } from '@helium/react-native-sdk'
-import { OnboardingRecord } from '@helium/onboarding'
-import { useSelector } from 'react-redux'
+import React, { useCallback, useEffect, useState } from "react";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
+import { useTranslation } from "react-i18next";
+import { AddGateway, useOnboarding } from "@helium/react-native-sdk";
+import { OnboardingRecord } from "@helium/onboarding";
+import { useSelector } from "react-redux";
 
-import Text from '../../../components/Text'
-import animateTransition from '../../../utils/animateTransition'
-import { DebouncedButton } from '../../../components/Button'
-import { RootState } from '../../../store/rootReducer'
-import Box from '../../../components/Box'
+import Text from "../../../components/Text";
+import animateTransition from "../../../utils/animateTransition";
+import { DebouncedButton } from "../../../components/Button";
+import { RootState } from "../../../store/rootReducer";
+import Box from "../../../components/Box";
 import {
   HotspotOnboardingNavigationProp,
   HotspotOnboardingStackParamList,
-} from '../../../navigation/hotspotOnboardingNavigatorTypes'
-import { ActivityIndicator } from '../../../components/ActivityIndicator'
+} from "../../../navigation/hotspotOnboardingNavigatorTypes";
+import { ActivityIndicator } from "../../../components/ActivityIndicator";
 
-type Route = RouteProp<HotspotOnboardingStackParamList, 'TxnConfirmScreen'>
+type Route = RouteProp<HotspotOnboardingStackParamList, "TxnConfirmScreen">;
 
 const TxnConfirmScreen = () => {
-  const { t } = useTranslation()
-  const { params } = useRoute<Route>()
-  const navigation = useNavigation<HotspotOnboardingNavigationProp>()
-  const { walletAddress: address } = useSelector(
-    (state: RootState) => state.app,
-  )
-  const [publicKey, setPublicKey] = useState('')
-  const [macAddress, setMacAddress] = useState('')
-  const [ownerAddress, setOwnerAddress] = useState('')
-  const [onboardingRecord, setOnboardingRecord] = useState<OnboardingRecord>()
+  const { t } = useTranslation();
+  const { params } = useRoute<Route>();
+  const navigation = useNavigation<HotspotOnboardingNavigationProp>();
+  const { walletAddress: address } = useSelector((state: RootState) => state.app);
+  const [publicKey, setPublicKey] = useState("");
+  const [macAddress, setMacAddress] = useState("");
+  const [ownerAddress, setOwnerAddress] = useState("");
+  const [onboardingRecord, setOnboardingRecord] = useState<OnboardingRecord>();
 
-  const { getOnboardingRecord } = useOnboarding()
+  const { getOnboardingRecord } = useOnboarding();
 
   useEffect(() => {
-    if (!publicKey) return
+    if (!publicKey) return;
 
     const getRecord = async () => {
-      const record = await getOnboardingRecord(publicKey)
+      const record = await getOnboardingRecord(publicKey);
 
-      if (!record) return
+      if (!record) return;
 
-      animateTransition('TxnConfirmScreen.GetMac')
-      setMacAddress(record.macEth0 || t('generic.unknown'))
-      setOnboardingRecord(record)
-    }
-    getRecord()
-  }, [publicKey, t, getOnboardingRecord])
+      animateTransition("TxnConfirmScreen.GetMac");
+      setMacAddress(record.macEth0 || t("generic.unknown"));
+      setOnboardingRecord(record);
+    };
+    getRecord();
+  }, [publicKey, t, getOnboardingRecord]);
 
   useEffect(() => {
-    if (!params.addGatewayTxn) return
+    if (!params.addGatewayTxn) return;
 
-    const addGatewayTxn = AddGateway.txnFromString(params.addGatewayTxn)
+    const addGatewayTxn = AddGateway.txnFromString(params.addGatewayTxn);
 
-    setPublicKey(addGatewayTxn.gateway?.b58 || '')
-    setOwnerAddress(addGatewayTxn.owner?.b58 || '')
-  }, [params])
+    setPublicKey(addGatewayTxn.gateway?.b58 || "");
+    setOwnerAddress(addGatewayTxn.owner?.b58 || "");
+  }, [params]);
 
   const navNext = useCallback(() => {
-    if (!onboardingRecord) return
-    navigation.push('AskSetLocationScreen', {
+    if (!onboardingRecord) return;
+    navigation.push("AskSetLocationScreen", {
       addGatewayTxn: params.addGatewayTxn,
       hotspotAddress: publicKey,
       onboardingRecord,
-    })
-  }, [navigation, onboardingRecord, params, publicKey])
+    });
+  }, [navigation, onboardingRecord, params, publicKey]);
 
   return (
-    <Box
-      flex={1}
-      backgroundColor="primaryBackground"
-      paddingHorizontal="m"
-      paddingBottom="l"
-    >
-      <Text
-        variant="h2"
-        marginBottom="l"
-        numberOfLines={1}
-        adjustsFontSizeToFit
-        textAlign="center"
-      >
-        {t('hotspotOnboarding.txnConfirmScreen.title')}
+    <Box flex={1} backgroundColor="primaryBackground" paddingHorizontal="m" paddingBottom="l">
+      <Text variant="h2" marginBottom="l" numberOfLines={1} adjustsFontSizeToFit textAlign="center">
+        {t("hotspotOnboarding.txnConfirmScreen.title")}
       </Text>
 
       <Box
@@ -91,14 +78,9 @@ const TxnConfirmScreen = () => {
         marginBottom="m"
       >
         <Text variant="body1" fontWeight="bold">
-          {t('hotspotOnboarding.txnConfirmScreen.publicKey')}
+          {t("hotspotOnboarding.txnConfirmScreen.publicKey")}
         </Text>
-        <Text
-          variant="body1"
-          marginTop="s"
-          numberOfLines={2}
-          adjustsFontSizeToFit
-        >
+        <Text variant="body1" marginTop="s" numberOfLines={2} adjustsFontSizeToFit>
           {publicKey}
         </Text>
       </Box>
@@ -110,7 +92,7 @@ const TxnConfirmScreen = () => {
         marginBottom="m"
       >
         <Text variant="body1" fontWeight="bold">
-          {t('hotspotOnboarding.txnConfirmScreen.macAddress')}
+          {t("hotspotOnboarding.txnConfirmScreen.macAddress")}
         </Text>
         {macAddress ? (
           <Text variant="body1" marginTop="s">
@@ -132,14 +114,9 @@ const TxnConfirmScreen = () => {
         marginBottom="m"
       >
         <Text variant="body1" fontWeight="bold">
-          {t('hotspotOnboarding.txnConfirmScreen.ownerAddress')}
+          {t("hotspotOnboarding.txnConfirmScreen.ownerAddress")}
         </Text>
-        <Text
-          variant="body1"
-          marginTop="s"
-          numberOfLines={2}
-          adjustsFontSizeToFit
-        >
+        <Text variant="body1" marginTop="s" numberOfLines={2} adjustsFontSizeToFit>
           {ownerAddress}
         </Text>
       </Box>
@@ -147,14 +124,14 @@ const TxnConfirmScreen = () => {
       <Box flex={1} />
 
       <DebouncedButton
-        title={t('generic.next')}
+        title={t("generic.next")}
         color="primary"
         onPress={navNext}
         disabled={ownerAddress !== address}
         fullWidth
       />
     </Box>
-  )
-}
+  );
+};
 
-export default TxnConfirmScreen
+export default TxnConfirmScreen;

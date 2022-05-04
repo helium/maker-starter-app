@@ -1,6 +1,6 @@
-import { Hotspot } from '@helium/http'
-import { Feature, Position } from 'geojson'
-import { isFinite } from 'lodash'
+import { Hotspot } from "@helium/http";
+import { Feature, Position } from "geojson";
+import { isFinite } from "lodash";
 
 export const hotspotsToFeatures = (hotspots: Hotspot[]): Feature[] =>
   hotspots
@@ -8,50 +8,42 @@ export const hotspotsToFeatures = (hotspots: Hotspot[]): Feature[] =>
     .map(
       (h) =>
         ({
-          type: 'Feature',
+          type: "Feature",
           properties: { ...h },
-          geometry: { type: 'Point', coordinates: [h.lng, h.lat] },
+          geometry: { type: "Point", coordinates: [h.lng, h.lat] },
           id: h.address,
         } as Feature),
-    )
+    );
 
 export type MapBounds = {
-  ne: number[]
-  sw: number[]
-  paddingLeft?: number
-  paddingRight?: number
-  paddingTop?: number
-  paddingBottom?: number
-}
+  ne: number[];
+  sw: number[];
+  paddingLeft?: number;
+  paddingRight?: number;
+  paddingTop?: number;
+  paddingBottom?: number;
+};
 
-export const findBounds = (
-  coords: number[][],
-  paddingBottom = 250,
-): MapBounds | undefined => {
+export const findBounds = (coords: number[][], paddingBottom = 250): MapBounds | undefined => {
   if (coords.length === 0) {
-    return
+    return;
   }
 
-  let minLng = coords[0][0]
-  let maxLng = coords[0][0]
-  let minLat = coords[0][1]
-  let maxLat = coords[0][1]
+  let minLng = coords[0][0];
+  let maxLng = coords[0][0];
+  let minLat = coords[0][1];
+  let maxLat = coords[0][1];
 
   coords.forEach((m) => {
-    const [lng, lat] = m
-    if (lng < minLng) minLng = lng
-    if (lng > maxLng) maxLng = lng
-    if (lat < minLat) minLat = lat
-    if (lat > maxLat) maxLat = lat
-  })
+    const [lng, lat] = m;
+    if (lng < minLng) minLng = lng;
+    if (lng > maxLng) maxLng = lng;
+    if (lat < minLat) minLat = lat;
+    if (lat > maxLat) maxLat = lat;
+  });
 
-  if (
-    !isFinite(minLng) ||
-    !isFinite(maxLng) ||
-    !isFinite(minLat) ||
-    !isFinite(maxLat)
-  ) {
-    return
+  if (!isFinite(minLng) || !isFinite(maxLng) || !isFinite(minLat) || !isFinite(maxLat)) {
+    return;
   }
 
   return {
@@ -61,14 +53,14 @@ export const findBounds = (
     paddingLeft: 30,
     paddingRight: 30,
     paddingTop: 30,
-  }
-}
+  };
+};
 
 export const boundsToFeature = (bounds: Position[] | undefined): Feature => {
   return {
-    type: 'Feature',
+    type: "Feature",
     geometry: {
-      type: 'Polygon',
+      type: "Polygon",
       coordinates: bounds
         ? [
             [
@@ -81,5 +73,5 @@ export const boundsToFeature = (bounds: Position[] | undefined): Feature => {
           ]
         : [],
     },
-  } as Feature
-}
+  } as Feature;
+};

@@ -1,11 +1,11 @@
-import mockRNDeviceInfo from 'react-native-device-info/jest/react-native-device-info-mock'
-import { setUpTests } from './node_modules/react-native-reanimated/src/reanimated2/jestUtils'
+import mockRNDeviceInfo from "react-native-device-info/jest/react-native-device-info-mock";
+import { setUpTests } from "./node_modules/react-native-reanimated/src/reanimated2/jestUtils";
 
-setUpTests()
+setUpTests();
 
-global.window = {}
-global.window = global
+global.window = {};
+global.window = global;
 
-jest.useFakeTimers()
-jest.mock('react-native-device-info', () => mockRNDeviceInfo)
-jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper')
+jest.useFakeTimers();
+jest.mock("react-native-device-info", () => mockRNDeviceInfo);
+jest.mock("react-native/Libraries/Animated/NativeAnimatedHelper");

@@ -1,18 +1,20 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable import/no-extraneous-dependencies */
-import React from 'react'
-import { render as rtlRender } from '@testing-library/react-native'
-import { ThemeProvider } from '@shopify/restyle'
-import { I18nextProvider } from 'react-i18next'
-import { Provider } from 'react-redux'
-import { NavigationContainer } from '@react-navigation/native'
-import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit'
-import { createStackNavigator } from '@react-navigation/stack'
-import { theme } from '../theme/theme'
-import i18n from './i18n'
-import rootReducer from '../store/rootReducer'
+import React from "react";
+import { render as rtlRender } from "@testing-library/react-native";
+import { ThemeProvider } from "@shopify/restyle";
+import { I18nextProvider } from "react-i18next";
+import { Provider } from "react-redux";
+import { NavigationContainer } from "@react-navigation/native";
+import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
+import { createStackNavigator } from "@react-navigation/stack";
+import { theme } from "../theme/theme";
+// TODO: Fix tests. File not exists.
+// eslint-disable-next-line
+import i18n from "./i18n";
+import rootReducer from "../store/rootReducer";
 
-const { Screen, Navigator } = createStackNavigator()
+const { Screen, Navigator } = createStackNavigator();
 
 const render = (ui, { initialState, ...renderOptions } = {}) => {
   function Wrapper({ children }) {
@@ -23,7 +25,7 @@ const render = (ui, { initialState, ...renderOptions } = {}) => {
         serializableCheck: false,
         immutableCheck: false,
       }),
-    })
+    });
     return (
       <Provider store={store}>
         <ThemeProvider theme={theme}>
@@ -32,10 +34,10 @@ const render = (ui, { initialState, ...renderOptions } = {}) => {
           </I18nextProvider>
         </ThemeProvider>
       </Provider>
-    )
+    );
   }
-  return rtlRender(ui, { wrapper: Wrapper, ...renderOptions })
-}
+  return rtlRender(ui, { wrapper: Wrapper, ...renderOptions });
+};
 
 const renderWithNav = (ui, { initialState, ...renderOptions } = {}) => {
   function Wrapper({ children }) {
@@ -46,7 +48,7 @@ const renderWithNav = (ui, { initialState, ...renderOptions } = {}) => {
         serializableCheck: false,
         immutableCheck: false,
       }),
-    })
+    });
     return (
       <Provider store={store}>
         <ThemeProvider theme={theme}>
@@ -59,11 +61,11 @@ const renderWithNav = (ui, { initialState, ...renderOptions } = {}) => {
           </I18nextProvider>
         </ThemeProvider>
       </Provider>
-    )
+    );
   }
-  return rtlRender(ui, { wrapper: Wrapper, ...renderOptions })
-}
+  return rtlRender(ui, { wrapper: Wrapper, ...renderOptions });
+};
 
 // override render method
-export * from '@testing-library/react-native'
-export { render, renderWithNav }
+export * from "@testing-library/react-native";
+export { render, renderWithNav };

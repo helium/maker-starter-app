@@ -5,6 +5,7 @@
       "error",
       { "requireCapitalFirstLetter": true, "requireEndingPeriod": true }
     ],
+    "name-format": "off",
     "no-duplicate-properties": "error",
     "no-repeated-dependencies": "error",
     "no-file-dependencies": "error",

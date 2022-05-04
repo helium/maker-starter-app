@@ -1,56 +1,49 @@
-import React, {
-  memo,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react'
+import React, { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import MapboxGL, {
   FillLayerStyle,
   LineLayerStyle,
   RegionPayload,
   SymbolLayerStyle,
-} from '@react-native-mapbox-gl/maps'
-import { Feature, Point, Position } from 'geojson'
-import { Hotspot, Witness } from '@helium/http'
-import { BoxProps } from '@shopify/restyle'
-import { StyleProp, ViewStyle } from 'react-native'
-import { useTranslation } from 'react-i18next'
-import { h3ToGeo } from 'h3-js'
-import Config from 'react-native-config'
-import { isFinite } from 'lodash'
-import LocationIcon from '@assets/images/location-icon.svg'
-import Box from './Box'
-import Text from './Text'
-import NoLocation from '../assets/images/no-location.svg'
-import { findBounds } from '../utils/mapUtils'
-import CurrentLocationButton from './CurrentLocationButton'
-import { theme, Theme } from '../theme/theme'
-import { useColors } from '../theme/themeHooks'
-import { distance } from '../utils/location'
+} from "@react-native-mapbox-gl/maps";
+import { Feature, Point, Position } from "geojson";
+import { Hotspot, Witness } from "@helium/http";
+import { BoxProps } from "@shopify/restyle";
+import { StyleProp, ViewStyle } from "react-native";
+import { useTranslation } from "react-i18next";
+import { h3ToGeo } from "h3-js";
+import Config from "react-native-config";
+import { isFinite } from "lodash";
+import LocationIcon from "@assets/images/location-icon.svg";
+import Box from "./Box";
+import Text from "./Text";
+import NoLocation from "../assets/images/no-location.svg";
+import { findBounds } from "../utils/mapUtils";
+import CurrentLocationButton from "./CurrentLocationButton";
+import { theme, Theme } from "../theme/theme";
+import { useColors } from "../theme/themeHooks";
+import { distance } from "../utils/location";
 
-const defaultLngLat = [-122.419418, 37.774929] // San Francisco
+const defaultLngLat = [-122.419418, 37.774929]; // San Francisco
 
 type Props = BoxProps<Theme> & {
-  onMapMoved?: (coords?: Position) => void
-  onDidFinishLoadingMap?: (latitude: number, longitude: number) => void
-  onMapMoving?: (feature: Feature<Point, RegionPayload>) => void
-  cameraBottomOffset?: number
-  currentLocationEnabled?: boolean
-  zoomLevel?: number
-  mapCenter?: number[]
-  selectedHotspot?: Hotspot | Witness
-  witnesses?: Witness[]
-  animationMode?: 'flyTo' | 'easeTo' | 'moveTo'
-  animationDuration?: number
-  maxZoomLevel?: number
-  minZoomLevel?: number
-  interactive?: boolean
-  showUserLocation?: boolean
-  showNoLocation?: boolean
-  markerLocation?: number[]
-}
+  onMapMoved?: (coords?: Position) => void;
+  onDidFinishLoadingMap?: (latitude: number, longitude: number) => void;
+  onMapMoving?: (feature: Feature<Point, RegionPayload>) => void;
+  cameraBottomOffset?: number;
+  currentLocationEnabled?: boolean;
+  zoomLevel?: number;
+  mapCenter?: number[];
+  selectedHotspot?: Hotspot | Witness;
+  witnesses?: Witness[];
+  animationMode?: "flyTo" | "easeTo" | "moveTo";
+  animationDuration?: number;
+  maxZoomLevel?: number;
+  minZoomLevel?: number;
+  interactive?: boolean;
+  showUserLocation?: boolean;
+  showNoLocation?: boolean;
+  markerLocation?: number[];
+};
 const Map = ({
   onMapMoved,
   onDidFinishLoadingMap,
@@ -58,7 +51,7 @@ const Map = ({
   currentLocationEnabled,
   zoomLevel,
   mapCenter,
-  animationMode = 'moveTo',
+  animationMode = "moveTo",
   animationDuration = 500,
   selectedHotspot,
   witnesses = [],
@@ -71,136 +64,120 @@ const Map = ({
   markerLocation,
   ...props
 }: Props) => {
-  const colors = useColors()
-  const { t } = useTranslation()
-  const map = useRef<MapboxGL.MapView>(null)
-  const camera = useRef<MapboxGL.Camera>(null)
-  const [loaded, setLoaded] = useState(false)
-  const [userCoords, setUserCoords] = useState({ latitude: 0, longitude: 0 })
-  const styles = useMemo(() => makeStyles(colors), [colors])
+  const colors = useColors();
+  const { t } = useTranslation();
+  const map = useRef<MapboxGL.MapView>(null);
+  const camera = useRef<MapboxGL.Camera>(null);
+  const [loaded, setLoaded] = useState(false);
+  const [userCoords, setUserCoords] = useState({ latitude: 0, longitude: 0 });
+  const styles = useMemo(() => makeStyles(colors), [colors]);
 
   const onRegionDidChange = useCallback(async () => {
     if (onMapMoved) {
-      const center = await map.current?.getCenter()
-      onMapMoved(center)
+      const center = await map.current?.getCenter();
+      onMapMoved(center);
     }
-  }, [onMapMoved])
+  }, [onMapMoved]);
 
   const centerUserLocation = useCallback(() => {
-    const hasCoords =
-      userCoords &&
-      isFinite(userCoords.longitude) &&
-      isFinite(userCoords.latitude)
+    const hasCoords = userCoords && isFinite(userCoords.longitude) && isFinite(userCoords.latitude);
     camera.current?.setCamera({
-      centerCoordinate: hasCoords
-        ? [userCoords.longitude, userCoords.latitude]
-        : defaultLngLat,
+      centerCoordinate: hasCoords ? [userCoords.longitude, userCoords.latitude] : defaultLngLat,
       zoomLevel: hasCoords ? 16 : 2,
       animationDuration,
       heading: 0,
-    })
-  }, [animationDuration, userCoords])
+    });
+  }, [animationDuration, userCoords]);
 
   const handleUserLocationUpdate = useCallback(
     (loc: MapboxGL.Location) => {
       if (!loc?.coords || (userCoords.latitude && userCoords.longitude)) {
-        return
+        return;
       }
 
-      setUserCoords(loc.coords)
+      setUserCoords(loc.coords);
     },
     [userCoords],
-  )
+  );
 
   useEffect(() => {
-    if (
-      !showUserLocation ||
-      !isFinite(userCoords.latitude) ||
-      !isFinite(userCoords.longitude)
-    )
-      return
+    if (!showUserLocation || !isFinite(userCoords.latitude) || !isFinite(userCoords.longitude))
+      return;
 
     camera.current?.setCamera({
       centerCoordinate: [userCoords.longitude, userCoords.latitude],
       zoomLevel,
-    })
-  }, [showUserLocation, userCoords, zoomLevel])
+    });
+  }, [showUserLocation, userCoords, zoomLevel]);
 
   const onDidFinishLoad = useCallback(() => {
-    setLoaded(true)
-  }, [])
+    setLoaded(true);
+  }, []);
 
-  const selectedHex = useMemo(() => selectedHotspot?.locationHex, [
-    selectedHotspot?.locationHex,
-  ])
+  const selectedHex = useMemo(() => selectedHotspot?.locationHex, [selectedHotspot?.locationHex]);
 
   useEffect(() => {
     if (loaded && userCoords) {
-      onDidFinishLoadingMap?.(userCoords.latitude, userCoords.longitude)
+      onDidFinishLoadingMap?.(userCoords.latitude, userCoords.longitude);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userCoords, loaded])
+  }, [userCoords, loaded]);
 
   const mapImages = useMemo(
     () => ({
-      markerLocation: require('../assets/images/selectedLocation.png'),
+      markerLocation: require("../assets/images/selectedLocation.png"),
     }),
     [],
-  )
+  );
 
   const bounds = useMemo(() => {
-    const boundsLocations: number[][] = []
-    let hotspotCoords: number[] | undefined
+    const boundsLocations: number[][] = [];
+    let hotspotCoords: number[] | undefined;
 
     if (mapCenter && !selectedHotspot && !selectedHex) {
-      boundsLocations.push(mapCenter)
+      boundsLocations.push(mapCenter);
     }
 
     if (selectedHotspot && selectedHotspot.locationHex) {
-      const h3Location = selectedHotspot.locationHex
-      hotspotCoords = h3ToGeo(h3Location).reverse()
-      boundsLocations.push(hotspotCoords)
+      const h3Location = selectedHotspot.locationHex;
+      hotspotCoords = h3ToGeo(h3Location).reverse();
+      boundsLocations.push(hotspotCoords);
     }
 
     if (selectedHex && !selectedHotspot) {
-      boundsLocations.push(h3ToGeo(selectedHex).reverse())
+      boundsLocations.push(h3ToGeo(selectedHex).reverse());
     }
 
     if (hotspotCoords) {
       const hotspotLatLng = {
         latitude: hotspotCoords[1],
         longitude: hotspotCoords[0],
-      }
+      };
       witnesses.forEach((w) => {
         if (w.locationHex) {
-          const h3Location = w.locationHex
-          const coords = h3ToGeo(h3Location).reverse()
-          const distanceKM = distance(
-            { latitude: coords[1], longitude: coords[0] },
-            hotspotLatLng,
-          )
+          const h3Location = w.locationHex;
+          const coords = h3ToGeo(h3Location).reverse();
+          const distanceKM = distance({ latitude: coords[1], longitude: coords[0] }, hotspotLatLng);
           if (distanceKM < 200) {
-            boundsLocations.push(coords)
+            boundsLocations.push(coords);
           }
         }
-      })
+      });
     }
 
-    return findBounds(boundsLocations, cameraBottomOffset)
-  }, [mapCenter, cameraBottomOffset, selectedHex, selectedHotspot, witnesses])
+    return findBounds(boundsLocations, cameraBottomOffset);
+  }, [mapCenter, cameraBottomOffset, selectedHex, selectedHotspot, witnesses]);
 
   const defaultCameraSettings = useMemo(() => {
     const centerCoordinate =
-      mapCenter?.length === 2 &&
-      isFinite(mapCenter[0]) &&
-      isFinite(mapCenter[1])
+      mapCenter?.length === 2 && isFinite(mapCenter[0]) && isFinite(mapCenter[1])
         ? mapCenter
-        : defaultLngLat
+        : defaultLngLat;
     return {
       zoomLevel,
       centerCoordinate,
-    }
-  }, [mapCenter, zoomLevel])
+    };
+  }, [mapCenter, zoomLevel]);
 
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
@@ -218,10 +195,10 @@ const Map = ({
         >
           <NoLocation color={colors.primary} />
           <Text variant="h2" marginTop="m">
-            {t('mapComponent.noLocationTitle')}
+            {t("mapComponent.noLocationTitle")}
           </Text>
           <Text variant="body2" marginTop="s">
-            {t('mapComponent.noLocationBody')}
+            {t("mapComponent.noLocationBody")}
           </Text>
         </Box>
       )}
@@ -241,10 +218,7 @@ const Map = ({
       >
         {(showUserLocation || currentLocationEnabled) && (
           <MapboxGL.UserLocation onUpdate={handleUserLocationUpdate}>
-            <MapboxGL.SymbolLayer
-              id="markerLocation"
-              style={styles.markerLocation}
-            />
+            <MapboxGL.SymbolLayer id="markerLocation" style={styles.markerLocation} />
           </MapboxGL.UserLocation>
         )}
         <MapboxGL.Camera
@@ -258,29 +232,24 @@ const Map = ({
         />
         <MapboxGL.Images images={mapImages} />
         {markerLocation !== undefined && (
-          <MapboxGL.PointAnnotation
-            id="locationCenterMarker"
-            coordinate={markerLocation}
-          >
+          <MapboxGL.PointAnnotation id="locationCenterMarker" coordinate={markerLocation}>
             <LocationIcon color={colors.primaryText} />
           </MapboxGL.PointAnnotation>
         )}
       </MapboxGL.MapView>
-      {currentLocationEnabled && (
-        <CurrentLocationButton onPress={centerUserLocation} />
-      )}
+      {currentLocationEnabled && <CurrentLocationButton onPress={centerUserLocation} />}
     </Box>
-  )
-}
+  );
+};
 
 const makeStyles = (colors: typeof theme.colors) => ({
   map: {
-    width: '100%',
-    height: '100%',
+    width: "100%",
+    height: "100%",
     borderRadius: 40,
   } as StyleProp<ViewStyle>,
   markerLocation: {
-    iconImage: 'markerLocation',
+    iconImage: "markerLocation",
     iconOffset: [0, -25 / 2],
   } as StyleProp<SymbolLayerStyle>,
   selectedHexagon: {
@@ -290,30 +259,27 @@ const makeStyles = (colors: typeof theme.colors) => ({
   ownedFill: {
     fillOpacity: 0.4,
     fillColor: colors.secondary,
-    fillOutlineColor: '#1C1E3B',
+    fillOutlineColor: "#1C1E3B",
   } as StyleProp<FillLayerStyle>,
   witnessFill: {
     fillOpacity: 0.4,
     fillColor: colors.primary,
-    fillOutlineColor: '#1C1E3B',
+    fillOutlineColor: "#1C1E3B",
   } as StyleProp<FillLayerStyle>,
-})
+});
 
-const hotspotsEqual = (
-  prev: Hotspot[] | Witness[],
-  next: Hotspot[] | Witness[],
-) => {
-  if (prev.length !== next.length) return false
+const hotspotsEqual = (prev: Hotspot[] | Witness[], next: Hotspot[] | Witness[]) => {
+  if (prev.length !== next.length) return false;
 
-  const ownedHotspotsEqual = next === prev
+  const ownedHotspotsEqual = next === prev;
   if (!ownedHotspotsEqual) {
     next.forEach((hotspot: Hotspot | Witness, index: number) => {
-      const addressesEqual = hotspot.address === prev[index].address
-      if (!addressesEqual) return false
-    })
+      const addressesEqual = hotspot.address === prev[index].address;
+      if (!addressesEqual) return false;
+    });
   }
-  return true
-}
+  return true;
+};
 
 export default memo(Map, (prevProps, nextProps) => {
   const {
@@ -321,30 +287,20 @@ export default memo(Map, (prevProps, nextProps) => {
     selectedHotspot: prevSelectedHotspot,
     witnesses: prevWitnesses,
     ...prevRest
-  } = prevProps
-  const { mapCenter, selectedHotspot, witnesses, ...nextRest } = nextProps
+  } = prevProps;
+  const { mapCenter, selectedHotspot, witnesses, ...nextRest } = nextProps;
 
   const primitivesEqual = Object.keys(prevRest).every((key) => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    return nextRest.hasOwnProperty(key) && nextRest[key] === prevRest[key]
-  })
-  let mapCenterEqual = mapCenter === prevMapCenter
+    return nextRest.hasOwnProperty(key) && nextRest[key] === prevRest[key];
+  });
+  let mapCenterEqual = mapCenter === prevMapCenter;
   if (!mapCenterEqual && mapCenter && prevMapCenter) {
-    mapCenterEqual =
-      mapCenter[0] === prevMapCenter[0] && mapCenter[1] === prevMapCenter[1]
+    mapCenterEqual = mapCenter[0] === prevMapCenter[0] && mapCenter[1] === prevMapCenter[1];
   }
 
-  const selectedHotspotEqual =
-    prevSelectedHotspot?.address === selectedHotspot?.address
-  const witnessHotspotsEqual = hotspotsEqual(
-    prevWitnesses || [],
-    witnesses || [],
-  )
-  return (
-    primitivesEqual &&
-    mapCenterEqual &&
-    selectedHotspotEqual &&
-    witnessHotspotsEqual
-  )
-})
+  const selectedHotspotEqual = prevSelectedHotspot?.address === selectedHotspot?.address;
+  const witnessHotspotsEqual = hotspotsEqual(prevWitnesses || [], witnesses || []);
+  return primitivesEqual && mapCenterEqual && selectedHotspotEqual && witnessHotspotsEqual;
+});

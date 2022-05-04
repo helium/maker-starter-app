@@ -1,55 +1,54 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { chain } from 'lodash'
-import Config from 'react-native-config'
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { chain } from "lodash";
+import Config from "react-native-config";
 
 export type Hotspot = {
-  lng: number
-  lat: number
-  status: string
-  payer: string
-  owner: string
-  name: string
-  isLocationSet: boolean
-  locationName: string | undefined
+  lng: number;
+  lat: number;
+  status: string;
+  payer: string;
+  owner: string;
+  name: string;
+  isLocationSet: boolean;
+  locationName: string | undefined;
   geocode: {
-    shortStreet: string
-    shortState: string
-    shortCountry: string
-    shortCity: string
-    longStreet: string
-    longState: string
-    longCountry: string
-    longCity: string
-    cityId: string
-  }
-  gain: number | undefined
-  elevation: number
-  address: string
-}
+    shortStreet: string;
+    shortState: string;
+    shortCountry: string;
+    shortCity: string;
+    longStreet: string;
+    longState: string;
+    longCountry: string;
+    longCity: string;
+    cityId: string;
+  };
+  gain: number | undefined;
+  elevation: number;
+  address: string;
+};
 
 export const heliumApi = createApi({
-  reducerPath: 'heliumApi',
+  reducerPath: "heliumApi",
   baseQuery: fetchBaseQuery({ baseUrl: Config.HELIUM_API_URL }),
   endpoints: (builder) => ({
     getHostspots: builder.query<Hotspot[], string>({
       query: (accountAddress) => ({
         url: `/accounts/${accountAddress}/hotspots`,
-        method: 'GET',
+        method: "GET",
       }),
+      // TODO: Add data type.
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       transformResponse: (response: { data: any }) => {
         return chain(response?.data)
-          .filter(
-            (hotspot) =>
-              hotspot.payer && hotspot.payer === Config.FREEDOMFI_MAKER_ID,
-          )
+          .filter((hotspot) => hotspot.payer && hotspot.payer === Config.FREEDOMFI_MAKER_ID)
           .map((hotspot) => {
-            const isLocationSet = !!hotspot.location
+            const isLocationSet = !!hotspot.location;
 
             const locationName = isLocationSet
               ? `${hotspot.geocode?.long_street}, ${hotspot.geocode?.short_city} ${hotspot.geocode?.short_country}`
-              : undefined
+              : undefined;
 
-            const gain = hotspot.gain ? hotspot.gain / 10 : undefined
+            const gain = hotspot.gain ? hotspot.gain / 10 : undefined;
 
             return {
               lng: hotspot.lng,
@@ -57,7 +56,7 @@ export const heliumApi = createApi({
               status: hotspot.status?.online,
               payer: hotspot.payer,
               owner: hotspot.owner,
-              name: hotspot.name?.replaceAll('-', ' '),
+              name: hotspot.name?.replaceAll("-", " "),
               isLocationSet,
               locationName,
               geocode: {
@@ -74,12 +73,12 @@ export const heliumApi = createApi({
               gain,
               elevation: hotspot.elevation,
               address: hotspot.address,
-            }
+            };
           })
-          .value()
+          .value();
       },
     }),
   }),
-})
+});
 
-export const { useGetHostspotsQuery } = heliumApi
+export const { useGetHostspotsQuery } = heliumApi;

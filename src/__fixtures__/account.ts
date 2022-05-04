@@ -1,5 +1,5 @@
-import Balance, { CurrencyType } from '@helium/currency'
-import { Account } from '@helium/http'
+import Balance, { CurrencyType } from "@helium/currency";
+import { Account } from "@helium/http";
 
 const account: Partial<Account> = {
   speculativeNonce: 30,
@@ -10,11 +10,11 @@ const account: Partial<Account> = {
   dcBalance: new Balance(0, CurrencyType.dataCredit),
   block: 883732,
   balance: new Balance(0, CurrencyType.networkToken),
-  address: '13WWmUq4i8383Akd2ASDFifjklamncjvr5no8qimMrNMsSaM96e',
-}
+  address: "13WWmUq4i8383Akd2ASDFifjklamncjvr5no8qimMrNMsSaM96e",
+};
 
 const createAccount = (opts: Partial<Account>): Partial<Account> => {
-  return { ...account, ...opts }
-}
+  return { ...account, ...opts };
+};
 
-export { account, createAccount }
+export { account, createAccount };

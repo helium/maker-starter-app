@@ -1,5 +1,5 @@
 const BarCodeScanner = jest.fn().mockImplementation(() => {
-  return {}
-})
+  return {};
+});
 
-export { BarCodeScanner }
+export { BarCodeScanner };

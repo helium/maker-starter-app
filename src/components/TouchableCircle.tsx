@@ -1,24 +1,23 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { BoxProps } from '@shopify/restyle'
-import React, { useRef } from 'react'
+import { BoxProps } from "@shopify/restyle";
+import React, { useRef } from "react";
 import {
   Animated,
   Easing,
   GestureResponderEvent,
   TouchableWithoutFeedback,
   TouchableWithoutFeedbackProps,
-} from 'react-native'
+} from "react-native";
 
-import { Theme } from '../theme/theme'
-import Box from './Box'
+import { Theme } from "../theme/theme";
+import Box from "./Box";
 
-type Props = BoxProps<Theme> &
-  TouchableWithoutFeedbackProps & { children: React.ReactNode }
+type Props = BoxProps<Theme> & TouchableWithoutFeedbackProps & { children: React.ReactNode };
 
-const AnimatedBox = Animated.createAnimatedComponent(Box)
+const AnimatedBox = Animated.createAnimatedComponent(Box);
 
 const TouchableCircle = ({ children, onPressIn, ...rest }: Props) => {
-  const anim = useRef(new Animated.Value(0))
+  const anim = useRef(new Animated.Value(0));
 
   const setOpacityTo = (value: number, duration: number) =>
     Animated.timing(anim.current, {
@@ -26,12 +25,12 @@ const TouchableCircle = ({ children, onPressIn, ...rest }: Props) => {
       duration,
       easing: Easing.inOut(Easing.quad),
       useNativeDriver: true,
-    })
+    });
 
   const handlePressIn = (e: GestureResponderEvent) => {
-    Animated.sequence([setOpacityTo(1, 50), setOpacityTo(0, 100)]).start()
-    onPressIn?.(e)
-  }
+    Animated.sequence([setOpacityTo(1, 50), setOpacityTo(0, 100)]).start();
+    onPressIn?.(e);
+  };
 
   return (
     <Box {...rest}>
@@ -58,7 +57,7 @@ const TouchableCircle = ({ children, onPressIn, ...rest }: Props) => {
         </Box>
       </TouchableWithoutFeedback>
     </Box>
-  )
-}
+  );
+};
 
-export default TouchableCircle
+export default TouchableCircle;
