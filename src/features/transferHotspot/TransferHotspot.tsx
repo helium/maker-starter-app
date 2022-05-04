@@ -50,14 +50,24 @@ const TransferHotspot = () => {
     // submit the signed transaction to the blockchain API
     setLoading(true)
     const signedTxnString = txnParams.transferTxn
+
     const pendingTxn = await submitTxn(signedTxnString)
-    setHash(pendingTxn.hash)
-    setLoading(false)
 
     // Segment track for Hotspot transfer
     track(HotspotEvents.TRANSFER_SUBMITTED, {
-      pending_transaction_hash: pendingTxn.hash,
+      pending_transaction: {
+        type: pendingTxn.type,
+        txn: pendingTxn.txn,
+        status: pendingTxn.status,
+        hash: pendingTxn.hash,
+        failed_reason: pendingTxn.failedReason,
+        created_at: pendingTxn.createdAt,
+        updated_at: pendingTxn.updatedAt,
+      },
     })
+
+    setHash(pendingTxn.hash)
+    setLoading(false)
   }, [params])
 
   const onSubmit = useCallback(async () => {
@@ -113,7 +123,7 @@ const TransferHotspot = () => {
       if (!url) throw new Error('Link could not be created')
 
       // Segment track for Hotspot transfer
-      track(HotspotEvents.TRANSFER_REQUESTED, {
+      track(HotspotEvents.TRANSFER_INITIATED, {
         hotspot_address: hotspotAddress,
         owner_address: ownerAddress,
         new_owner_address: newOwnerAddress,

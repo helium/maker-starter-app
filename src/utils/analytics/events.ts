@@ -1,4 +1,4 @@
 export enum HotspotEvents {
-  TRANSFER_REQUESTED = 'Hotspot Transfer Requested',
+  TRANSFER_INITIATED = 'Hotspot Transfer Initiated',
   TRANSFER_SUBMITTED = 'Hotspot Transfer Submitted',
 }
