@@ -4,6 +4,7 @@ import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
 import { uniq } from 'lodash'
 import { useHotspotBle } from '@helium/react-native-sdk'
+import { useAnalytics } from '@segment/analytics-react-native'
 import BackScreen from '../../../components/BackScreen'
 import Text from '../../../components/Text'
 import {
@@ -19,6 +20,7 @@ import Checkmark from '../../../assets/images/check.svg'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
 import { getAddress, getSecureItem } from '../../../utils/secureAccount'
 import { getHotspotDetails } from '../../../utils/appDataClient'
+import { HotspotEvents } from '../../../utils/analytics/events'
 
 const WifiItem = ({
   name,
@@ -61,6 +63,8 @@ const HotspotSetupPickWifiScreen = () => {
   const { t } = useTranslation()
   const navigation = useNavigation<HotspotSetupNavigationProp>()
   const rootNav = useNavigation<RootNavigationProp>()
+
+  const { track } = useAnalytics()
 
   const {
     params: {
@@ -123,11 +127,21 @@ const HotspotSetupPickWifiScreen = () => {
 
   const scanForNetworks = async () => {
     setScanning(true)
+
+    // Segment track for wifi scan
+    track(HotspotEvents.WIFI_SCAN_STARTED)
+
     const newNetworks = uniq((await readWifiNetworks(false)) || [])
     const newConnectedNetworks = uniq((await readWifiNetworks(true)) || [])
     setScanning(false)
     setWifiNetworks(newNetworks)
     setConnectedWifiNetworks(newConnectedNetworks)
+
+    // Segment track for wifi scan
+    track(HotspotEvents.WIFI_SCAN_FINISHED, {
+      networks_count: newNetworks.length,
+      connected_networks_count: newConnectedNetworks.length,
+    })
   }
 
   return (

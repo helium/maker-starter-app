@@ -7,4 +7,6 @@ export enum HotspotEvents {
   DEVICE_TRANSFER_SUBMITTED = 'DeviceTransfer Submitted',
   BLUETOOTH_SCAN_STARTED = 'Bluetooth Scan Started',
   BLUETOOTH_SCAN_FINISHED = 'Bluetooth Scan Finished',
+  WIFI_SCAN_STARTED = 'Wifi Scan Started',
+  WIFI_SCAN_FINISHED = 'Wifi Scan Finished',
 }
