@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { useHotspotBle } from '@helium/react-native-sdk'
 import { ActivityIndicator } from 'react-native'
+import { useAnalytics } from '@segment/analytics-react-native'
 import Box from '../../../components/Box'
 import { DebouncedButton } from '../../../components/Button'
 import SafeAreaBox from '../../../components/SafeAreaBox'
@@ -13,6 +14,7 @@ import {
 } from './hotspotSetupTypes'
 import sleep from '../../../utils/sleep'
 import { useColors } from '../../../theme/themeHooks'
+import { HotspotEvents } from '../../../utils/analytics/events'
 
 type Route = RouteProp<HotspotSetupStackParamList, 'HotspotSetupScanningScreen'>
 
@@ -24,6 +26,8 @@ const HotspotSetupScanningScreen = () => {
   const { params } = useRoute<Route>()
   const navigation = useNavigation<HotspotSetupNavigationProp>()
 
+  const { track } = useAnalytics()
+
   useEffect(() => {
     const scan = async () => {
       await startScan((error) => {
@@ -33,6 +37,10 @@ const HotspotSetupScanningScreen = () => {
           console.log(error)
         }
       })
+
+      // Segment track for bluetooth scan
+      track(HotspotEvents.BLUETOOTH_SCAN_STARTED)
+
       await sleep(SCAN_DURATION)
       stopScan()
       navigation.replace('HotspotSetupPickHotspotScreen', params)

@@ -5,4 +5,6 @@ export enum HotspotEvents {
   ASSERT_LOCATION_SUBMITTED = 'AssertLocation Submitted',
   DEVICE_TRANSFER_INITIATED = 'DeviceTransfer Initiated',
   DEVICE_TRANSFER_SUBMITTED = 'DeviceTransfer Submitted',
+  BLUETOOTH_SCAN_STARTED = 'Bluetooth Scan Started',
+  BLUETOOTH_SCAN_FINISHED = 'Bluetooth Scan Finished',
 }
