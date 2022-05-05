@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { HeliumActionSheetItemType } from "../../components/HeliumActionSheetItem";
+import { HeliumActionSheetItemType } from "components/HeliumActionSheetItem";
 
 const MILLIS_IN_SECOND = 1000;
 const SECONDS_IN_MINUTE = 60;

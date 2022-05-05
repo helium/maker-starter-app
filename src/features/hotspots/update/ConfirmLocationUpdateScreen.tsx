@@ -18,16 +18,16 @@ import Toast from "react-native-simple-toast";
 
 import type { Account } from "@helium/http";
 
-import { RootState } from "../../../store/rootReducer";
-import useAlert from "../../../utils/useAlert";
-import Box from "../../../components/Box";
-import { DebouncedButton } from "../../../components/Button";
-import Text from "../../../components/Text";
-import { decimalSeparator, groupSeparator } from "../../../i18n";
-import { getAccount } from "../../../utils/appDataClient";
-import { SignedInStackParamList } from "../../../navigation/navigationRootTypes";
-import HotspotLocationPreview from "../../../components/HotspotLocationPreview";
-import { ActivityIndicatorCentered } from "../../../components/ActivityIndicator";
+import { RootState } from "store/rootReducer";
+import useAlert from "utils/useAlert";
+import Box from "components/Box";
+import { DebouncedButton } from "components/Button";
+import Text from "components/Text";
+import { decimalSeparator, groupSeparator } from "i18n";
+import { getAccount } from "utils/appDataClient";
+import { SignedInStackParamList } from "navigation/navigationRootTypes";
+import HotspotLocationPreview from "components/HotspotLocationPreview";
+import { ActivityIndicatorCentered } from "components/ActivityIndicator";
 
 type Route = RouteProp<SignedInStackParamList, "ConfirmLocationUpdateScreen">;
 

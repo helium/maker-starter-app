@@ -8,20 +8,20 @@ import { useOnboarding } from "@helium/react-native-sdk";
 import { useSelector } from "react-redux";
 import { Hotspot } from "@helium/http";
 
-import { EXPLORER_BASE_URL } from "../../../utils/config";
-import { getHotspotDetails } from "../../../utils/appDataClient";
-import Text from "../../../components/Text";
-import Box from "../../../components/Box";
-import WalletNotLinkedError from "../../../components/WalletNotLinkedError";
+import { EXPLORER_BASE_URL } from "utils/config";
+import { getHotspotDetails } from "utils/appDataClient";
+import Text from "components/Text";
+import Box from "components/Box";
+import WalletNotLinkedError from "components/WalletNotLinkedError";
 import {
   SignedInStackParamList,
   SignedInStackNavigationProp,
-} from "../../../navigation/navigationRootTypes";
-import { DebouncedButton } from "../../../components/Button";
-import HotspotLocationPreview from "../../../components/HotspotLocationPreview";
-import useCheckLocationPermission from "../../../utils/useCheckLocationPermission";
-import { RootState } from "../../../store/rootReducer";
-import { ActivityIndicatorCentered } from "../../../components/ActivityIndicator";
+} from "navigation/navigationRootTypes";
+import { DebouncedButton } from "components/Button";
+import HotspotLocationPreview from "components/HotspotLocationPreview";
+import useCheckLocationPermission from "utils/useCheckLocationPermission";
+import { RootState } from "store/rootReducer";
+import { ActivityIndicatorCentered } from "components/ActivityIndicator";
 
 type Route = RouteProp<SignedInStackParamList, "HotspotDetails">;
 

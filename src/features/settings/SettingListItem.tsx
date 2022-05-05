@@ -1,12 +1,12 @@
 import React, { memo, ReactText, useMemo } from "react";
 import { Linking, Switch } from "react-native";
-import Text, { TextProps } from "../../components/Text";
-import TouchableOpacityBox from "../../components/TouchableOpacityBox";
-import { useColors } from "../../theme/themeHooks";
-import CarotRight from "../../assets/images/carot-right.svg";
-import LinkImg from "../../assets/images/link.svg";
-import HeliumActionSheet from "../../components/HeliumActionSheet";
-import { HeliumActionSheetItemType } from "../../components/HeliumActionSheetItem";
+import Text, { TextProps } from "components/Text";
+import TouchableOpacityBox from "components/TouchableOpacityBox";
+import { useColors } from "theme/themeHooks";
+import CarotRight from "assets/images/carot-right.svg";
+import LinkImg from "assets/images/link.svg";
+import HeliumActionSheet from "components/HeliumActionSheet";
+import { HeliumActionSheetItemType } from "components/HeliumActionSheetItem";
 
 export type SelectProps = {
   onDonePress?: () => void;

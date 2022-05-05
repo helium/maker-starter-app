@@ -3,8 +3,8 @@ import React, { useCallback } from "react";
 import { StyleProp, ViewStyle } from "react-native";
 import { BoxProps } from "@shopify/restyle";
 
+import { Colors, Theme } from "theme/theme";
 import Text from "./Text";
-import { Colors, Theme } from "../theme/theme";
 import TouchableOpacityBox from "./TouchableOpacityBox";
 import WithDebounce from "./WithDebounce";
 

@@ -3,8 +3,8 @@ import React, { useMemo } from "react";
 import { createRestyleComponent, VariantProps, createVariant, createBox } from "@shopify/restyle";
 import { TextInput as RNTextInput } from "react-native";
 import tinycolor from "tinycolor2";
-import { Colors, Theme } from "../theme/theme";
-import { useColors } from "../theme/themeHooks";
+import { Colors, Theme } from "theme/theme";
+import { useColors } from "theme/themeHooks";
 
 const TextInputBox = createBox<Theme, React.ComponentProps<typeof RNTextInput>>(RNTextInput);
 

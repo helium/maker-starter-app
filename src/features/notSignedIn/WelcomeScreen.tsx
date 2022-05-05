@@ -2,17 +2,17 @@ import React, { useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { KeyboardAvoidingView } from "react-native";
 
-import LogoIcon from "@assets/images/logo.svg";
-import CarotRightIcon from "@assets/images/carot-right.svg";
-import Text from "../../components/Text";
-import Box from "../../components/Box";
-import { Button } from "../../components/Button";
-import TextInput from "../../components/TextInput";
-import TouchableOpacityBox from "../../components/TouchableOpacityBox";
-import { useColors } from "../../theme/themeHooks";
-import { useAppDispatch } from "../../store/store";
-import appSlice from "../../store/user/appSlice";
-import useLinkWallet from "../../utils/useLinkWallet";
+import LogoIcon from "assets/images/logo.svg";
+import CarotRightIcon from "assets/images/carot-right.svg";
+import Text from "components/Text";
+import Box from "components/Box";
+import { Button } from "components/Button";
+import TextInput from "components/TextInput";
+import TouchableOpacityBox from "components/TouchableOpacityBox";
+import { useColors } from "theme/themeHooks";
+import { useAppDispatch } from "store/store";
+import appSlice from "store/user/appSlice";
+import useLinkWallet from "utils/useLinkWallet";
 
 const WelcomeScreen = () => {
   const { t } = useTranslation();

@@ -13,7 +13,7 @@ const CurrentLocationButton = ({ onPress }: Props) => {
       bottom={16}
       left={16}
     >
-      <Image source={require("../assets/images/current-location.png")} />
+      <Image source={require("assets/images/current-location.png")} />
     </TouchableOpacityBox>
   );
 };

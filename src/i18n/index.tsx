@@ -2,8 +2,8 @@ import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import * as RNLocalize from "react-native-localize";
 import { useCallback, useEffect, useState } from "react";
+import { getSecureItem, setSecureItem } from "utils/secureAccount";
 import en from "./en";
-import { getSecureItem, setSecureItem } from "../utils/secureAccount";
 
 const locales = RNLocalize.getLocales();
 

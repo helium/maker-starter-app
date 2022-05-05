@@ -5,18 +5,18 @@ import { useSelector } from "react-redux";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { isEqual } from "lodash";
 
-import Text from "../../components/Text";
-import { RootState } from "../../store/rootReducer";
-import { useAppDispatch } from "../../store/store";
-import appSlice from "../../store/user/appSlice";
-import { SignedInStackNavigationProp } from "../../navigation/navigationRootTypes";
-import { MainTabParamList } from "../../navigation/main/mainTabNavigatorTypes";
-import SettingListItem, { SettingListItemType } from "./SettingListItem";
+import Text from "components/Text";
+import { RootState } from "store/rootReducer";
+import { useAppDispatch } from "store/store";
+import appSlice from "store/user/appSlice";
+import { SignedInStackNavigationProp } from "navigation/navigationRootTypes";
+import { MainTabParamList } from "navigation/main/mainTabNavigatorTypes";
+import Box from "components/Box";
+import { SUPPORTED_LANGUAGUES } from "i18n/i18nTypes";
+import { useLanguageContext } from "providers/LanguageProvider";
+import useLinkWallet from "utils/useLinkWallet";
 import useAuthIntervals from "./useAuthIntervals";
-import Box from "../../components/Box";
-import { SUPPORTED_LANGUAGUES } from "../../i18n/i18nTypes";
-import { useLanguageContext } from "../../providers/LanguageProvider";
-import useLinkWallet from "../../utils/useLinkWallet";
+import SettingListItem, { SettingListItemType } from "./SettingListItem";
 
 type Route = RouteProp<MainTabParamList, "Settings">;
 

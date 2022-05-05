@@ -12,9 +12,12 @@ import queryString from "query-string";
 import { useSelector } from "react-redux";
 import { WalletLink as HeliumWalletLink } from "@helium/react-native-sdk";
 
-import useMount from "../utils/useMount";
-import { RootState } from "../store/rootReducer";
-import { navigationRef } from "../navigation/navigator";
+import useMount from "utils/useMount";
+import { RootState } from "store/rootReducer";
+import { navigationRef } from "navigation/navigator";
+import { useAppDispatch } from "store/store";
+import appSlice from "store/user/appSlice";
+import useAlert from "utils/useAlert";
 import {
   AppLink,
   AppLinkFields,
@@ -23,9 +26,6 @@ import {
   WalletLink,
   HotspotLink,
 } from "./appLinkTypes";
-import { useAppDispatch } from "../store/store";
-import appSlice from "../store/user/appSlice";
-import useAlert from "../utils/useAlert";
 
 export const createAppLink = (resource: AppLinkCategoryType, resourceId: string) =>
   `${Config.APP_LINK_PROTOCOL}${resource}/${resourceId}`;

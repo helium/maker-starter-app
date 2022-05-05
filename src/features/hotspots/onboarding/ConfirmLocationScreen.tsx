@@ -6,18 +6,18 @@ import { Balance, DataCredits, Location, NetworkTokens, USDollars } from "@heliu
 import type { Account } from "@helium/http";
 import { useSelector } from "react-redux";
 
-import Box from "../../../components/Box";
-import { DebouncedButton } from "../../../components/Button";
-import Text from "../../../components/Text";
-import { decimalSeparator, groupSeparator } from "../../../i18n";
-import { RootState } from "../../../store/rootReducer";
-import { getAccount } from "../../../utils/appDataClient";
+import Box from "components/Box";
+import { DebouncedButton } from "components/Button";
+import Text from "components/Text";
+import { decimalSeparator, groupSeparator } from "i18n";
+import { RootState } from "store/rootReducer";
+import { getAccount } from "utils/appDataClient";
 import {
   HotspotOnboardingNavigationProp,
   HotspotOnboardingStackParamList,
-} from "../../../navigation/hotspotOnboardingNavigatorTypes";
-import HotspotLocationPreview from "../../../components/HotspotLocationPreview";
-import { ActivityIndicatorCentered } from "../../../components/ActivityIndicator";
+} from "navigation/hotspotOnboardingNavigatorTypes";
+import HotspotLocationPreview from "components/HotspotLocationPreview";
+import { ActivityIndicatorCentered } from "components/ActivityIndicator";
 
 type Route = RouteProp<HotspotOnboardingStackParamList, "ConfirmLocationScreen">;
 

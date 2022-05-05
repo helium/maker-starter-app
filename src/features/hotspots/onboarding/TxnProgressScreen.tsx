@@ -7,15 +7,15 @@ import { Linking } from "react-native";
 import Toast from "react-native-simple-toast";
 import { useSelector } from "react-redux";
 
-import { ActivityIndicator } from "../../../components/ActivityIndicator";
-import Text from "../../../components/Text";
-import Box from "../../../components/Box";
-import { hotspotOnChain } from "../../../utils/appDataClient";
-import useAlert from "../../../utils/useAlert";
-import useMount from "../../../utils/useMount";
-import { SignedInStackNavigationProp } from "../../../navigation/navigationRootTypes";
-import { HotspotOnboardingStackParamList } from "../../../navigation/hotspotOnboardingNavigatorTypes";
-import { RootState } from "../../../store/rootReducer";
+import { ActivityIndicator } from "components/ActivityIndicator";
+import Text from "components/Text";
+import Box from "components/Box";
+import { hotspotOnChain } from "utils/appDataClient";
+import useAlert from "utils/useAlert";
+import useMount from "utils/useMount";
+import { SignedInStackNavigationProp } from "navigation/navigationRootTypes";
+import { HotspotOnboardingStackParamList } from "navigation/hotspotOnboardingNavigatorTypes";
+import { RootState } from "store/rootReducer";
 
 type Route = RouteProp<HotspotOnboardingStackParamList, "TxnProgressScreen">;
 

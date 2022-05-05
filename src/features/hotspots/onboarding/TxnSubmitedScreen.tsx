@@ -5,12 +5,12 @@ import { useAsync } from "react-async-hook";
 import { useOnboarding } from "@helium/react-native-sdk";
 import { AssertLocationV2 } from "@helium/transactions";
 
-import Box from "../../../components/Box";
-import { DebouncedButton } from "../../../components/Button";
-import Text from "../../../components/Text";
-import { submitTxn } from "../../../utils/appDataClient";
-import { SignedInStackNavigationProp } from "../../../navigation/navigationRootTypes";
-import { HotspotOnboardingStackParamList } from "../../../navigation/hotspotOnboardingNavigatorTypes";
+import Box from "components/Box";
+import { DebouncedButton } from "components/Button";
+import Text from "components/Text";
+import { submitTxn } from "utils/appDataClient";
+import { SignedInStackNavigationProp } from "navigation/navigationRootTypes";
+import { HotspotOnboardingStackParamList } from "navigation/hotspotOnboardingNavigatorTypes";
 
 type Route = RouteProp<HotspotOnboardingStackParamList, "TxnSubmitedScreen">;
 

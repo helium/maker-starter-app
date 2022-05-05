@@ -3,17 +3,17 @@ import { createStackNavigator, StackNavigationOptions } from "@react-navigation/
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
 
-import { Button } from "../components/Button";
-import { SignedInStackNavigationProp } from "./navigationRootTypes";
+import { Button } from "components/Button";
+import AskSetLocationScreen from "features/hotspots/onboarding/AskSetLocationScreen";
+import PickLocationScreen from "features/hotspots/onboarding/PickLocationScreen";
+import TxnProgressScreen from "features/hotspots/onboarding/TxnProgressScreen";
+import ConfirmLocationScreen from "features/hotspots/onboarding/ConfirmLocationScreen";
+import SkipLocationScreen from "features/hotspots/onboarding/SkipLocationScreen";
+import AntennaSetupScreen from "features/hotspots/onboarding/AntennaSetupScreen";
+import TxnConfirmScreen from "features/hotspots/onboarding/TxnConfirmScreen";
+import TxnSubmitedScreen from "features/hotspots/onboarding/TxnSubmitedScreen";
 import useDefaultScreenOptions from "./useDefaultScreenOptions";
-import AskSetLocationScreen from "../features/hotspots/onboarding/AskSetLocationScreen";
-import PickLocationScreen from "../features/hotspots/onboarding/PickLocationScreen";
-import TxnProgressScreen from "../features/hotspots/onboarding/TxnProgressScreen";
-import ConfirmLocationScreen from "../features/hotspots/onboarding/ConfirmLocationScreen";
-import SkipLocationScreen from "../features/hotspots/onboarding/SkipLocationScreen";
-import AntennaSetupScreen from "../features/hotspots/onboarding/AntennaSetupScreen";
-import TxnConfirmScreen from "../features/hotspots/onboarding/TxnConfirmScreen";
-import TxnSubmitedScreen from "../features/hotspots/onboarding/TxnSubmitedScreen";
+import { SignedInStackNavigationProp } from "./navigationRootTypes";
 import { HotspotOnboardingStackParamList } from "./hotspotOnboardingNavigatorTypes";
 
 const Stack = createStackNavigator<HotspotOnboardingStackParamList>();

@@ -3,8 +3,8 @@ import { NavigatorScreenParams } from "@react-navigation/native";
 import { OnboardingRecord } from "@helium/onboarding";
 import { Hotspot } from "@helium/http";
 
+import { Antenna } from "types/Antenna";
 import { HotspotOnboardingStackParamList } from "./hotspotOnboardingNavigatorTypes";
-import { Antenna } from "../types/Antenna";
 
 export type LockScreenRequestType =
   | "disablePin"

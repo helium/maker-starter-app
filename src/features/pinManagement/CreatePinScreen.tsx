@@ -2,14 +2,14 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 
-import Text from "../../components/Text";
-import PinDisplay from "../../components/PinDisplay";
-import Keypad from "../../components/Keypad";
-import Box from "../../components/Box";
+import Text from "components/Text";
+import PinDisplay from "components/PinDisplay";
+import Keypad from "components/Keypad";
+import Box from "components/Box";
 import {
   SignedInStackNavigationProp,
   SignedInStackParamList,
-} from "../../navigation/navigationRootTypes";
+} from "navigation/navigationRootTypes";
 
 type Route = RouteProp<SignedInStackParamList, "CreatePinScreen">;
 

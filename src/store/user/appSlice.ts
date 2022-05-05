@@ -8,8 +8,8 @@ import {
   getWalletToken,
   setWalletToken,
   signOut,
-} from "../../utils/secureAccount";
-import { Intervals } from "../../features/settings/useAuthIntervals";
+} from "utils/secureAccount";
+import { Intervals } from "features/settings/useAuthIntervals";
 
 export type AppState = {
   isRestored: boolean;

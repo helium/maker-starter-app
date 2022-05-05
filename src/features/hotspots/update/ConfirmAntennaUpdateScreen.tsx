@@ -9,14 +9,14 @@ import Toast from "react-native-simple-toast";
 import { Linking } from "react-native";
 import { Balance, CurrencyType } from "@helium/currency";
 
-import { RootState } from "../../../store/rootReducer";
-import useAlert from "../../../utils/useAlert";
-import Box from "../../../components/Box";
-import { DebouncedButton } from "../../../components/Button";
-import Text from "../../../components/Text";
-import { SignedInStackParamList } from "../../../navigation/navigationRootTypes";
-import { ActivityIndicatorCentered } from "../../../components/ActivityIndicator";
-import { decimalSeparator, groupSeparator } from "../../../i18n";
+import { RootState } from "store/rootReducer";
+import useAlert from "utils/useAlert";
+import Box from "components/Box";
+import { DebouncedButton } from "components/Button";
+import Text from "components/Text";
+import { SignedInStackParamList } from "navigation/navigationRootTypes";
+import { ActivityIndicatorCentered } from "components/ActivityIndicator";
+import { decimalSeparator, groupSeparator } from "i18n";
 
 type Route = RouteProp<SignedInStackParamList, "ConfirmAntennaUpdateScreen">;
 

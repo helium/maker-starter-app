@@ -6,17 +6,17 @@ import { FlatList, Linking } from "react-native";
 import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 
-import CarotRight from "@assets/images/carot-right.svg";
-import { DebouncedButton } from "../../../components/Button";
-import Text from "../../../components/Text";
-import WalletNotLinkedError from "../../../components/WalletNotLinkedError";
-import Box from "../../../components/Box";
-import TouchableOpacityBox from "../../../components/TouchableOpacityBox";
-import { ActivityIndicatorCentered } from "../../../components/ActivityIndicator";
-import { useGetHostspotsQuery } from "../../../store/helium/heliumApi";
-import { useColors } from "../../../theme/themeHooks";
-import { SignedInStackNavigationProp } from "../../../navigation/navigationRootTypes";
-import { RootState } from "../../../store/rootReducer";
+import CarotRight from "assets/images/carot-right.svg";
+import { DebouncedButton } from "components/Button";
+import Text from "components/Text";
+import WalletNotLinkedError from "components/WalletNotLinkedError";
+import Box from "components/Box";
+import TouchableOpacityBox from "components/TouchableOpacityBox";
+import { ActivityIndicatorCentered } from "components/ActivityIndicator";
+import { useGetHostspotsQuery } from "store/helium/heliumApi";
+import { useColors } from "theme/themeHooks";
+import { SignedInStackNavigationProp } from "navigation/navigationRootTypes";
+import { RootState } from "store/rootReducer";
 
 const HotspotsScreen = () => {
   const { t } = useTranslation();

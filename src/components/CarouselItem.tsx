@@ -1,7 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { SvgProps } from "react-native-svg";
-import { useColors } from "../theme/themeHooks";
+import { useColors } from "theme/themeHooks";
 import Box from "./Box";
 import Card from "./Card";
 import Text from "./Text";

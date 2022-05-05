@@ -2,14 +2,14 @@ import React, { useEffect, useRef, useState } from "react";
 import { Alert, TextInput, TouchableWithoutFeedback } from "react-native";
 import { useTranslation } from "react-i18next";
 
+import InfoIcon from "assets/images/info-hollow.svg";
+import { decimalSeparator, groupSeparator, locale } from "i18n";
+import { useColors, useTextVariants } from "theme/themeHooks";
+import { Antenna, antennas, customAntenna } from "types/Antenna";
 import HeliumActionSheet from "./HeliumActionSheet";
 import Box from "./Box";
 import Text from "./Text";
 import TouchableOpacityBox from "./TouchableOpacityBox";
-import InfoIcon from "../assets/images/info-hollow.svg";
-import { decimalSeparator, groupSeparator, locale } from "../i18n";
-import { useColors, useTextVariants } from "../theme/themeHooks";
-import { Antenna, antennas, customAntenna } from "../types/Antenna";
 
 type Props = {
   onAntennaUpdated: (antenna: Antenna) => void;

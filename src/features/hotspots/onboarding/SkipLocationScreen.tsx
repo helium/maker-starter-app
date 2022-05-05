@@ -2,14 +2,14 @@ import React, { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 
-import SkipLocationIcon from "@assets/images/skip-location-icon.svg";
-import Box from "../../../components/Box";
-import { DebouncedButton } from "../../../components/Button";
-import Text from "../../../components/Text";
+import SkipLocationIcon from "assets/images/skip-location-icon.svg";
+import Box from "components/Box";
+import { DebouncedButton } from "components/Button";
+import Text from "components/Text";
 import {
   HotspotOnboardingNavigationProp,
   HotspotOnboardingStackParamList,
-} from "../../../navigation/hotspotOnboardingNavigatorTypes";
+} from "navigation/hotspotOnboardingNavigatorTypes";
 
 type Route = RouteProp<HotspotOnboardingStackParamList, "SkipLocationScreen">;
 

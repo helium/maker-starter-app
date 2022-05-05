@@ -1,5 +1,5 @@
 import { useTheme } from "@shopify/restyle";
-import { ww } from "../utils/layout";
+import { ww } from "utils/layout";
 import { Theme } from "./theme";
 
 export const useColors = () => {

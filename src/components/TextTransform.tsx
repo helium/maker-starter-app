@@ -2,8 +2,8 @@
 import React from "react";
 import { Trans } from "react-i18next";
 import { TextProps } from "@shopify/restyle";
+import { Theme } from "theme/theme";
 import Text from "./Text";
-import { Theme } from "../theme/theme";
 
 const components = {
   b: <Text fontWeight="700" />,

@@ -5,16 +5,16 @@ import { AddGateway, useOnboarding } from "@helium/react-native-sdk";
 import { OnboardingRecord } from "@helium/onboarding";
 import { useSelector } from "react-redux";
 
-import Text from "../../../components/Text";
-import animateTransition from "../../../utils/animateTransition";
-import { DebouncedButton } from "../../../components/Button";
-import { RootState } from "../../../store/rootReducer";
-import Box from "../../../components/Box";
+import Text from "components/Text";
+import animateTransition from "utils/animateTransition";
+import { DebouncedButton } from "components/Button";
+import { RootState } from "store/rootReducer";
+import Box from "components/Box";
 import {
   HotspotOnboardingNavigationProp,
   HotspotOnboardingStackParamList,
-} from "../../../navigation/hotspotOnboardingNavigatorTypes";
-import { ActivityIndicator } from "../../../components/ActivityIndicator";
+} from "navigation/hotspotOnboardingNavigatorTypes";
+import { ActivityIndicator } from "components/ActivityIndicator";
 
 type Route = RouteProp<HotspotOnboardingStackParamList, "TxnConfirmScreen">;
 

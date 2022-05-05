@@ -4,7 +4,7 @@ import {
   ActivityIndicatorProps as NativeActivityIndicatorProps,
 } from "react-native";
 
-import { useColors } from "../theme/themeHooks";
+import { useColors } from "theme/themeHooks";
 import Box from "./Box";
 
 const ActivityIndicator = (props: NativeActivityIndicatorProps) => {

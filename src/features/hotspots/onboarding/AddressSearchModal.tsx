@@ -3,16 +3,16 @@ import { BottomSheetSectionList } from "@gorhom/bottom-sheet";
 import { Keyboard } from "react-native";
 import { useDebouncedCallback } from "use-debounce";
 import { useTranslation } from "react-i18next";
-import Text from "../../../components/Text";
-import TextInput from "../../../components/TextInput";
-import TouchableOpacityBox from "../../../components/TouchableOpacityBox";
-import { useSpacing } from "../../../theme/themeHooks";
+import Text from "components/Text";
+import TextInput from "components/TextInput";
+import TouchableOpacityBox from "components/TouchableOpacityBox";
+import { useSpacing } from "theme/themeHooks";
 import {
   autocompleteAddress,
   AutocompleteSearchResult,
   getPlaceGeography,
   PlaceGeography,
-} from "../../../utils/googlePlaces";
+} from "utils/googlePlaces";
 
 type Props = {
   onSelectPlace: (placeGeography: PlaceGeography) => void;

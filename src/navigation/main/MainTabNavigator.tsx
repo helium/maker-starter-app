@@ -3,15 +3,15 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useNavigation } from "@react-navigation/native";
 import { useSelector } from "react-redux";
 
-import HotspotsScreen from "../../features/hotspots/root/HotspotsScreen";
-import SettingsScreen from "../../features/settings/SettingsScreen";
-import { TabBarIconType, MainTabType } from "./tabTypes";
-import TabBarIcon from "./TabBarIcon";
-import { RootState } from "../../store/rootReducer";
-import { SignedInStackNavigationProp } from "../navigationRootTypes";
+import HotspotsScreen from "features/hotspots/root/HotspotsScreen";
+import SettingsScreen from "features/settings/SettingsScreen";
+import { RootState } from "store/rootReducer";
+import { SignedInStackNavigationProp } from "navigation/navigationRootTypes";
+import useDefaultScreenOptions from "navigation/useDefaultScreenOptions";
+import { useColors } from "theme/themeHooks";
 import { MainTabParamList } from "./mainTabNavigatorTypes";
-import useDefaultScreenOptions from "../useDefaultScreenOptions";
-import { useColors } from "../../theme/themeHooks";
+import TabBarIcon from "./TabBarIcon";
+import { TabBarIconType, MainTabType } from "./tabTypes";
 
 const MainTab = createBottomTabNavigator<MainTabParamList>();
 

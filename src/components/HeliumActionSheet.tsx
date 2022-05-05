@@ -1,26 +1,26 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { BoxProps } from "@shopify/restyle";
-import Close from "@assets/images/close.svg";
-import CarotDown from "@assets/images/carot-down.svg";
-import Kabob from "@assets/images/kabob.svg";
+import Close from "assets/images/close.svg";
+import CarotDown from "assets/images/carot-down.svg";
+import Kabob from "assets/images/kabob.svg";
 import { useTranslation } from "react-i18next";
 import { Modal, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useAnimatedStyle, useSharedValue, withSpring } from "react-native-reanimated";
 import { FlatList } from "react-native-gesture-handler";
-import { Colors, Theme } from "../theme/theme";
+import { Colors, Theme } from "theme/theme";
+import { useColors } from "theme/themeHooks";
+import useVisible from "utils/useVisible";
 import HeliumActionSheetItem, {
   HeliumActionSheetItemHeight,
   HeliumActionSheetItemType,
 } from "./HeliumActionSheetItem";
-import { useColors } from "../theme/themeHooks";
 import Text, { TextProps } from "./Text";
 import Box from "./Box";
 import TouchableOpacityBox from "./TouchableOpacityBox";
 import BlurBox from "./BlurBox";
 import { ReAnimatedBox } from "./AnimatedBox";
-import useVisible from "../utils/useVisible";
 
 type Props = BoxProps<Theme> & {
   data: Array<HeliumActionSheetItemType>;

@@ -3,15 +3,15 @@ import { useTranslation } from "react-i18next";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { KeyboardAvoidingView, StyleSheet } from "react-native";
 
-import Box from "../../../components/Box";
-import Text from "../../../components/Text";
-import { DebouncedButton } from "../../../components/Button";
-import HotspotConfigurationPicker from "../../../components/HotspotConfigurationPicker";
-import { Antenna, defaultAntenna } from "../../../types/Antenna";
+import Box from "components/Box";
+import Text from "components/Text";
+import { DebouncedButton } from "components/Button";
+import HotspotConfigurationPicker from "components/HotspotConfigurationPicker";
+import { Antenna, defaultAntenna } from "types/Antenna";
 import {
   SignedInStackNavigationProp,
   SignedInStackParamList,
-} from "../../../navigation/navigationRootTypes";
+} from "navigation/navigationRootTypes";
 
 type Route = RouteProp<SignedInStackParamList, "PickNewAntennaScreen">;
 

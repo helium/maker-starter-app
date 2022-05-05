@@ -2,15 +2,15 @@ import React from "react";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 
-import AskLocationIcon from "@assets/images/ask-location-icon.svg";
-import { DebouncedButton } from "../../../components/Button";
-import Text from "../../../components/Text";
+import AskLocationIcon from "assets/images/ask-location-icon.svg";
+import { DebouncedButton } from "components/Button";
+import Text from "components/Text";
 import {
   HotspotOnboardingNavigationProp,
   HotspotOnboardingStackParamList,
-} from "../../../navigation/hotspotOnboardingNavigatorTypes";
-import Box from "../../../components/Box";
-import useCheckLocationPermission from "../../../utils/useCheckLocationPermission";
+} from "navigation/hotspotOnboardingNavigatorTypes";
+import Box from "components/Box";
+import useCheckLocationPermission from "utils/useCheckLocationPermission";
 
 type Route = RouteProp<HotspotOnboardingStackParamList, "AskSetLocationScreen">;
 

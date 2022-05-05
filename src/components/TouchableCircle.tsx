@@ -9,7 +9,7 @@ import {
   TouchableWithoutFeedbackProps,
 } from "react-native";
 
-import { Theme } from "../theme/theme";
+import { Theme } from "theme/theme";
 import Box from "./Box";
 
 type Props = BoxProps<Theme> & TouchableWithoutFeedbackProps & { children: React.ReactNode };

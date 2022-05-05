@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 
-import { useColors } from "../theme/themeHooks";
+import { useColors } from "theme/themeHooks";
 
 const useDefaultScreenOptions = () => {
   const { t } = useTranslation();

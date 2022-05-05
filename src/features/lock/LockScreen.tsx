@@ -8,13 +8,13 @@ import * as LocalAuthentication from "expo-local-authentication";
 import {
   SignedInStackNavigationProp,
   SignedInStackParamList,
-} from "../../navigation/navigationRootTypes";
-import { getSecureItem } from "../../utils/secureAccount";
-import ConfirmPinView from "../../components/ConfirmPinView";
-import { MainTabNavigationProp } from "../../navigation/main/mainTabNavigatorTypes";
-import { useAppDispatch } from "../../store/store";
-import appSlice from "../../store/user/appSlice";
-import Box from "../../components/Box";
+} from "navigation/navigationRootTypes";
+import { getSecureItem } from "utils/secureAccount";
+import ConfirmPinView from "components/ConfirmPinView";
+import { MainTabNavigationProp } from "navigation/main/mainTabNavigatorTypes";
+import { useAppDispatch } from "store/store";
+import appSlice from "store/user/appSlice";
+import Box from "components/Box";
 
 type Route = RouteProp<SignedInStackParamList, "LockScreen">;
 

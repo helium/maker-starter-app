@@ -1,6 +1,6 @@
 import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 
-import { LockScreenRequestType } from "../navigationRootTypes";
+import { LockScreenRequestType } from "navigation/navigationRootTypes";
 
 export type MainTabParamList = {
   Hotspots: undefined;

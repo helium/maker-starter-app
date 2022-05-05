@@ -1,11 +1,11 @@
-import "./src/utils/polyfill";
+import "utils/polyfill";
 import React from "react";
 import { AppRegistry } from "react-native";
 import { Provider } from "react-redux";
-import App from "./src/App";
+import App from "App";
+import store from "store/store";
+import LanguageProvider from "providers/LanguageProvider";
 import { name as appName } from "./package.json";
-import store from "./src/store/store";
-import LanguageProvider from "./src/providers/LanguageProvider";
 
 const render = () => {
   return (
