@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { BleError, Device } from 'react-native-ble-plx'
 import { useHotspotBle, useOnboarding } from '@helium/react-native-sdk'
 import { uniq } from 'lodash'
+import { useAnalytics } from '@segment/analytics-react-native'
 import Box from '../../../components/Box'
 import HotspotPairingList from '../../../components/HotspotPairingList'
 import Text from '../../../components/Text'
@@ -12,6 +13,7 @@ import {
   HotspotSetupStackParamList,
 } from './hotspotSetupTypes'
 import useAlert from '../../../utils/useAlert'
+import { HotspotEvents } from '../../../utils/analytics/events'
 
 type Route = RouteProp<
   HotspotSetupStackParamList,
@@ -35,6 +37,8 @@ const HotspotSetupBluetoothSuccess = () => {
   const { getMinFirmware, getOnboardingRecord } = useOnboarding()
   const { showOKAlert } = useAlert()
 
+  const { track } = useAnalytics()
+
   const handleError = useCallback(
     async (e: unknown) => {
       const titleKey = 'generic.error'
@@ -52,6 +56,11 @@ const HotspotSetupBluetoothSuccess = () => {
     async (hotspot: Device) => {
       if (connectStatus === 'connecting') return
 
+      // Segment track for bluetooth connection
+      track(HotspotEvents.BLUETOOTH_CONNECTION_STARTED, {
+        hotspot_id: hotspot.id,
+      })
+
       setConnectStatus(hotspot.id)
       try {
         const connected = await isConnected()
@@ -59,12 +68,23 @@ const HotspotSetupBluetoothSuccess = () => {
           await connect(hotspot)
         }
         setConnectStatus(true)
+
+        // Segment track for bluetooth connection
+        track(HotspotEvents.BLUETOOTH_CONNECTION_SUCCEED, {
+          hotspot_id: hotspot.id,
+        })
       } catch (e) {
         setConnectStatus(false)
+
+        // Segment track for bluetooth connection
+        track(HotspotEvents.BLUETOOTH_CONNECTION_FAILED, {
+          hotspot_id: hotspot.id,
+        })
+
         handleError(e)
       }
     },
-    [connect, connectStatus, handleError, isConnected],
+    [connect, connectStatus, handleError, isConnected, track],
   )
 
   useEffect(() => {
