@@ -1,0 +1,226 @@
+{
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "plugins": [
+    "import",
+    "react",
+    "react-hooks",
+    "react-memo",
+    "jsdoc",
+    "eslint-plugin-no-cyrillic-string"
+  ],
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:jsx-a11y/recommended",
+    "plugin:prettier/recommended",
+    "plugin:jsdoc/recommended",
+    "plugin:import/recommended"
+  ],
+  "settings": {
+    "react": {
+      "version": "detect"
+    },
+    "import/resolver": {
+      "node": {
+        "extensions": [".ts", ".tsx", ".js", ".jsx"],
+        "moduleDirectory": ["node_modules", "src"]
+      }
+    },
+    "import/internal-regex": "^@freedom-fi/"
+  },
+  "rules": {
+    // BASIC RULES
+    "curly": ["error", "all"],
+    "prefer-template": "error",
+    "radix": "error",
+    "no-console": "error",
+    "no-empty-function": "error",
+    "no-nested-ternary": "error",
+    "no-param-reassign": "error",
+    "no-shadow": "error",
+    "no-redeclare": "error",
+    "no-restricted-imports": [
+      "error",
+      {
+        "paths": [
+          {
+            "name": ".",
+            "message": "Usage of imports from root index file of the module is not allowed."
+          }
+        ],
+        "patterns": [
+          {
+            "group": ["../*"],
+            "message": "Usage of relative parent imports is not allowed."
+          },
+          {
+            "group": ["*/../*"],
+            "message": "Import seems to be started from the incorrect source."
+          },
+          {
+            "group": ["*/**/index"],
+            "message": "Usage of 'index' segment in import path is not allowed."
+          }
+        ]
+      }
+    ],
+    "no-restricted-globals": [
+      "error",
+      {
+        "name": "history",
+        "message": "Use React history instead."
+      }
+    ],
+    "no-underscore-dangle": "error",
+    "no-unused-vars": [
+      "error",
+      {
+        "vars": "all",
+        "args": "all",
+        "argsIgnorePattern": "^_",
+        "ignoreRestSiblings": true
+      }
+    ],
+    "no-use-before-define": "error",
+    "no-useless-constructor": "error",
+    "quotes": [
+      "error",
+      "double",
+      {
+        "avoidEscape": true
+      }
+    ],
+    // IMPORT RULES
+    // Static analysis
+    "import/no-unresolved": "error",
+    "import/no-self-import": "error",
+    "import/no-cycle": "error",
+    "import/no-useless-path-segments": "error",
+    "import/no-relative-packages": "error",
+    // Helpful warnings
+    "import/export": "error",
+    "import/no-extraneous-dependencies": "error",
+    "import/no-mutable-exports": "error",
+    // Style guide
+    "import/first": "error",
+    "import/no-namespace": "error",
+    "import/order": [
+      "error",
+      {
+        "groups": ["builtin", "external", "internal", "parent", "sibling", "index", "unknown"],
+        "pathGroups": [
+          {
+            "pattern": "@freedom-fi/**",
+            "group": "external",
+            "position": "after"
+          },
+          {
+            "pattern": "react",
+            "group": "builtin",
+            "position": "before"
+          }
+        ],
+        "pathGroupsExcludedImportTypes": ["react"],
+        "newlines-between": "always",
+        "alphabetize": {
+          "order": "asc"
+        }
+      }
+    ],
+    "import/newline-after-import": "error",
+    "import/no-unassigned-import": "error",
+    "import/no-default-export": "error",
+    // REACT RULES
+    // Common
+    "react/display-name": "error",
+    "react/no-danger": "error",
+    "react/no-did-mount-set-state": "error",
+    "react/no-did-update-set-state": "error",
+    "react/no-will-update-set-state": "error",
+    "react/no-invalid-html-attribute": "error",
+    "react/no-multi-comp": ["error", { "ignoreStateless": true }],
+    "react/no-namespace": "error",
+    "react/no-this-in-sfc": "error",
+    "react/no-typos": "error",
+    "react/no-unsafe": "error",
+    "react/prefer-read-only-props": "error",
+    "react/prefer-stateless-function": "error",
+    "react/react-in-jsx-scope": "off",
+    "react/require-default-props": "error",
+    "react/self-closing-comp": [
+      "error",
+      {
+        "component": true,
+        "html": true
+      }
+    ],
+    "react/no-array-index-key": "error",
+    "react/style-prop-object": "error",
+    "react/void-dom-elements-no-children": "error",
+    // JSX
+    "react/jsx-curly-brace-presence": "error",
+    "react/jsx-filename-extension": [
+      "error",
+      {
+        "extensions": [".jsx", ".tsx"]
+      }
+    ],
+    "react/jsx-newline": [
+      "error",
+      {
+        "prevent": true
+      }
+    ],
+    "react/jsx-no-bind": "error",
+    "react/jsx-no-script-url": "error",
+    "react/jsx-no-useless-fragment": "error",
+    "react/jsx-pascal-case": "error",
+    // REACT-HOOKS RULES
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    // REACT MEMO RULES
+    "react-memo/require-memo": "error",
+    "react-memo/require-usememo": "error",
+    // JSX-A11Y
+    "jsx-a11y/no-autofocus": "off",
+    // JSDOC RULES
+    "jsdoc/check-access": "warn",
+    "jsdoc/check-examples": "warn",
+    "jsdoc/check-indentation": "warn",
+    "jsdoc/check-param-names": "error",
+    "jsdoc/check-property-names": "warn",
+    "jsdoc/check-syntax": "error",
+    "jsdoc/check-tag-names": "error",
+    "jsdoc/check-types": "error",
+    "jsdoc/match-description": "warn",
+    "jsdoc/no-types": "off",
+    "jsdoc/no-undefined-types": "error",
+    "jsdoc/require-description": "error",
+    "jsdoc/require-description-complete-sentence": "warn",
+    "jsdoc/require-example": "off",
+    "jsdoc/require-hyphen-before-param-description": "warn",
+    "jsdoc/require-jsdoc": "off",
+    "jsdoc/require-param": "off",
+    "jsdoc/require-param-description": "error",
+    "jsdoc/require-param-name": "error",
+    "jsdoc/require-param-type": "off",
+    "jsdoc/require-property": "off",
+    "jsdoc/require-property-description": "error",
+    "jsdoc/require-property-name": "error",
+    "jsdoc/require-property-type": "off",
+    "jsdoc/require-returns": "off",
+    "jsdoc/require-returns-type": "off",
+    "jsdoc/require-returns-description": "error"
+  }
+}

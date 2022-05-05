@@ -1,0 +1,7 @@
+{
+  "env": {
+    "react-native/react-native": true
+  },
+  "plugins": ["react-native"],
+  "extends": ["plugin:react-native/all"]
+}

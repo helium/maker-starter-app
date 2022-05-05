@@ -1,3 +1,21 @@
-metro.config.js
-babel.config.js
-jest.config.js
+# Dependencies
+node_modules
+
+# Testing
+coverage
+
+# Logs
+logs
+
+# Tools
+.git
+.vscode
+.yarn
+
+# Production
+build
+dist
+
+# React-native
+.expo
+ios/Pods
