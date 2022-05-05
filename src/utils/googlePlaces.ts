@@ -1,5 +1,5 @@
 import qs from "qs";
-import Config from "react-native-config";
+import { Config } from "react-native-config";
 
 const baseUrl = "https://maps.googleapis.com/maps/api/place";
 const apiKey = Config.GOOGLE_MAPS_API_KEY;

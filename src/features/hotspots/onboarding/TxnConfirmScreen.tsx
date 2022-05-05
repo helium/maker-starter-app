@@ -1,20 +1,21 @@
 import React, { useCallback, useEffect, useState } from "react";
+
+import { OnboardingRecord } from "@helium/onboarding";
+import { AddGateway, useOnboarding } from "@helium/react-native-sdk";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
-import { AddGateway, useOnboarding } from "@helium/react-native-sdk";
-import { OnboardingRecord } from "@helium/onboarding";
 import { useSelector } from "react-redux";
 
-import Text from "components/Text";
-import animateTransition from "utils/animateTransition";
-import { DebouncedButton } from "components/Button";
-import { RootState } from "store/rootReducer";
+import { ActivityIndicator } from "components/ActivityIndicator";
 import Box from "components/Box";
+import { DebouncedButton } from "components/Button";
+import Text from "components/Text";
 import {
   HotspotOnboardingNavigationProp,
   HotspotOnboardingStackParamList,
 } from "navigation/hotspotOnboardingNavigatorTypes";
-import { ActivityIndicator } from "components/ActivityIndicator";
+import { RootState } from "store/rootReducer";
+import animateTransition from "utils/animateTransition";
 
 type Route = RouteProp<HotspotOnboardingStackParamList, "TxnConfirmScreen">;
 
@@ -31,12 +32,16 @@ const TxnConfirmScreen = () => {
   const { getOnboardingRecord } = useOnboarding();
 
   useEffect(() => {
-    if (!publicKey) return;
+    if (!publicKey) {
+      return;
+    }
 
     const getRecord = async () => {
       const record = await getOnboardingRecord(publicKey);
 
-      if (!record) return;
+      if (!record) {
+        return;
+      }
 
       animateTransition("TxnConfirmScreen.GetMac");
       setMacAddress(record.macEth0 || t("generic.unknown"));
@@ -46,7 +51,9 @@ const TxnConfirmScreen = () => {
   }, [publicKey, t, getOnboardingRecord]);
 
   useEffect(() => {
-    if (!params.addGatewayTxn) return;
+    if (!params.addGatewayTxn) {
+      return;
+    }
 
     const addGatewayTxn = AddGateway.txnFromString(params.addGatewayTxn);
 
@@ -55,7 +62,9 @@ const TxnConfirmScreen = () => {
   }, [params]);
 
   const navNext = useCallback(() => {
-    if (!onboardingRecord) return;
+    if (!onboardingRecord) {
+      return;
+    }
     navigation.push("AskSetLocationScreen", {
       addGatewayTxn: params.addGatewayTxn,
       hotspotAddress: publicKey,
@@ -68,7 +77,6 @@ const TxnConfirmScreen = () => {
       <Text variant="h2" marginBottom="l" numberOfLines={1} adjustsFontSizeToFit textAlign="center">
         {t("hotspotOnboarding.txnConfirmScreen.title")}
       </Text>
-
       <Box
         backgroundColor="secondaryBackground"
         padding="m"
@@ -84,7 +92,6 @@ const TxnConfirmScreen = () => {
           {publicKey}
         </Text>
       </Box>
-
       <Box
         backgroundColor="secondaryBackground"
         padding="m"
@@ -104,7 +111,6 @@ const TxnConfirmScreen = () => {
           </Box>
         )}
       </Box>
-
       <Box
         backgroundColor="secondaryBackground"
         padding="m"
@@ -120,9 +126,7 @@ const TxnConfirmScreen = () => {
           {ownerAddress}
         </Text>
       </Box>
-
       <Box flex={1} />
-
       <DebouncedButton
         title={t("generic.next")}
         color="primary"

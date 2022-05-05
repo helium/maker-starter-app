@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { BoxProps } from "@shopify/restyle";
 import React, { useRef } from "react";
+
+import { BoxProps } from "@shopify/restyle";
 import {
   Animated,
   Easing,
@@ -10,6 +11,7 @@ import {
 } from "react-native";
 
 import { Theme } from "theme/theme";
+
 import Box from "./Box";
 
 type Props = BoxProps<Theme> & TouchableWithoutFeedbackProps & { children: React.ReactNode };
@@ -52,7 +54,6 @@ const TouchableCircle = ({ children, onPressIn, ...rest }: Props) => {
             borderRadius="round"
             backgroundColor="blizzardWhite"
           />
-
           {children}
         </Box>
       </TouchableWithoutFeedback>

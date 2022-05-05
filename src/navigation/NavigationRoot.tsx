@@ -1,21 +1,23 @@
 import React, { memo, useEffect } from "react";
-import { createStackNavigator } from "@react-navigation/stack";
-import { useSelector } from "react-redux";
-import changeNavigationBarColor from "react-native-navigation-bar-color";
 
-import { RootState } from "store/rootReducer";
-import LockScreen from "features/lock/LockScreen";
-import { useColors } from "theme/themeHooks";
-import WelcomeScreen from "features/notSignedIn/WelcomeScreen";
-import CreatePinScreen from "features/pinManagement/CreatePinScreen";
-import ConfirmPinScreen from "features/pinManagement/ConfirmPinScreen";
+import { createStackNavigator } from "@react-navigation/stack";
+import changeNavigationBarColor from "react-native-navigation-bar-color";
+import { useSelector } from "react-redux";
+
 import HotspotDetailsScreen from "features/hotspots/root/HotspotDetailsScreen";
-import PickNewLocationScreen from "features/hotspots/update/PickNewLocationScreen";
+import ConfirmAntennaUpdateScreen from "features/hotspots/update/ConfirmAntennaUpdateScreen";
 import ConfirmLocationUpdateScreen from "features/hotspots/update/ConfirmLocationUpdateScreen";
 import PickNewAntennaScreen from "features/hotspots/update/PickNewAntennaScreen";
-import ConfirmAntennaUpdateScreen from "features/hotspots/update/ConfirmAntennaUpdateScreen";
-import MainTabs from "./main/MainTabNavigator";
+import PickNewLocationScreen from "features/hotspots/update/PickNewLocationScreen";
+import LockScreen from "features/lock/LockScreen";
+import WelcomeScreen from "features/notSignedIn/WelcomeScreen";
+import ConfirmPinScreen from "features/pinManagement/ConfirmPinScreen";
+import CreatePinScreen from "features/pinManagement/CreatePinScreen";
+import { RootState } from "store/rootReducer";
+import { useColors } from "theme/themeHooks";
+
 import HotspotOnboardingNavigator from "./HotspotOnboardingNavigator";
+import MainTabs from "./main/MainTabNavigator";
 import { NotSignedInStackParamList, SignedInStackParamList } from "./navigationRootTypes";
 import useDefaultScreenOptions from "./useDefaultScreenOptions";
 
@@ -50,7 +52,6 @@ const NavigationRoot = () => {
   return (
     <SignedInStack.Navigator screenOptions={{ gestureEnabled: false, headerShown: false }}>
       <SignedInStack.Screen name="MainTabs" component={MainTabs} />
-
       <SignedInStack.Group
         screenOptions={{
           ...defaultScreenOptions,
@@ -71,12 +72,9 @@ const NavigationRoot = () => {
           component={ConfirmAntennaUpdateScreen}
         />
       </SignedInStack.Group>
-
       <SignedInStack.Screen name="HotspotOnboarding" component={HotspotOnboardingNavigator} />
-
       <SignedInStack.Screen name="CreatePinScreen" component={CreatePinScreen} />
       <SignedInStack.Screen name="ConfirmPinScreen" component={ConfirmPinScreen} />
-
       <SignedInStack.Screen name="LockScreen" component={LockScreen} />
     </SignedInStack.Navigator>
   );

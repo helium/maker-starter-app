@@ -1,13 +1,15 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Alert, TextInput, TouchableWithoutFeedback } from "react-native";
+
 import { useTranslation } from "react-i18next";
+import { Alert, TextInput, TouchableWithoutFeedback } from "react-native";
 
 import InfoIcon from "assets/images/info-hollow.svg";
 import { decimalSeparator, groupSeparator, locale } from "i18n";
 import { useColors, useTextVariants } from "theme/themeHooks";
 import { Antenna, antennas, customAntenna } from "types/Antenna";
-import HeliumActionSheet from "./HeliumActionSheet";
+
 import Box from "./Box";
+import HeliumActionSheet from "./HeliumActionSheet";
 import Text from "./Text";
 import TouchableOpacityBox from "./TouchableOpacityBox";
 
@@ -128,9 +130,7 @@ const HotspotConfigurationPicker = ({
         paddingVertical="l"
         maxModalHeight={700}
       />
-
       <Box backgroundColor="primaryBackground" height={1} paddingVertical="xxs" />
-
       <TouchableWithoutFeedback onPress={focusGain}>
         <Box
           padding="m"
@@ -161,9 +161,7 @@ const HotspotConfigurationPicker = ({
           </Box>
         </Box>
       </TouchableWithoutFeedback>
-
       <Box backgroundColor="primaryBackground" height={1} paddingVertical="xxs" />
-
       <TouchableWithoutFeedback onPress={focusElevation}>
         <Box
           padding="m"

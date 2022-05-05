@@ -1,7 +1,9 @@
 import React, { useRef, useEffect } from "react";
+
 import { Animated } from "react-native";
-import Word from "./Word";
+
 import Box from "./Box";
+import Word from "./Word";
 
 type Props = { words: Array<string>; onPressWord?: (idx: number) => () => void };
 

@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { chain } from "lodash";
-import Config from "react-native-config";
+import { Config } from "react-native-config";
 
 export type Hotspot = {
   lng: number;
@@ -36,8 +36,6 @@ export const heliumApi = createApi({
         url: `/accounts/${accountAddress}/hotspots`,
         method: "GET",
       }),
-      // TODO: Add data type.
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       transformResponse: (response: { data: any }) => {
         return chain(response?.data)
           .filter((hotspot) => hotspot.payer && hotspot.payer === Config.FREEDOMFI_MAKER_ID)

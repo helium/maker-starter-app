@@ -1,17 +1,18 @@
 import React, { useCallback, useMemo, useState } from "react";
+
 import { useTranslation } from "react-i18next";
 import { KeyboardAvoidingView } from "react-native";
 
-import LogoIcon from "assets/images/logo.svg";
 import CarotRightIcon from "assets/images/carot-right.svg";
-import Text from "components/Text";
+import LogoIcon from "assets/images/logo.svg";
 import Box from "components/Box";
 import { Button } from "components/Button";
+import Text from "components/Text";
 import TextInput from "components/TextInput";
 import TouchableOpacityBox from "components/TouchableOpacityBox";
-import { useColors } from "theme/themeHooks";
 import { useAppDispatch } from "store/store";
 import appSlice from "store/user/appSlice";
+import { useColors } from "theme/themeHooks";
 import useLinkWallet from "utils/useLinkWallet";
 
 const WelcomeScreen = () => {
@@ -23,7 +24,9 @@ const WelcomeScreen = () => {
   const isWalletAddressEmpty = useMemo(() => !walletAddress, [walletAddress]);
 
   const submitWalletAddress = useCallback(async () => {
-    if (isWalletAddressEmpty) return;
+    if (isWalletAddressEmpty) {
+      return;
+    }
 
     dispatch(
       appSlice.actions.storeWalletInfo({
@@ -45,10 +48,8 @@ const WelcomeScreen = () => {
       >
         <Box flex={1} justifyContent="center" alignItems="center">
           <LogoIcon height={80} width={80} />
-
           <Text variant="h1">{t("welcomeScreen.title")}</Text>
         </Box>
-
         <Button
           onPress={linkWallet}
           color="primary"
@@ -56,11 +57,9 @@ const WelcomeScreen = () => {
           marginBottom="s"
           title={t("welcomeScreen.signIn")}
         />
-
         <Text variant="body2" textAlign="center" marginBottom="s">
           {t("welcomeScreen.or")}
         </Text>
-
         <Box flexDirection="row" marginBottom="m">
           <TextInput
             onChangeText={setWalletAddress}
@@ -72,7 +71,6 @@ const WelcomeScreen = () => {
             borderTopRightRadius="none"
             borderBottomRightRadius="none"
           />
-
           <TouchableOpacityBox
             onPress={submitWalletAddress}
             disabled={isWalletAddressEmpty}

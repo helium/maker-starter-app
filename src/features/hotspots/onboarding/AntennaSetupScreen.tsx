@@ -1,17 +1,18 @@
 import React, { useCallback, useState } from "react";
-import { useTranslation } from "react-i18next";
+
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
+import { useTranslation } from "react-i18next";
 import { KeyboardAvoidingView, StyleSheet } from "react-native";
 
 import Box from "components/Box";
-import Text from "components/Text";
 import { DebouncedButton } from "components/Button";
 import HotspotConfigurationPicker from "components/HotspotConfigurationPicker";
-import { Antenna, defaultAntenna } from "types/Antenna";
+import Text from "components/Text";
 import {
   HotspotOnboardingNavigationProp,
   HotspotOnboardingStackParamList,
 } from "navigation/hotspotOnboardingNavigatorTypes";
+import { Antenna, defaultAntenna } from "types/Antenna";
 
 type Route = RouteProp<HotspotOnboardingStackParamList, "AntennaSetupScreen">;
 
@@ -25,7 +26,9 @@ const AntennaSetupScreen = () => {
   const [elevation, setElevation] = useState<number>(0);
 
   const navNext = useCallback(async () => {
-    if (!antenna) return;
+    if (!antenna) {
+      return;
+    }
 
     navigation.navigate("ConfirmLocationScreen", {
       ...params,
@@ -48,12 +51,10 @@ const AntennaSetupScreen = () => {
             >
               {t("antennas.onboarding.title")}
             </Text>
-
             <Text variant="subtitle2" numberOfLines={2} adjustsFontSizeToFit textAlign="center">
               {t("antennas.onboarding.subtitle")}
             </Text>
           </Box>
-
           <HotspotConfigurationPicker
             selectedAntenna={antenna}
             onAntennaUpdated={setAntenna}
@@ -62,7 +63,6 @@ const AntennaSetupScreen = () => {
           />
         </Box>
       </KeyboardAvoidingView>
-
       <DebouncedButton title={t("generic.next")} onPress={navNext} color="primary" fullWidth />
     </Box>
   );

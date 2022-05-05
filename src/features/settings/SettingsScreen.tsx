@@ -1,22 +1,24 @@
 import React, { memo, ReactText, useCallback, useEffect, useMemo } from "react";
+
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
+import { isEqual } from "lodash";
 import { useTranslation } from "react-i18next";
 import { Alert, SectionList } from "react-native";
 import { useSelector } from "react-redux";
-import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
-import { isEqual } from "lodash";
 
+import Box from "components/Box";
 import Text from "components/Text";
+import { SUPPORTED_LANGUAGUES } from "i18n/i18nTypes";
+import { MainTabParamList } from "navigation/main/mainTabNavigatorTypes";
+import { SignedInStackNavigationProp } from "navigation/navigationRootTypes";
+import { useLanguageContext } from "providers/LanguageProvider";
 import { RootState } from "store/rootReducer";
 import { useAppDispatch } from "store/store";
 import appSlice from "store/user/appSlice";
-import { SignedInStackNavigationProp } from "navigation/navigationRootTypes";
-import { MainTabParamList } from "navigation/main/mainTabNavigatorTypes";
-import Box from "components/Box";
-import { SUPPORTED_LANGUAGUES } from "i18n/i18nTypes";
-import { useLanguageContext } from "providers/LanguageProvider";
 import useLinkWallet from "utils/useLinkWallet";
-import useAuthIntervals from "./useAuthIntervals";
+
 import SettingListItem, { SettingListItemType } from "./SettingListItem";
+import useAuthIntervals from "./useAuthIntervals";
 
 type Route = RouteProp<MainTabParamList, "Settings">;
 
@@ -32,13 +34,17 @@ const SettingsScreen = () => {
   const { walletAddress, walletToken } = useSelector((state: RootState) => state.app);
 
   const truncatedAddress = useMemo(() => {
-    if (!walletAddress) return;
+    if (!walletAddress) {
+      return;
+    }
 
     return [walletAddress.slice(0, 8), walletAddress.slice(-8)].join("...");
   }, [walletAddress]);
 
   useEffect(() => {
-    if (!params?.pinVerifiedFor) return;
+    if (!params?.pinVerifiedFor) {
+      return;
+    }
 
     const { pinVerifiedFor } = params;
 
@@ -225,7 +231,6 @@ const SettingsScreen = () => {
       <Text variant="h2" textAlign="center">
         {t("settingsScreen.title")}
       </Text>
-
       <SectionList
         sections={SectionData}
         keyExtractor={keyExtractor}

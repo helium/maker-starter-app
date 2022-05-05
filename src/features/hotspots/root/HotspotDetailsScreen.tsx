@@ -1,27 +1,28 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { ScrollView, Linking } from "react-native";
-import { useTranslation } from "react-i18next";
-import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
-import Toast from "react-native-simple-toast";
+
+import { Hotspot } from "@helium/http";
 import { OnboardingRecord } from "@helium/onboarding";
 import { useOnboarding } from "@helium/react-native-sdk";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
+import { useTranslation } from "react-i18next";
+import { ScrollView, Linking } from "react-native";
+import Toast from "react-native-simple-toast";
 import { useSelector } from "react-redux";
-import { Hotspot } from "@helium/http";
 
-import { EXPLORER_BASE_URL } from "utils/config";
-import { getHotspotDetails } from "utils/appDataClient";
-import Text from "components/Text";
+import { ActivityIndicatorCentered } from "components/ActivityIndicator";
 import Box from "components/Box";
+import { DebouncedButton } from "components/Button";
+import HotspotLocationPreview from "components/HotspotLocationPreview";
+import Text from "components/Text";
 import WalletNotLinkedError from "components/WalletNotLinkedError";
 import {
   SignedInStackParamList,
   SignedInStackNavigationProp,
 } from "navigation/navigationRootTypes";
-import { DebouncedButton } from "components/Button";
-import HotspotLocationPreview from "components/HotspotLocationPreview";
-import useCheckLocationPermission from "utils/useCheckLocationPermission";
 import { RootState } from "store/rootReducer";
-import { ActivityIndicatorCentered } from "components/ActivityIndicator";
+import { getHotspotDetails } from "utils/appDataClient";
+import { EXPLORER_BASE_URL } from "utils/config";
+import useCheckLocationPermission from "utils/useCheckLocationPermission";
 
 type Route = RouteProp<SignedInStackParamList, "HotspotDetails">;
 
@@ -37,7 +38,9 @@ const HotspotDetailsScreen = () => {
 
   const [hotspot, setHotspot] = useState<Hotspot | undefined>();
   useEffect(() => {
-    if (!hotspotAddress) return;
+    if (!hotspotAddress) {
+      return;
+    }
 
     getHotspotDetails(hotspotAddress).then(setHotspot);
   }, [hotspotAddress]);
@@ -49,22 +52,30 @@ const HotspotDetailsScreen = () => {
   }, [getOnboardingRecord, hotspotAddress, setOnboardingRecord]);
 
   const updateAntenna = useCallback(async () => {
-    if (!hotspot || !onboardingRecord) return;
+    if (!hotspot || !onboardingRecord) {
+      return;
+    }
 
     navigation.navigate("PickNewAntennaScreen", { hotspot, onboardingRecord });
   }, [hotspot, onboardingRecord, navigation]);
 
   const updateLocation = useCallback(async () => {
-    if (!hotspot || !onboardingRecord) return;
+    if (!hotspot || !onboardingRecord) {
+      return;
+    }
 
     const isGranted = await requestPermission();
-    if (!isGranted) return;
+    if (!isGranted) {
+      return;
+    }
 
     navigation.navigate("PickNewLocationScreen", { hotspot, onboardingRecord });
   }, [hotspot, onboardingRecord, requestPermission, navigation]);
 
   const viewOnHeliumExplorer = useCallback(async () => {
-    if (!hotspotAddress) return;
+    if (!hotspotAddress) {
+      return;
+    }
 
     const url = `${EXPLORER_BASE_URL}/hotspots/${hotspotAddress}`;
 
@@ -76,7 +87,9 @@ const HotspotDetailsScreen = () => {
     }
   }, [t, hotspotAddress]);
 
-  if (!hotspot || !onboardingRecord) return <ActivityIndicatorCentered />;
+  if (!hotspot || !onboardingRecord) {
+    return <ActivityIndicatorCentered />;
+  }
 
   return (
     <Box flex={1} backgroundColor="primaryBackground" paddingHorizontal="m" paddingBottom="l">
@@ -95,7 +108,6 @@ const HotspotDetailsScreen = () => {
           >
             {hotspot.name}
           </Text>
-
           <Text
             variant="body1"
             color="linkText"
@@ -104,14 +116,12 @@ const HotspotDetailsScreen = () => {
           >
             {t("hotspotDetailsScreen.viewOnHeliumExplorer")}
           </Text>
-
           <ScrollView>
             <Box flex={1} marginTop="l">
               <Box flexDirection="row" justifyContent="space-between" marginBottom="l">
                 <Text variant="body1" fontWeight="bold">
                   {t("hotspotDetailsScreen.statusLabel")}
                 </Text>
-
                 {hotspot.location ? (
                   <Text variant="body1" fontWeight="bold" textTransform="capitalize">
                     {hotspot.status?.online}
@@ -122,7 +132,6 @@ const HotspotDetailsScreen = () => {
                   </Text>
                 )}
               </Box>
-
               {hotspot.location && hotspot.lng !== undefined && hotspot.lat !== undefined ? (
                 <Box height={200}>
                   <HotspotLocationPreview
@@ -135,18 +144,15 @@ const HotspotDetailsScreen = () => {
                   <Text variant="body1" fontWeight="bold">
                     {t("hotspotDetailsScreen.locationLabel")}
                   </Text>
-
                   <Text variant="body1" fontWeight="bold">
                     {t("hotspotDetailsScreen.notSet")}
                   </Text>
                 </Box>
               )}
-
               <Box flexDirection="row" justifyContent="space-between" marginTop="l">
                 <Text variant="body1" fontWeight="bold">
                   {t("hotspot_setup.location_fee.gain_label")}
                 </Text>
-
                 {hotspot.gain ? (
                   <Text variant="body1" fontWeight="bold">
                     {t("hotspot_setup.location_fee.gain", {
@@ -159,12 +165,10 @@ const HotspotDetailsScreen = () => {
                   </Text>
                 )}
               </Box>
-
               <Box flexDirection="row" justifyContent="space-between" marginTop="l">
                 <Text variant="body1" fontWeight="bold">
                   {t("hotspot_setup.location_fee.elevation_label")}
                 </Text>
-
                 {hotspot.elevation ? (
                   <Text variant="body1" fontWeight="bold">
                     {t("hotspot_setup.location_fee.elevation", {
@@ -179,9 +183,7 @@ const HotspotDetailsScreen = () => {
               </Box>
             </Box>
           </ScrollView>
-
           {!walletToken && <WalletNotLinkedError />}
-
           {hotspot.location && (
             <DebouncedButton
               onPress={updateAntenna}
@@ -191,7 +193,6 @@ const HotspotDetailsScreen = () => {
               marginBottom="m"
             />
           )}
-
           <DebouncedButton
             onPress={updateLocation}
             disabled={isRequestingPermission}

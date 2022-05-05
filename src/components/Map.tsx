@@ -1,27 +1,30 @@
 import React, { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
+
+import { Hotspot, Witness } from "@helium/http";
 import MapboxGL, {
   FillLayerStyle,
   LineLayerStyle,
   RegionPayload,
   SymbolLayerStyle,
 } from "@react-native-mapbox-gl/maps";
-import { Feature, Point, Position } from "geojson";
-import { Hotspot, Witness } from "@helium/http";
 import { BoxProps } from "@shopify/restyle";
-import { StyleProp, ViewStyle } from "react-native";
-import { useTranslation } from "react-i18next";
+import { Feature, Point, Position } from "geojson";
 import { h3ToGeo } from "h3-js";
-import Config from "react-native-config";
 import { isFinite } from "lodash";
+import { useTranslation } from "react-i18next";
+import { StyleProp, ViewStyle } from "react-native";
+import { Config } from "react-native-config";
+
 import LocationIcon from "assets/images/location-icon.svg";
 import NoLocation from "assets/images/no-location.svg";
-import { findBounds } from "utils/mapUtils";
 import { theme, Theme } from "theme/theme";
 import { useColors } from "theme/themeHooks";
 import { distance } from "utils/location";
+import { findBounds } from "utils/mapUtils";
+
+import Box from "./Box";
 import CurrentLocationButton from "./CurrentLocationButton";
 import Text from "./Text";
-import Box from "./Box";
 
 const defaultLngLat = [-122.419418, 37.774929]; // San Francisco
 
@@ -101,8 +104,9 @@ const Map = ({
   );
 
   useEffect(() => {
-    if (!showUserLocation || !isFinite(userCoords.latitude) || !isFinite(userCoords.longitude))
+    if (!showUserLocation || !isFinite(userCoords.latitude) || !isFinite(userCoords.longitude)) {
       return;
+    }
 
     camera.current?.setCamera({
       centerCoordinate: [userCoords.longitude, userCoords.latitude],
@@ -269,13 +273,20 @@ const makeStyles = (colors: typeof theme.colors) => ({
 });
 
 const hotspotsEqual = (prev: Hotspot[] | Witness[], next: Hotspot[] | Witness[]) => {
-  if (prev.length !== next.length) return false;
+  if (prev.length !== next.length) {
+    return false;
+  }
 
   const ownedHotspotsEqual = next === prev;
   if (!ownedHotspotsEqual) {
+    // TODO: Fix to desired behavior
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     next.forEach((hotspot: Hotspot | Witness, index: number) => {
       const addressesEqual = hotspot.address === prev[index].address;
-      if (!addressesEqual) return false;
+      if (!addressesEqual) {
+        return false;
+      }
     });
   }
   return true;

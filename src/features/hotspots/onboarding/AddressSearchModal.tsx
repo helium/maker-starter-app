@@ -1,8 +1,10 @@
 import React, { memo, useCallback, useMemo, useState } from "react";
+
 import { BottomSheetSectionList } from "@gorhom/bottom-sheet";
+import { useTranslation } from "react-i18next";
 import { Keyboard } from "react-native";
 import { useDebouncedCallback } from "use-debounce";
-import { useTranslation } from "react-i18next";
+
 import Text from "components/Text";
 import TextInput from "components/TextInput";
 import TouchableOpacityBox from "components/TouchableOpacityBox";
@@ -71,7 +73,6 @@ const AddressSearchModal = ({ onSelectPlace }: Props) => {
       return (
         <TouchableOpacityBox
           onPress={handleSelectPlace(searchResult)}
-          // backgroundColor="secondary"
           padding="s"
           marginVertical="xxs"
         >

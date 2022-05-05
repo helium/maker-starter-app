@@ -1,9 +1,10 @@
-import { StackNavigationProp } from "@react-navigation/stack";
-import { NavigatorScreenParams } from "@react-navigation/native";
-import { OnboardingRecord } from "@helium/onboarding";
 import { Hotspot } from "@helium/http";
+import { OnboardingRecord } from "@helium/onboarding";
+import { NavigatorScreenParams } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
 
 import { Antenna } from "types/Antenna";
+
 import { HotspotOnboardingStackParamList } from "./hotspotOnboardingNavigatorTypes";
 
 export type LockScreenRequestType =

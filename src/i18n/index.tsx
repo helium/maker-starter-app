@@ -1,17 +1,25 @@
+import { useCallback, useEffect, useState } from "react";
+
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
-import * as RNLocalize from "react-native-localize";
-import { useCallback, useEffect, useState } from "react";
+import {
+  getLocales,
+  getNumberFormatSettings,
+  getCurrencies,
+  usesMetricSystem as RNLocalize_usesMetricSystem,
+} from "react-native-localize";
+
 import { getSecureItem, setSecureItem } from "utils/secureAccount";
+
 import en from "./en";
 
-const locales = RNLocalize.getLocales();
+const locales = getLocales();
 
-const numberFormatSettings = RNLocalize.getNumberFormatSettings();
+const numberFormatSettings = getNumberFormatSettings();
 export const groupSeparator = numberFormatSettings.groupingSeparator;
 export const { decimalSeparator } = numberFormatSettings;
-export const [currencyType] = RNLocalize.getCurrencies() || ["USD"];
-export const usesMetricSystem = RNLocalize.usesMetricSystem();
+export const [currencyType] = getCurrencies() || ["USD"];
+export const usesMetricSystem = RNLocalize_usesMetricSystem();
 
 let phoneLang = "en";
 let phoneLocale = "en-US";

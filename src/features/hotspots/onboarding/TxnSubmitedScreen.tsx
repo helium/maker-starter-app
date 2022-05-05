@@ -1,16 +1,17 @@
 import React from "react";
-import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
-import { useTranslation } from "react-i18next";
-import { useAsync } from "react-async-hook";
+
 import { useOnboarding } from "@helium/react-native-sdk";
 import { AssertLocationV2 } from "@helium/transactions";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
+import { useAsync } from "react-async-hook";
+import { useTranslation } from "react-i18next";
 
 import Box from "components/Box";
 import { DebouncedButton } from "components/Button";
 import Text from "components/Text";
-import { submitTxn } from "utils/appDataClient";
-import { SignedInStackNavigationProp } from "navigation/navigationRootTypes";
 import { HotspotOnboardingStackParamList } from "navigation/hotspotOnboardingNavigatorTypes";
+import { SignedInStackNavigationProp } from "navigation/navigationRootTypes";
+import { submitTxn } from "utils/appDataClient";
 
 type Route = RouteProp<HotspotOnboardingStackParamList, "TxnSubmitedScreen">;
 
@@ -44,7 +45,9 @@ const TxnSubmitedScreen = () => {
           params.gatewayAddress,
           params.assertTxn,
         );
-        if (!onboardAssertTxn) return;
+        if (!onboardAssertTxn) {
+          return;
+        }
 
         finalTxn = onboardAssertTxn;
       }
@@ -58,12 +61,10 @@ const TxnSubmitedScreen = () => {
         <Text variant="h3" marginBottom="xl" numberOfLines={1} adjustsFontSizeToFit>
           {t("hotspotOnboarding.txnSubmitedScreen.title")}
         </Text>
-
         <Text variant="body1" textAlign="center">
           {t("hotspotOnboarding.txnSubmitedScreen.subtitle")}
         </Text>
       </Box>
-
       <DebouncedButton
         onPress={() => navigation.navigate("MainTabs")}
         color="primary"

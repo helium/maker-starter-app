@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { ScrollView, Linking } from "react-native";
-import { useTranslation } from "react-i18next";
-import { RouteProp, useRoute } from "@react-navigation/native";
+
+import type { Account } from "@helium/http";
 import {
   Balance,
   DataCredits,
@@ -12,28 +11,29 @@ import {
   WalletLink,
 } from "@helium/react-native-sdk";
 import { AssertLocationV2 } from "@helium/transactions";
+import { RouteProp, useRoute } from "@react-navigation/native";
 import { isString } from "lodash";
-import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
+import { ScrollView, Linking } from "react-native";
 import Toast from "react-native-simple-toast";
+import { useSelector } from "react-redux";
 
-import type { Account } from "@helium/http";
-
-import { RootState } from "store/rootReducer";
-import useAlert from "utils/useAlert";
+import { ActivityIndicatorCentered } from "components/ActivityIndicator";
 import Box from "components/Box";
 import { DebouncedButton } from "components/Button";
+import HotspotLocationPreview from "components/HotspotLocationPreview";
 import Text from "components/Text";
 import { decimalSeparator, groupSeparator } from "i18n";
-import { getAccount } from "utils/appDataClient";
 import { SignedInStackParamList } from "navigation/navigationRootTypes";
-import HotspotLocationPreview from "components/HotspotLocationPreview";
-import { ActivityIndicatorCentered } from "components/ActivityIndicator";
+import { RootState } from "store/rootReducer";
+import { getAccount } from "utils/appDataClient";
+import useAlert from "utils/useAlert";
 
 type Route = RouteProp<SignedInStackParamList, "ConfirmLocationUpdateScreen">;
 
 const ConfirmLocationUpdateScreen = () => {
   const { t } = useTranslation();
-  const { showOKAlert } = useAlert();
+  const { showOkAlert } = useAlert();
   const { walletToken, walletAddress } = useSelector((state: RootState) => state.app);
   const {
     params: { hotspot, onboardingRecord, coords, locationName },
@@ -54,7 +54,9 @@ const ConfirmLocationUpdateScreen = () => {
   }>();
   useEffect(() => {
     const calculateLocationUpdateFee = async () => {
-      if (!walletAddress || !account?.balance) return;
+      if (!walletAddress || !account?.balance) {
+        return;
+      }
 
       const locationFeeData = await Location.loadLocationFeeData({
         nonce: (hotspot.speculativeNonce || 0) + 1,
@@ -74,14 +76,20 @@ const ConfirmLocationUpdateScreen = () => {
   const [updateTxn, setUpdateTxn] = useState<AssertLocationV2>();
   useEffect(() => {
     const createUpdateTxn = async () => {
-      if (!walletToken) return;
+      if (!walletToken) {
+        return;
+      }
 
       const parsed = WalletLink.parseWalletLinkToken(walletToken);
-      if (!parsed?.address) throw new Error("Invalid Token");
+      if (!parsed?.address) {
+        throw new Error("Invalid Token");
+      }
 
       const { address: ownerAddress } = parsed;
 
-      if (hotspot.gain === undefined || hotspot.elevation === undefined) return;
+      if (hotspot.gain === undefined || hotspot.elevation === undefined) {
+        return;
+      }
 
       const [lng, lat] = coords;
 
@@ -105,7 +113,9 @@ const ConfirmLocationUpdateScreen = () => {
   }, [walletToken, coords, onboardingRecord, hotspot]);
 
   const submitTxn = useCallback(async () => {
-    if (!walletToken || !updateTxn) return;
+    if (!walletToken || !updateTxn) {
+      return;
+    }
 
     const url = WalletLink.createUpdateHotspotUrl({
       token: walletToken,
@@ -145,11 +155,13 @@ const ConfirmLocationUpdateScreen = () => {
         }
       }
 
-      await showOKAlert({ titleKey, messageKey });
+      await showOkAlert({ titleKey, messageKey });
     }
-  }, [t, submitTxn, showOKAlert]);
+  }, [t, submitTxn, showOkAlert]);
 
-  if (!feeData) return <ActivityIndicatorCentered />;
+  if (!feeData) {
+    return <ActivityIndicatorCentered />;
+  }
 
   return (
     <Box flex={1} backgroundColor="primaryBackground" paddingHorizontal="m" paddingBottom="l">
@@ -164,7 +176,6 @@ const ConfirmLocationUpdateScreen = () => {
           >
             {t("confirmLocationUpdateScreen.title")}
           </Text>
-
           <Text variant="subtitle1" marginBottom="s" textAlign="center">
             {t(
               feeData.isFree
@@ -172,7 +183,6 @@ const ConfirmLocationUpdateScreen = () => {
                 : "hotspot_setup.location_fee.subtitle_fee",
             )}
           </Text>
-
           <Text
             variant="subtitle1"
             marginBottom={{ phone: "m", smallPhone: "ms" }}
@@ -182,11 +192,9 @@ const ConfirmLocationUpdateScreen = () => {
           >
             {t("hotspot_setup.location_fee.confirm_location")}
           </Text>
-
           <Box height={200} marginBottom={{ phone: "m", smallPhone: "ms" }}>
             <HotspotLocationPreview mapCenter={coords} locationName={locationName} />
           </Box>
-
           {!feeData.isFree && (
             <>
               <Box
@@ -207,7 +215,6 @@ const ConfirmLocationUpdateScreen = () => {
                   })}
                 </Text>
               </Box>
-
               <Box
                 flexDirection="row"
                 justifyContent="space-between"
@@ -220,7 +227,6 @@ const ConfirmLocationUpdateScreen = () => {
                   {feeData.totalStakingAmount.toString(2)}
                 </Text>
               </Box>
-
               {!feeData.hasSufficientBalance && (
                 <Text variant="body2" color="error" textAlign="center">
                   {t("hotspot_setup.location_fee.no_funds")}

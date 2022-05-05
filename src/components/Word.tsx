@@ -1,6 +1,8 @@
-import upperFirst from "lodash/upperFirst";
 import React from "react";
+
+import upperFirst from "lodash/upperFirst";
 import { Animated } from "react-native";
+
 import Text from "./Text";
 import TouchableOpacityBox from "./TouchableOpacityBox";
 
@@ -27,7 +29,6 @@ const Word = ({ position, word, opacity = new Animated.Value(1), onPress }: Prop
         <Text variant="body1" color="primaryText" maxFontSizeMultiplier={1.1}>
           {position}
         </Text>
-
         <Text
           variant="body1"
           numberOfLines={1}

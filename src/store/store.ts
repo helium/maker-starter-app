@@ -1,7 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { useDispatch, useStore } from "react-redux";
-import rootReducer from "./rootReducer";
+
 import { heliumApi } from "./helium/heliumApi";
+import rootReducer from "./rootReducer";
 
 const store = configureStore({
   reducer: rootReducer,

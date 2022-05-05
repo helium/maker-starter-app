@@ -1,6 +1,7 @@
 import { combineReducers } from "@reduxjs/toolkit";
-import appSlice from "./user/appSlice";
+
 import { heliumApi } from "./helium/heliumApi";
+import appSlice from "./user/appSlice";
 
 const rootReducer = combineReducers({
   app: appSlice.reducer,

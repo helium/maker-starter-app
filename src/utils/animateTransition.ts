@@ -1,5 +1,5 @@
 import { LayoutAnimation, LayoutAnimationConfig, Platform } from "react-native";
-import Config from "react-native-config";
+import { Config } from "react-native-config";
 
 type AnimationOptions = {
   enabledOnAndroid: boolean;
@@ -12,7 +12,9 @@ export default (
     config: LayoutAnimation.Presets.easeInEaseOut,
   },
 ) => {
-  if (Platform.OS === "android" && !enabledOnAndroid) return;
+  if (Platform.OS === "android" && !enabledOnAndroid) {
+    return;
+  }
 
   if (__DEV__ && Config.LOG_ANIMATIONS === "true") {
     // eslint-disable-next-line no-console

@@ -1,26 +1,29 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { memo, useCallback, useEffect, useMemo, useState } from "react";
+
 import { BoxProps } from "@shopify/restyle";
-import Close from "assets/images/close.svg";
-import CarotDown from "assets/images/carot-down.svg";
-import Kabob from "assets/images/kabob.svg";
 import { useTranslation } from "react-i18next";
 import { Modal, StyleSheet } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useAnimatedStyle, useSharedValue, withSpring } from "react-native-reanimated";
 import { FlatList } from "react-native-gesture-handler";
+import { useAnimatedStyle, useSharedValue, withSpring } from "react-native-reanimated";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+
+import CarotDown from "assets/images/carot-down.svg";
+import Close from "assets/images/close.svg";
+import Kabob from "assets/images/kabob.svg";
 import { Colors, Theme } from "theme/theme";
 import { useColors } from "theme/themeHooks";
 import useVisible from "utils/useVisible";
+
+import { ReAnimatedBox } from "./AnimatedBox";
+import BlurBox from "./BlurBox";
+import Box from "./Box";
 import HeliumActionSheetItem, {
   HeliumActionSheetItemHeight,
   HeliumActionSheetItemType,
 } from "./HeliumActionSheetItem";
 import Text, { TextProps } from "./Text";
-import Box from "./Box";
 import TouchableOpacityBox from "./TouchableOpacityBox";
-import BlurBox from "./BlurBox";
-import { ReAnimatedBox } from "./AnimatedBox";
 
 type Props = BoxProps<Theme> & {
   data: Array<HeliumActionSheetItemType>;
@@ -180,9 +183,13 @@ const HeliumActionSheet = ({
   }, [handleClose, t]);
 
   const icon = useMemo(() => {
-    if (iconVariant === "none") return;
+    if (iconVariant === "none") {
+      return;
+    }
 
-    if (iconVariant === "kabob") return <Kabob color={colors[carotColor]} />;
+    if (iconVariant === "kabob") {
+      return <Kabob color={colors[carotColor]} />;
+    }
 
     return <CarotDown color={colors[carotColor]} />;
   }, [carotColor, colors, iconVariant]);
@@ -230,7 +237,6 @@ const HeliumActionSheet = ({
   return (
     <Box {...boxProps}>
       {displayText}
-
       <Modal transparent visible={modalVisible} onRequestClose={handleClose} animationType="fade">
         <BlurBox position="absolute" top={0} bottom={0} left={0} right={0} />
         <Box flex={1}>

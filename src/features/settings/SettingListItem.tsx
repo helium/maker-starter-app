@@ -1,12 +1,14 @@
-import React, { memo, ReactText, useMemo } from "react";
+import React, { memo, ReactText, useCallback, useMemo } from "react";
+
 import { Linking, Switch } from "react-native";
-import Text, { TextProps } from "components/Text";
-import TouchableOpacityBox from "components/TouchableOpacityBox";
-import { useColors } from "theme/themeHooks";
+
 import CarotRight from "assets/images/carot-right.svg";
 import LinkImg from "assets/images/link.svg";
 import HeliumActionSheet from "components/HeliumActionSheet";
 import { HeliumActionSheetItemType } from "components/HeliumActionSheetItem";
+import Text, { TextProps } from "components/Text";
+import TouchableOpacityBox from "components/TouchableOpacityBox";
+import { useColors } from "theme/themeHooks";
 
 export type SelectProps = {
   onDonePress?: () => void;
@@ -35,7 +37,7 @@ const SettingListItem = ({
 }) => {
   const colors = useColors();
 
-  const handlePress = () => {
+  const handlePress = useCallback(() => {
     if (openUrl) {
       Linking.openURL(openUrl);
     }
@@ -43,7 +45,7 @@ const SettingListItem = ({
     if (onPress) {
       onPress();
     }
-  };
+  }, [onPress, openUrl]);
 
   const trackColor = useMemo(
     () => ({

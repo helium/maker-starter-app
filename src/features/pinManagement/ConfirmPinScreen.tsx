@@ -1,12 +1,14 @@
 import React, { useCallback } from "react";
-import { useTranslation } from "react-i18next";
+
 import { RouteProp, useRoute, useNavigation } from "@react-navigation/native";
-import appSlice from "store/user/appSlice";
-import { useAppDispatch } from "store/store";
-import ConfirmPinView from "components/ConfirmPinView";
-import { SignedInStackParamList } from "navigation/navigationRootTypes";
-import { MainTabNavigationProp } from "navigation/main/mainTabNavigatorTypes";
+import { useTranslation } from "react-i18next";
+
 import Box from "components/Box";
+import ConfirmPinView from "components/ConfirmPinView";
+import { MainTabNavigationProp } from "navigation/main/mainTabNavigatorTypes";
+import { SignedInStackParamList } from "navigation/navigationRootTypes";
+import { useAppDispatch } from "store/store";
+import appSlice from "store/user/appSlice";
 
 type Route = RouteProp<SignedInStackParamList, "ConfirmPinScreen">;
 

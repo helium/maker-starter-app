@@ -1,7 +1,10 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { BoxProps } from "@shopify/restyle";
 import React from "react";
+
+import { BoxProps } from "@shopify/restyle";
+
 import { Theme } from "theme/theme";
+
 import Box from "./Box";
 import Dot from "./Dot";
 

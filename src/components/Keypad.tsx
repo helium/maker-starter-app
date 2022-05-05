@@ -1,7 +1,9 @@
 import React, { useCallback, useMemo } from "react";
-import useHaptic from "utils/useHaptic";
+
 import Backspace from "assets/images/backspace.svg";
 import { useColors } from "theme/themeHooks";
+import useHaptic from "utils/useHaptic";
+
 import Box from "./Box";
 import Text from "./Text";
 import TouchableCircle from "./TouchableCircle";
@@ -79,9 +81,7 @@ const Keypad = ({
           <Text variant="keypad">{idx + 1}</Text>
         </TouchableCircle>
       ))}
-
       {renderDynamicButton}
-
       <TouchableCircle
         alignItems="center"
         marginBottom="xs"

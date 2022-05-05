@@ -1,5 +1,5 @@
-import { createBox } from "@shopify/restyle";
 import { BlurView, BlurViewProperties } from "@react-native-community/blur";
+import { createBox } from "@shopify/restyle";
 
 import { Theme } from "theme/theme";
 

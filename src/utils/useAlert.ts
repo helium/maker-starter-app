@@ -1,11 +1,12 @@
 import { useCallback } from "react";
+
 import { useTranslation } from "react-i18next";
 import { Alert } from "react-native";
 
 const useAlert = () => {
   const { t } = useTranslation();
 
-  const showOKAlert = useCallback(
+  const showOkAlert = useCallback(
     (options: {
       titleKey: string;
       messageKey?: string;
@@ -26,7 +27,7 @@ const useAlert = () => {
     [t],
   );
 
-  const showOKCancelAlert = useCallback(
+  const showOkCancelAlert = useCallback(
     (options: {
       titleKey: string;
       messageKey?: string;
@@ -61,7 +62,7 @@ const useAlert = () => {
     [t],
   );
 
-  return { showOKCancelAlert, showOKAlert };
+  return { showOkCancelAlert, showOkAlert };
 };
 
 export default useAlert;

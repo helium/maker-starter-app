@@ -1,16 +1,16 @@
 import { Hotspot, Witness } from "@helium/http";
-import * as Location from "expo-location";
+import { reverseGeocodeAsync, getCurrentPositionAsync, LocationAccuracy } from "expo-location";
 import { isFinite } from "lodash";
 
 export type LocationCoords = { latitude: number; longitude: number };
 
 export const reverseGeocode = async (latitude: number, longitude: number) =>
-  Location.reverseGeocodeAsync({ latitude, longitude });
+  reverseGeocodeAsync({ latitude, longitude });
 
 export const getCurrentPosition = async (
-  accuracy: Location.LocationAccuracy = Location.LocationAccuracy.Balanced,
+  accuracy: LocationAccuracy = LocationAccuracy.Balanced,
 ) => {
-  const pos = await Location.getCurrentPositionAsync({ accuracy });
+  const pos = await getCurrentPositionAsync({ accuracy });
   return pos.coords;
 };
 

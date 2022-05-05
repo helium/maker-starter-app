@@ -1,9 +1,11 @@
 import React, { memo, useCallback, useMemo, useRef, useState } from "react";
+
 import MapboxGL from "@react-native-mapbox-gl/maps";
-import Config from "react-native-config";
+import { Config } from "react-native-config";
 
 import LocationIcon from "assets/images/location-icon.svg";
 import { useColors } from "theme/themeHooks";
+
 import Box from "./Box";
 import Text from "./Text";
 
@@ -39,7 +41,9 @@ const HotspotLocationPreview = ({
   const [coords, setCoords] = useState(mapCenter);
 
   const onRegionDidChange = useCallback(async () => {
-    if (!movable) return;
+    if (!movable) {
+      return;
+    }
     const center = (await map.current?.getCenter()) as number[];
     setCoords(center);
     onMapMoved(center);

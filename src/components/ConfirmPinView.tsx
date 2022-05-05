@@ -1,12 +1,15 @@
 import React, { useState, useRef, useEffect, useCallback, memo } from "react";
-import { Animated } from "react-native";
+
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
+import { Animated } from "react-native";
+
 import useHaptic from "utils/useHaptic";
-import Text from "./Text";
-import PinDisplay from "./PinDisplay";
-import Keypad from "./Keypad";
+
 import Box from "./Box";
+import Keypad from "./Keypad";
+import PinDisplay from "./PinDisplay";
+import Text from "./Text";
 import TouchableOpacityBox from "./TouchableOpacityBox";
 
 type Props = {
@@ -36,8 +39,12 @@ const ConfirmPinView = ({
     const { current } = shakeAnim;
     const move = (direction: "left" | "right" | "center") => {
       let value = 0;
-      if (direction === "left") value = -15;
-      if (direction === "right") value = 15;
+      if (direction === "left") {
+        value = -15;
+      }
+      if (direction === "right") {
+        value = 15;
+      }
       return Animated.timing(current, {
         toValue: value,
         duration: 85,
@@ -94,7 +101,6 @@ const ConfirmPinView = ({
       <Text marginBottom="m" variant="h1" maxFontSizeMultiplier={1}>
         {title}
       </Text>
-
       <Text variant="body1">{subtitle}</Text>
       <Animated.View style={{ transform: [{ translateX: shakeAnim.current }] }}>
         <PinDisplay length={pin.length} marginVertical="xl" />

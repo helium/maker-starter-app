@@ -10,7 +10,9 @@ export const getHotspotDetails = async (address: string): Promise<Hotspot> => {
 };
 
 export const getAccount = async (address?: string) => {
-  if (!address) return;
+  if (!address) {
+    return;
+  }
 
   const { data } = await heliumHttpClient.accounts.get(address);
   return data;

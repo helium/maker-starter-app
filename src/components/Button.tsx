@@ -1,9 +1,11 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useCallback } from "react";
-import { StyleProp, ViewStyle } from "react-native";
+
 import { BoxProps } from "@shopify/restyle";
+import { StyleProp, ViewStyle } from "react-native";
 
 import { Colors, Theme } from "theme/theme";
+
 import Text from "./Text";
 import TouchableOpacityBox from "./TouchableOpacityBox";
 import WithDebounce from "./WithDebounce";
@@ -51,7 +53,9 @@ export const Button = ({
   }, [size]);
 
   const getBackground = useCallback((): Colors | undefined => {
-    if (variant === "text") return undefined;
+    if (variant === "text") {
+      return undefined;
+    }
 
     switch (color) {
       case "primary":

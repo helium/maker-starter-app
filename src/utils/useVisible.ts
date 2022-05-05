@@ -1,6 +1,8 @@
-import { useNavigation } from "@react-navigation/native";
 import { useCallback, useEffect, useState } from "react";
+
+import { useNavigation } from "@react-navigation/native";
 import useAppState from "react-native-appstate-hook";
+
 import useMount from "./useMount";
 
 type Props = { onAppear?: () => void; onDisappear?: () => void };
@@ -15,7 +17,9 @@ const useVisible = (props?: Props) => {
 
   const handleVisibility = useCallback(
     (isVisible: boolean) => {
-      if (isVisible === visible) return;
+      if (isVisible === visible) {
+        return;
+      }
 
       setVisible(isVisible);
       if (isVisible) {

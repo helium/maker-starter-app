@@ -1,3 +1,5 @@
+import React from "react";
+
 import {
   BaseTheme,
   ColorProps,
@@ -21,7 +23,6 @@ import {
   createRestyleComponent,
   RestyleFunctionContainer,
 } from "@shopify/restyle";
-import React from "react";
 import { Text } from "react-native";
 
 type BaseTextProps<Theme extends BaseTheme> = ColorProps<Theme> &

@@ -1,28 +1,29 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { useTranslation } from "react-i18next";
-import { RouteProp, useRoute } from "@react-navigation/native";
+
+import { Balance, CurrencyType } from "@helium/currency";
 import { Location, HotspotErrorCode, WalletLink } from "@helium/react-native-sdk";
 import { AssertLocationV2 } from "@helium/transactions";
+import { RouteProp, useRoute } from "@react-navigation/native";
 import { isString } from "lodash";
-import { useSelector } from "react-redux";
-import Toast from "react-native-simple-toast";
+import { useTranslation } from "react-i18next";
 import { Linking } from "react-native";
-import { Balance, CurrencyType } from "@helium/currency";
+import Toast from "react-native-simple-toast";
+import { useSelector } from "react-redux";
 
-import { RootState } from "store/rootReducer";
-import useAlert from "utils/useAlert";
+import { ActivityIndicatorCentered } from "components/ActivityIndicator";
 import Box from "components/Box";
 import { DebouncedButton } from "components/Button";
 import Text from "components/Text";
-import { SignedInStackParamList } from "navigation/navigationRootTypes";
-import { ActivityIndicatorCentered } from "components/ActivityIndicator";
 import { decimalSeparator, groupSeparator } from "i18n";
+import { SignedInStackParamList } from "navigation/navigationRootTypes";
+import { RootState } from "store/rootReducer";
+import useAlert from "utils/useAlert";
 
 type Route = RouteProp<SignedInStackParamList, "ConfirmAntennaUpdateScreen">;
 
 const ConfirmAntennaUpdateScreen = () => {
   const { t } = useTranslation();
-  const { showOKAlert } = useAlert();
+  const { showOkAlert } = useAlert();
   const { walletToken } = useSelector((state: RootState) => state.app);
   const {
     params: { hotspot, onboardingRecord, antenna, gain, elevation },
@@ -31,14 +32,20 @@ const ConfirmAntennaUpdateScreen = () => {
   const [updateTxn, setUpdateTxn] = useState<AssertLocationV2>();
   useEffect(() => {
     const createUpdateTxn = async () => {
-      if (!walletToken) return;
+      if (!walletToken) {
+        return;
+      }
 
       const parsed = WalletLink.parseWalletLinkToken(walletToken);
-      if (!parsed?.address) throw new Error("Invalid Token");
+      if (!parsed?.address) {
+        throw new Error("Invalid Token");
+      }
 
       const { address: ownerAddress } = parsed;
 
-      if (hotspot.lat === undefined || hotspot.lng === undefined) return;
+      if (hotspot.lat === undefined || hotspot.lng === undefined) {
+        return;
+      }
 
       const txn = await Location.createLocationTxn({
         gateway: hotspot.address,
@@ -60,7 +67,9 @@ const ConfirmAntennaUpdateScreen = () => {
   }, [walletToken, onboardingRecord, hotspot, gain, elevation]);
 
   const feeString: string = useMemo(() => {
-    if (updateTxn?.fee === undefined) return "";
+    if (updateTxn?.fee === undefined) {
+      return "";
+    }
 
     const feeDc = new Balance(updateTxn.fee, CurrencyType.dataCredit);
     return feeDc.toString(0, {
@@ -70,7 +79,9 @@ const ConfirmAntennaUpdateScreen = () => {
   }, [updateTxn]);
 
   const submitTxn = useCallback(async () => {
-    if (!walletToken || !updateTxn) return;
+    if (!walletToken || !updateTxn) {
+      return;
+    }
 
     const url = WalletLink.createUpdateHotspotUrl({
       token: walletToken,
@@ -110,11 +121,13 @@ const ConfirmAntennaUpdateScreen = () => {
         }
       }
 
-      await showOKAlert({ titleKey, messageKey });
+      await showOkAlert({ titleKey, messageKey });
     }
-  }, [t, submitTxn, showOKAlert]);
+  }, [t, submitTxn, showOkAlert]);
 
-  if (!updateTxn) return <ActivityIndicatorCentered />;
+  if (!updateTxn) {
+    return <ActivityIndicatorCentered />;
+  }
 
   return (
     <Box flex={1} backgroundColor="primaryBackground" paddingHorizontal="m" paddingBottom="l">
@@ -128,48 +141,39 @@ const ConfirmAntennaUpdateScreen = () => {
         >
           {t("confirmAntennaUpdateScreen.title")}
         </Text>
-
         <Box flexDirection="row" justifyContent="space-between" marginTop="l">
           <Text variant="body1" fontWeight="bold">
             {t("confirmAntennaUpdateScreen.antennaLabel")}
           </Text>
-
           <Text variant="body1" fontWeight="bold">
             {antenna.name}
           </Text>
         </Box>
-
         <Box flexDirection="row" justifyContent="space-between" marginTop="l">
           <Text variant="body1" fontWeight="bold">
             {t("hotspot_setup.location_fee.gain_label")}
           </Text>
-
           <Text variant="body1" fontWeight="bold">
             {t("hotspot_setup.location_fee.gain", { gain })}
           </Text>
         </Box>
-
         <Box flexDirection="row" justifyContent="space-between" marginTop="l">
           <Text variant="body1" fontWeight="bold">
             {t("hotspot_setup.location_fee.elevation_label")}
           </Text>
-
           <Text variant="body1" fontWeight="bold">
             {t("hotspot_setup.location_fee.elevation", { count: elevation })}
           </Text>
         </Box>
-
         <Box flexDirection="row" justifyContent="space-between" marginTop="l">
           <Text variant="body1" fontWeight="bold">
             {t("hotspot_setup.location_fee.fee")}
           </Text>
-
           <Text variant="body1" fontWeight="bold">
             {feeString}
           </Text>
         </Box>
       </Box>
-
       <DebouncedButton title={t("generic.submit")} color="primary" onPress={handlerSubmitPress} />
     </Box>
   );

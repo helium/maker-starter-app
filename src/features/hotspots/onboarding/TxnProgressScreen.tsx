@@ -1,21 +1,22 @@
 import React, { useCallback } from "react";
-import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
-import { useTranslation } from "react-i18next";
-import { isString } from "lodash";
+
 import { HotspotErrorCode, WalletLink, Location } from "@helium/react-native-sdk";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
+import { isString } from "lodash";
+import { useTranslation } from "react-i18next";
 import { Linking } from "react-native";
 import Toast from "react-native-simple-toast";
 import { useSelector } from "react-redux";
 
 import { ActivityIndicator } from "components/ActivityIndicator";
-import Text from "components/Text";
 import Box from "components/Box";
+import Text from "components/Text";
+import { HotspotOnboardingStackParamList } from "navigation/hotspotOnboardingNavigatorTypes";
+import { SignedInStackNavigationProp } from "navigation/navigationRootTypes";
+import { RootState } from "store/rootReducer";
 import { hotspotOnChain } from "utils/appDataClient";
 import useAlert from "utils/useAlert";
 import useMount from "utils/useMount";
-import { SignedInStackNavigationProp } from "navigation/navigationRootTypes";
-import { HotspotOnboardingStackParamList } from "navigation/hotspotOnboardingNavigatorTypes";
-import { RootState } from "store/rootReducer";
 
 type Route = RouteProp<HotspotOnboardingStackParamList, "TxnProgressScreen">;
 
@@ -23,7 +24,7 @@ const TxnProgressScreen = () => {
   const { t } = useTranslation();
   const { params } = useRoute<Route>();
   const navigation = useNavigation<SignedInStackNavigationProp>();
-  const { showOKAlert } = useAlert();
+  const { showOkAlert } = useAlert();
 
   const handleError = async (error: unknown) => {
     let titleKey = "generic.error";
@@ -38,17 +39,21 @@ const TxnProgressScreen = () => {
       }
     }
 
-    await showOKAlert({ titleKey, messageKey });
+    await showOkAlert({ titleKey, messageKey });
     navigation.navigate("MainTabs");
   };
 
   const { walletToken } = useSelector((state: RootState) => state.app);
 
   const submitOnboardingTxns = useCallback(async () => {
-    if (!walletToken) return;
+    if (!walletToken) {
+      return;
+    }
 
     const parsed = WalletLink.parseWalletLinkToken(walletToken);
-    if (!parsed?.address) throw new Error("Invalid Token");
+    if (!parsed?.address) {
+      throw new Error("Invalid Token");
+    }
 
     const { address: ownerAddress } = parsed;
 
@@ -130,7 +135,6 @@ const TxnProgressScreen = () => {
       <Text variant="h3" marginBottom="xl" numberOfLines={1} adjustsFontSizeToFit>
         {t("hotspotOnboarding.txnProgressScreen.title")}
       </Text>
-
       <ActivityIndicator size="large" />
     </Box>
   );

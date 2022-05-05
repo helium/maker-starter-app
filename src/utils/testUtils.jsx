@@ -1,22 +1,22 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable import/no-extraneous-dependencies */
 import React from "react";
-import { render as rtlRender } from "@testing-library/react-native";
+
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 import { ThemeProvider } from "@shopify/restyle";
+import { render as rtlRender } from "@testing-library/react-native";
 import { I18nextProvider } from "react-i18next";
 import { Provider } from "react-redux";
-import { NavigationContainer } from "@react-navigation/native";
-import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
-import { createStackNavigator } from "@react-navigation/stack";
-import { theme } from "../theme/theme";
-// TODO: Fix tests. File not exists.
-// eslint-disable-next-line
-import i18n from "./i18n";
-import rootReducer from "../store/rootReducer";
+
+import i18n from "i18n";
+import rootReducer from "store/rootReducer";
+import { theme } from "theme/theme";
 
 const { Screen, Navigator } = createStackNavigator();
 
 const render = (ui, { initialState, ...renderOptions } = {}) => {
+  // TODO: Convert to TS. Fix tests.
+  // eslint-disable-next-line react/prop-types
   function Wrapper({ children }) {
     const store = configureStore({
       reducer: rootReducer,
@@ -40,6 +40,8 @@ const render = (ui, { initialState, ...renderOptions } = {}) => {
 };
 
 const renderWithNav = (ui, { initialState, ...renderOptions } = {}) => {
+  // TODO: Convert to TS. Fix tests.
+  // eslint-disable-next-line react/prop-types
   function Wrapper({ children }) {
     const store = configureStore({
       reducer: rootReducer,

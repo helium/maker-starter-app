@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { useTranslation } from "react-i18next";
-import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 
-import Text from "components/Text";
-import PinDisplay from "components/PinDisplay";
-import Keypad from "components/Keypad";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
+import { useTranslation } from "react-i18next";
+
 import Box from "components/Box";
+import Keypad from "components/Keypad";
+import PinDisplay from "components/PinDisplay";
+import Text from "components/Text";
 import {
   SignedInStackNavigationProp,
   SignedInStackParamList,
@@ -62,7 +63,6 @@ const AccountCreatePinScreen = () => {
       >
         {t("pinManagement.createPin.title")}
       </Text>
-
       <Text variant="body1" maxFontSizeMultiplier={1.2}>
         {t("pinManagement.createPin.subtitle")}
       </Text>

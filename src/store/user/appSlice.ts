@@ -1,4 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+
+import { Intervals } from "features/settings/useAuthIntervals";
 import {
   deleteSecureItem,
   getSecureItem,
@@ -9,7 +11,6 @@ import {
   setWalletToken,
   signOut,
 } from "utils/secureAccount";
-import { Intervals } from "features/settings/useAuthIntervals";
 
 export type AppState = {
   isRestored: boolean;

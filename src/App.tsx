@@ -1,28 +1,29 @@
+// eslint-disable-next-line import/no-unassigned-import
 import "react-native-gesture-handler";
-import React, { useEffect } from "react";
-import { SafeAreaProvider } from "react-native-safe-area-context";
+import React, { memo, useEffect } from "react";
+
+import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
+import { OnboardingProvider } from "@helium/react-native-sdk";
+import MapboxGL from "@react-native-mapbox-gl/maps";
+import { NavigationContainer } from "@react-navigation/native";
+import { ThemeProvider } from "@shopify/restyle";
+import { preventAutoHideAsync, hideAsync } from "expo-splash-screen";
+import { useAsync } from "react-async-hook";
 import { LogBox, Platform, StatusBar, UIManager } from "react-native";
 import useAppState from "react-native-appstate-hook";
-import { ThemeProvider } from "@shopify/restyle";
-import Config from "react-native-config";
+import { Config } from "react-native-config";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useSelector } from "react-redux";
-import MapboxGL from "@react-native-mapbox-gl/maps";
-import { useAsync } from "react-async-hook";
-import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
-import * as SplashScreen from "expo-splash-screen";
-import { NavigationContainer } from "@react-navigation/native";
-import { OnboardingProvider } from "@helium/react-native-sdk";
 
-import { navigationRef } from "./navigation/navigator";
-import { theme } from "./theme/theme";
-import NavigationRoot from "./navigation/NavigationRoot";
-import { useAppDispatch } from "./store/store";
-import appSlice, { restoreAppSettings } from "./store/user/appSlice";
-import { RootState } from "./store/rootReducer";
-import AppLinkProvider from "./providers/AppLinkProvider";
-import useMount from "./utils/useMount";
+import NavigationRoot from "navigation/NavigationRoot";
+import { navigationRef } from "navigation/navigator";
+import { RootState } from "store/rootReducer";
+import { useAppDispatch } from "store/store";
+import appSlice, { restoreAppSettings } from "store/user/appSlice";
+import { theme } from "theme/theme";
+import useMount from "utils/useMount";
 
-SplashScreen.preventAutoHideAsync().catch(() => {
+preventAutoHideAsync().catch(() => {
   /* reloading the app might trigger some race conditions, ignore them */
 });
 
@@ -84,14 +85,14 @@ const App = () => {
   // hide splash screen
   useAsync(async () => {
     if (isRestored) {
-      await SplashScreen.hideAsync();
+      await hideAsync();
     }
   }, [isRestored]);
 
   useEffect(() => {
     // Hide splash after 5 seconds, deal with the consequences?
     const timeout = setTimeout(() => {
-      SplashScreen.hideAsync();
+      hideAsync();
     }, 5000);
     return () => clearInterval(timeout);
   }, [dispatch]);
@@ -105,11 +106,8 @@ const App = () => {
             {Platform.OS === "android" && (
               <StatusBar barStyle="dark-content" translucent backgroundColor="transparent" />
             )}
-
             <NavigationContainer ref={navigationRef}>
-              <AppLinkProvider>
-                <NavigationRoot />
-              </AppLinkProvider>
+              <NavigationRoot />
             </NavigationContainer>
           </SafeAreaProvider>
         </BottomSheetModalProvider>
@@ -118,4 +116,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default memo(App);

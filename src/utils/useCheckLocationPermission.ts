@@ -1,14 +1,15 @@
 import { useCallback, useState } from "react";
-import * as Location from "expo-location";
+
+import { useForegroundPermissions } from "expo-location";
 import { useTranslation } from "react-i18next";
 
 import useAlert from "./useAlert";
 
 const useCheckLocationPermission = () => {
-  const { showOKAlert } = useAlert();
+  const { showOkAlert } = useAlert();
   const { t } = useTranslation();
 
-  const [, requestPermissionExpo] = Location.useForegroundPermissions();
+  const [, requestPermissionExpo] = useForegroundPermissions();
   const [isRequesting, setIsRequesting] = useState(false);
 
   const requestPermission = useCallback(async (): Promise<boolean> => {
@@ -19,14 +20,14 @@ const useCheckLocationPermission = () => {
     const isGranted = status === "granted";
 
     if (!isGranted) {
-      await showOKAlert({
+      await showOkAlert({
         titleKey: t("checkLocationPermission.error.title"),
         messageKey: t("checkLocationPermission.error.message"),
       });
     }
 
     return isGranted;
-  }, [setIsRequesting, requestPermissionExpo, showOKAlert, t]);
+  }, [setIsRequesting, requestPermissionExpo, showOkAlert, t]);
 
   return { isRequestingPermission: isRequesting, requestPermission };
 };

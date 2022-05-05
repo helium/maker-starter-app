@@ -1,9 +1,10 @@
 import { useCallback } from "react";
+
 import { WalletLink } from "@helium/react-native-sdk";
-import { Linking } from "react-native";
-import { getBundleId } from "react-native-device-info";
-import Config from "react-native-config";
 import { useTranslation } from "react-i18next";
+import { Linking } from "react-native";
+import { Config } from "react-native-config";
+import { getBundleId } from "react-native-device-info";
 import Toast from "react-native-simple-toast";
 
 const useLinkWallet = () => {

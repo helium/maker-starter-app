@@ -1,5 +1,7 @@
 import React from "react";
+
 import { Image } from "react-native";
+
 import TouchableOpacityBox from "./TouchableOpacityBox";
 
 type Props = { onPress: () => void };

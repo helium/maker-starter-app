@@ -1,8 +1,10 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useMemo } from "react";
+
 import { createRestyleComponent, VariantProps, createVariant, createBox } from "@shopify/restyle";
 import { TextInput as RNTextInput } from "react-native";
 import tinycolor from "tinycolor2";
+
 import { Colors, Theme } from "theme/theme";
 import { useColors } from "theme/themeHooks";
 
@@ -22,18 +24,24 @@ const TI = ({ variant, placeholderTextColor, ...rest }: Props) => {
 
   const getPlaceholderTextColor = useMemo(() => {
     const findColor = () => {
-      if (placeholderTextColor) return colors[placeholderTextColor];
+      if (placeholderTextColor) {
+        return colors[placeholderTextColor];
+      }
 
       if (variant === "regular") {
         return colors.primaryText;
       }
-      if (variant === "secondary") return colors.surfaceSecondaryText;
+      if (variant === "secondary") {
+        return colors.surfaceSecondaryText;
+      }
 
       return undefined;
     };
 
     const color = findColor();
-    if (!color) return;
+    if (!color) {
+      return;
+    }
 
     return tinycolor(color).setAlpha(0.6).toRgbString();
   }, [colors, placeholderTextColor, variant]);

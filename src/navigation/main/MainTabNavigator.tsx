@@ -1,16 +1,18 @@
 import React, { useEffect, memo, useMemo, useCallback } from "react";
+
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useNavigation } from "@react-navigation/native";
 import { useSelector } from "react-redux";
 
 import HotspotsScreen from "features/hotspots/root/HotspotsScreen";
 import SettingsScreen from "features/settings/SettingsScreen";
-import { RootState } from "store/rootReducer";
 import { SignedInStackNavigationProp } from "navigation/navigationRootTypes";
 import useDefaultScreenOptions from "navigation/useDefaultScreenOptions";
+import { RootState } from "store/rootReducer";
 import { useColors } from "theme/themeHooks";
-import { MainTabParamList } from "./mainTabNavigatorTypes";
+
 import TabBarIcon from "./TabBarIcon";
+import { MainTabParamList } from "./mainTabNavigatorTypes";
 import { TabBarIconType, MainTabType } from "./tabTypes";
 
 const MainTab = createBottomTabNavigator<MainTabParamList>();
@@ -25,7 +27,9 @@ const MainTabs = () => {
   const defaultScreenOptions = useDefaultScreenOptions();
 
   useEffect(() => {
-    if (!isLocked) return;
+    if (!isLocked) {
+      return;
+    }
     rootNavigation.navigate("LockScreen", { requestType: "unlock", lock: true });
   }, [isLocked, rootNavigation]);
 

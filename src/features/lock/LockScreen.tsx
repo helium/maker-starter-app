@@ -1,20 +1,22 @@
 import React, { memo, useCallback, useEffect } from "react";
-import { Alert } from "react-native";
-import { useTranslation } from "react-i18next";
+
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
+import { hasHardwareAsync, isEnrolledAsync, authenticateAsync } from "expo-local-authentication";
 import { useAsync } from "react-async-hook";
+import { useTranslation } from "react-i18next";
+import { Alert } from "react-native";
 import { useStateWithCallbackLazy } from "use-state-with-callback";
-import * as LocalAuthentication from "expo-local-authentication";
+
+import Box from "components/Box";
+import ConfirmPinView from "components/ConfirmPinView";
+import { MainTabNavigationProp } from "navigation/main/mainTabNavigatorTypes";
 import {
   SignedInStackNavigationProp,
   SignedInStackParamList,
 } from "navigation/navigationRootTypes";
-import { getSecureItem } from "utils/secureAccount";
-import ConfirmPinView from "components/ConfirmPinView";
-import { MainTabNavigationProp } from "navigation/main/mainTabNavigatorTypes";
 import { useAppDispatch } from "store/store";
 import appSlice from "store/user/appSlice";
-import Box from "components/Box";
+import { getSecureItem } from "utils/secureAccount";
 
 type Route = RouteProp<SignedInStackParamList, "LockScreen">;
 
@@ -73,7 +75,9 @@ const LockScreen = () => {
 
   useEffect(() => {
     const unsubscribe = rootNav.addListener("beforeRemove", (e) => {
-      if (locked) e.preventDefault();
+      if (locked) {
+        e.preventDefault();
+      }
     });
 
     return unsubscribe;
@@ -81,12 +85,16 @@ const LockScreen = () => {
 
   useEffect(() => {
     const localAuth = async () => {
-      const hasHardware = await LocalAuthentication.hasHardwareAsync();
-      const isEnrolled = await LocalAuthentication.isEnrolledAsync();
-      if (!isEnrolled || !hasHardware) return;
+      const hasHardware = await hasHardwareAsync();
+      const isEnrolled = await isEnrolledAsync();
+      if (!isEnrolled || !hasHardware) {
+        return;
+      }
 
-      const { success } = await LocalAuthentication.authenticateAsync();
-      if (success) handleSuccess();
+      const { success } = await authenticateAsync();
+      if (success) {
+        handleSuccess();
+      }
     };
 
     localAuth();

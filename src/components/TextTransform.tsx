@@ -1,8 +1,11 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from "react";
-import { Trans } from "react-i18next";
+
 import { TextProps } from "@shopify/restyle";
+import { Trans } from "react-i18next";
+
 import { Theme } from "theme/theme";
+
 import Text from "./Text";
 
 const components = {

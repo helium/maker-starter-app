@@ -1,22 +1,23 @@
 import React, { useCallback } from "react";
-import { useTranslation } from "react-i18next";
-import Config from "react-native-config";
-import Toast from "react-native-simple-toast";
-import { FlatList, Linking } from "react-native";
-import { useSelector } from "react-redux";
+
 import { useNavigation } from "@react-navigation/native";
+import { useTranslation } from "react-i18next";
+import { FlatList, Linking } from "react-native";
+import { Config } from "react-native-config";
+import Toast from "react-native-simple-toast";
+import { useSelector } from "react-redux";
 
 import CarotRight from "assets/images/carot-right.svg";
+import { ActivityIndicatorCentered } from "components/ActivityIndicator";
+import Box from "components/Box";
 import { DebouncedButton } from "components/Button";
 import Text from "components/Text";
-import WalletNotLinkedError from "components/WalletNotLinkedError";
-import Box from "components/Box";
 import TouchableOpacityBox from "components/TouchableOpacityBox";
-import { ActivityIndicatorCentered } from "components/ActivityIndicator";
-import { useGetHostspotsQuery } from "store/helium/heliumApi";
-import { useColors } from "theme/themeHooks";
+import WalletNotLinkedError from "components/WalletNotLinkedError";
 import { SignedInStackNavigationProp } from "navigation/navigationRootTypes";
+import { useGetHostspotsQuery } from "store/helium/heliumApi";
 import { RootState } from "store/rootReducer";
+import { useColors } from "theme/themeHooks";
 
 const HotspotsScreen = () => {
   const { t } = useTranslation();
@@ -24,7 +25,9 @@ const HotspotsScreen = () => {
   const { walletAddress, walletToken } = useSelector((state: RootState) => state.app);
 
   const openOnboardingSite = useCallback(async () => {
-    if (!walletAddress) return;
+    if (!walletAddress) {
+      return;
+    }
 
     const url = Config.ONBOARD_URL.replace(/WALLET/, walletAddress);
 
@@ -41,13 +44,10 @@ const HotspotsScreen = () => {
       <Text variant="h2" textAlign="center" marginBottom="m">
         {t("hotspotsScreen.title")}
       </Text>
-
       <Box flex={1} marginBottom="s">
         {walletAddress && <HotspotsList walletAddress={walletAddress} />}
       </Box>
-
       {!walletToken && <WalletNotLinkedError />}
-
       <DebouncedButton
         title={t("hotspotsScreen.addBtn")}
         disabled={!walletToken}
@@ -73,17 +73,22 @@ const HotspotsList = ({ walletAddress }: HotspotsListProps) => {
     { pollingInterval: 60000 }, // refresh every minute
   );
 
-  if (isLoading) return <ActivityIndicatorCentered />;
+  if (isLoading) {
+    return <ActivityIndicatorCentered />;
+  }
 
-  if (!hotspots?.length)
+  if (!hotspots?.length) {
     return (
       <Text variant="body1" textAlign="center">
         {t("hotspotsScreen.noItems")}
       </Text>
     );
+  }
 
   const openHotspotDetails = (hotspotAddress: string) => {
-    if (!walletAddress || !hotspotAddress) return;
+    if (!walletAddress || !hotspotAddress) {
+      return;
+    }
 
     navigation.push("HotspotDetails", { hotspotAddress });
   };
@@ -104,16 +109,13 @@ const HotspotsList = ({ walletAddress }: HotspotsListProps) => {
               <Text variant="body1" textTransform="capitalize" fontWeight="bold" marginBottom="xs">
                 {item.name}
               </Text>
-
               <Text variant="body2" marginBottom="xs">
                 {item.locationName || t("hotspotsScreen.locationNotSet")}
               </Text>
-
               <Text variant="body2" textTransform="capitalize">
                 {item.isLocationSet && item.status}
               </Text>
             </Box>
-
             <Box width={60} justifyContent="center" alignItems="center">
               <CarotRight color={colors.boneBlack} />
             </Box>

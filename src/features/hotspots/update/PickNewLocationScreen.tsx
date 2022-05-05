@@ -1,29 +1,30 @@
-import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import React, { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useTranslation } from "react-i18next";
-import { Position } from "geojson";
-import Search from "assets/images/search.svg";
+
 import {
   BottomSheetBackdrop,
   BottomSheetModal,
   BottomSheetModalProvider,
 } from "@gorhom/bottom-sheet";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
+import { Position } from "geojson";
+import { useTranslation } from "react-i18next";
 import { Image } from "react-native";
 
+import Search from "assets/images/search.svg";
 import Box from "components/Box";
 import { DebouncedButton } from "components/Button";
 import Map from "components/Map";
 import Text from "components/Text";
-import { reverseGeocode } from "utils/location";
-import sleep from "utils/sleep";
+import TouchableOpacityBox from "components/TouchableOpacityBox";
+import AddressSearchModal from "features/hotspots/onboarding/AddressSearchModal";
 import {
   SignedInStackNavigationProp,
   SignedInStackParamList,
 } from "navigation/navigationRootTypes";
-import TouchableOpacityBox from "components/TouchableOpacityBox";
 import { useColors, useSpacing } from "theme/themeHooks";
-import AddressSearchModal from "features/hotspots/onboarding/AddressSearchModal";
 import { PlaceGeography } from "utils/googlePlaces";
+import { reverseGeocode } from "utils/location";
+import sleep from "utils/sleep";
 
 type Route = RouteProp<SignedInStackParamList, "PickNewLocationScreen">;
 
@@ -120,7 +121,6 @@ const PickNewLocationScreen = () => {
           <Text variant="subtitle1" fontWeight="bold" marginBottom="s">
             {t("pickNewLocationScreen.title")}
           </Text>
-
           <Box flexDirection="row" alignItems="center">
             {!!locationName && <Image source={require("assets/images/selectedLocation.png")} />}
             <Text variant="subtitle2" marginLeft="m">
@@ -136,7 +136,6 @@ const PickNewLocationScreen = () => {
           fullWidth
         />
       </Box>
-
       <BottomSheetModalProvider>
         <BottomSheetModal
           ref={searchModal}
