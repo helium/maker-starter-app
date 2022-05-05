@@ -59,7 +59,7 @@ const segmentClient = createClient({
   writeKey: Config.SEGMENT_ANALYTICS_KEY,
   trackAppLifecycleEvents: true,
   collectDeviceId: true,
-  debug: true,
+  debug: false,
 })
 
 const getActiveRoute = (
