@@ -4,6 +4,7 @@ import { useAsync } from 'react-async-hook'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
 import { BleError, useHotspotBle } from '@helium/react-native-sdk'
+import { useAnalytics } from '@segment/analytics-react-native'
 import useAlert from '../../../utils/useAlert'
 import {
   HotspotSetupNavigationProp,
@@ -14,6 +15,7 @@ import Box from '../../../components/Box'
 import SafeAreaBox from '../../../components/SafeAreaBox'
 import { getHotspotDetails } from '../../../utils/appDataClient'
 import { getAddress } from '../../../utils/secureAccount'
+import { HotspotEvents } from '../../../utils/analytics/events'
 
 type Route = RouteProp<
   HotspotSetupStackParamList,
@@ -31,6 +33,8 @@ const HotspotSetupWifiConnectingScreen = () => {
   const { readWifiNetworks, setWifi, removeConfiguredWifi } = useHotspotBle()
 
   const { showOKAlert } = useAlert()
+
+  const { track } = useAnalytics()
 
   const handleError = useCallback(
     async (err: unknown) => {
@@ -64,23 +68,45 @@ const HotspotSetupWifiConnectingScreen = () => {
   }, [addGatewayTxn, hotspotAddress, hotspotType, navigation])
 
   const connectToWifi = useCallback(async () => {
+    // Segment track for wifi connection
+    track(HotspotEvents.WIFI_CONNECTION_STARTED, {
+      network,
+    })
+
     const response = await setWifi(network, password)
     if (response === 'not_found') {
+      // Segment track for wifi connection
+      track(HotspotEvents.WIFI_CONNECTION_FAILED, {
+        network,
+        message: 'Something went wrong.',
+      })
+
       showOKAlert({
         titleKey: 'generic.error',
         messageKey: 'generic.something_went_wrong',
       })
       navigation.goBack()
     } else if (response === 'invalid') {
+      // Segment track for wifi connection
+      track(HotspotEvents.WIFI_CONNECTION_FAILED, {
+        network,
+        message: 'Invalid password.',
+      })
+
       showOKAlert({
         titleKey: 'generic.error',
         messageKey: 'generic.invalid_password',
       })
       navigation.goBack()
     } else {
+      // Segment track for wifi connection
+      track(HotspotEvents.WIFI_CONNECTION_SUCCEED, {
+        network,
+      })
+
       goToNextStep()
     }
-  }, [goToNextStep, navigation, network, password, setWifi, showOKAlert])
+  }, [goToNextStep, navigation, network, password, setWifi, showOKAlert, track])
 
   const forgetWifi = async () => {
     try {

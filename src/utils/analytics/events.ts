@@ -12,4 +12,7 @@ export enum HotspotEvents {
   BLUETOOTH_CONNECTION_FAILED = 'Bluetooth Connection Failed',
   WIFI_SCAN_STARTED = 'Wifi Scan Started',
   WIFI_SCAN_FINISHED = 'Wifi Scan Finished',
+  WIFI_CONNECTION_STARTED = 'Wifi Connection Started',
+  WIFI_CONNECTION_SUCCEED = 'Wifi Connection Succeed',
+  WIFI_CONNECTION_FAILED = 'Wifi Connection Failed',
 }
