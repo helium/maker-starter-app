@@ -9,9 +9,9 @@ module.exports = {
   },
   ...expoPreset,
   setupFilesAfterEnv: [
-    "./node_modules/react-native-gesture-handler/jestSetup.js",
+    "react-native-gesture-handler/jestSetup.js",
     "@testing-library/jest-native/extend-expect",
-    "./jestSetup",
+    "./jest.setup",
     "@react-native-mapbox-gl/maps/setup-jest",
   ],
   transformIgnorePatterns: ["node_modules/(?!@helium)/"],

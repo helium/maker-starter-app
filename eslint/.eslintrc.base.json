@@ -143,7 +143,6 @@
     "import/no-default-export": "error",
     // REACT RULES
     // Common
-    "react/display-name": "error",
     "react/no-danger": "error",
     "react/no-did-mount-set-state": "error",
     "react/no-did-update-set-state": "error",

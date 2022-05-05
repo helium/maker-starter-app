@@ -7,7 +7,7 @@
       "extends": "./eslint/.eslintrc.addon.typescript"
     },
     {
-      "files": ["jest.setup.js", "**/*{spec,test}.{t,j}s?(x)"],
+      "files": ["jest.setup.js", "**/__mocks__/**", "**/*{spec,test}.{t,j}s?(x)"],
       "extends": "./eslint/.eslintrc.addon.jest"
     }
   ]
