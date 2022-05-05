@@ -154,6 +154,7 @@ export const lightThemeColors = {
   cardBackgroundSecondary: palette.grayHighlight,
   cardMainText: palette.offblack,
   cardSecondaryText: palette.blueGray,
+  antennaText: palette.white,
 }
 export const darkThemeColors = {
   ...palette,
@@ -177,6 +178,7 @@ export const darkThemeColors = {
   cardBackgroundSecondary: palette.offblack,
   cardMainText: palette.white,
   cardSecondaryText: palette.offWhite,
+  antennaText: palette.black,
 }
 
 export const theme = createTheme({
