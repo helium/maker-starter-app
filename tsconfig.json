@@ -11,9 +11,8 @@
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    "baseUrl": ".",
+    "baseUrl": "src",
     "paths": {
-      "@assets": ["./src/assets"],
       "@helium/crypto": ["./node_modules/@helium/crypto-react-native"]
     },
     "resolveJsonModule": true,
