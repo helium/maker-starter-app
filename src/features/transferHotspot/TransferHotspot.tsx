@@ -123,7 +123,7 @@ const TransferHotspot = () => {
       if (!url) throw new Error('Link could not be created')
 
       // Segment track for Hotspot transfer
-      track(HotspotEvents.DEVICE_TRANSFER_INITIATED, {
+      track(HotspotEvents.DEVICE_TRANSFER_STARTED, {
         hotspot_address: hotspotAddress,
         owner_address: ownerAddress,
         new_owner_address: newOwnerAddress,

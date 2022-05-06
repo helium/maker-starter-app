@@ -70,7 +70,7 @@ const HotspotSetupBluetoothSuccess = () => {
         setConnectStatus(true)
 
         // Segment track for bluetooth connection
-        track(HotspotEvents.BLUETOOTH_CONNECTION_SUCCEED, {
+        track(HotspotEvents.BLUETOOTH_CONNECTION_FINISHED, {
           hotspot_id: hotspot.id,
         })
       } catch (e) {

@@ -100,7 +100,7 @@ const HotspotSetupWifiConnectingScreen = () => {
       navigation.goBack()
     } else {
       // Segment track for wifi connection
-      track(HotspotEvents.WIFI_CONNECTION_SUCCEED, {
+      track(HotspotEvents.WIFI_CONNECTION_FINISHED, {
         network,
       })
 

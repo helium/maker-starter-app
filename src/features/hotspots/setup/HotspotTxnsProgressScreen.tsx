@@ -169,7 +169,7 @@ const HotspotTxnsProgressScreen = () => {
 
     // Segment track for add gateway
     if (updateParams.addGatewayTxn) {
-      track(HotspotEvents.ADD_GATEWAY_INITIATED, {
+      track(HotspotEvents.ADD_GATEWAY_STARTED, {
         owner_address: ownerAddress,
         payer_address: onboardingRecord?.maker.address,
       })
@@ -179,7 +179,7 @@ const HotspotTxnsProgressScreen = () => {
     if (updateParams.assertLocationTxn && params.coords) {
       const [lng, lat] = params.coords
 
-      track(HotspotEvents.ASSERT_LOCATION_INITIATED, {
+      track(HotspotEvents.ASSERT_LOCATION_STARTED, {
         hotspot_address: hotspotAddress,
         lat,
         lng,
