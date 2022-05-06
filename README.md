@@ -321,7 +321,12 @@ You can also open the Android project in Android Studio by selecting `open an ex
 ➜ export APPCENTER_BUILD_ID=0000000
 ```
 
-2. Open Android Studio
+2. Open Android Studio in terminal.
+
+```
+VERSION_CODE_OFFSET=5010001 APPCENTER_BUILD_ID=0000000 open Android\ Studio.app
+```
+
 3. Update the version in `package.json` "version".
 4. Build > Generate Signed APK
 5. Use `com.nebra.helium.maker` keystore, `prod` key.
