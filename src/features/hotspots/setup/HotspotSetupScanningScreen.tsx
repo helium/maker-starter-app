@@ -30,6 +30,10 @@ const HotspotSetupScanningScreen = () => {
 
   useEffect(() => {
     const scan = async () => {
+      // Segment track for bluetooth scan
+      const startTimestamp = Date.now()
+      track(HotspotEvents.BLUETOOTH_SCAN_STARTED)
+
       await startScan((error) => {
         if (error) {
           // TODO: handle error
@@ -38,11 +42,15 @@ const HotspotSetupScanningScreen = () => {
         }
       })
 
-      // Segment track for bluetooth scan
-      track(HotspotEvents.BLUETOOTH_SCAN_STARTED)
-
       await sleep(SCAN_DURATION)
       stopScan()
+
+      // Segment track for bluetooth scan
+      const endTimestamp = Date.now()
+      track(HotspotEvents.BLUETOOTH_SCAN_FINISHED, {
+        elapsed_milliseconds: endTimestamp - startTimestamp,
+      })
+
       navigation.replace('HotspotSetupPickHotspotScreen', params)
     }
     scan()
