@@ -24,8 +24,8 @@
     "lint:fix": "yarn lint:prettier:fix && yarn lint:package-json && yarn lint:eslint:fix",
     "lint:eslint": "eslint \"**/*.{js,jsx,ts,tsx}\"",
     "lint:eslint:fix": "eslint \"**/*.{js,jsx,ts,tsx}\" --fix",
-    "lint:prettier": "prettier --loglevel warn --check \"**/*.{css,scss,js,jsx,ts,tsx,html,md,json,yml}\"",
-    "lint:prettier:fix": "prettier --loglevel warn --write \"**/*.{css,scss,js,jsx,ts,tsx,html,md,json,yml}\"",
+    "lint:prettier": "prettier --loglevel warn --check \"**/*.{css,scss,js,jsx,ts,tsx,html,md,json,yml,yaml}\"",
+    "lint:prettier:fix": "prettier --loglevel warn --write \"**/*.{css,scss,js,jsx,ts,tsx,html,md,json,yml,yaml}\"",
     "lint:package-json": "npmPkgJsonLint .",
     "lint:typescript": "tsc --pretty --noEmit",
     "ci": "yarn lint"
