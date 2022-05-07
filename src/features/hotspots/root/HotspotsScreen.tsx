@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native'
 import AddIcon from '@assets/images/add.svg'
 import { useSelector } from 'react-redux'
 import { useAnalytics } from '@segment/analytics-react-native'
+import { Hotspot } from '@helium/http'
 import Box from '../../../components/Box'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
 import CircularButton from '../../../components/CircularButton'
@@ -43,15 +44,19 @@ const HotspotsScreen = () => {
   const { identify } = useAnalytics()
   const [address, setAddress] = useState<string>()
 
+  const [identified, setIdentified] = useState(false)
+
   useMount(() => {
     getAddress().then(setAddress)
   })
 
   useEffect(() => {
-    if (address) {
+    if (address && !identified) {
       identify(address)
+
+      setIdentified(true)
     }
-  }, [address, identify])
+  }, [address, identified, identify])
 
   return (
     <Box backgroundColor="primaryBackground" flex={1}>
