@@ -1,4 +1,5 @@
 export enum HotspotEvents {
+  DEVICE_LOADED = 'device_loaded',
   ADD_GATEWAY_STARTED = 'add_gateway_started',
   ADD_GATEWAY_SUBMITTED = 'add_gateway_submitted',
   ASSERT_LOCATION_STARTED = 'assert_location_started',

@@ -30,6 +30,8 @@ import {
   createClient,
   AnalyticsProvider,
 } from '@segment/analytics-react-native'
+import animalName from 'angry-purple-tiger'
+import { Hotspot } from '@helium/http'
 import { theme, darkThemeColors, lightThemeColors } from './theme/theme'
 import NavigationRoot from './navigation/NavigationRoot'
 import { useAppDispatch } from './store/store'
@@ -42,6 +44,8 @@ import useMount from './utils/useMount'
 import usePrevious from './utils/usePrevious'
 import { fetchHotspotsData } from './store/hotspots/hotspotsSlice'
 import { fetchInitialData } from './store/helium/heliumDataSlice'
+import { HELIUM_OLD_MAKER_ADDRESS } from './utils/hotspotUtils'
+import { HotspotEvents } from './utils/analytics/events'
 
 interface RouteInfo {
   name: string
@@ -60,7 +64,7 @@ const segmentClient = createClient({
   writeKey: Config.SEGMENT_ANALYTICS_KEY,
   trackAppLifecycleEvents: true,
   collectDeviceId: true,
-  debug: false,
+  debug: true,
 })
 
 const getActiveRoute = (
@@ -108,6 +112,44 @@ const App = () => {
   const { appState } = useAppState()
   const dispatch = useAppDispatch()
 
+  const [deviceLoaded, setDeviceLoaded] = useState(false)
+
+  const hotspots = useSelector(
+    (state: RootState) => state.hotspots.hotspots.data,
+  )
+  const hotspotsLoaded = useSelector(
+    (state: RootState) => state.hotspots.hotspotsLoaded,
+  )
+  const makers = useSelector((state: RootState) => state.heliumData.makers)
+  const makersLoaded = useSelector(
+    (state: RootState) => state.heliumData.makersLoaded,
+  )
+
+  useEffect(() => {
+    const makerName = (hotspot: Hotspot) => {
+      if (hotspot?.payer === HELIUM_OLD_MAKER_ADDRESS) {
+        // special case for old Helium Hotspots
+        return 'Helium'
+      }
+      return makers?.find((m) => m.address === hotspot?.payer)?.name
+    }
+
+    if (!deviceLoaded && hotspotsLoaded && makersLoaded) {
+      const params = hotspots.map((hotspot) => ({
+        address: hotspot.address,
+        name: animalName(hotspot.address),
+        owner: hotspot.owner,
+        maker: makerName(hotspot),
+      }))
+
+      segmentClient.track(HotspotEvents.DEVICE_LOADED, {
+        hotspots: params,
+      })
+
+      setDeviceLoaded(true)
+    }
+  }, [deviceLoaded, hotspots, hotspotsLoaded, makers, makersLoaded])
+
   const {
     lastIdle,
     isPinRequired,
@@ -120,6 +162,10 @@ const App = () => {
   useMount(() => {
     dispatch(restoreAppSettings())
   })
+
+  useEffect(() => {
+    dispatch(fetchInitialData())
+  }, [dispatch])
 
   useEffect(() => {
     MapboxGL.setAccessToken(Config.MAPBOX_ACCESS_TOKEN)

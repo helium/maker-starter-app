@@ -3,10 +3,15 @@ import { getMakers, Maker } from '../../utils/stakingClient'
 
 export type HeliumDataState = {
   makers?: Maker[]
+  makersLoaded: boolean
+  failure: boolean
 }
-const initialState: HeliumDataState = {}
+const initialState: HeliumDataState = {
+  makersLoaded: false,
+  failure: false,
+}
 
-export const fetchInitialData = createAsyncThunk<HeliumDataState>(
+export const fetchInitialData = createAsyncThunk(
   'heliumData/fetchInitialData',
   async () => {
     const makers = await getMakers()
@@ -24,6 +29,12 @@ const heliumDataSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchInitialData.fulfilled, (state, { payload }) => {
       state.makers = payload.makers
+      state.makersLoaded = true
+      state.failure = false
+    })
+    builder.addCase(fetchInitialData.rejected, (state) => {
+      state.makersLoaded = true
+      state.failure = true
     })
   },
 })
