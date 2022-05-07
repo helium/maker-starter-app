@@ -41,6 +41,7 @@ import { navigationRef } from './navigation/navigator'
 import useMount from './utils/useMount'
 import usePrevious from './utils/usePrevious'
 import { fetchHotspotsData } from './store/hotspots/hotspotsSlice'
+import { fetchInitialData } from './store/helium/heliumDataSlice'
 
 interface RouteInfo {
   name: string
@@ -156,6 +157,7 @@ const App = () => {
     ) {
       const fiveMinutesAgo = Date.now() - 300000
       if (lastIdle && fiveMinutesAgo > lastIdle) {
+        dispatch(fetchInitialData())
         dispatch(fetchHotspotsData())
       }
     }

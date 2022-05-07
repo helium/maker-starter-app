@@ -4,7 +4,7 @@ import AsyncStorage from '@react-native-community/async-storage'
 // import accountSlice from './account/accountSlice'
 import appSlice from './user/appSlice'
 // import connectedHotspotSlice from './connectedHotspot/connectedHotspotSlice'
-// import heliumDataSlice from './helium/heliumDataSlice'
+import heliumDataSlice from './helium/heliumDataSlice'
 // import heliumStatusSlice from './helium/heliumStatusSlice'
 // import hotspotDetailsSlice from './hotspotDetails/hotspotDetailsSlice'
 import hotspotsSlice, {
@@ -22,7 +22,7 @@ const hotspotsConfig = {
 
 const rootReducer = combineReducers({
   app: appSlice.reducer,
-
+  heliumData: heliumDataSlice.reducer,
   hotspots: persistReducer(hotspotsConfig, hotspotsSlice.reducer),
   location: locationSlice.reducer,
 })
