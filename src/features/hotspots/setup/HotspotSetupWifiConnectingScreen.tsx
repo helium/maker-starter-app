@@ -69,15 +69,12 @@ const HotspotSetupWifiConnectingScreen = () => {
 
   const connectToWifi = useCallback(async () => {
     // Segment track for wifi connection
-    track(HotspotEvents.WIFI_CONNECTION_STARTED, {
-      network,
-    })
+    track(HotspotEvents.WIFI_CONNECTION_STARTED)
 
     const response = await setWifi(network, password)
     if (response === 'not_found') {
       // Segment track for wifi connection
       track(HotspotEvents.WIFI_CONNECTION_FAILED, {
-        network,
         message: 'Something went wrong.',
       })
 
@@ -89,7 +86,6 @@ const HotspotSetupWifiConnectingScreen = () => {
     } else if (response === 'invalid') {
       // Segment track for wifi connection
       track(HotspotEvents.WIFI_CONNECTION_FAILED, {
-        network,
         message: 'Invalid password.',
       })
 
@@ -100,9 +96,7 @@ const HotspotSetupWifiConnectingScreen = () => {
       navigation.goBack()
     } else {
       // Segment track for wifi connection
-      track(HotspotEvents.WIFI_CONNECTION_FINISHED, {
-        network,
-      })
+      track(HotspotEvents.WIFI_CONNECTION_FINISHED)
 
       goToNextStep()
     }
