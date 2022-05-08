@@ -5,6 +5,8 @@ import { BleError, Device } from 'react-native-ble-plx'
 import { useHotspotBle, useOnboarding } from '@helium/react-native-sdk'
 import { uniq } from 'lodash'
 import { useAnalytics } from '@segment/analytics-react-native'
+import animalName from 'angry-purple-tiger'
+import { useSelector } from 'react-redux'
 import Box from '../../../components/Box'
 import HotspotPairingList from '../../../components/HotspotPairingList'
 import Text from '../../../components/Text'
@@ -14,6 +16,11 @@ import {
 } from './hotspotSetupTypes'
 import useAlert from '../../../utils/useAlert'
 import { HotspotEvents } from '../../../utils/analytics/events'
+import { getHotspotDetails } from '../../../utils/appDataClient'
+import { useAppDispatch } from '../../../store/store'
+import hotspotOnboardingSlice from '../../../store/hotspots/hotspotOnboardingSlice'
+import { getMakerName } from '../../../utils/stakingClient'
+import { RootState } from '../../../store/rootReducer'
 
 type Route = RouteProp<
   HotspotSetupStackParamList,
@@ -36,6 +43,8 @@ const HotspotSetupBluetoothSuccess = () => {
   } = useHotspotBle()
   const { getMinFirmware, getOnboardingRecord } = useOnboarding()
   const { showOKAlert } = useAlert()
+  const dispatch = useAppDispatch()
+  const makers = useSelector((state: RootState) => state.heliumData.makers)
 
   const { track } = useAnalytics()
 
@@ -105,6 +114,26 @@ const HotspotSetupBluetoothSuccess = () => {
         const networks = uniq((await readWifiNetworks(false)) || [])
         const connectedNetworks = uniq((await readWifiNetworks(true)) || [])
         const hotspotAddress = await getOnboardingAddress()
+
+        // Save the hotspot details for later use
+        const hotspot = await getHotspotDetails(hotspotAddress)
+        dispatch(
+          hotspotOnboardingSlice.actions.setHotspotAddress(hotspotAddress),
+        )
+        dispatch(
+          hotspotOnboardingSlice.actions.setHotspotName(
+            animalName(hotspotAddress),
+          ),
+        )
+        dispatch(
+          hotspotOnboardingSlice.actions.setOwnerAddress(hotspot?.owner || ''),
+        )
+        dispatch(
+          hotspotOnboardingSlice.actions.setMakerName(
+            getMakerName(hotspot?.payer, makers),
+          ),
+        )
+
         const onboardingRecord = await getOnboardingRecord(hotspotAddress)
         if (!onboardingRecord) return
 
@@ -130,12 +159,14 @@ const HotspotSetupBluetoothSuccess = () => {
   }, [
     checkFirmwareCurrent,
     connectStatus,
+    dispatch,
     gatewayAction,
     getMinFirmware,
     getOnboardingAddress,
     getOnboardingRecord,
     handleError,
     hotspotType,
+    makers,
     navigation,
     readWifiNetworks,
   ])

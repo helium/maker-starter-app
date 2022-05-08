@@ -1,5 +1,5 @@
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
-import React, { memo, useCallback, useMemo } from 'react'
+import React, { memo, useCallback, useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList } from 'react-native-gesture-handler'
 import { Edge } from 'react-native-safe-area-context'
@@ -17,6 +17,8 @@ import {
   HotspotMakerModels,
 } from '../../../makers'
 import { useBorderRadii } from '../../../theme/themeHooks'
+import hotspotOnboardingSlice from '../../../store/hotspots/hotspotOnboardingSlice'
+import { useAppDispatch } from '../../../store/store'
 
 const ItemSeparatorComponent = () => (
   <Box height={1} backgroundColor="primaryBackground" />
@@ -31,11 +33,19 @@ const HotspotSetupSelectionScreen = () => {
   const navigation = useNavigation<HotspotSetupNavigationProp>()
   const edges = useMemo((): Edge[] => ['top', 'left', 'right'], [])
   const radii = useBorderRadii()
+  const dispatch = useAppDispatch()
 
   const { params } = useRoute<Route>()
 
+  // clear any existing onboarding state
+  useEffect(() => {
+    dispatch(hotspotOnboardingSlice.actions.reset())
+  }, [dispatch])
+
   const handlePress = useCallback(
     (hotspotType: HotspotType) => () => {
+      dispatch(hotspotOnboardingSlice.actions.setHotspotType(hotspotType))
+
       const { onboardType } = HotspotMakerModels[hotspotType]
       if (onboardType === 'BLE') {
         navigation.push('HotspotSetupEducationScreen', {
@@ -49,7 +59,7 @@ const HotspotSetupSelectionScreen = () => {
         })
       }
     },
-    [navigation, params],
+    [dispatch, navigation, params],
   )
 
   const keyExtractor = useCallback((item) => item, [])

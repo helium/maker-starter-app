@@ -10,6 +10,8 @@ import { useTranslation } from 'react-i18next'
 import { useAsync } from 'react-async-hook'
 import Toast from 'react-native-simple-toast'
 import { useAnalytics } from '@segment/analytics-react-native'
+import animalName from 'angry-purple-tiger'
+import { useSelector } from 'react-redux'
 import Text from '../../components/Text'
 import BackButton from '../../components/BackButton'
 import SafeAreaBox from '../../components/SafeAreaBox'
@@ -28,6 +30,10 @@ import {
   RootStackParamList,
 } from '../../navigation/main/tabTypes'
 import { HotspotEvents } from '../../utils/analytics/events'
+import { RootState } from '../../store/rootReducer'
+import { getMakerName } from '../../utils/stakingClient'
+import hotspotTransferSlice from '../../store/hotspots/hotspotTransferSlice'
+import { useAppDispatch } from '../../store/store'
 
 type Route = RouteProp<RootStackParamList, 'TransferHotspot'>
 const TransferHotspot = () => {
@@ -37,10 +43,25 @@ const TransferHotspot = () => {
   const [newOwnerAddress, setNewOwnerAddress] = useState('')
   const [loading, setLoading] = useState(false)
   const [hash, setHash] = useState<string>()
-
+  const makers = useSelector((state: RootState) => state.heliumData.makers)
   const hotspotAddress = (params as HotspotAddressParam)?.hotspotAddress || ''
+  const dispatch = useAppDispatch()
 
   const { track } = useAnalytics()
+
+  // Saved hotspot information when starting the transferring
+  const hotspotNameSaved = useSelector(
+    (state: RootState) => state.hotspotTransfer.hotspotName,
+  )
+  const ownerAddressSaved = useSelector(
+    (state: RootState) => state.hotspotTransfer.ownerAddress,
+  )
+  const newOwnerAddressSaved = useSelector(
+    (state: RootState) => state.hotspotTransfer.newOwnerAddress,
+  )
+  const makerNameSaved = useSelector(
+    (state: RootState) => state.hotspotTransfer.makerName,
+  )
 
   // handle callback from the Helium hotspot app
   useAsync(async () => {
@@ -55,6 +76,11 @@ const TransferHotspot = () => {
 
     // Segment track for Hotspot transfer
     track(HotspotEvents.DEVICE_TRANSFER_SUBMITTED, {
+      hotspot_address: txnParams.gatewayAddress,
+      hotspot_name: hotspotNameSaved,
+      owner_address: ownerAddressSaved,
+      new_owner_address: newOwnerAddressSaved,
+      maker_name: makerNameSaved,
       pending_transaction: {
         type: pendingTxn.type,
         txn: pendingTxn.txn,
@@ -71,6 +97,8 @@ const TransferHotspot = () => {
   }, [params])
 
   const onSubmit = useCallback(async () => {
+    dispatch(hotspotTransferSlice.actions.reset())
+
     setLoading(true)
 
     // get linked wallet token
@@ -84,6 +112,15 @@ const TransferHotspot = () => {
       // load hotspot
       const hotspot = await getHotspotDetails(hotspotAddress)
       const ownerAddress = hotspot.owner
+
+      const hotspotName = animalName(hotspot.address)
+      const makerName = getMakerName(hotspot.payer, makers)
+
+      dispatch(hotspotTransferSlice.actions.setHotspotName(hotspotName))
+      dispatch(hotspotTransferSlice.actions.setOwnerAddress(ownerAddress || ''))
+      dispatch(hotspotTransferSlice.actions.setNewOwnerAddress(newOwnerAddress))
+      dispatch(hotspotTransferSlice.actions.setMakerName(makerName))
+
       const nonce = hotspot?.speculativeNonce
         ? hotspot?.speculativeNonce + 1
         : 0
@@ -125,8 +162,10 @@ const TransferHotspot = () => {
       // Segment track for Hotspot transfer
       track(HotspotEvents.DEVICE_TRANSFER_STARTED, {
         hotspot_address: hotspotAddress,
+        hotspot_name: hotspotName,
         owner_address: ownerAddress,
         new_owner_address: newOwnerAddress,
+        maker_name: makerName,
       })
 
       // open in the Helium hotspot app
@@ -138,7 +177,7 @@ const TransferHotspot = () => {
       Toast.showWithGravity(e.message, Toast.LONG, Toast.CENTER)
     }
     setLoading(false)
-  }, [hotspotAddress, newOwnerAddress, track])
+  }, [dispatch, hotspotAddress, makers, newOwnerAddress, track])
 
   return (
     <SafeAreaBox

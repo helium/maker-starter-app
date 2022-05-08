@@ -31,7 +31,6 @@ import {
   AnalyticsProvider,
 } from '@segment/analytics-react-native'
 import animalName from 'angry-purple-tiger'
-import { Hotspot } from '@helium/http'
 import { theme, darkThemeColors, lightThemeColors } from './theme/theme'
 import NavigationRoot from './navigation/NavigationRoot'
 import { useAppDispatch } from './store/store'
@@ -44,8 +43,8 @@ import useMount from './utils/useMount'
 import usePrevious from './utils/usePrevious'
 import { fetchHotspotsData } from './store/hotspots/hotspotsSlice'
 import { fetchInitialData } from './store/helium/heliumDataSlice'
-import { HELIUM_OLD_MAKER_ADDRESS } from './utils/hotspotUtils'
 import { HotspotEvents } from './utils/analytics/events'
+import { getMakerName } from './utils/stakingClient'
 
 interface RouteInfo {
   name: string
@@ -126,20 +125,12 @@ const App = () => {
   )
 
   useEffect(() => {
-    const makerName = (hotspot: Hotspot) => {
-      if (hotspot?.payer === HELIUM_OLD_MAKER_ADDRESS) {
-        // special case for old Helium Hotspots
-        return 'Helium'
-      }
-      return makers?.find((m) => m.address === hotspot?.payer)?.name
-    }
-
     if (!deviceLoaded && hotspotsLoaded && makersLoaded) {
       const params = hotspots.map((hotspot) => ({
-        address: hotspot.address,
-        name: animalName(hotspot.address),
-        owner: hotspot.owner,
-        maker: makerName(hotspot),
+        hotspot_address: hotspot.address,
+        hotspot_name: animalName(hotspot.address),
+        owner_address: hotspot.owner,
+        maker_name: getMakerName(hotspot.payer, makers),
       }))
 
       segmentClient.track(HotspotEvents.DEVICE_LOADED, {

@@ -11,6 +11,8 @@ import hotspotsSlice, {
   hotspotsSliceMigrations,
 } from './hotspots/hotspotsSlice'
 import locationSlice from './location/locationSlice'
+import hotspotOnboardingSlice from './hotspots/hotspotOnboardingSlice'
+import hotspotTransferSlice from './hotspots/hotspotTransferSlice'
 
 const hotspotsConfig = {
   key: hotspotsSlice.name,
@@ -24,6 +26,8 @@ const rootReducer = combineReducers({
   app: appSlice.reducer,
   heliumData: heliumDataSlice.reducer,
   hotspots: persistReducer(hotspotsConfig, hotspotsSlice.reducer),
+  hotspotOnboarding: hotspotOnboardingSlice.reducer,
+  hotspotTransfer: hotspotTransferSlice.reducer,
   location: locationSlice.reducer,
 })
 

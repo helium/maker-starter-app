@@ -4,6 +4,10 @@ import { HotspotType } from '../../makers'
 
 export type HotspotOnboardingState = {
   hotspotType?: HotspotType
+  hotspotAddress?: string
+  hotspotName?: string
+  ownerAddress?: string
+  makerName?: string
   elevation?: number
   gain?: number
   antenna?: MakerAntenna
@@ -18,6 +22,18 @@ const hotspotOnboardingSlice = createSlice({
   reducers: {
     setHotspotType(state, action: PayloadAction<HotspotType>) {
       state.hotspotType = action.payload
+    },
+    setHotspotAddress(state, action: PayloadAction<string>) {
+      state.hotspotAddress = action.payload
+    },
+    setHotspotName(state, action: PayloadAction<string>) {
+      state.hotspotName = action.payload
+    },
+    setOwnerAddress(state, action: PayloadAction<string>) {
+      state.ownerAddress = action.payload
+    },
+    setMakerName(state, action: PayloadAction<string>) {
+      state.makerName = action.payload
     },
     setElevation(state, action: PayloadAction<number>) {
       state.elevation = action.payload

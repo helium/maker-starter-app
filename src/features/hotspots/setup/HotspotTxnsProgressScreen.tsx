@@ -12,6 +12,7 @@ import {
 import { ActivityIndicator, Linking, Alert } from 'react-native'
 
 import { useAnalytics } from '@segment/analytics-react-native'
+import { useSelector } from 'react-redux'
 import Box from '../../../components/Box'
 import Text from '../../../components/Text'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
@@ -25,6 +26,7 @@ import { DebouncedButton } from '../../../components/Button'
 import useMount from '../../../utils/useMount'
 import { getH3Location } from '../../../utils/h3Utils'
 import { HotspotEvents } from '../../../utils/analytics/events'
+import { RootState } from '../../../store/rootReducer'
 
 type Route = RouteProp<HotspotSetupStackParamList, 'HotspotTxnsProgressScreen'>
 
@@ -36,6 +38,16 @@ const HotspotTxnsProgressScreen = () => {
   const { createGatewayTxn } = useHotspotBle()
   const { getOnboardingRecord } = useOnboarding()
   const { primaryText } = useColors()
+
+  const hotspotType = useSelector(
+    (state: RootState) => state.hotspotOnboarding.hotspotType,
+  )
+  const hotspotName = useSelector(
+    (state: RootState) => state.hotspotOnboarding.hotspotName,
+  )
+  const makerName = useSelector(
+    (state: RootState) => state.hotspotOnboarding.makerName,
+  )
 
   const { track } = useAnalytics()
 
@@ -76,6 +88,8 @@ const HotspotTxnsProgressScreen = () => {
         throw new Error('Hotspot disconnected')
       }
     }
+
+    const hotspot = await getHotspotDetails(params.hotspotAddress)
 
     const updateParams = {
       token,
@@ -125,7 +139,6 @@ const HotspotTxnsProgressScreen = () => {
       })
       updateParams.assertLocationTxn = assertLocationTxn.toString()
     } else if (params.updateAntennaOnly) {
-      const hotspot = await getHotspotDetails(params.hotspotAddress)
       if (!hotspot.lat || !hotspot.lng) {
         // Show an alert if the hotspot location has never been asserted
         Alert.alert(
@@ -170,8 +183,11 @@ const HotspotTxnsProgressScreen = () => {
     // Segment track for add gateway
     if (updateParams.addGatewayTxn) {
       track(HotspotEvents.ADD_GATEWAY_STARTED, {
+        hotspot_type: hotspotType,
+        hotspot_address: hotspotAddress,
+        hotspot_name: hotspotName,
         owner_address: ownerAddress,
-        payer_address: onboardingRecord?.maker.address,
+        maker_name: makerName,
       })
     }
 
@@ -180,13 +196,15 @@ const HotspotTxnsProgressScreen = () => {
       const [lng, lat] = params.coords
 
       track(HotspotEvents.ASSERT_LOCATION_STARTED, {
+        hotspot_type: hotspotType,
         hotspot_address: hotspotAddress,
+        hotspot_name: hotspotName,
+        owner_address: ownerAddress,
+        maker_name: makerName,
         lat,
         lng,
         decimal_gain: params.gain,
         elevation: params.elevation,
-        owner_address: ownerAddress,
-        maker_address: onboardingRecord?.maker.address,
         location_nonce_limit: onboardingRecord?.maker.locationNonceLimit || 0,
       })
     }
