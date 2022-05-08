@@ -27,6 +27,8 @@ import useMount from '../../../utils/useMount'
 import { getH3Location } from '../../../utils/h3Utils'
 import { HotspotEvents } from '../../../utils/analytics/events'
 import { RootState } from '../../../store/rootReducer'
+import { useAppDispatch } from '../../../store/store'
+import hotspotOnboardingSlice from '../../../store/hotspots/hotspotOnboardingSlice'
 
 type Route = RouteProp<HotspotSetupStackParamList, 'HotspotTxnsProgressScreen'>
 
@@ -38,6 +40,7 @@ const HotspotTxnsProgressScreen = () => {
   const { createGatewayTxn } = useHotspotBle()
   const { getOnboardingRecord } = useOnboarding()
   const { primaryText } = useColors()
+  const dispatch = useAppDispatch()
 
   const hotspotType = useSelector(
     (state: RootState) => state.hotspotOnboarding.hotspotType,
@@ -195,18 +198,25 @@ const HotspotTxnsProgressScreen = () => {
     if (updateParams.assertLocationTxn && params.coords) {
       const [lng, lat] = params.coords
 
-      track(HotspotEvents.ASSERT_LOCATION_STARTED, {
-        hotspot_type: hotspotType,
-        hotspot_address: hotspotAddress,
-        hotspot_name: hotspotName,
-        owner_address: ownerAddress,
-        maker_name: makerName,
-        lat,
-        lng,
-        decimal_gain: params.gain,
-        elevation: params.elevation,
-        location_nonce_limit: onboardingRecord?.maker.locationNonceLimit || 0,
-      })
+      track(
+        params.updateAntennaOnly
+          ? HotspotEvents.UPDATE_ANTENNA_ONLY_STARTED
+          : HotspotEvents.ASSERT_LOCATION_STARTED,
+        {
+          hotspot_type: hotspotType,
+          hotspot_address: hotspotAddress,
+          hotspot_name: hotspotName,
+          owner_address: ownerAddress,
+          maker_name: makerName,
+          lat,
+          lng,
+          decimal_gain: params.gain,
+          elevation: params.elevation,
+          location_nonce_limit: onboardingRecord?.maker.locationNonceLimit || 0,
+        },
+      )
+
+      dispatch(hotspotOnboardingSlice.actions.setUpdateAntennaOnly(true))
     }
 
     Linking.openURL(url)

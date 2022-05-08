@@ -4,6 +4,8 @@ export enum HotspotEvents {
   ADD_GATEWAY_SUBMITTED = 'add_gateway_submitted',
   ASSERT_LOCATION_STARTED = 'assert_location_started',
   ASSERT_LOCATION_SUBMITTED = 'assert_location_submitted',
+  UPDATE_ANTENNA_ONLY_STARTED = 'update_antenna_only_started',
+  UPDATE_ANTENNA_ONLY_SUBMITTED = 'update_antenna_only_submitted',
   DEVICE_TRANSFER_STARTED = 'device_transfer_started',
   DEVICE_TRANSFER_SUBMITTED = 'device_transfer_submitted',
   BLUETOOTH_SCAN_STARTED = 'bluetooth_scan_started',

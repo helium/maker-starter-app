@@ -36,6 +36,9 @@ const HotspotTxnsSubmitScreen = () => {
   const makerName = useSelector(
     (state: RootState) => state.hotspotOnboarding.makerName,
   )
+  const updateAntennaOnly = useSelector(
+    (state: RootState) => state.hotspotOnboarding.updateAntennaOnly,
+  )
 
   const { track } = useAnalytics()
 
@@ -91,22 +94,27 @@ const HotspotTxnsSubmitScreen = () => {
       const pendingTxn = await submitTxn(finalTxn)
 
       // Segment track for assert location
-      track(HotspotEvents.ASSERT_LOCATION_SUBMITTED, {
-        hotspot_type: hotspotType,
-        hotspot_address: params.gatewayAddress,
-        hotspot_name: hotspotName,
-        owner_address: ownerAddress,
-        maker_name: makerName,
-        pending_transaction: {
-          type: pendingTxn.type,
-          txn: pendingTxn.txn,
-          status: pendingTxn.status,
-          hash: pendingTxn.hash,
-          failed_reason: pendingTxn.failedReason,
-          created_at: pendingTxn.createdAt,
-          updated_at: pendingTxn.updatedAt,
+      track(
+        updateAntennaOnly
+          ? HotspotEvents.UPDATE_ANTENNA_ONLY_SUBMITTED
+          : HotspotEvents.ASSERT_LOCATION_SUBMITTED,
+        {
+          hotspot_type: hotspotType,
+          hotspot_address: params.gatewayAddress,
+          hotspot_name: hotspotName,
+          owner_address: ownerAddress,
+          maker_name: makerName,
+          pending_transaction: {
+            type: pendingTxn.type,
+            txn: pendingTxn.txn,
+            status: pendingTxn.status,
+            hash: pendingTxn.hash,
+            failed_reason: pendingTxn.failedReason,
+            created_at: pendingTxn.createdAt,
+            updated_at: pendingTxn.updatedAt,
+          },
         },
-      })
+      )
     }
   }, [])
 

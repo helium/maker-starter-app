@@ -13,8 +13,11 @@ export type HotspotOnboardingState = {
   antenna?: MakerAntenna
   hotspotCoords?: number[]
   locationName?: string
+  updateAntennaOnly: boolean
 }
-const initialState: HotspotOnboardingState = {}
+const initialState: HotspotOnboardingState = {
+  updateAntennaOnly: false,
+}
 
 const hotspotOnboardingSlice = createSlice({
   name: 'hotspotOnboarding',
@@ -49,6 +52,9 @@ const hotspotOnboardingSlice = createSlice({
     },
     setLocationName(state, action: PayloadAction<string>) {
       state.locationName = action.payload
+    },
+    setUpdateAntennaOnly(state, action: PayloadAction<boolean>) {
+      state.updateAntennaOnly = action.payload
     },
     reset() {
       return initialState
