@@ -1,32 +1,39 @@
 {
   "rules": {
     // TODO: Errors under these rules should be fixes and this file should be removed afterward, to leave clean config in the root.
-    "no-empty-function": "off",
-    "no-prototype-builtins": "off",
-    "import/namespace": "off",
-    "import/no-default-export": "off",
-    "import/no-named-as-default-member": "off",
-    "import/no-unresolved": "off",
-    "react/jsx-no-bind": "off",
-    "react-memo/require-memo": "off",
-    "react-memo/require-usememo": "off",
-    "react-native/no-inline-styles": "off",
-    "react-native/no-color-literals": "off",
-    "@typescript-eslint/explicit-function-return-type": "off",
-    "@typescript-eslint/no-use-before-define": "off",
-    "@typescript-eslint/no-floating-promises": "off",
-    "@typescript-eslint/no-unsafe-assignment": "off",
-    "@typescript-eslint/no-unsafe-return": "off",
-    "@typescript-eslint/no-unsafe-member-access": "off",
-    "@typescript-eslint/no-unsafe-call": "off",
-    "@typescript-eslint/naming-convention": "off",
-    "@typescript-eslint/restrict-template-expressions": "off",
-    "@typescript-eslint/no-explicit-any": "off",
-    "@typescript-eslint/require-await": "off",
-    "@typescript-eslint/no-unsafe-argument": "off",
-    "@typescript-eslint/no-misused-promises": "off",
-    "@typescript-eslint/restrict-plus-operands": "off",
-    "@typescript-eslint/unbound-method": "off",
-    "@typescript-eslint/no-empty-function": "off"
-  }
+    "no-empty-function": "warn",
+    "no-prototype-builtins": "warn",
+    "import/namespace": "warn",
+    "import/no-default-export": "warn",
+    "import/no-named-as-default-member": "warn",
+    "import/no-unresolved": "warn",
+    "react/jsx-no-bind": "warn",
+    "react-memo/require-memo": "warn",
+    "react-memo/require-usememo": "warn",
+    "react-native/no-inline-styles": "warn",
+    "react-native/no-color-literals": "warn"
+  },
+  "overrides": [
+    {
+      "files": ["**/*.ts?(x)"],
+      "rules": {
+        "@typescript-eslint/explicit-function-return-type": "warn",
+        "@typescript-eslint/no-use-before-define": "warn",
+        "@typescript-eslint/no-floating-promises": "warn",
+        "@typescript-eslint/no-unsafe-assignment": "warn",
+        "@typescript-eslint/no-unsafe-return": "warn",
+        "@typescript-eslint/no-unsafe-member-access": "warn",
+        "@typescript-eslint/no-unsafe-call": "warn",
+        "@typescript-eslint/naming-convention": "warn",
+        "@typescript-eslint/restrict-template-expressions": "warn",
+        "@typescript-eslint/no-explicit-any": "warn",
+        "@typescript-eslint/require-await": "warn",
+        "@typescript-eslint/no-unsafe-argument": "warn",
+        "@typescript-eslint/no-misused-promises": "warn",
+        "@typescript-eslint/restrict-plus-operands": "warn",
+        "@typescript-eslint/unbound-method": "warn",
+        "@typescript-eslint/no-empty-function": "warn"
+      }
+    }
+  ]
 }

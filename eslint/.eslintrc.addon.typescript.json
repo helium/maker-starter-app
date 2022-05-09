@@ -7,7 +7,7 @@
       "jsx": true
     },
     "warnOnUnsupportedTypeScriptVersion": true,
-    "project": ["./tsconfig.json", "./services/*/tsconfig.json", "./packages/*/tsconfig.json"]
+    "project": ["./tsconfig.json"]
   },
   "plugins": ["@typescript-eslint"],
   "extends": [
