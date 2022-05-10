@@ -27,7 +27,8 @@
     "lint:prettier": "prettier --loglevel warn --check \"**/*.{css,scss,js,jsx,ts,tsx,html,md,json,yml,yaml}\"",
     "lint:prettier:fix": "prettier --loglevel warn --write \"**/*.{css,scss,js,jsx,ts,tsx,html,md,json,yml,yaml}\"",
     "lint:package-json": "npmPkgJsonLint .",
-    "lint:typescript": "tsc --pretty --noEmit"
+    "lint:typescript": "tsc --pretty --noEmit",
+    "ci": "yarn lint:prettier && yarn lint:package-json && yarn lint:eslint"
   },
   "dependencies": {
     "@ff/libs": "git+ssh://git@github.com:openEPC/ff-js-libs.git#master",

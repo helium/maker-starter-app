@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import React, { useMemo } from "react";
 
 import { createRestyleComponent, VariantProps, createVariant, createBox } from "@shopify/restyle";

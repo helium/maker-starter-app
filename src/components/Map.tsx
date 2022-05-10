@@ -184,7 +184,6 @@ const Map = ({
   }, [mapCenter, zoomLevel]);
 
   return (
-    // eslint-disable-next-line react/jsx-props-no-spreading
     <Box {...props}>
       {showNoLocation && (
         <Box

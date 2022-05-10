@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import React, { memo, useCallback, useEffect, useMemo, useState } from "react";
 
 import { BoxProps } from "@shopify/restyle";

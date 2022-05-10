@@ -17,14 +17,12 @@ const ActivityIndicator = (props: NativeActivityIndicatorProps) => {
     color: props.color || primary,
   };
 
-  // eslint-disable-next-line react/jsx-props-no-spreading
   return <NativeActivityIndicator {...propsWithDefaults} />;
 };
 
 const ActivityIndicatorCentered = (props: NativeActivityIndicatorProps) => {
   return (
     <Box flex={1} justifyContent="center">
-      {/* eslint-disable-next-line react/jsx-props-no-spreading */}
       <ActivityIndicator {...props} />
     </Box>
   );
