@@ -383,7 +383,7 @@ PODS:
   - RNSVG (12.1.1):
     - React
   - Toast (4.0.0)
-  - UMTaskManagerInterface (7.1.0):
+  - UMTaskManagerInterface (7.1.1):
     - ExpoModulesCore
   - Yoga (1.14.0)
 
@@ -645,7 +645,7 @@ SPEC CHECKSUMS:
   RNScreens: 6e1ea5787989f92b0671049b808aef64fa1ef98c
   RNSVG: 551acb6562324b1d52a4e0758f7ca0ec234e278f
   Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
-  UMTaskManagerInterface: 6f7150f9ec9bc6f2760eeae532a70de71ff951c1
+  UMTaskManagerInterface: 3184c93ecc290bd422c6e344badc89b601e9c29b
   Yoga: 32a18c0e845e185f4a2a66ec76e1fd1f958f22fa
 
 PODFILE CHECKSUM: a71020512310441950b6a28775048d67223768e1

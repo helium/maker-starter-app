@@ -1,3 +1,0 @@
-{
-  "*.{css,scss,js,jsx,ts,tsx,html,md,json,yml,yaml}": ["yarn lint:prettier:fix"]
-}
