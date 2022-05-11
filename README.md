@@ -332,3 +332,30 @@ VERSION_CODE_OFFSET=5010001 APPCENTER_BUILD_ID=0000000 open Android\ Studio.app
 5. Use `com.nebra.helium.maker` keystore, `prod` key.
 6. Select `release` variant.
 7. Copy `/android/app/release/app-release.abb` to Google Play.
+
+## Preparing for app stores
+
+In order to skip Helium Wallet handshake, in `src/utils/secureAccount.ts`
+
+```diff
+export async function getSecureItem(key: AccountStoreKey) {
+  const item = await SecureStore.getItemAsync(key)
++  if (key === 'walletLinkToken')
++    return '14enCC7DaKDfSxwnZUkheZjevksj2BQYYPm1bWvLjC24uMyV6hm'
+
+  if (boolKeys.find((bk) => key === bk)) {
+    return item === 'true'
+  }
+  return item
+}
+```
+
+### Android
+
+- Tablet 7": 7" WSVGA(Tablet)
+- Tablet 10": 10" WSVGA(Tablet)
+
+### iOS Screenshot Sizes
+
+- Phone 5.5": Simulator iPhone 8 Pro
+- Tablet 12.9": Simulator iPad Pro 12.9" (5th Gen)
