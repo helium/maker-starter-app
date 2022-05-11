@@ -24,6 +24,14 @@ export default {
       title: 'Enter Recovery\nSeed Phrase',
     },
   },
+  home: {
+    goto: {
+      nebra_dashboard: {
+        title: 'Free Trial!',
+        subtitle: 'Check out the Nebra Dashboard for additional insights',
+      },
+    },
+  },
   account_setup: {
     confirm: {
       forgot: 'I forgot my words',

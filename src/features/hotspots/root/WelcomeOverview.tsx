@@ -3,6 +3,7 @@ import React, { useEffect, useState, memo, useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder'
+import { Linking, View, Image, Platform } from 'react-native'
 import Box from '../../../components/Box'
 import EmojiBlip from '../../../components/EmojiBlip'
 import Text from '../../../components/Text'
@@ -11,6 +12,8 @@ import animateTransition from '../../../utils/animateTransition'
 import { useAppDispatch } from '../../../store/store'
 import useMount from '../../../utils/useMount'
 import { fetchHotspotsData } from '../../../store/hotspots/hotspotsSlice'
+import TouchableOpacityBox from '../../../components/TouchableOpacityBox'
+import { useColors } from '../../../theme/themeHooks'
 
 const TimeOfDayTitle = ({ date }: { date: Date }) => {
   const { t } = useTranslation()
@@ -57,6 +60,20 @@ const WelcomeOverview = () => {
     (state: RootState) => state.hotspots.hotspotsLoaded,
   )
 
+  const colors = useColors()
+
+  const utmCampaign = {
+    utm_id: 'nebra_app.1',
+    utm_source: Platform.OS === 'ios' ? 'nebra_app_ios' : 'nebra_app_android',
+    utm_medium: 'app_home',
+    utm_campaign: 'nebra_app',
+  }
+
+  const goToNebraDashboard = () => {
+    const queryString = new URLSearchParams(utmCampaign).toString()
+    Linking.openURL(`https://dashboard.nebra.com/pricing/?${queryString}`)
+  }
+
   useEffect(() => {
     if (hotspotsLoaded) return
 
@@ -100,7 +117,7 @@ const WelcomeOverview = () => {
     <Box alignItems="center" backgroundColor="primaryBackground">
       <EmojiBlip date={date} />
       <TimeOfDayTitle date={date} />
-      <Box marginTop="m" marginBottom="xxl">
+      <Box marginTop="m" marginBottom="l">
         {hotspotsLoaded ? (
           <Text
             variant="light"
@@ -117,19 +134,54 @@ const WelcomeOverview = () => {
             <SkeletonPlaceholder.Item
               height={20}
               width={320}
-              marginBottom={4}
+              marginBottom={2}
               borderRadius={4}
             />
             <SkeletonPlaceholder.Item
               alignSelf="center"
               height={20}
-              marginBottom={4}
+              marginBottom={2}
               width={280}
               borderRadius={4}
             />
           </SkeletonPlaceholder>
         )}
       </Box>
+      <TouchableOpacityBox
+        onPress={goToNebraDashboard}
+        width="100%"
+        padding="m"
+        marginBottom="m"
+        style={{
+          borderColor: colors.primaryText,
+          borderWidth: 1,
+          backgroundColor: colors.primary,
+          flex: 1,
+          flexDirection: 'row',
+        }}
+      >
+        <View style={{ flex: 4 }}>
+          <Text
+            variant="body1"
+            color="secondaryText"
+            marginBottom="s"
+            style={{ textAlign: 'left', fontSize: 17, fontWeight: 'bold' }}
+          >
+            {t('home.goto.nebra_dashboard.title')}
+          </Text>
+          <Text
+            variant="body1"
+            color="secondaryText"
+            style={{ textAlign: 'left', fontSize: 11, fontWeight: 'normal' }}
+          >
+            {t('home.goto.nebra_dashboard.subtitle')}
+          </Text>
+        </View>
+
+        <View style={{ flex: 1, alignItems: 'center', alignSelf: 'center' }}>
+          <Image source={require('../../../assets/images/goto.png')} />
+        </View>
+      </TouchableOpacityBox>
     </Box>
   )
 }
