@@ -3,7 +3,7 @@ import React, { useEffect, useState, memo, useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder'
-import { Linking, View, Image } from 'react-native'
+import { Linking, View, Image, Platform } from 'react-native'
 import Box from '../../../components/Box'
 import EmojiBlip from '../../../components/EmojiBlip'
 import Text from '../../../components/Text'
@@ -61,8 +61,17 @@ const WelcomeOverview = () => {
   )
 
   const colors = useColors()
+
+  const utmCampaign = {
+    utm_id: 'nebra_app.1',
+    utm_source: Platform.OS === 'ios' ? 'nebra_app_ios' : 'nebra_app_android',
+    utm_medium: 'app_home',
+    utm_campaign: 'nebra_app',
+  }
+
   const goToNebraDashboard = () => {
-    Linking.openURL('https://dashboard.nebra.com/pricing/')
+    const queryString = new URLSearchParams(utmCampaign).toString()
+    Linking.openURL(`https://dashboard.nebra.com/pricing/?${queryString}`)
   }
 
   useEffect(() => {
