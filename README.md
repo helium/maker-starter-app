@@ -335,19 +335,48 @@ VERSION_CODE_OFFSET=5010001 APPCENTER_BUILD_ID=0000000 open Android\ Studio.app
 
 ## Preparing for app stores
 
-In order to skip Helium Wallet handshake, in `src/utils/secureAccount.ts`
+In order to skip Helium Wallet handshake:
+
+- Get your wallet token in `src/providers/AppLinkProvider.tsx`
 
 ```diff
-export async function getSecureItem(key: AccountStoreKey) {
-  const item = await SecureStore.getItemAsync(key)
-+  if (key === 'walletLinkToken')
-+    return '14enCC7DaKDfSxwnZUkheZjevksj2BQYYPm1bWvLjC24uMyV6hm'
-
-  if (boolKeys.find((bk) => key === bk)) {
-    return item === 'true'
+  case 'link_wallet': {
+    const walletLink = record as WalletLink
+    if (walletLink.status === 'success' && walletLink.token) {
++     console.log(walletLink.token)
++
+      dispatch(appSlice.actions.storeWalletLinkToken(walletLink.token))
+    } else {
+      // TODO: handle error
+    }
+    break
   }
-  return item
-}
+```
+
+- Set the token manually in `src/providers/AppLinkProvider.tsx`
+
+```diff
+  useMount(() => {
++   dispatch(appSlice.actions.storeWalletLinkToken('tb3413n3C5D8Kgf3xwnZUkheZjevksj2BQY8Pm5bWv3jC24u9yV0hm'))
++
+    Linking.addEventListener('url', ({ url: nextUrl }) => {
+      if (!nextUrl) return
+
+      const link = parseUrl(nextUrl)
+      if (!link) return
+      navToAppLink(link)
+    })
+    const getUrlAsync = async () => {
+      const initialUrl = await Linking.getInitialURL()
+      if (!initialUrl) return
+
+      const link = parseUrl(initialUrl)
+      if (!link) return
+      navToAppLink(link)
+    }
+
+    getUrlAsync()
+  })
 ```
 
 ### Android
