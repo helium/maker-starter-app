@@ -16,10 +16,8 @@ import {
 } from './hotspotSetupTypes'
 import useAlert from '../../../utils/useAlert'
 import { HotspotEvents } from '../../../utils/analytics/events'
-import { getHotspotDetails } from '../../../utils/appDataClient'
 import { useAppDispatch } from '../../../store/store'
 import hotspotOnboardingSlice from '../../../store/hotspots/hotspotOnboardingSlice'
-import { getMakerName } from '../../../utils/stakingClient'
 import { RootState } from '../../../store/rootReducer'
 
 type Route = RouteProp<
@@ -114,9 +112,10 @@ const HotspotSetupBluetoothSuccess = () => {
         const networks = uniq((await readWifiNetworks(false)) || [])
         const connectedNetworks = uniq((await readWifiNetworks(true)) || [])
         const hotspotAddress = await getOnboardingAddress()
+        const onboardingRecord = await getOnboardingRecord(hotspotAddress)
+        if (!onboardingRecord) return
 
         // Save the hotspot details for later use
-        const hotspot = await getHotspotDetails(hotspotAddress)
         dispatch(
           hotspotOnboardingSlice.actions.setHotspotAddress(hotspotAddress),
         )
@@ -126,16 +125,8 @@ const HotspotSetupBluetoothSuccess = () => {
           ),
         )
         dispatch(
-          hotspotOnboardingSlice.actions.setOwnerAddress(hotspot?.owner || ''),
+          hotspotOnboardingSlice.actions.setMaker(onboardingRecord.maker),
         )
-        dispatch(
-          hotspotOnboardingSlice.actions.setMakerName(
-            getMakerName(hotspot?.payer, makers),
-          ),
-        )
-
-        const onboardingRecord = await getOnboardingRecord(hotspotAddress)
-        if (!onboardingRecord) return
 
         // navigate to next screen
         if (gatewayAction === 'addGateway') {

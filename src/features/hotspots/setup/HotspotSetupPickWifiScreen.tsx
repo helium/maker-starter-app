@@ -96,11 +96,11 @@ const HotspotSetupPickWifiScreen = () => {
     const address = await getAddress()
 
     // Handle "404 not found" exception when onboarding new device
-    hotspot = undefined
+    let hotspot
     try {
       hotspot = await getHotspotDetails(hotspotAddress)
     } catch (error) {
-      console.log('Hotspot not found')
+      console.log('Hotspot is not onboarded')
     }
 
     if (hotspot && hotspot.owner === address) {

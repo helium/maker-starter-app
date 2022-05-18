@@ -48,9 +48,7 @@ const HotspotTxnsProgressScreen = () => {
   const hotspotName = useSelector(
     (state: RootState) => state.hotspotOnboarding.hotspotName,
   )
-  const makerName = useSelector(
-    (state: RootState) => state.hotspotOnboarding.makerName,
-  )
+  const maker = useSelector((state: RootState) => state.hotspotOnboarding.maker)
 
   const { track } = useAnalytics()
 
@@ -91,8 +89,6 @@ const HotspotTxnsProgressScreen = () => {
         throw new Error('Hotspot disconnected')
       }
     }
-
-    const hotspot = await getHotspotDetails(params.hotspotAddress)
 
     const updateParams = {
       token,
@@ -142,6 +138,8 @@ const HotspotTxnsProgressScreen = () => {
       })
       updateParams.assertLocationTxn = assertLocationTxn.toString()
     } else if (params.updateAntennaOnly) {
+      const hotspot = await getHotspotDetails(params.hotspotAddress)
+
       if (!hotspot.lat || !hotspot.lng) {
         // Show an alert if the hotspot location has never been asserted
         Alert.alert(
@@ -190,7 +188,7 @@ const HotspotTxnsProgressScreen = () => {
         hotspot_address: hotspotAddress,
         hotspot_name: hotspotName,
         owner_address: ownerAddress,
-        maker_name: makerName,
+        maker,
       })
     }
 
@@ -207,7 +205,7 @@ const HotspotTxnsProgressScreen = () => {
           hotspot_address: hotspotAddress,
           hotspot_name: hotspotName,
           owner_address: ownerAddress,
-          maker_name: makerName,
+          maker,
           lat,
           lng,
           decimal_gain: params.gain,

@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { Maker } from '@helium/onboarding'
 import { MakerAntenna } from '../../makers/antennaMakerTypes'
 import { HotspotType } from '../../makers'
 
@@ -7,7 +8,7 @@ export type HotspotOnboardingState = {
   hotspotAddress?: string
   hotspotName?: string
   ownerAddress?: string
-  makerName?: string
+  maker?: Maker
   elevation?: number
   gain?: number
   antenna?: MakerAntenna
@@ -35,8 +36,8 @@ const hotspotOnboardingSlice = createSlice({
     setOwnerAddress(state, action: PayloadAction<string>) {
       state.ownerAddress = action.payload
     },
-    setMakerName(state, action: PayloadAction<string>) {
-      state.makerName = action.payload
+    setMaker(state, action: PayloadAction<Maker>) {
+      state.maker = action.payload
     },
     setElevation(state, action: PayloadAction<number>) {
       state.elevation = action.payload

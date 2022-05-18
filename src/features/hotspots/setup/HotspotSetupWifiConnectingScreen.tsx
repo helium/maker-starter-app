@@ -53,7 +53,15 @@ const HotspotSetupWifiConnectingScreen = () => {
 
   const goToNextStep = useCallback(async () => {
     const address = await getAddress()
-    const hotspot = await getHotspotDetails(hotspotAddress)
+
+    // Check if hotspot is onboarded
+    let hotspot
+    try {
+      hotspot = await getHotspotDetails(hotspotAddress)
+    } catch (error) {
+      console.log('Hotspot is not onboarded')
+    }
+
     if (hotspot && hotspot.owner === address) {
       navigation.replace('OwnedHotspotErrorScreen')
     } else if (hotspot && hotspot.owner !== address) {

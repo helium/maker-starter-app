@@ -33,9 +33,7 @@ const HotspotTxnsSubmitScreen = () => {
   const ownerAddress = useSelector(
     (state: RootState) => state.hotspotOnboarding.ownerAddress,
   )
-  const makerName = useSelector(
-    (state: RootState) => state.hotspotOnboarding.makerName,
-  )
+  const maker = useSelector((state: RootState) => state.hotspotOnboarding.maker)
   const updateAntennaOnly = useSelector(
     (state: RootState) => state.hotspotOnboarding.updateAntennaOnly,
   )
@@ -62,8 +60,7 @@ const HotspotTxnsSubmitScreen = () => {
         hotspot_type: hotspotType,
         hotspot_address: params.gatewayAddress,
         hotspot_name: hotspotName,
-        owner_address: ownerAddress,
-        maker_name: makerName,
+        maker,
         pending_transaction: {
           type: pendingTxn.type,
           txn: pendingTxn.txn,
@@ -103,7 +100,7 @@ const HotspotTxnsSubmitScreen = () => {
           hotspot_address: params.gatewayAddress,
           hotspot_name: hotspotName,
           owner_address: ownerAddress,
-          maker_name: makerName,
+          maker,
           pending_transaction: {
             type: pendingTxn.type,
             txn: pendingTxn.txn,
