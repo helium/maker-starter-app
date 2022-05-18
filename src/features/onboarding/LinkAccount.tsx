@@ -30,7 +30,7 @@ const LinkAccount = () => {
         } else {
           Alert.alert(
             'Helium App Not Found',
-            'You must have the Helium app installed from official App Store.',
+            'You must have the Helium wallet app installed using the official Android Play Store or iOS App Store.',
             [
               {
                 text: 'Cancel',
