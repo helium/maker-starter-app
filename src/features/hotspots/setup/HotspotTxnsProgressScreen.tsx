@@ -214,7 +214,11 @@ const HotspotTxnsProgressScreen = () => {
         },
       )
 
-      dispatch(hotspotOnboardingSlice.actions.setUpdateAntennaOnly(true))
+      dispatch(
+        hotspotOnboardingSlice.actions.setUpdateAntennaOnly(
+          params.updateAntennaOnly || false,
+        ),
+      )
     }
 
     Linking.openURL(url)

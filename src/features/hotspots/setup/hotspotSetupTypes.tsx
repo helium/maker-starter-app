@@ -91,6 +91,7 @@ export type HotspotSetupStackParamList = {
     gain?: number
     coords?: number[]
     locationName?: string
+    updateAntennaOnly?: boolean
   }
   HotspotSetupSkipLocationScreen: {
     addGatewayTxn?: string
