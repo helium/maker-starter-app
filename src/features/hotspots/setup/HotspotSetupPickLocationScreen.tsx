@@ -89,7 +89,13 @@ const HotspotSetupPickLocationScreen = () => {
 
   const onDidFinishLoadingMap = useCallback(
     async (latitude: number, longitude: number) => {
-      const hotspot = await getHotspotDetails(params.hotspotAddress)
+      let hotspot
+      try {
+        hotspot = await getHotspotDetails(params.hotspotAddress)
+      } catch (error) {
+        console.log('Hotspot is not onboarded')
+      }
+
       const defaultLocation =
         hotspot?.lng && hotspot?.lat
           ? [hotspot?.lng, hotspot?.lat]
