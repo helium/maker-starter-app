@@ -79,7 +79,14 @@ const HotspotSetupConfirmLocationScreen = () => {
     let hotspot
     try {
       hotspot = await getHotspotDetails(params.hotspotAddress)
-    } catch (error) {}
+    } catch (error) {
+      if (error?.status === 404) {
+        // Silencing the 404 error since it means the hotspot is not on chain and
+        // it is needed to move forward to onboarding.
+      } else {
+        throw error
+      }
+    }
 
     if (!ownerAddress || !account?.balance) {
       return

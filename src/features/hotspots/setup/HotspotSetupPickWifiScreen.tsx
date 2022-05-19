@@ -100,7 +100,12 @@ const HotspotSetupPickWifiScreen = () => {
     try {
       hotspot = await getHotspotDetails(hotspotAddress)
     } catch (error) {
-      console.log('Hotspot is not onboarded')
+      if (error?.status === 404) {
+        // Silencing the 404 error since it means the hotspot is not on chain and
+        // it is needed to move forward to onboarding.
+      } else {
+        throw error
+      }
     }
 
     if (hotspot && hotspot.owner === address) {
