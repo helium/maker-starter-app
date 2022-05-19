@@ -1,7 +1,7 @@
 {
     "name": "Nebra",
-    "version": "1.0.2",
-    "build": "2",
+    "version": "1.0.3",
+    "build": "1",
     "private": true,
     "scripts": {
         "android": "react-native run-android",

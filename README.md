@@ -149,10 +149,11 @@ Before you can upload a build of your app to App Store Connect, you must first c
 
 To build the app for distribution:
 
+1. Refresh dependencies: `yarn install && cd ios && pod install`
 1. In Xcode first go to Product
-2. Go to Scheme
-3. Go to Edit scheme
-4. Change the Build configuration to Release
+1. Go to Scheme
+1. Go to Edit scheme
+1. Change the Build configuration to Release
 
 ##### Archiving
 
@@ -316,22 +317,23 @@ You can also open the Android project in Android Studio by selecting `open an ex
 
 1. Set build version env vars. `VERSION_CODE_OFFSET` is using format `5xxyyzz`. Corresponding to major, minor, patch. So v1.0.1, equal to 5010001. `APPCENTER_BUILD_ID` is always `0000000`.
 
-```
-➜ export VERSION_CODE_OFFSET=5010001
-➜ export APPCENTER_BUILD_ID=0000000
-```
-
-2. Open Android Studio in terminal.
+1. Open Android Studio in terminal, supplying the values from above:
 
 ```
-VERSION_CODE_OFFSET=5010001 APPCENTER_BUILD_ID=0000000 open Android\ Studio.app
+VERSION_CODE_OFFSET=5010003 APPCENTER_BUILD_ID=0000000 open Android\ Studio.app
 ```
 
-3. Update the version in `package.json` "version".
-4. Build > Generate Signed APK
-5. Use `com.nebra.helium.maker` keystore, `prod` key.
-6. Select `release` variant.
-7. Copy `/android/app/release/app-release.abb` to Google Play.
+1. Build > Generate Signed APK.
+1. Use `com.nebra.helium.maker` keystore, `prod` key.
+1. Select `release` variant.
+1. Copy `/android/app/release/app-release.abb` to Google Play.
+
+## Release instructions
+
+1. Checkout feature branch with version name `git checkout -b release/v1.0.4`.
+1. Update the version in `package.json` to match the branch name.
+1. Create tag after PR merged to master `git tag -a v1.0.4 -m v1.0.4`.
+1. Push tag `git push origin --tags`.
 
 ## Preparing for app stores
 
