@@ -10,6 +10,10 @@ import Config from 'react-native-config'
 import { fromNow } from './timeUtils'
 import { getAddress } from './secureAccount'
 
+class StatusError extends Error {
+  status: number | undefined
+}
+
 const privateHeliumClient = new Client(
   new Network({
     baseURL: Config.PRIVATE_HELIUM_API_URL,
@@ -21,12 +25,32 @@ export const getHotspotDetails = async (address: string): Promise<Hotspot> => {
   try {
     return await privateHeliumClient.hotspots.get(address)
   } catch (error) {
+    // The app was able to communicate with the private Helium API server, but can not find
+    // the hotspot designated by the address. There is no need to retry, so just throw the exception.
+    if (error?.response?.status === 404) {
+      const notFoundError = new StatusError(
+        `Could not find the hotspot for address ${address}`,
+      )
+      notFoundError.status = 404
+      throw notFoundError
+    }
+
     try {
       return await heliumHttpClient.hotspots.get(address)
     } catch (err) {
-      throw new Error(
-        `Helium API request failed while trying to retrieve hotspot for address ${address}`,
-      )
+      // The app was able to communicate with the public Helium API server, but can not find
+      // the hotspot designated by the address. There is no need to retry, so just throw the exception.
+      if (error?.response?.status === 404) {
+        const notFoundError = new StatusError(
+          `Could not find the hotspot for address ${address}`,
+        )
+        notFoundError.status = 404
+        throw notFoundError
+      } else {
+        throw new Error(
+          `Helium API request failed while trying to retrieve hotspot for address ${address}`,
+        )
+      }
     }
   }
 }
