@@ -145,6 +145,12 @@ Before you can upload a build of your app to App Store Connect, you must first c
 
 6. Click Create, and look for messages that indicate missing information.
 
+##### Updating App Version and Build on Xcode
+
+1. Under "Target" on your right hand side, click on the app.
+2. Go to "General"
+3. Under "Identity", update the version and build to the required value
+
 ##### Building
 
 To build the app for distribution:
