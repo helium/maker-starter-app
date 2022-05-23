@@ -43,7 +43,7 @@ const SupportScreen = () => {
         >
           <WebView
             source={{
-              uri: 'https://support.nebra.com/support/home',
+              uri: 'https://support.nebra.com/support/solutions/24000003609',
             }}
             style={{ marginTop: 30 }}
           />
