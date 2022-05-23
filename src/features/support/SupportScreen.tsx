@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from 'react'
+import React, { memo, useEffect } from 'react'
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
 
 import { useAnalytics } from '@segment/analytics-react-native'
@@ -6,34 +6,19 @@ import { WebView } from 'react-native-webview'
 
 import Box from '../../components/Box'
 
-import useMount from '../../utils/useMount'
-
-import { getAddress } from '../../utils/secureAccount'
+import { AppScreens } from '../../utils/analytics/screens'
 
 const SupportScreen = () => {
-  // Set segment identity
-  const { identify } = useAnalytics()
-  const [address, setAddress] = useState<string>()
-
-  const [identified, setIdentified] = useState(false)
-
-  useMount(() => {
-    getAddress().then(setAddress)
-  })
+  const { screen } = useAnalytics()
 
   useEffect(() => {
-    if (address && !identified) {
-      identify(address)
-
-      setIdentified(true)
-    }
-  }, [address, identified, identify])
+    screen(AppScreens.SUPPORT)
+  }, [screen])
 
   return (
     <Box backgroundColor="primaryBackground" flex={1}>
       <BottomSheetModalProvider>
         <Box
-          padding="l"
           flex={1}
           justifyContent="center"
           backgroundColor="primaryBackground"
@@ -45,7 +30,7 @@ const SupportScreen = () => {
             source={{
               uri: 'https://support.nebra.com/support/solutions/24000003609',
             }}
-            style={{ marginTop: 30 }}
+            style={{ marginTop: 70 }}
           />
         </Box>
       </BottomSheetModalProvider>
