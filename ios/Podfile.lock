@@ -289,6 +289,8 @@ PODS:
     - Toast (~> 4.0.0)
   - react-native-sodium (0.3.9):
     - React
+  - react-native-webview (11.18.2):
+    - React-Core
   - React-perflogger (0.66.3)
   - React-RCTActionSheet (0.66.3):
     - React-Core/RCTActionSheetHeaders (= 0.66.3)
@@ -468,6 +470,7 @@ DEPENDENCIES:
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-simple-toast (from `../node_modules/react-native-simple-toast`)
   - react-native-sodium (from `../node_modules/react-native-sodium`)
+  - react-native-webview (from `../node_modules/react-native-webview`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
   - React-RCTAnimation (from `../node_modules/react-native/Libraries/NativeAnimation`)
@@ -594,6 +597,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-simple-toast"
   react-native-sodium:
     :path: "../node_modules/react-native-sodium"
+  react-native-webview:
+    :path: "../node_modules/react-native-webview"
   React-perflogger:
     :path: "../node_modules/react-native/ReactCommon/reactperflogger"
   React-RCTActionSheet:
@@ -696,6 +701,7 @@ SPEC CHECKSUMS:
   react-native-safe-area-context: 584dc04881deb49474363f3be89e4ca0e854c057
   react-native-simple-toast: bf002828cf816775a6809f7a9ec3907509bce11f
   react-native-sodium: be31e3fd97b1e9abd0853d7623fbec4b390b6615
+  react-native-webview: 8ec7ddf9eb4ddcd92b32cee7907efec19a9ec7cb
   React-perflogger: 73732888d37d4f5065198727b167846743232882
   React-RCTActionSheet: 96c6d774fa89b1f7c59fc460adc3245ba2d7fd79
   React-RCTAnimation: 8940cfd3a8640bd6f6372150dbdb83a79bcbae6c
