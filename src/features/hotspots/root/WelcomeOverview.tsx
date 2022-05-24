@@ -7,11 +7,14 @@ import { Linking, View, Image, Platform } from 'react-native'
 import Box from '../../../components/Box'
 import EmojiBlip from '../../../components/EmojiBlip'
 import Text from '../../../components/Text'
+import Button from '../../../components/Button'
 import { RootState } from '../../../store/rootReducer'
 import animateTransition from '../../../utils/animateTransition'
 import { useAppDispatch } from '../../../store/store'
 import useMount from '../../../utils/useMount'
-import { fetchHotspotsData } from '../../../store/hotspots/hotspotsSlice'
+import hotspotsSlice, {
+  fetchHotspotsData,
+} from '../../../store/hotspots/hotspotsSlice'
 import TouchableOpacityBox from '../../../components/TouchableOpacityBox'
 import { useColors } from '../../../theme/themeHooks'
 
@@ -40,9 +43,11 @@ const TimeOfDayTitle = ({ date }: { date: Date }) => {
 const WelcomeOverview = () => {
   const { t } = useTranslation()
   const [bodyText, setBodyText] = useState('')
-  const [{ hotspotsLoaded }, setHasLoadedWelcome] = useState({
+  const [{ hotspotsLoaded, loadedStatus }, setHasLoadedWelcome] = useState({
     hotspotsLoaded: false,
+    loadedStatus: false,
   })
+
   const hotspots = useSelector(
     (state: RootState) => state.hotspots.hotspots.data,
     isEqual,
@@ -60,6 +65,10 @@ const WelcomeOverview = () => {
     (state: RootState) => state.hotspots.hotspotsLoaded,
   )
 
+  const hotspotsLoadingStatus = useSelector(
+    (state: RootState) => !state.hotspots.failure,
+  )
+
   const colors = useColors()
 
   const utmCampaign = {
@@ -74,26 +83,37 @@ const WelcomeOverview = () => {
     Linking.openURL(`https://dashboard.nebra.com/pricing/?${queryString}`)
   }
 
+  const onRefresh = () => {
+    setHasLoadedWelcome({
+      hotspotsLoaded: false,
+      loadedStatus: false,
+    })
+    dispatch(hotspotsSlice.actions.refresh())
+    dispatch(fetchHotspotsData())
+  }
+
   useEffect(() => {
-    if (hotspotsLoaded) return
+    if (hotspotsLoaded && loadedStatus) return
 
     const nextLoaded = {
-      hotspotsLoaded: hotspotsLoaded || !hotspotsLoading,
+      hotspotsLoaded: hotspotsLoaded || hotspotsLoading,
+      loadedStatus: loadedStatus || hotspotsLoadingStatus,
     }
 
-    if (nextLoaded.hotspotsLoaded) {
+    if (nextLoaded.hotspotsLoaded && nextLoaded.loadedStatus) {
       animateTransition('WelcomeOverview.LoadingChange', {
         enabledOnAndroid: false,
       })
     }
 
     setHasLoadedWelcome(nextLoaded)
-  }, [hotspotsLoaded, hotspotsLoading])
+  }, [hotspotsLoaded, hotspotsLoading, loadedStatus, hotspotsLoadingStatus])
 
   const updateBodyText = useCallback(async () => {
     if (!hotspotsLoaded) return
 
     const hotspotCount = visibleHotspots.length
+
     let nextBodyText = ''
 
     nextBodyText = t('hotspots.owned.hotspot_plural', {
@@ -118,7 +138,7 @@ const WelcomeOverview = () => {
       <EmojiBlip date={date} />
       <TimeOfDayTitle date={date} />
       <Box marginTop="m" marginBottom="l">
-        {hotspotsLoaded ? (
+        {hotspotsLoaded && loadedStatus ? (
           <Text
             variant="light"
             fontSize={20}
@@ -130,21 +150,44 @@ const WelcomeOverview = () => {
             {bodyText}
           </Text>
         ) : (
-          <SkeletonPlaceholder speed={3000}>
-            <SkeletonPlaceholder.Item
-              height={20}
-              width={320}
-              marginBottom={2}
-              borderRadius={4}
-            />
-            <SkeletonPlaceholder.Item
-              alignSelf="center"
-              height={20}
-              marginBottom={2}
-              width={280}
-              borderRadius={4}
-            />
-          </SkeletonPlaceholder>
+          <>
+            {hotspotsLoaded && !loadedStatus ? (
+              <Box>
+                <Text
+                  variant="light"
+                  fontSize={20}
+                  lineHeight={24}
+                  textAlign="center"
+                  color="HelperText"
+                  maxFontSizeMultiplier={1.2}
+                >
+                  {t('hotspots.loading_error')}
+                </Text>
+                <Button
+                  style={{ color: 'HelperText' }}
+                  title="Reload"
+                  mode="text"
+                  onPress={onRefresh}
+                />
+              </Box>
+            ) : (
+              <SkeletonPlaceholder speed={3000}>
+                <SkeletonPlaceholder.Item
+                  height={20}
+                  width={320}
+                  marginBottom={2}
+                  borderRadius={4}
+                />
+                <SkeletonPlaceholder.Item
+                  alignSelf="center"
+                  height={20}
+                  marginBottom={2}
+                  width={280}
+                  borderRadius={4}
+                />
+              </SkeletonPlaceholder>
+            )}
+          </>
         )}
       </Box>
       <TouchableOpacityBox

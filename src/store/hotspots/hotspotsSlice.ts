@@ -22,7 +22,7 @@ const initialState: HotspotsSliceState = {
   hotspots: { lastFetchedTimestamp: 0, loading: false, data: [] },
   orderedHotspots: [],
   hotspotsLoaded: false,
-  failure: false,
+  failure: true,
   syncStatuses: {},
 }
 
@@ -36,7 +36,6 @@ export const fetchHotspotsData = createAsyncThunk(
         hotspots: state.hotspots.data,
       }
     }
-
     const allHotspots = await Promise.all([getHotspots()])
 
     const [hotspots = []]: [Hotspot[]] = allHotspots as [Hotspot[]]
@@ -59,6 +58,9 @@ const hotspotsSlice = createSlice({
     signOut: () => {
       return { ...initialState }
     },
+    refresh: () => {
+      return { ...initialState }
+    },
     updateSyncStatus: (
       state,
       {
@@ -75,8 +77,10 @@ const hotspotsSlice = createSlice({
       state.hotspots = handleCacheFulfilled({ data: action.payload.hotspots })
       state.hotspotsLoaded = true
       state.failure = false
+      console.log('here we are not')
     })
     builder.addCase(fetchHotspotsData.rejected, (state, _action) => {
+      console.log('here we are')
       state.hotspotsLoaded = true
       state.failure = true
     })

@@ -354,6 +354,7 @@ export default {
       hotspot_plural: 'You have {{count}} Hotspot(s)',
       hotspot: 'Hotspot',
     },
+    loading_error: 'Unable to fetch information',
     list: {
       no_offline: 'NO OFFLINE HOTSPOTS',
       online: 'ONLINE HOTSPOTS',
