@@ -3,7 +3,7 @@ import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs'
 import { NavigatorScreenParams } from '@react-navigation/native'
 import { HotspotLink } from '../../providers/appLinkTypes'
 
-export type MainTabType = 'Hotspots' | 'More'
+export type MainTabType = 'Hotspots' | 'More' | 'Support'
 
 export type TabBarIconType = {
   focused: boolean
