@@ -77,10 +77,8 @@ const hotspotsSlice = createSlice({
       state.hotspots = handleCacheFulfilled({ data: action.payload.hotspots })
       state.hotspotsLoaded = true
       state.failure = false
-      console.log('here we are not')
     })
     builder.addCase(fetchHotspotsData.rejected, (state, _action) => {
-      console.log('here we are')
       state.hotspotsLoaded = true
       state.failure = true
     })

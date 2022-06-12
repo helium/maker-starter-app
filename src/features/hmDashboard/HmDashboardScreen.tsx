@@ -16,6 +16,18 @@ const HmDashboardScreen = () => {
     screen(AppScreens.HMDASHBOARD)
   }, [screen])
 
+  const utmCampaign = {
+    utm_id: 'nebra_app.1',
+    utm_source: Platform.OS === 'ios' ? 'nebra_app_ios' : 'nebra_app_android',
+    utm_medium: 'app_home',
+    utm_campaign: 'nebra_app',
+  }
+
+  const getNebraDashboardUrl = () => {
+    const queryString = new URLSearchParams(utmCampaign).toString()
+    return `https://dashboard.nebra.com/?${queryString}`
+  }
+
   return (
     <Box backgroundColor="primaryBackground" flex={1}>
       <BottomSheetModalProvider>
@@ -29,7 +41,7 @@ const HmDashboardScreen = () => {
         >
           <WebView
             source={{
-              uri: 'https://dashboard.nebra.com/',
+              uri: getNebraDashboardUrl(),
             }}
             style={{ marginTop: 70 }}
           />
