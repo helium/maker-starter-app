@@ -3,7 +3,8 @@ import React, { useEffect, useState, memo, useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder'
-import { Linking, View, Image, Platform } from 'react-native'
+import { View, Image } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
 import Box from '../../../components/Box'
 import EmojiBlip from '../../../components/EmojiBlip'
 import Text from '../../../components/Text'
@@ -17,6 +18,7 @@ import hotspotsSlice, {
 } from '../../../store/hotspots/hotspotsSlice'
 import TouchableOpacityBox from '../../../components/TouchableOpacityBox'
 import { useColors } from '../../../theme/themeHooks'
+import { RootNavigationProp } from '../../../navigation/main/tabTypes'
 
 const TimeOfDayTitle = ({ date }: { date: Date }) => {
   const { t } = useTranslation()
@@ -48,6 +50,8 @@ const WelcomeOverview = () => {
     loadedStatus: false,
   })
 
+  const rootNav = useNavigation<RootNavigationProp>()
+
   const hotspots = useSelector(
     (state: RootState) => state.hotspots.hotspots.data,
     isEqual,
@@ -71,17 +75,10 @@ const WelcomeOverview = () => {
 
   const colors = useColors()
 
-  const utmCampaign = {
-    utm_id: 'nebra_app.1',
-    utm_source: Platform.OS === 'ios' ? 'nebra_app_ios' : 'nebra_app_android',
-    utm_medium: 'app_home',
-    utm_campaign: 'nebra_app',
-  }
-
-  const goToNebraDashboard = () => {
-    const queryString = new URLSearchParams(utmCampaign).toString()
-    Linking.openURL(`https://dashboard.nebra.com/pricing/?${queryString}`)
-  }
+  const goToNebraDashboard = useCallback(
+    () => rootNav.navigate('HmDashboard'),
+    [rootNav],
+  )
 
   const onRefresh = () => {
     setHasLoadedWelcome({
