@@ -11,8 +11,6 @@ import {
 } from '@helium/react-native-sdk'
 import type { Account } from '@helium/http'
 import { useAsync } from 'react-async-hook'
-import { CurrencyType } from '@helium/currency'
-import { calculateAssertLocFee } from '../../../utils/fees'
 import {
   HotspotSetupNavigationProp,
   HotspotSetupStackParamList,
@@ -46,10 +44,6 @@ const HotspotSetupConfirmLocationScreen = () => {
     totalStakingAmount: Balance<NetworkTokens>
     totalStakingAmountDC: Balance<DataCredits>
     totalStakingAmountUsd: Balance<USDollars>
-  }>()
-  const [transactionFeeData, setTransactionFeeData] = useState<{
-    fee: Balance<DataCredits>
-    stakingFee: Balance<DataCredits>
   }>()
   const { params } = useRoute<Route>()
   const { hotspotType, elevation, gain, coords } = params
@@ -98,18 +92,7 @@ const HotspotSetupConfirmLocationScreen = () => {
       onboardingRecord,
       dataOnly: false,
     }
-    if (params.updateAntennaOnly) {
-      // Generate Helium transaction fee
-      const { fee, stakingFee } = calculateAssertLocFee(
-        undefined,
-        undefined,
-        undefined,
-      )
-      setTransactionFeeData({
-        fee: new Balance(fee, CurrencyType.dataCredit),
-        stakingFee: new Balance(stakingFee, CurrencyType.dataCredit),
-      })
-    }
+
     loadLocationFeeData(feeParams).then(setFeeData)
   }, [ownerAddress, account, getOnboardingRecord, params.hotspotAddress])
 
@@ -261,7 +244,7 @@ const HotspotSetupConfirmLocationScreen = () => {
                 </Text>
                 {params.updateAntennaOnly ? (
                   <Text variant="body1" color="primaryText">
-                    {transactionFeeData?.fee.toString(2)}
+                    55k DC ($0.55)
                   </Text>
                 ) : (
                   <Text variant="body1" color="primaryText">
