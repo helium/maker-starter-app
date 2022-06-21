@@ -148,7 +148,9 @@ const TransferHotspot = () => {
       )
       const lastActiveBlock = reportedActivity.block || 0
       if (blockHeight - lastActiveBlock > staleBlockCount) {
-        throw new Error('Hotspot has no recent activity')
+        throw new Error(
+          'Hotspot has no recent Proof-of-Coverage or Data Transfer activity',
+        )
       }
 
       // create transfer hotspot v2 transaction
