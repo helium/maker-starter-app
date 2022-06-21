@@ -40,7 +40,7 @@
     "@gorhom/bottom-sheet": "^4.0.3",
     "@helium/crypto-react-native": "^3.60.0",
     "@helium/currency": "^3.52.0",
-    "@helium/http": "^3.63.0",
+    "@helium/http": "^4.3.1",
     "@helium/onboarding": "^3.59.0",
     "@helium/proto-ble": "^3.37.0",
     "@helium/react-native-sdk": "0.3.0",
