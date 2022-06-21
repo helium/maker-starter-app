@@ -244,7 +244,7 @@ const HotspotSetupConfirmLocationScreen = () => {
                 </Text>
                 {params.updateAntennaOnly ? (
                   <Text variant="body1" color="primaryText">
-                    55k DC ($0.55)
+                    55,000 DC ($0.55)
                   </Text>
                 ) : (
                   <Text variant="body1" color="primaryText">

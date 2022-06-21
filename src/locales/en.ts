@@ -27,8 +27,9 @@ export default {
   home: {
     goto: {
       nebra_dashboard: {
-        title: 'Free Trial!',
-        subtitle: 'Check out the Nebra Dashboard for additional insights',
+        title: 'Advanced Fleet Management',
+        subtitle:
+          'Remotely control and monitor the health of all your Nebra hotspots',
       },
     },
   },
