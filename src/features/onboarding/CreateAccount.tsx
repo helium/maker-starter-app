@@ -1,8 +1,8 @@
 import React, { memo, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-import { WalletLink } from '@helium/react-native-sdk'
 import { Linking, Platform } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
+import { DelegateApp, DELEGATE_APPS } from '@helium/wallet-link'
 import SafeAreaBox from '../../components/SafeAreaBox'
 import Text from '../../components/Text'
 import Box from '../../components/Box'
@@ -11,11 +11,10 @@ import { locale } from '../../utils/i18n'
 
 const CreateAccount = () => {
   const { t } = useTranslation()
-  const { delegateApps } = WalletLink
   const nav = useNavigation()
 
   const handleAppSelection = useCallback(
-    (app: WalletLink.DelegateApp) => async () => {
+    (app: DelegateApp) => async () => {
       if (Platform.OS === 'android') {
         Linking.openURL(`market://details?id=${app.androidPackage}`)
       } else if (Platform.OS === 'ios') {
@@ -35,7 +34,7 @@ const CreateAccount = () => {
       </Text>
 
       <Box flexDirection="row" marginBottom="l">
-        {delegateApps.map((app) => (
+        {DELEGATE_APPS.map((app) => (
           <TouchableOpacityBox
             key={app.name}
             backgroundColor="surface"
