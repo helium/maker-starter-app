@@ -2045,10 +2045,10 @@
     js-sha256 "^0.9.0"
     multiformats "^9.6.4"
 
-"@helium/crypto-react-native@^4.3.1":
-  version "4.3.1"
-  resolved "https://registry.yarnpkg.com/@helium/crypto-react-native/-/crypto-react-native-4.3.1.tgz#3d1ef0ddc16b7bdf0126759fd1d2ef6aeff8372d"
-  integrity sha512-7S0Qof6o00ZPlIWZ2VUawwXtmOz/HO+qP+JeR+05fU2S8rOntzYFX0KYb4vVUa+gQlSBQt+eb49DPQkzkB6GRg==
+"@helium/crypto-react-native@^4.5.0":
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/@helium/crypto-react-native/-/crypto-react-native-4.5.0.tgz#dbc7daeacf22b6f936848ca2a001550609782594"
+  integrity sha512-l/9+cf/hDzIA+bNGalQCTUEk3fLCu7UputhLJgA4nIDxwjG7nQqjXQD4ZelnfM5XkMrqDNI8C5Fca7S1Sgw4sA==
   dependencies:
     "@helium/address" "^4.3.1"
     js-sha256 "^0.9.0"
@@ -2061,15 +2061,6 @@
   integrity sha512-zvDshfSv9wv0PAmmKvZPFP9pnNmR6Q7ZAy+WuGpCD3AxuWv9fiODgKATVuTMhV/QXkkxI+5t8TbGUjTOxsXAmA==
   dependencies:
     bs58 "^4.0.1"
-    create-hash "^1.2.0"
-    libsodium-wrappers "^0.7.6"
-
-"@helium/crypto@^4.3.1":
-  version "4.3.1"
-  resolved "https://registry.yarnpkg.com/@helium/crypto/-/crypto-4.3.1.tgz#1c7673634fc761dc0511a92dff8969c8b9a4ec59"
-  integrity sha512-6MHzu2oyxEJWSNdM3YV/hF8sd0+pLET8BZcUnA62a/ofQefvCoJaBjteAtolyGw8cxRBp10ZWPCXMHHGdXFSZQ==
-  dependencies:
-    "@helium/address" "^4.3.1"
     create-hash "^1.2.0"
     libsodium-wrappers "^0.7.6"
 
@@ -2100,10 +2091,10 @@
     retry-axios "^2.1.2"
     snakecase-keys "^5.1.0"
 
-"@helium/onboarding@^3.59.0":
-  version "3.59.0"
-  resolved "https://registry.yarnpkg.com/@helium/onboarding/-/onboarding-3.59.0.tgz#82c601d32a29d7ea99abd4758618888a45e92550"
-  integrity sha512-Xbo3m3/2VbHEiOzDOp4mUbaK38xtEoOLcvUDk0BUMTWa+E6xAvul/uxHq0NAhQtbwUclkvDaZpfjo3EmXHsDPA==
+"@helium/onboarding@^4.5.0":
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/@helium/onboarding/-/onboarding-4.5.0.tgz#90a24297f60d19160777adeec500e4f3b445763d"
+  integrity sha512-7N7RF/ialP2sOqdZNaeF4BPBA6h3IxygtmJ1Jp4KcgQWFREy6BN6EKMu3MFBKpzpjTQc7OnEqKK9yVvqEhLmPQ==
   dependencies:
     axios "^0.24.0"
     qs "^6.10.3"
@@ -2149,11 +2140,12 @@
     long "^4.0.0"
     path "^0.12.7"
 
-"@helium/wallet-link@file:.yalc/@helium/wallet-link":
-  version "4.4.0"
+"@helium/wallet-link@^4.5.0":
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/@helium/wallet-link/-/wallet-link-4.5.0.tgz#a3ea186ace0f6c9985ebc788de04767c9fcc75c1"
+  integrity sha512-XOQgmJG++NY1il1L1zTO21w+tb/PyvA3DJJk2Yr3wJGedASvurvc876RheG3y4PPTOmbieluVk0cACOmU3BIPA==
   dependencies:
     "@helium/address" "^4.3.1"
-    "@helium/crypto" "^4.3.1"
     "@helium/transactions" "^4.3.1"
     date-fns "^2.28.0"
     query-string "^7.1.1"
