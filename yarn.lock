@@ -2045,17 +2045,6 @@
     js-sha256 "^0.9.0"
     multiformats "^9.6.4"
 
-"@helium/crypto-react-native@^3.60.0":
-  version "3.60.0"
-  resolved "https://registry.yarnpkg.com/@helium/crypto-react-native/-/crypto-react-native-3.60.0.tgz#f43e1abc74e560fa24686a42c26b36451157efb3"
-  integrity sha512-gb9p+qqJXx4wpaZk51z3P701TEqc78GJNCx4Ev4xRAmkUEtYdTywdalK1AaSN78VRVQAJkt1F/QYFJp4fwIeYA==
-  dependencies:
-    bs58 "^4.0.1"
-    buffer "^6.0.1"
-    js-sha256 "^0.9.0"
-    react-native-sodium "^0.3.8"
-    safe-buffer "^5.2.1"
-
 "@helium/crypto-react-native@^4.3.1":
   version "4.3.1"
   resolved "https://registry.yarnpkg.com/@helium/crypto-react-native/-/crypto-react-native-4.3.1.tgz#3d1ef0ddc16b7bdf0126759fd1d2ef6aeff8372d"
@@ -2072,6 +2061,15 @@
   integrity sha512-zvDshfSv9wv0PAmmKvZPFP9pnNmR6Q7ZAy+WuGpCD3AxuWv9fiODgKATVuTMhV/QXkkxI+5t8TbGUjTOxsXAmA==
   dependencies:
     bs58 "^4.0.1"
+    create-hash "^1.2.0"
+    libsodium-wrappers "^0.7.6"
+
+"@helium/crypto@^4.3.1":
+  version "4.3.1"
+  resolved "https://registry.yarnpkg.com/@helium/crypto/-/crypto-4.3.1.tgz#1c7673634fc761dc0511a92dff8969c8b9a4ec59"
+  integrity sha512-6MHzu2oyxEJWSNdM3YV/hF8sd0+pLET8BZcUnA62a/ofQefvCoJaBjteAtolyGw8cxRBp10ZWPCXMHHGdXFSZQ==
+  dependencies:
+    "@helium/address" "^4.3.1"
     create-hash "^1.2.0"
     libsodium-wrappers "^0.7.6"
 
@@ -2140,14 +2138,25 @@
     long "^4.0.0"
     path "^0.12.7"
 
+"@helium/transactions@^4.3.1":
+  version "4.3.1"
+  resolved "https://registry.yarnpkg.com/@helium/transactions/-/transactions-4.3.1.tgz#b4ad5782ad6f9d25287ba43efc4683db34d4ec25"
+  integrity sha512-acH0gDLrC/aTDtM4Jljd8xdQCzITWVNBsGvyTClfrS5dRos++A9wisvCx/VwUyl3w9x/NNU/+V5q8Is6fPJtJw==
+  dependencies:
+    "@helium/address" "^4.3.1"
+    "@helium/proto" "^1.5.0"
+    "@types/libsodium-wrappers" "^0.7.8"
+    long "^4.0.0"
+    path "^0.12.7"
+
 "@helium/wallet-link@file:.yalc/@helium/wallet-link":
   version "4.4.0"
   dependencies:
     "@helium/address" "^4.3.1"
-    "@helium/crypto-react-native" "^4.3.1"
+    "@helium/crypto" "^4.3.1"
+    "@helium/transactions" "^4.3.1"
     date-fns "^2.28.0"
     query-string "^7.1.1"
-    react-native-sodium "^0.4.0"
 
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.1.0"
@@ -4845,7 +4854,7 @@ buffer-from@1.x, buffer-from@^1.0.0:
   resolved "https://registry.yarnpkg.com/buffer-from/-/buffer-from-1.1.1.tgz#32713bc028f75c02fdb710d7c7bcec1f2c6070ef"
   integrity sha512-MQcXEUbCKtEo7bhqEs6560Hyd4XaovZlO/k9V3hjVUF/zwW7KBVdSK4gIt/bzwS9MbR5qob+F5jusZsb0YQK2A==
 
-buffer@^6.0.1, buffer@^6.0.3:
+buffer@^6.0.3:
   version "6.0.3"
   resolved "https://registry.yarnpkg.com/buffer/-/buffer-6.0.3.tgz#2ace578459cc8fbe2a70aaa8f52ee63b6a74c6c6"
   integrity sha512-FTiCpNxtwiZZHEZbcbTIcZjERVICn9yq/pDFkTl95/AxzD1naBctN7YO68riM/gLSDY7sdrMby8hofADYuuqOA==
@@ -11024,11 +11033,6 @@ react-native-sodium@^0.3.8, react-native-sodium@^0.3.9:
   version "0.3.9"
   resolved "https://registry.yarnpkg.com/react-native-sodium/-/react-native-sodium-0.3.9.tgz#cd853b9ef03ee053130d6d731c5d738f65a961db"
   integrity sha512-eLI2n5Kflvq6OcVHW4estK0EGFlSDk2fHSHst4a2ysO4Hpm5nxf/DCQ7DWcLZYJlE9SX9wk461eF9wKZL/gwfQ==
-
-react-native-sodium@^0.4.0:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/react-native-sodium/-/react-native-sodium-0.4.0.tgz#9f416aa5d24c020ae252fa4d6ce6b67251c47dc5"
-  integrity sha512-u5ZQGRnoencCJV5PaUcEjJ7+svn8rqBBFgrmI+J5j6YGKebl/cOqapH8OuLCWB8SDOSKftx0KxFoeVZEz8O4lQ==
 
 react-native-svg-transformer@^0.14.3:
   version "0.14.3"

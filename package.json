@@ -38,7 +38,7 @@
   },
   "dependencies": {
     "@gorhom/bottom-sheet": "^4.0.3",
-    "@helium/crypto-react-native": "^3.60.0",
+    "@helium/crypto-react-native": "^4.3.1",
     "@helium/currency": "^3.52.0",
     "@helium/http": "^4.3.1",
     "@helium/onboarding": "^3.59.0",
