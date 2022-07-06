@@ -1,8 +1,12 @@
 import React, { memo, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-import { WalletLink } from '@helium/react-native-sdk'
 import { Linking, Platform } from 'react-native'
 import { getBundleId } from 'react-native-device-info'
+import {
+  createWalletLinkUrl,
+  DelegateApp,
+  DELEGATE_APPS,
+} from '@helium/wallet-link'
 import SafeAreaBox from '../../components/SafeAreaBox'
 import Text from '../../components/Text'
 import Box from '../../components/Box'
@@ -10,12 +14,11 @@ import TouchableOpacityBox from '../../components/TouchableOpacityBox'
 
 const LinkAccount = () => {
   const { t } = useTranslation()
-  const { delegateApps } = WalletLink
 
   const handleAppSelection = useCallback(
-    (app: WalletLink.DelegateApp) => async () => {
+    (app: DelegateApp) => async () => {
       try {
-        const url = WalletLink.createWalletLinkUrl({
+        const url = createWalletLinkUrl({
           universalLink: app.universalLink,
           requestAppId: getBundleId(),
           callbackUrl: 'makerappscheme://',
@@ -38,7 +41,7 @@ const LinkAccount = () => {
       </Text>
 
       <Box flexDirection="column" marginBottom="l">
-        {delegateApps.map((app) => (
+        {DELEGATE_APPS.map((app) => (
           <TouchableOpacityBox
             key={
               Platform.OS === 'android' ? app.androidPackage : app.iosBundleId

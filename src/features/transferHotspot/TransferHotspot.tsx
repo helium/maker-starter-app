@@ -1,9 +1,13 @@
 import React, { useState, useCallback } from 'react'
-import { Transfer, WalletLink } from '@helium/react-native-sdk'
+import { Transfer } from '@helium/react-native-sdk'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
-import { ActivityIndicator, Linking } from 'react-native'
+import { ActivityIndicator, Linking, Platform } from 'react-native'
 import { useTranslation } from 'react-i18next'
 import { useAsync } from 'react-async-hook'
+import {
+  createUpdateHotspotUrl,
+  parseWalletLinkToken,
+} from '@helium/wallet-link'
 import Text from '../../components/Text'
 import BackButton from '../../components/BackButton'
 import SafeAreaBox from '../../components/SafeAreaBox'
@@ -49,7 +53,7 @@ const TransferHotspot = () => {
     const token = await getSecureItem('walletLinkToken')
     if (!token) throw new Error('Token Not found')
 
-    const parsed = WalletLink.parseWalletLinkToken(token)
+    const parsed = parseWalletLinkToken(token)
     if (!parsed?.address) throw new Error('Invalid Token')
 
     try {
@@ -90,7 +94,8 @@ const TransferHotspot = () => {
       )
 
       // create wallet link url to sent transfer v2
-      const url = WalletLink.createUpdateHotspotUrl({
+      const url = createUpdateHotspotUrl({
+        platform: Platform.OS,
         token,
         transferHotspotTxn: transferHotspotV2Txn.toString(),
       })

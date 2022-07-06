@@ -12,8 +12,8 @@ import { useSelector } from 'react-redux'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { isEqual } from 'lodash'
 import { Edge } from 'react-native-safe-area-context'
-import { WalletLink } from '@helium/react-native-sdk'
 import { useAsync } from 'react-async-hook'
+import { parseWalletLinkToken } from '@helium/wallet-link'
 import SafeAreaBox from '../../../components/SafeAreaBox'
 import Text from '../../../components/Text'
 import { RootState } from '../../../store/rootReducer'
@@ -47,7 +47,7 @@ const MoreScreen = () => {
   useAsync(async () => {
     const token = await getSecureItem('walletLinkToken')
     if (!token) return ''
-    const parsedToken = WalletLink.parseWalletLinkToken(token)
+    const parsedToken = parseWalletLinkToken(token)
 
     const truncatedAddress = [
       parsedToken.address.slice(0, 8),
