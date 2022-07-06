@@ -10,6 +10,10 @@ import { Linking } from 'react-native'
 import queryString from 'query-string'
 import { BarCodeScannerResult } from 'expo-barcode-scanner'
 import { useSelector } from 'react-redux'
+import {
+  parseWalletLinkToken,
+  verifyWalletLinkToken,
+} from '@helium/wallet-link'
 import useMount from '../utils/useMount'
 import { RootState } from '../store/rootReducer'
 import navigator from '../navigation/navigator'
@@ -79,7 +83,18 @@ const useAppLink = () => {
         }
         case 'link_wallet': {
           const walletLink = record as WalletLink
+          if (typeof record.token !== 'string') {
+            throw new Error('Invalid wallet link')
+          }
+
+          const parsedToken = parseWalletLinkToken(record.token)
           if (walletLink.status === 'success' && walletLink.token) {
+            const verified = verifyWalletLinkToken(parsedToken, {
+              maxAgeInSeconds: 60,
+            })
+
+            if (!verified) throw new Error('Invalid wallet link')
+
             dispatch(appSlice.actions.storeWalletLinkToken(walletLink.token))
           } else {
             // TODO: handle error

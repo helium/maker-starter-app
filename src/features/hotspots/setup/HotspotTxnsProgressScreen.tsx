@@ -5,14 +5,17 @@ import { isString } from 'lodash'
 import {
   useHotspotBle,
   HotspotErrorCode,
-  WalletLink,
   Location,
   useOnboarding,
 } from '@helium/react-native-sdk'
-import { ActivityIndicator, Linking, Alert } from 'react-native'
-
+import { ActivityIndicator, Linking, Alert, Platform } from 'react-native'
 import { useAnalytics } from '@segment/analytics-react-native'
 import { useSelector } from 'react-redux'
+import {
+  createUpdateHotspotUrl,
+  parseWalletLinkToken,
+  SignHotspotRequest,
+} from '@helium/wallet-link'
 import Box from '../../../components/Box'
 import Text from '../../../components/Text'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
@@ -80,7 +83,7 @@ const HotspotTxnsProgressScreen = () => {
     const token = await getSecureItem('walletLinkToken')
     if (!token) throw new Error('Token Not found')
 
-    const parsed = WalletLink.parseWalletLinkToken(token)
+    const parsed = parseWalletLinkToken(token)
     if (!parsed?.address) throw new Error('Invalid Token')
 
     const { address: ownerAddress } = parsed
@@ -97,7 +100,8 @@ const HotspotTxnsProgressScreen = () => {
 
     const updateParams = {
       token,
-    } as WalletLink.SignHotspotRequest
+      platform: Platform.OS,
+    } as SignHotspotRequest
 
     // check if add gateway needed
     const isOnChain = await hotspotOnChain(hotspotAddress)
@@ -179,7 +183,7 @@ const HotspotTxnsProgressScreen = () => {
       updateParams.assertLocationTxn = assertLocationTxn.toString()
     }
 
-    const url = WalletLink.createUpdateHotspotUrl(updateParams)
+    const url = createUpdateHotspotUrl(updateParams)
     if (!url) {
       // eslint-disable-next-line no-console
       console.error('Link could not be created')

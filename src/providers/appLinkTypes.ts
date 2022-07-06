@@ -1,4 +1,4 @@
-import { WalletLink as HeliumWalletLink } from '@helium/react-native-sdk'
+import { LinkWalletResponse, SignHotspotResponse } from '@helium/wallet-link'
 
 export const AppLinkCategories = [
   'add_gateway',
@@ -17,6 +17,6 @@ export type AppLink = {
   [key: string]: string | number | undefined
 }
 
-export type WalletLink = AppLink & HeliumWalletLink.LinkWalletResponse
+export type WalletLink = AppLink & LinkWalletResponse
 
-export type HotspotLink = AppLink & HeliumWalletLink.SignHotspotResponse
+export type HotspotLink = AppLink & SignHotspotResponse
