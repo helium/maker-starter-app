@@ -15,7 +15,12 @@ import Box from '../../../components/Box'
 import SafeAreaBox from '../../../components/SafeAreaBox'
 import { getHotspotDetails } from '../../../utils/appDataClient'
 import { getAddress } from '../../../utils/secureAccount'
-import { HotspotEvents } from '../../../utils/analytics/events'
+import {
+  getEvent,
+  Scope,
+  SubScope,
+  Action,
+} from '../../../utils/analytics/utils'
 
 type Route = RouteProp<
   HotspotSetupStackParamList,
@@ -82,14 +87,27 @@ const HotspotSetupWifiConnectingScreen = () => {
 
   const connectToWifi = useCallback(async () => {
     // Segment track for wifi connection
-    track(HotspotEvents.WIFI_CONNECTION_STARTED)
+    track(
+      getEvent({
+        scope: Scope.HOTSPOT,
+        sub_scope: SubScope.WIFI_CONNECTION,
+        action: Action.STARTED,
+      }),
+    )
 
     const response = await setWifi(network, password)
     if (response === 'not_found') {
       // Segment track for wifi connection
-      track(HotspotEvents.WIFI_CONNECTION_FAILED, {
-        message: 'Something went wrong.',
-      })
+      track(
+        getEvent({
+          scope: Scope.HOTSPOT,
+          sub_scope: SubScope.WIFI_CONNECTION,
+          action: Action.FAILED,
+        }),
+        {
+          message: 'Something went wrong.',
+        },
+      )
 
       showOKAlert({
         titleKey: 'generic.error',
@@ -98,9 +116,16 @@ const HotspotSetupWifiConnectingScreen = () => {
       navigation.goBack()
     } else if (response === 'invalid') {
       // Segment track for wifi connection
-      track(HotspotEvents.WIFI_CONNECTION_FAILED, {
-        message: 'Invalid password.',
-      })
+      track(
+        getEvent({
+          scope: Scope.HOTSPOT,
+          sub_scope: SubScope.WIFI_CONNECTION,
+          action: Action.FAILED,
+        }),
+        {
+          message: 'Invalid password.',
+        },
+      )
 
       showOKAlert({
         titleKey: 'generic.error',
@@ -109,7 +134,13 @@ const HotspotSetupWifiConnectingScreen = () => {
       navigation.goBack()
     } else {
       // Segment track for wifi connection
-      track(HotspotEvents.WIFI_CONNECTION_FINISHED)
+      track(
+        getEvent({
+          scope: Scope.HOTSPOT,
+          sub_scope: SubScope.WIFI_CONNECTION,
+          action: Action.FINISHED,
+        }),
+      )
 
       goToNextStep()
     }

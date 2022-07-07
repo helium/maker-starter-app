@@ -14,7 +14,12 @@ import {
 } from './hotspotSetupTypes'
 import sleep from '../../../utils/sleep'
 import { useColors } from '../../../theme/themeHooks'
-import { HotspotEvents } from '../../../utils/analytics/events'
+import {
+  getEvent,
+  Scope,
+  SubScope,
+  Action,
+} from '../../../utils/analytics/utils'
 
 type Route = RouteProp<HotspotSetupStackParamList, 'HotspotSetupScanningScreen'>
 
@@ -32,7 +37,13 @@ const HotspotSetupScanningScreen = () => {
     const scan = async () => {
       // Segment track for bluetooth scan
       const startTimestamp = Date.now()
-      track(HotspotEvents.BLUETOOTH_SCAN_STARTED)
+      track(
+        getEvent({
+          scope: Scope.HOTSPOT,
+          sub_scope: SubScope.BLUETOOTH_CONNECTION,
+          action: Action.STARTED,
+        }),
+      )
 
       await startScan((error) => {
         if (error) {
@@ -47,9 +58,16 @@ const HotspotSetupScanningScreen = () => {
 
       // Segment track for bluetooth scan
       const endTimestamp = Date.now()
-      track(HotspotEvents.BLUETOOTH_SCAN_FINISHED, {
-        elapsed_milliseconds: endTimestamp - startTimestamp,
-      })
+      track(
+        getEvent({
+          scope: Scope.HOTSPOT,
+          sub_scope: SubScope.BLUETOOTH_CONNECTION,
+          action: Action.FINISHED,
+        }),
+        {
+          elapsed_milliseconds: endTimestamp - startTimestamp,
+        },
+      )
 
       navigation.replace('HotspotSetupPickHotspotScreen', params)
     }

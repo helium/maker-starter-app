@@ -15,7 +15,12 @@ import {
   HotspotSetupStackParamList,
 } from './hotspotSetupTypes'
 import useAlert from '../../../utils/useAlert'
-import { HotspotEvents } from '../../../utils/analytics/events'
+import {
+  getEvent,
+  Scope,
+  SubScope,
+  Action,
+} from '../../../utils/analytics/utils'
 import { useAppDispatch } from '../../../store/store'
 import hotspotOnboardingSlice from '../../../store/hotspots/hotspotOnboardingSlice'
 import { RootState } from '../../../store/rootReducer'
@@ -64,9 +69,16 @@ const HotspotSetupBluetoothSuccess = () => {
       if (connectStatus === 'connecting') return
 
       // Segment track for bluetooth connection
-      track(HotspotEvents.BLUETOOTH_CONNECTION_STARTED, {
-        hotspot_id: hotspot.id,
-      })
+      track(
+        getEvent({
+          scope: Scope.HOTSPOT,
+          sub_scope: SubScope.BLUETOOTH_CONNECTION,
+          action: Action.STARTED,
+        }),
+        {
+          hotspot_id: hotspot.id,
+        },
+      )
 
       setConnectStatus(hotspot.id)
       try {
@@ -77,16 +89,30 @@ const HotspotSetupBluetoothSuccess = () => {
         setConnectStatus(true)
 
         // Segment track for bluetooth connection
-        track(HotspotEvents.BLUETOOTH_CONNECTION_FINISHED, {
-          hotspot_id: hotspot.id,
-        })
+        track(
+          getEvent({
+            scope: Scope.HOTSPOT,
+            sub_scope: SubScope.BLUETOOTH_CONNECTION,
+            action: Action.FINISHED,
+          }),
+          {
+            hotspot_id: hotspot.id,
+          },
+        )
       } catch (e) {
         setConnectStatus(false)
 
         // Segment track for bluetooth connection
-        track(HotspotEvents.BLUETOOTH_CONNECTION_FAILED, {
-          hotspot_id: hotspot.id,
-        })
+        track(
+          getEvent({
+            scope: Scope.HOTSPOT,
+            sub_scope: SubScope.BLUETOOTH_CONNECTION,
+            action: Action.FAILED,
+          }),
+          {
+            hotspot_id: hotspot.id,
+          },
+        )
 
         handleError(e)
       }

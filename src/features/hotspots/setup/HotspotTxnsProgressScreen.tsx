@@ -25,7 +25,12 @@ import { useColors } from '../../../theme/themeHooks'
 import { DebouncedButton } from '../../../components/Button'
 import useMount from '../../../utils/useMount'
 import { getH3Location } from '../../../utils/h3Utils'
-import { HotspotEvents } from '../../../utils/analytics/events'
+import {
+  getEvent,
+  Scope,
+  SubScope,
+  Action,
+} from '../../../utils/analytics/utils'
 import { RootState } from '../../../store/rootReducer'
 import { useAppDispatch } from '../../../store/store'
 import hotspotOnboardingSlice from '../../../store/hotspots/hotspotOnboardingSlice'
@@ -183,13 +188,19 @@ const HotspotTxnsProgressScreen = () => {
 
     // Segment track for add gateway
     if (updateParams.addGatewayTxn) {
-      track(HotspotEvents.ADD_GATEWAY_STARTED, {
-        hotspot_type: hotspotType,
-        hotspot_address: hotspotAddress,
-        hotspot_name: hotspotName,
-        owner_address: ownerAddress,
-        maker,
-      })
+      track(
+        getEvent({
+          scope: Scope.HOTSPOT,
+          action: Action.NEW,
+        }),
+        {
+          hotspot_type: hotspotType,
+          hotspot_address: hotspotAddress,
+          hotspot_name: hotspotName,
+          owner_address: ownerAddress,
+          maker,
+        },
+      )
     }
 
     // Segment track for assert location
@@ -198,8 +209,16 @@ const HotspotTxnsProgressScreen = () => {
 
       track(
         params.updateAntennaOnly
-          ? HotspotEvents.UPDATE_ANTENNA_ONLY_STARTED
-          : HotspotEvents.ASSERT_LOCATION_STARTED,
+          ? getEvent({
+              scope: Scope.HOTSPOT,
+              sub_scope: SubScope.ANTENNA,
+              action: Action.NEW,
+            })
+          : getEvent({
+              scope: Scope.HOTSPOT,
+              sub_scope: SubScope.LOCATION,
+              action: Action.NEW,
+            }),
         {
           hotspot_type: hotspotType,
           hotspot_address: hotspotAddress,
