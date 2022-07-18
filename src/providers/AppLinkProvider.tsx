@@ -67,7 +67,7 @@ const useAppLink = () => {
   })
 
   const navToAppLink = useCallback(
-    (record: AppLink | WalletLink) => {
+    async (record: AppLink | WalletLink) => {
       if (isLocked) {
         setUnhandledLink(record)
         return
@@ -89,11 +89,14 @@ const useAppLink = () => {
 
           const parsedToken = parseWalletLinkToken(record.token)
           if (walletLink.status === 'success' && walletLink.token) {
-            const verified = verifyWalletLinkToken(parsedToken, {
+            const verified = await verifyWalletLinkToken(parsedToken, {
               maxAgeInSeconds: 60,
             })
 
-            if (!verified) throw new Error('Invalid wallet link')
+            if (!verified) {
+              // TODO: Handle error
+              throw new Error('Invalid wallet link')
+            }
 
             dispatch(appSlice.actions.storeWalletLinkToken(walletLink.token))
           } else {
