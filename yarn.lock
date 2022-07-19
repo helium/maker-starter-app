@@ -2045,6 +2045,15 @@
     js-sha256 "^0.9.0"
     multiformats "^9.6.4"
 
+"@helium/address@^4.6.2":
+  version "4.6.2"
+  resolved "https://registry.yarnpkg.com/@helium/address/-/address-4.6.2.tgz#0356bd9693ff7184f93f3c4e12c04f4f9c1db7b6"
+  integrity sha512-MXlT9SH4HPrBj+r71w51grZj4MUNi4o4SnDJds/yallROBK0qlO8m/bDCsKfmj0FVm861tIfQBrJc6y5vjsymg==
+  dependencies:
+    bs58 "^5.0.0"
+    js-sha256 "^0.9.0"
+    multiformats "^9.6.4"
+
 "@helium/crypto-react-native@^4.5.0":
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/@helium/crypto-react-native/-/crypto-react-native-4.5.0.tgz#dbc7daeacf22b6f936848ca2a001550609782594"
@@ -2120,24 +2129,24 @@
     long "^4.0.0"
     path "^0.12.7"
 
-"@helium/transactions@^4.6.1":
-  version "4.6.1"
-  resolved "https://registry.yarnpkg.com/@helium/transactions/-/transactions-4.6.1.tgz#2a960c6dbb609b5b1959cfe5b10be3f2a69a279a"
-  integrity sha512-pFikcl+dzFMwtAC+/lG1ZnRaOOAWg/mNjmawk9PQSLQVEURZttxUMDSGO5DjZrDTahR0m4t0snYg6tpHeFwwiA==
+"@helium/transactions@^4.6.2":
+  version "4.6.2"
+  resolved "https://registry.yarnpkg.com/@helium/transactions/-/transactions-4.6.2.tgz#f81b599b524252a24571415501e19074f5781e6e"
+  integrity sha512-zD32S+lk9Iz4m//6R43crgWHWFHYltgTgWCSHHLNwAH4bKfC3D2986rlBtXa37A3zUdPWt9vfqsVE5rdKszyiA==
   dependencies:
-    "@helium/address" "^4.3.1"
+    "@helium/address" "^4.6.2"
     "@helium/proto" "^1.6.0"
     "@types/libsodium-wrappers" "^0.7.8"
     long "^4.0.0"
     path "^0.12.7"
 
-"@helium/wallet-link@^4.6.1":
-  version "4.6.1"
-  resolved "https://registry.yarnpkg.com/@helium/wallet-link/-/wallet-link-4.6.1.tgz#273119a56ba73a94779d26a7c2d31d61af733148"
-  integrity sha512-uiL8ExYj+U+jCI2gRD+QwHjn2mQd6h7Ci5DI0UB5yqPBvJjg32WYfvRajVSGq4gf6EtKSh5/3QKJ+zYhyhJ16g==
+"@helium/wallet-link@^4.6.2":
+  version "4.6.2"
+  resolved "https://registry.yarnpkg.com/@helium/wallet-link/-/wallet-link-4.6.2.tgz#80f95e82ddfa49d6fdd5ecd37a515033e9448539"
+  integrity sha512-j+t1YW9mpsO2r8JlNgK1pskmHCo3kkV0wTmcZ0oJYoYG1xE+/5vakyDehn8Q0+KzDgVenygHxbxth8BIiYtnTw==
   dependencies:
-    "@helium/address" "^4.3.1"
-    "@helium/transactions" "^4.6.1"
+    "@helium/address" "^4.6.2"
+    "@helium/transactions" "^4.6.2"
     date-fns "^2.28.0"
     query-string "^7.1.1"
 
