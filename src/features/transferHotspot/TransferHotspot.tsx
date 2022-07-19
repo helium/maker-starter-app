@@ -29,7 +29,7 @@ import {
   HotspotAddressParam,
   RootStackParamList,
 } from '../../navigation/main/tabTypes'
-import { HotspotEvents } from '../../utils/analytics/events'
+import { getEvent, Scope, SubScope, Action } from '../../utils/analytics/utils'
 import { RootState } from '../../store/rootReducer'
 import { getMakerName } from '../../utils/stakingClient'
 import hotspotTransferSlice from '../../store/hotspots/hotspotTransferSlice'
@@ -75,22 +75,29 @@ const TransferHotspot = () => {
     const pendingTxn = await submitTxn(signedTxnString)
 
     // Segment track for Hotspot transfer
-    track(HotspotEvents.DEVICE_TRANSFER_SUBMITTED, {
-      hotspot_address: txnParams.gatewayAddress,
-      hotspot_name: hotspotNameSaved,
-      owner_address: ownerAddressSaved,
-      new_owner_address: newOwnerAddressSaved,
-      maker_name: makerNameSaved,
-      pending_transaction: {
-        type: pendingTxn.type,
-        txn: pendingTxn.txn,
-        status: pendingTxn.status,
-        hash: pendingTxn.hash,
-        failed_reason: pendingTxn.failedReason,
-        created_at: pendingTxn.createdAt,
-        updated_at: pendingTxn.updatedAt,
+    track(
+      getEvent({
+        scope: Scope.HOTSPOT,
+        sub_scope: SubScope.TRANSFER,
+        action: Action.SUBMITTED,
+      }),
+      {
+        hotspot_address: txnParams.gatewayAddress,
+        hotspot_name: hotspotNameSaved,
+        owner_address: ownerAddressSaved,
+        new_owner_address: newOwnerAddressSaved,
+        maker_name: makerNameSaved,
+        pending_transaction: {
+          type: pendingTxn.type,
+          txn: pendingTxn.txn,
+          status: pendingTxn.status,
+          hash: pendingTxn.hash,
+          failed_reason: pendingTxn.failedReason,
+          created_at: pendingTxn.createdAt,
+          updated_at: pendingTxn.updatedAt,
+        },
       },
-    })
+    )
 
     setHash(pendingTxn.hash)
     setLoading(false)
@@ -160,13 +167,20 @@ const TransferHotspot = () => {
       if (!url) throw new Error('Link could not be created')
 
       // Segment track for Hotspot transfer
-      track(HotspotEvents.DEVICE_TRANSFER_STARTED, {
-        hotspot_address: hotspotAddress,
-        hotspot_name: hotspotName,
-        owner_address: ownerAddress,
-        new_owner_address: newOwnerAddress,
-        maker_name: makerName,
-      })
+      track(
+        getEvent({
+          scope: Scope.HOTSPOT,
+          sub_scope: SubScope.TRANSFER,
+          action: Action.STARTED,
+        }),
+        {
+          hotspot_address: hotspotAddress,
+          hotspot_name: hotspotName,
+          owner_address: ownerAddress,
+          new_owner_address: newOwnerAddress,
+          maker_name: makerName,
+        },
+      )
 
       // open in the Helium hotspot app
       await Linking.openURL(url)

@@ -20,7 +20,12 @@ import Checkmark from '../../../assets/images/check.svg'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
 import { getAddress, getSecureItem } from '../../../utils/secureAccount'
 import { getHotspotDetails } from '../../../utils/appDataClient'
-import { HotspotEvents } from '../../../utils/analytics/events'
+import {
+  getEvent,
+  Scope,
+  SubScope,
+  Action,
+} from '../../../utils/analytics/utils'
 
 const WifiItem = ({
   name,
@@ -134,7 +139,13 @@ const HotspotSetupPickWifiScreen = () => {
     setScanning(true)
 
     // Segment track for wifi scan
-    track(HotspotEvents.WIFI_SCAN_STARTED)
+    track(
+      getEvent({
+        scope: Scope.HOTSPOT,
+        sub_scope: SubScope.WIFI_SCAN,
+        action: Action.STARTED,
+      }),
+    )
 
     const newNetworks = uniq((await readWifiNetworks(false)) || [])
     const newConnectedNetworks = uniq((await readWifiNetworks(true)) || [])
@@ -143,10 +154,17 @@ const HotspotSetupPickWifiScreen = () => {
     setConnectedWifiNetworks(newConnectedNetworks)
 
     // Segment track for wifi scan
-    track(HotspotEvents.WIFI_SCAN_FINISHED, {
-      networks_count: newNetworks.length,
-      connected_networks_count: newConnectedNetworks.length,
-    })
+    track(
+      getEvent({
+        scope: Scope.HOTSPOT,
+        sub_scope: SubScope.WIFI_SCAN,
+        action: Action.FINISHED,
+      }),
+      {
+        networks_count: newNetworks.length,
+        connected_networks_count: newConnectedNetworks.length,
+      },
+    )
   }
 
   return (

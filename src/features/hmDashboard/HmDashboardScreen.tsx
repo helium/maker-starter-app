@@ -7,14 +7,19 @@ import { WebView } from 'react-native-webview'
 import { URL, URLSearchParams } from 'react-native-url-polyfill'
 import Box from '../../components/Box'
 
-import { AppScreens } from '../../utils/analytics/screens'
+import { getEvent, Scope, Action } from '../../utils/analytics/utils'
 
 const HmDashboardScreen = () => {
   const { screen } = useAnalytics()
 
   // Segment log screen visit
   useEffect(() => {
-    screen(AppScreens.HMDASHBOARD)
+    screen(
+      getEvent({
+        scope: Scope.DASHBOARD,
+        action: Action.VISITED,
+      }),
+    )
   }, [screen])
 
   const utmCampaign = {

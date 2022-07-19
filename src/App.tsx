@@ -43,8 +43,8 @@ import useMount from './utils/useMount'
 import usePrevious from './utils/usePrevious'
 import { fetchHotspotsData } from './store/hotspots/hotspotsSlice'
 import { fetchInitialData } from './store/helium/heliumDataSlice'
-import { HotspotEvents } from './utils/analytics/events'
 import { getMakerName } from './utils/stakingClient'
+import { getEvent, Scope, Action } from './utils/analytics/utils'
 
 interface RouteInfo {
   name: string
@@ -133,9 +133,15 @@ const App = () => {
         maker_name: getMakerName(hotspot.payer, makers),
       }))
 
-      segmentClient.track(HotspotEvents.DEVICE_LOADED, {
-        hotspots: params,
-      })
+      segmentClient.track(
+        getEvent({
+          scope: Scope.HOTSPOT,
+          action: Action.LOADED,
+        }),
+        {
+          hotspots: params,
+        },
+      )
 
       setDeviceLoaded(true)
     }

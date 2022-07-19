@@ -13,7 +13,12 @@ import { RootNavigationProp } from '../../../navigation/main/tabTypes'
 import SafeAreaBox from '../../../components/SafeAreaBox'
 import { HotspotSetupStackParamList } from './hotspotSetupTypes'
 import { submitTxn } from '../../../utils/appDataClient'
-import { HotspotEvents } from '../../../utils/analytics/events'
+import {
+  getEvent,
+  Scope,
+  SubScope,
+  Action,
+} from '../../../utils/analytics/utils'
 import { RootState } from '../../../store/rootReducer'
 
 type Route = RouteProp<HotspotSetupStackParamList, 'HotspotTxnsSubmitScreen'>
@@ -56,21 +61,27 @@ const HotspotTxnsSubmitScreen = () => {
       const pendingTxn = await submitTxn(gatewayTxn)
 
       // Segment track for add gateway
-      track(HotspotEvents.ADD_GATEWAY_SUBMITTED, {
-        hotspot_type: hotspotType,
-        hotspot_address: params.gatewayAddress,
-        hotspot_name: hotspotName,
-        maker,
-        pending_transaction: {
-          type: pendingTxn.type,
-          txn: pendingTxn.txn,
-          status: pendingTxn.status,
-          hash: pendingTxn.hash,
-          failed_reason: pendingTxn.failedReason,
-          created_at: pendingTxn.createdAt,
-          updated_at: pendingTxn.updatedAt,
+      track(
+        getEvent({
+          scope: Scope.HOTSPOT,
+          action: Action.SUBMITTED,
+        }),
+        {
+          hotspot_type: hotspotType,
+          hotspot_address: params.gatewayAddress,
+          hotspot_name: hotspotName,
+          maker,
+          pending_transaction: {
+            type: pendingTxn.type,
+            txn: pendingTxn.txn,
+            status: pendingTxn.status,
+            hash: pendingTxn.hash,
+            failed_reason: pendingTxn.failedReason,
+            created_at: pendingTxn.createdAt,
+            updated_at: pendingTxn.updatedAt,
+          },
         },
-      })
+      )
     }
 
     if (params.assertTxn) {
@@ -93,8 +104,16 @@ const HotspotTxnsSubmitScreen = () => {
       // Segment track for assert location
       track(
         updateAntennaOnly
-          ? HotspotEvents.UPDATE_ANTENNA_ONLY_SUBMITTED
-          : HotspotEvents.ASSERT_LOCATION_SUBMITTED,
+          ? getEvent({
+              scope: Scope.HOTSPOT,
+              sub_scope: SubScope.ANTENNA,
+              action: Action.SUBMITTED,
+            })
+          : getEvent({
+              scope: Scope.HOTSPOT,
+              sub_scope: SubScope.LOCATION,
+              action: Action.SUBMITTED,
+            }),
         {
           hotspot_type: hotspotType,
           hotspot_address: params.gatewayAddress,

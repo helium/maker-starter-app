@@ -6,13 +6,18 @@ import { WebView } from 'react-native-webview'
 
 import Box from '../../components/Box'
 
-import { AppScreens } from '../../utils/analytics/screens'
+import { getEvent, Scope, Action } from '../../utils/analytics/utils'
 
 const SupportScreen = () => {
   const { screen } = useAnalytics()
 
   useEffect(() => {
-    screen(AppScreens.SUPPORT)
+    screen(
+      getEvent({
+        scope: Scope.SUPPORT,
+        action: Action.VISITED,
+      }),
+    )
   }, [screen])
 
   return (
