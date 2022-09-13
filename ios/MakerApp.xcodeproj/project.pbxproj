@@ -3,12 +3,12 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* MakerAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* MakerAppTests.m */; };
-		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
+		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		3AAA8194DB4D059944852532 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D65FC53696548063B0CA59 /* ExpoModulesProvider.swift */; };
@@ -17,6 +17,8 @@
 		78771B5356165C9F7AF63C78 /* libPods-MakerApp-MakerAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ED9B03F4EE6066C138C909EC /* libPods-MakerApp-MakerAppTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		964E9C302638CD0C00CCBCCC /* bridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 964E9C2F2638CD0C00CCBCCC /* bridge.swift */; };
+		967EDD5C28D0370A002F60D1 /* hermes.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 967EDD5A28D0368A002F60D1 /* hermes.xcframework */; };
+		967EDD5D28D0370A002F60D1 /* hermes.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 967EDD5A28D0368A002F60D1 /* hermes.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -30,6 +32,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		967EDD5E28D0370A002F60D1 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				967EDD5D28D0370A002F60D1 /* hermes.xcframework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F8B0E225256300AD00EB1E73 /* Embed App Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -50,7 +63,7 @@
 		131B3F2792FC4EFA005595E1 /* Pods-MakerApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MakerApp.release.xcconfig"; path = "Target Support Files/Pods-MakerApp/Pods-MakerApp.release.xcconfig"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* MakerApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MakerApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = MakerApp/AppDelegate.h; sourceTree = "<group>"; };
-		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = MakerApp/AppDelegate.m; sourceTree = "<group>"; };
+		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = MakerApp/AppDelegate.mm; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = MakerApp/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = MakerApp/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = MakerApp/main.m; sourceTree = "<group>"; };
@@ -60,6 +73,7 @@
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = MakerApp/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		964E9C2E2638CD0B00CCBCCC /* MakerApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MakerApp-Bridging-Header.h"; sourceTree = "<group>"; };
 		964E9C2F2638CD0C00CCBCCC /* bridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bridge.swift; sourceTree = "<group>"; };
+		967EDD5A28D0368A002F60D1 /* hermes.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = hermes.xcframework; path = "Pods/hermes-engine/destroot/Library/Frameworks/universal/hermes.xcframework"; sourceTree = "<group>"; };
 		A8C2C551342F5A01DDC30CEC /* libPods-MakerApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MakerApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFB45BBD2A85DBD1301D84BC /* Pods-MakerApp-MakerAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MakerApp-MakerAppTests.debug.xcconfig"; path = "Target Support Files/Pods-MakerApp-MakerAppTests/Pods-MakerApp-MakerAppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		DE9CC2ABA6BCC071224EC7DF /* Pods-MakerApp-MakerAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MakerApp-MakerAppTests.release.xcconfig"; path = "Target Support Files/Pods-MakerApp-MakerAppTests/Pods-MakerApp-MakerAppTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -83,6 +97,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3C2D26697DA9DE0D62775384 /* libPods-MakerApp.a in Frameworks */,
+				967EDD5C28D0370A002F60D1 /* hermes.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,7 +127,7 @@
 				F8B0E2112563005D00EB1E73 /* MakerApp.entitlements */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
-				13B07FB01A68108700A75B9A /* AppDelegate.m */,
+				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
@@ -134,6 +149,7 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				967EDD5A28D0368A002F60D1 /* hermes.xcframework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
 				A8C2C551342F5A01DDC30CEC /* libPods-MakerApp.a */,
@@ -241,12 +257,13 @@
 				0103E73B626F0B8DC823B3E8 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
 				13B07F871A680F5B00A75B9A /* Sources */,
-				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
+				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				F8B0E225256300AD00EB1E73 /* Embed App Extensions */,
 				491486BDF219C0BBBBD02CF8 /* [CP] Embed Pods Frameworks */,
 				CD738B53C9E63C2BEE40515E /* [CP] Copy Pods Resources */,
+				967EDD5E28D0370A002F60D1 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -501,7 +518,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				964E9C302638CD0C00CCBCCC /* bridge.swift in Sources */,
-				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 				3AAA8194DB4D059944852532 /* ExpoModulesProvider.swift in Sources */,
 			);
@@ -530,7 +547,11 @@
 				);
 				INFOPLIST_FILE = MakerAppTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -552,7 +573,11 @@
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = MakerAppTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -569,7 +594,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 25340B7256A37E523AF6B776 /* Pods-MakerApp.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = MakerApp/MakerApp.entitlements;
@@ -579,7 +603,10 @@
 				EXCLUDED_ARCHS = "";
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = MakerApp/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				MARKETING_VERSION = 1.0.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -601,7 +628,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 131B3F2792FC4EFA005595E1 /* Pods-MakerApp.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = MakerApp/MakerApp.entitlements;
@@ -610,7 +636,10 @@
 				EXCLUDED_ARCHS = "";
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = MakerApp/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				MARKETING_VERSION = 1.0.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -677,7 +706,10 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
-				LD_RUNPATH_SEARCH_PATHS = "/usr/lib/swift $(inherited)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					/usr/lib/swift,
+					"$(inherited)",
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(SDKROOT)/usr/lib/swift",
 					"\"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)\"",
@@ -733,7 +765,10 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
-				LD_RUNPATH_SEARCH_PATHS = "/usr/lib/swift $(inherited)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					/usr/lib/swift,
+					"$(inherited)",
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(SDKROOT)/usr/lib/swift",
 					"\"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)\"",
