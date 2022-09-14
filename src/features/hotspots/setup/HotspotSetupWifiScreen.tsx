@@ -78,7 +78,7 @@ const HotspotSetupWifiScreen = () => {
             keyboardAppearance="dark"
             autoCorrect={false}
             placeholderTextColor="secondaryText"
-            autoCompleteType="off"
+            autoComplete="off"
             autoCapitalize="none"
             blurOnSubmit={false}
             returnKeyType="done"
