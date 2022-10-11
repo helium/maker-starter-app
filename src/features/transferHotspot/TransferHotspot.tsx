@@ -226,11 +226,26 @@ const TransferHotspot = () => {
         style={styles.textInput}
         borderRadius="s"
         padding="s"
+        marginBottom="m"
+        backgroundColor="white"
+        onChangeText={setHotspotAddress}
+        value={hotspotAddress}
+        placeholderTextColor="black"
+        placeholder={t('transferHotspot.enterHotspot')}
+        editable={!loading}
+        autoCapitalize="none"
+        autoComplete="off"
+        autoCorrect={false}
+      />
+      <TextInput
+        borderRadius="s"
+        padding="s"
+        backgroundColor="white"
         onChangeText={setNewOwnerAddress}
         value={newOwnerAddress}
         editable={!loading}
         autoCapitalize="none"
-        autoCompleteType="off"
+        autoComplete="off"
         autoCorrect={false}
       />
       <Button

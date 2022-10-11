@@ -33,13 +33,14 @@ const CreateAccount = () => {
         {t('account_setup.linkAccount.stepOne')}
       </Text>
 
-      <Box flexDirection="row" marginBottom="l">
+      <Box flexDirection="column" marginBottom="l">
         {DELEGATE_APPS.map((app) => (
           <TouchableOpacityBox
             key={app.name}
             backgroundColor="surface"
             padding="s"
             paddingHorizontal="m"
+            marginBottom="s"
             borderRadius="l"
             onPress={handleAppSelection(app)}
           >
