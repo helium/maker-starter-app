@@ -135,7 +135,7 @@ const TransferHotspot = () => {
         placeholder={t('transferHotspot.enterHotspot')}
         editable={!loading}
         autoCapitalize="none"
-        autoCompleteType="off"
+        autoComplete="off"
         autoCorrect={false}
       />
       <TextInput
@@ -148,7 +148,7 @@ const TransferHotspot = () => {
         placeholder={t('transferHotspot.enterOwner')}
         editable={!loading}
         autoCapitalize="none"
-        autoCompleteType="off"
+        autoComplete="off"
         autoCorrect={false}
       />
       <Button
