@@ -5,8 +5,10 @@ buildscript {
         buildToolsVersion = "31.0.0"
         minSdkVersion = 21
         compileSdkVersion = 31
-        targetSdkVersion = 30
+        targetSdkVersion = 31
         kotlinVersion = "1.6.0"
+        androidXCore = "1.6.0"
+        coreVersion = "1.6.0"
 
         if (System.properties['os.arch'] == "aarch64") {
             // For M1 Users we need to use the NDK 24 which added support for aarch64
@@ -56,6 +58,17 @@ allprojects {
          maven {
             // expo-camera bundles a custom com.google.android:cameraview
             url "$rootDir/../node_modules/expo-camera/android/maven"
+        }
+    }
+}
+
+subprojects {
+    afterEvaluate {project ->
+        if (project.hasProperty("android")) {
+            android {
+                compileSdkVersion = 31
+                buildToolsVersion = "31.0.0"
+            }
         }
     }
 }
