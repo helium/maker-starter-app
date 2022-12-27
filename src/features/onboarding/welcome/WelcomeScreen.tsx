@@ -14,13 +14,15 @@ const WelcomeScreen = () => {
   const { t } = useTranslation()
   const navigation = useNavigation<OnboardingNavigationProp>()
 
-  const createAccount = useCallback(() => navigation.push('CreateAccount'), [
-    navigation,
-  ])
+  const createAccount = useCallback(
+    () => navigation.push('CreateAccount'),
+    [navigation],
+  )
 
-  const importAccount = useCallback(() => navigation.push('LinkAccount'), [
-    navigation,
-  ])
+  const importAccount = useCallback(
+    () => navigation.push('LinkAccount'),
+    [navigation],
+  )
 
   const colors = useColors()
 

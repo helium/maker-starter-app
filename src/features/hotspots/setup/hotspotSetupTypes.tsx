@@ -118,4 +118,5 @@ export type HotspotSetupStackParamList = {
   }
 }
 
-export type HotspotSetupNavigationProp = StackNavigationProp<HotspotSetupStackParamList>
+export type HotspotSetupNavigationProp =
+  StackNavigationProp<HotspotSetupStackParamList>

@@ -27,13 +27,15 @@ const HotspotsScreen = () => {
     dispatch(fetchHotspotsData())
   })
 
-  const addHotspot = useCallback(() => navigation.push('HotspotSetup'), [
-    navigation,
-  ])
+  const addHotspot = useCallback(
+    () => navigation.push('HotspotSetup'),
+    [navigation],
+  )
 
-  const hasHotspots = useMemo(() => !!hotspots.data?.length, [
-    hotspots.data?.length,
-  ])
+  const hasHotspots = useMemo(
+    () => !!hotspots.data?.length,
+    [hotspots.data?.length],
+  )
 
   const handlePresentHotspot = useCallback(async (gateway: Hotspot) => {
     if (!isHotspot(gateway)) {

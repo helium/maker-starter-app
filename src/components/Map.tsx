@@ -130,9 +130,10 @@ const Map = ({
     setLoaded(true)
   }, [])
 
-  const selectedHex = useMemo(() => selectedHotspot?.locationHex, [
-    selectedHotspot?.locationHex,
-  ])
+  const selectedHex = useMemo(
+    () => selectedHotspot?.locationHex,
+    [selectedHotspot?.locationHex],
+  )
 
   useEffect(() => {
     if (loaded && userCoords) {

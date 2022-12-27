@@ -15,9 +15,10 @@ const FirmwareUpdateNeededScreen = () => {
   const { t } = useTranslation()
   const { params } = useRoute<Route>()
   const navigation = useNavigation<RootNavigationProp>()
-  const handleClose = useCallback(() => navigation.navigate('MainTabs'), [
-    navigation,
-  ])
+  const handleClose = useCallback(
+    () => navigation.navigate('MainTabs'),
+    [navigation],
+  )
 
   return (
     <BackScreen onClose={handleClose}>

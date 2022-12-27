@@ -11,9 +11,10 @@ const HotspotSetupPickHotspotScreen = () => {
   const rootNav = useNavigation<RootNavigationProp>()
   const handleClose = useCallback(() => rootNav.navigate('MainTabs'), [rootNav])
 
-  const hotspotsFound = useMemo(() => !!scannedDevices.length, [
-    scannedDevices.length,
-  ])
+  const hotspotsFound = useMemo(
+    () => !!scannedDevices.length,
+    [scannedDevices.length],
+  )
 
   if (hotspotsFound) {
     return (

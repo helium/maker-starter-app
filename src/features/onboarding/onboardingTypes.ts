@@ -6,4 +6,5 @@ export type OnboardingStackParamList = {
   CreateAccount: undefined
 }
 
-export type OnboardingNavigationProp = StackNavigationProp<OnboardingStackParamList>
+export type OnboardingNavigationProp =
+  StackNavigationProp<OnboardingStackParamList>

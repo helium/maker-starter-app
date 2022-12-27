@@ -5,7 +5,7 @@ export type CacheRecord<T> = T & {
 
 const asCacheRecord = <T>(item: T) => {
   if (item && 'lastFetchedTimestamp' in item && 'loading' in item) {
-    return (item as unknown) as CacheRecord<T>
+    return item as unknown as CacheRecord<T>
   }
 }
 
