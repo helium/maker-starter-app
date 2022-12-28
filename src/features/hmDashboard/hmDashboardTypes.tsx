@@ -4,4 +4,5 @@ export type HmDashboardStackParamList = {
   HmDashboardScreen: undefined
 }
 
-export type HmDashboardNavigationProp = StackNavigationProp<HmDashboardStackParamList>
+export type HmDashboardNavigationProp =
+  StackNavigationProp<HmDashboardStackParamList>

@@ -40,10 +40,10 @@ const EmojiBlip = ({ date, name }: { date?: Date; name?: string }) => {
     return sample(emojiOptions)
   }, [date])
 
-  const emojiName = useMemo(() => name || pickEmoji() || '100', [
-    name,
-    pickEmoji,
-  ])
+  const emojiName = useMemo(
+    () => name || pickEmoji() || '100',
+    [name, pickEmoji],
+  )
 
   return (
     <Emoji name={emojiName} style={styles.emoji} maxFontSizeMultiplier={1.2} />

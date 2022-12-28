@@ -71,9 +71,10 @@ const MainTabs = () => {
     [],
   )
 
-  const fetchHotspotData = useCallback(() => dispatch(fetchHotspotsData()), [
-    dispatch,
-  ])
+  const fetchHotspotData = useCallback(
+    () => dispatch(fetchHotspotsData()),
+    [dispatch],
+  )
 
   return (
     <MainTab.Navigator

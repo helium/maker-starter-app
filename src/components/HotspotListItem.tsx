@@ -57,9 +57,10 @@ const HotspotListItem = ({
     return `${geo.longStreet}, ${geo.longCity}, ${geo.shortCountry}`
   }, [gateway, t])
 
-  const isRelayed = useMemo(() => isRelay(gateway?.status?.listenAddrs), [
-    gateway?.status,
-  ])
+  const isRelayed = useMemo(
+    () => isRelay(gateway?.status?.listenAddrs),
+    [gateway?.status],
+  )
 
   const statusBackgroundColor = useMemo(() => {
     if (hidden || isDataOnly(gateway)) return 'grayLightText'

@@ -1,4 +1,4 @@
-import { WalletLink } from '@helium/react-native-sdk'
+import { parseWalletLinkToken } from '@helium/wallet-link'
 import * as SecureStore from 'expo-secure-store'
 
 type AccountStoreKey = BooleanKey | StringKey
@@ -34,7 +34,7 @@ export const getAddress = async () => {
   const token = await getSecureItem('walletLinkToken')
 
   if (!token) return
-  const parsed = WalletLink.parseWalletLinkToken(token)
+  const parsed = parseWalletLinkToken(token)
   if (!parsed?.address) return
   const { address } = parsed
   return address

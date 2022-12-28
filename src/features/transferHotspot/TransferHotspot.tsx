@@ -2,16 +2,19 @@ import React, { useState, useCallback } from 'react'
 import {
   Transfer,
   WalletLink as HeliumWalletLink,
-  WalletLink,
 } from '@helium/react-native-sdk'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
-import { ActivityIndicator, Linking, StyleSheet } from 'react-native'
-import { useTranslation } from 'react-i18next'
-import { useAsync } from 'react-async-hook'
+import { ActivityIndicator, Linking, StyleSheet, Platform } from 'react-native'
 import Toast from 'react-native-simple-toast'
 import { useAnalytics } from '@segment/analytics-react-native'
 import animalName from 'angry-purple-tiger'
 import { useSelector } from 'react-redux'
+import { useTranslation } from 'react-i18next'
+import { useAsync } from 'react-async-hook'
+import {
+  createUpdateHotspotUrl,
+  parseWalletLinkToken,
+} from '@helium/wallet-link'
 import Text from '../../components/Text'
 import BackButton from '../../components/BackButton'
 import SafeAreaBox from '../../components/SafeAreaBox'
@@ -112,7 +115,7 @@ const TransferHotspot = () => {
     const token = await getSecureItem('walletLinkToken')
     if (!token) throw new Error('Token Not found')
 
-    const parsed = WalletLink.parseWalletLinkToken(token)
+    const parsed = parseWalletLinkToken(token)
     if (!parsed?.address) throw new Error('Invalid Token')
 
     try {
@@ -148,7 +151,9 @@ const TransferHotspot = () => {
       )
       const lastActiveBlock = reportedActivity.block || 0
       if (blockHeight - lastActiveBlock > staleBlockCount) {
-        throw new Error('Hotspot has no recent activity')
+        throw new Error(
+          'Hotspot has no recent Proof-of-Coverage or Data Transfer activity',
+        )
       }
 
       // create transfer hotspot v2 transaction
@@ -160,7 +165,8 @@ const TransferHotspot = () => {
       )
 
       // create wallet link url to sent transfer v2
-      const url = WalletLink.createUpdateHotspotUrl({
+      const url = createUpdateHotspotUrl({
+        platform: Platform.OS,
         token,
         transferHotspotTxn: transferHotspotV2Txn.toString(),
       })
@@ -220,11 +226,26 @@ const TransferHotspot = () => {
         style={styles.textInput}
         borderRadius="s"
         padding="s"
+        marginBottom="m"
+        backgroundColor="white"
+        onChangeText={setHotspotAddress}
+        value={hotspotAddress}
+        placeholderTextColor="black"
+        placeholder={t('transferHotspot.enterHotspot')}
+        editable={!loading}
+        autoCapitalize="none"
+        autoComplete="off"
+        autoCorrect={false}
+      />
+      <TextInput
+        borderRadius="s"
+        padding="s"
+        backgroundColor="white"
         onChangeText={setNewOwnerAddress}
         value={newOwnerAddress}
         editable={!loading}
         autoCapitalize="none"
-        autoCompleteType="off"
+        autoComplete="off"
         autoCorrect={false}
       />
       <Button

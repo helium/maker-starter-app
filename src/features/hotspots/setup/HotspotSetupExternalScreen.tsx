@@ -50,9 +50,10 @@ const HotspotSetupExternalScreen = () => {
     [params.hotspotType],
   )
 
-  const handleClose = useCallback(() => navigation.navigate('MainTabs'), [
-    navigation,
-  ])
+  const handleClose = useCallback(
+    () => navigation.navigate('MainTabs'),
+    [navigation],
+  )
 
   const handleBarCodeScanned = useDebouncedCallback(
     (result: BarCodeScannerResult) => {
@@ -62,7 +63,11 @@ const HotspotSetupExternalScreen = () => {
         })
         triggerNotification('success')
       } catch (error) {
-        if (error.message) {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        if (error?.message) {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
           Toast.showWithGravity(error.message, Toast.LONG, Toast.CENTER)
         }
         triggerNotification('error')

@@ -4,10 +4,16 @@
 
 ### App Setup
 
-1. First add your environment variables. See the [installing](#Installing) section below for more detail on how to do so.
+1. First add your environment variables. See the [installing](#Installing) section below for more detail on how to do so. For development environment you can use your own generated keys but for release use nebra account keys.
    1. You will need a [Mapbox](https://docs.mapbox.com/help/getting-started/access-tokens/) API key to show the map for Hotspot onboarding.
    2. You will need a [Google](https://developers.google.com/maps/documentation/javascript/get-api-key) API key for address and location search.
 2. Rename your application using [React Native Rename](https://github.com/junedomingo/react-native-rename). You will want to pass in the custom bundle identifier for [Android](https://developer.android.com/studio/build/configure-app-module#set_the_application_id) and also change it manually for [iOS](https://developer.apple.com/documentation/appstoreconnectapi/bundle_ids).
+   This step is only required if you are picking ios and android specific changes from upstream. As upstream app is named "MakerApp" while we name it simply "Nebra". Follow below procedure to do so.
+   1. checkout upstream main branch
+   2. create a new branch from it "upstream_main_app_renamed".
+   3. use [React Native Rename](https://github.com/junedomingo/react-native-rename) utility to change name from "MakerApp" to "Nebra".
+   4. temporarily commit the changes in this branch.
+   5. use this branch to make you diff against nebra main and pick any changes if required.
 3. Update your theme colors in [theme.ts](src/theme/theme.ts). The theme controls the look of the application.
 4. Add your Hotspot and Antenna data in the [makers](src/makers) folder. See the [Makers README](src/makers/README.md) for more detail.
 5. You will need to update your App Scheme for any deep linking. There are guides for both [iOS](https://developer.apple.com/documentation/xcode/defining-a-custom-url-scheme-for-your-app) and [Android](https://developer.android.com/training/app-links/deep-linking).
@@ -98,6 +104,7 @@ yarn pod-install
 If the app is not working you may want to clean your workspace and then follow the running the app section below
 
 ```
+npx expo install --check # this will try to fix incompatible package version in package.json. Safe to accept them.
 yarn clean-install
 yarn clean-start
 ```
@@ -110,7 +117,7 @@ The fastest way to run the app is on the iOS simulator. Just type:
 yarn ios
 ```
 
-You can also open the `MakerApp.xcworkspace` file in the `/ios` folder using xcode and run the app on your device or any other simulator.
+You can also open the `Nebra.xcworkspace` file in the `/ios` folder using xcode and run the app on your device or any other simulator.
 
 To run the app on a specific device, type:
 
@@ -124,6 +131,19 @@ To build a release version of the app:
 yarn ios --configuration=release
 ```
 
+#### Possible Issues on android
+
+##### Android build breaks too often especially if you are changing package.json while working with ios
+
+It will always look like a gradle error. Don't try to debug gradle, mostly it won't have anything to do with gradle. Just google the error, you will most likely find that some react package needs to be updated.
+
+```
+# use following command to update the required package (eg netinfo)
+yarn add @react-native-community/netinfo
+# don't forget to run to following to fix any incompatibility between packages after installing of upgrading any package.
+npx expo install --check
+```
+
 #### Building and distributing to App store with Xcode
 
 To distribute your app on the App Store with Xcode, a few steps are required.
@@ -134,15 +154,10 @@ App signing is done automatically.
 Before you can upload a build of your app to App Store Connect, you must first create an app record in your [App Store Connect account](https://appstoreconnect.apple.com/).
 
 1. From My Apps, click the Add button (+) in the top-left corner.
-
 2. The My Apps page is blank until you create your first app record.
-
 3. From the pop-up menu, select New App.
-
 4. In the New App dialog, select one or more platform(s) and enter the app information. The bundle ID should match that of the app you want to deploy.
-
 5. Under User Access, choose Limited Access or Full Access. If you choose Limited Access, select the users that you would like to be able to access this app.
-
 6. Click Create, and look for messages that indicate missing information.
 
 ##### Updating App Version and Build on Xcode
@@ -156,10 +171,10 @@ Before you can upload a build of your app to App Store Connect, you must first c
 To build the app for distribution:
 
 1. Refresh dependencies: `yarn install && cd ios && pod install`
-1. In Xcode first go to Product
-1. Go to Scheme
-1. Go to Edit scheme
-1. Change the Build configuration to Release
+2. In Xcode first go to Product
+3. Go to Scheme
+4. Go to Edit scheme
+5. Change the Build configuration to Release
 
 ##### Archiving
 
@@ -242,7 +257,19 @@ You may need to trust the app on your IOS device.
 3. Go to Device Management
 4. You will see a profile for the developer. Tap the name of the developer profile to establish trust.
 
+### 6. Node package ios version mismatch.
+
+Write targetted version of OS in both these locations. This has nothing to do with Device version. As of writing Ios 13 is the lastest version and it is supported Iphone 6 and above.
+
+ios/Podfile : eg platform :ios, '13.0'
+
+and
+
+ios/MakerApp.xcodeproj/project.pbxproj (all configruations): eg. IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+
 ### Running Project on Android
+
+> > > > > > > Stashed changes
 
 #### Java Development Kit
 
@@ -322,24 +349,23 @@ You can also open the Android project in Android Studio by selecting `open an ex
 #### Android Release
 
 1. Set build version env vars. `VERSION_CODE_OFFSET` is using format `5xxyyzz`. Corresponding to major, minor, patch. So v1.0.1, equal to 5010001. `APPCENTER_BUILD_ID` is always `0000000`.
-
-1. Open Android Studio in terminal, supplying the values from above:
+2. Open Android Studio in terminal, supplying the values from above:
 
 ```
 VERSION_CODE_OFFSET=5010003 APPCENTER_BUILD_ID=0000000 open Android\ Studio.app
 ```
 
 1. Build > Generate Signed APK.
-1. Use `com.nebra.helium.maker` keystore, `prod` key.
-1. Select `release` variant.
-1. Copy `/android/app/release/app-release.abb` to Google Play.
+2. Use `com.nebra.helium.maker` keystore, `prod` key.
+3. Select `release` variant.
+4. Copy `/android/app/release/app-release.abb` to Google Play.
 
 ## Release instructions
 
 1. Checkout feature branch with version name `git checkout -b release/v1.0.4`.
-1. Update the version in `package.json` to match the branch name.
-1. Create tag after PR merged to master `git tag -a v1.0.4 -m v1.0.4`.
-1. Push tag `git push origin --tags`.
+2. Update the version in `package.json` to match the branch name.
+3. Create tag after PR merged to master `git tag -a v1.0.4 -m v1.0.4`.
+4. Push tag `git push origin --tags`.
 
 ## Preparing for app stores
 

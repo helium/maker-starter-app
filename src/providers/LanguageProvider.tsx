@@ -3,9 +3,8 @@ import { useLanguage } from '../utils/i18n'
 
 const initialState = { language: 'en', changeLanguage: async () => undefined }
 
-const LanguageContext = createContext<ReturnType<typeof useLanguage>>(
-  initialState,
-)
+const LanguageContext =
+  createContext<ReturnType<typeof useLanguage>>(initialState)
 const { Provider } = LanguageContext
 
 const LanguageProvider = ({ children }: { children: ReactNode }) => {

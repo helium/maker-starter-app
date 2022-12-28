@@ -106,6 +106,7 @@ const App = () => {
     'Require cycle',
     'new NativeEventEmitter',
     'EventEmitter.removeListener(',
+    'Internal React error:',
   ])
 
   const { appState } = useAppState()
