@@ -1,32 +1,38 @@
+<manifest
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  package="com.nebra.helium.maker"
+  xmlns:tools="http://schemas.android.com/tools"
+>
+  <uses-permission android:name="android.permission.INTERNET"/>
+  <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+  <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
+  
+  <!-- Request legacy Bluetooth permissions on older devices. -->
+  <uses-permission android:name="android.permission.BLUETOOTH" android:maxSdkVersion="30"/>
+  <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" android:maxSdkVersion="30"/>
 
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.nebra.helium.maker"
-          xmlns:tools="http://schemas.android.com/tools">
-
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" tools:node="remove" />
-
-    <uses-permission android:name="android.permission.BLUETOOTH" />
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
-    <queries>
+  <uses-permission android:name="android.permission.BLUETOOTH_SCAN"/>
+  <uses-permission android:name="android.permission.BLUETOOTH_CONNECT"/>
+  <!-- <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE"/> -->
+  
+  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+  <queries>
     <!-- these filters don't provide much value other than making Linking.canOpen() succeed 
     on android. In the long run, the filters as well as canOpen() logic can be removed.-->
-       <intent>
-          <action android:name="android.intent.action.VIEW" />
-          <data android:scheme="https" android:host="wallet.helium.com" />
-       </intent>
-       <intent>
-          <action android:name="android.intent.action.VIEW" />
-          <data android:scheme="https" android:host="helium.com" />
-       </intent>
-    </queries>
-    <!-- Add this line if your application always requires BLE. More info can be found on:
+    <intent>
+      <action android:name="android.intent.action.VIEW"/>
+      <data android:scheme="https" android:host="wallet.helium.com"/>
+    </intent>
+    <intent>
+      <action android:name="android.intent.action.VIEW"/>
+      <data android:scheme="https" android:host="helium.com"/>
+    </intent>
+  </queries>
+  <!-- Add this line if your application always requires BLE. More info can be found on:
 
       https://developer.android.com/guide/topics/connectivity/bluetooth-le.html#permissions -->
+  <uses-feature android:name="android.hardware.bluetooth" android:required="true"/>
   <uses-feature android:name="android.hardware.bluetooth_le" android:required="true"/>
   <application
     android:name=".MainApplication"
