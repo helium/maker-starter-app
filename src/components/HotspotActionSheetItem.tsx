@@ -41,8 +41,8 @@ const HotspotActionSheetItem = ({
 
         <Text
           marginLeft={Icon ? 'ms' : 'none'}
-          color="purpleGrayLight"
           variant={selected ? 'medium' : 'regular'}
+          color="purpleGrayLight"
           fontSize={18}
           maxFontSizeMultiplier={1.2}
         >
@@ -66,8 +66,8 @@ const HotspotActionSheetItem = ({
 
       <Text
         marginLeft={Icon ? 'ms' : 'none'}
-        color={selected ? 'primaryText' : 'black'}
         variant={selected ? 'medium' : 'regular'}
+        color={selected ? 'primaryText' : 'black'}
         fontSize={18}
         maxFontSizeMultiplier={1.2}
       >

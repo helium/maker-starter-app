@@ -83,8 +83,8 @@ const HeliumBottomSheet = ({
           borderTopLeftRadius="l"
           borderTopRightRadius="l"
           height={sheetHeight}
-          backgroundColor="white"
           paddingHorizontal="lx"
+          backgroundColor="hotspotDialogSurface"
         >
           <Box
             flexDirection="row"
