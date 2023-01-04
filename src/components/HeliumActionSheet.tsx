@@ -205,10 +205,10 @@ const HeliumActionSheet = ({
         <Box flexDirection="row">
           {!!prefix && (
             <Text
-              color="surfaceText"
               maxFontSizeMultiplier={1}
               marginRight="xs"
               variant="body2"
+              color="surfaceText"
               fontSize={20}
               {...prefixTextProps}
             >
@@ -260,7 +260,6 @@ const HeliumActionSheet = ({
             borderTopRightRadius="l"
             height={sheetHeight}
             paddingHorizontal="lx"
-            backgroundColor="surface"
           >
             <Box
               flexDirection="row"

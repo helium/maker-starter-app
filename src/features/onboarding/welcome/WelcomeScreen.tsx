@@ -85,8 +85,8 @@ const WelcomeScreen = () => {
             }}
           >
             <Text
-              color="secondaryText"
               variant="body1"
+              color="secondaryText"
               style={{ textAlign: 'center' }}
             >
               {t('account_setup.welcome.login_with_helium')}
