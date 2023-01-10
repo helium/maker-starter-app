@@ -1,16 +1,11 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import {
-  LOCATION,
-  getAsync,
-  PermissionResponse,
-  PermissionStatus,
-} from 'expo-permissions'
+import * as Location from 'expo-location'
 import { getCurrentPosition, LocationCoords } from '../../utils/location'
 
 export type AppState = {
   currentLocation?: LocationCoords
   isLoadingLocation: boolean
-  permissionResponse?: PermissionResponse
+  permissionResponse?: Location.LocationPermissionResponse
   locationBlocked: boolean
 }
 const initialState: AppState = {
@@ -32,11 +27,12 @@ export const getLocation = createAsyncThunk(
 
 export const getLocationPermission = createAsyncThunk(
   'location/getLocationPermission',
-  async () => getAsync(LOCATION),
+  Location.getForegroundPermissionsAsync,
 )
 
-export const hasLocationPermission = (status?: PermissionStatus) =>
-  status === 'granted'
+export const hasLocationPermission = (
+  status?: Location.LocationPermissionResponse,
+) => status?.granted
 
 // This slice contains data related to the state of the app
 const appSlice = createSlice({
@@ -45,7 +41,9 @@ const appSlice = createSlice({
   reducers: {
     updateLocationPermission: (
       state,
-      { payload: permissionResponse }: { payload: PermissionResponse },
+      {
+        payload: permissionResponse,
+      }: { payload: Location.LocationPermissionResponse },
     ) => {
       state.permissionResponse = permissionResponse
       state.locationBlocked =

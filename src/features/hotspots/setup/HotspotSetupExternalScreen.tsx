@@ -1,12 +1,8 @@
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
 import Icon from '@assets/images/placeholder.svg'
-import {
-  BarCodeScanner,
-  BarCodeScannerResult,
-  usePermissions,
-} from 'expo-barcode-scanner'
+import { BarCodeScanner, BarCodeScannerResult } from 'expo-barcode-scanner'
 import { Camera } from 'expo-camera'
 import { useDebouncedCallback } from 'use-debounce/lib'
 import Toast from 'react-native-simple-toast'
@@ -36,10 +32,13 @@ const HotspotSetupExternalScreen = () => {
   const { handleBarCode } = useAppLinkContext()
   const { triggerNotification } = useHaptic()
   const navigation = useNavigation<RootNavigationProp>()
+  const [hasPermission, setHasPermission] = useState<boolean>()
 
-  const [perms] = usePermissions({
-    request: true,
-  })
+  useEffect(() => {
+    BarCodeScanner.requestPermissionsAsync().then(({ status }) =>
+      setHasPermission(status === 'granted'),
+    )
+  }, [])
 
   useMount(() => {
     getAddress().then(setAddress)
@@ -50,9 +49,10 @@ const HotspotSetupExternalScreen = () => {
     [params.hotspotType],
   )
 
-  const handleClose = useCallback(() => navigation.navigate('MainTabs'), [
-    navigation,
-  ])
+  const handleClose = useCallback(
+    () => navigation.navigate('MainTabs'),
+    [navigation],
+  )
 
   const handleBarCodeScanned = useDebouncedCallback(
     (result: BarCodeScannerResult) => {
@@ -148,6 +148,13 @@ const HotspotSetupExternalScreen = () => {
 
   const scrollViewStyle = useMemo(() => ({ borderRadius: xl }), [xl])
 
+  if (hasPermission === undefined) {
+    return <Text>Requesting for camera permission</Text>
+  }
+  if (hasPermission === false) {
+    return <Text>No access to camera</Text>
+  }
+
   return (
     <BackScreen
       backgroundColor="primaryBackground"
@@ -202,7 +209,7 @@ const HotspotSetupExternalScreen = () => {
           </Text>
         </TouchableOpacity>
 
-        {isQr && perms?.granted && (
+        {isQr && hasPermission && (
           <>
             <Box flex={1} />
             <Box

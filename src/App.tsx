@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler'
-import React, { useEffect, useMemo } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import {
   LogBox,
@@ -20,7 +20,9 @@ import { NavigationContainer } from '@react-navigation/native'
 import {
   HotspotBleProvider,
   OnboardingProvider,
+  SolanaProvider,
 } from '@helium/react-native-sdk'
+import { parseWalletLinkToken } from '@helium/wallet-link'
 import { theme, darkThemeColors, lightThemeColors } from './theme/theme'
 import NavigationRoot from './navigation/NavigationRoot'
 import { useAppDispatch } from './store/store'
@@ -69,12 +71,27 @@ const App = () => {
     isLocked,
   } = useSelector((state: RootState) => state.app)
 
+  const { walletLinkToken } = useSelector((state: RootState) => state.app)
+  const [heliumWallet, setHeliumWallet] = useState('')
+
   useMount(() => {
     dispatch(restoreAppSettings())
   })
 
   useEffect(() => {
-    MapboxGL.setAccessToken(Config.MAPBOX_ACCESS_TOKEN)
+    if (!walletLinkToken) {
+      if (heliumWallet) {
+        setHeliumWallet('')
+      }
+      return
+    }
+
+    const addr = parseWalletLinkToken(walletLinkToken).address
+    setHeliumWallet(addr)
+  }, [heliumWallet, walletLinkToken])
+
+  useEffect(() => {
+    MapboxGL.setAccessToken(Config.MAPBOX_ACCESS_TOKEN || '')
   }, [dispatch])
 
   // handle app state changes
@@ -123,29 +140,43 @@ const App = () => {
   )
 
   return (
-    <OnboardingProvider baseUrl="https://onboarding.dewi.org/api/v2">
-      <HotspotBleProvider>
-        <ThemeProvider theme={colorAdaptedTheme}>
-          <BottomSheetModalProvider>
-            <SafeAreaProvider>
-              {/* TODO: Will need to adapt status bar for light/dark modes */}
-              {Platform.OS === 'ios' && <StatusBar barStyle="light-content" />}
-              {Platform.OS === 'android' && (
-                <StatusBar translucent backgroundColor="transparent" />
-              )}
-              <NavigationContainer ref={navigationRef}>
-                <AppLinkProvider>
-                  <NavigationRoot />
-                </AppLinkProvider>
-              </NavigationContainer>
-            </SafeAreaProvider>
-            <SecurityScreen
-              visible={appState !== 'active' && appState !== 'unknown'}
-            />
-          </BottomSheetModalProvider>
-        </ThemeProvider>
-      </HotspotBleProvider>
-    </OnboardingProvider>
+    <SolanaProvider
+      cluster={
+        (Config.SOLANA_CLUSTER as 'devnet' | 'testnet' | 'mainnet-beta') ||
+        'devnet'
+      }
+      heliumWallet={heliumWallet}
+    >
+      <OnboardingProvider
+        baseUrl={
+          Config.ONBOARDING_BASE_URL || 'https://onboarding.dewi.org/api'
+        }
+      >
+        <HotspotBleProvider>
+          <ThemeProvider theme={colorAdaptedTheme}>
+            <BottomSheetModalProvider>
+              <SafeAreaProvider>
+                {/* TODO: Will need to adapt status bar for light/dark modes */}
+                {Platform.OS === 'ios' && (
+                  <StatusBar barStyle="light-content" />
+                )}
+                {Platform.OS === 'android' && (
+                  <StatusBar translucent backgroundColor="transparent" />
+                )}
+                <NavigationContainer ref={navigationRef}>
+                  <AppLinkProvider>
+                    <NavigationRoot />
+                  </AppLinkProvider>
+                </NavigationContainer>
+              </SafeAreaProvider>
+              <SecurityScreen
+                visible={appState !== 'active' && appState !== 'unknown'}
+              />
+            </BottomSheetModalProvider>
+          </ThemeProvider>
+        </HotspotBleProvider>
+      </OnboardingProvider>
+    </SolanaProvider>
   )
 }
 

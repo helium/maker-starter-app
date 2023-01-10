@@ -74,9 +74,8 @@ const HotspotSetupPickWifiScreen = () => {
   const { readWifiNetworks } = useHotspotBle()
 
   const [wifiNetworks, setWifiNetworks] = useState(networks)
-  const [connectedWifiNetworks, setConnectedWifiNetworks] = useState(
-    connectedNetworks,
-  )
+  const [connectedWifiNetworks, setConnectedWifiNetworks] =
+    useState(connectedNetworks)
   const [scanning, setScanning] = useState(false)
 
   const handleClose = useCallback(() => rootNav.navigate('MainTabs'), [rootNav])

@@ -2,6 +2,8 @@ import { Hotspot, PocReceiptsV2 } from '@helium/http'
 import { heliumHttpClient } from '@helium/react-native-sdk'
 import { fromNow } from './timeUtils'
 
+const MAX = 100000
+
 export const submitTxn = async (txn: string) => {
   return heliumHttpClient.transactions.submit(txn)
 }
@@ -27,6 +29,11 @@ export const getCurrentOraclePrice = async () => {
 
 export const getPredictedOraclePrice = async () => {
   return heliumHttpClient.oracle.getPredictedPrice()
+}
+
+export const getHotspots = async (address: string) => {
+  const newHotspotList = await heliumHttpClient.account(address).hotspots.list()
+  return newHotspotList.takeJSON(MAX)
 }
 
 export const hotspotOnChain = async (address: string) => {

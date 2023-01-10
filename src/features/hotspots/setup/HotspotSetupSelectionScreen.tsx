@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unused-prop-types */
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import React, { memo, useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -52,14 +53,23 @@ const HotspotSetupSelectionScreen = () => {
     [navigation, params],
   )
 
-  const keyExtractor = useCallback((item) => item, [])
+  const keyExtractor = useCallback(
+    (item: 'ExampleHotspotBLE' | 'ExampleHotspotQR') => item,
+    [],
+  )
 
   const data = useMemo(() => {
     return HotspotModelKeys
   }, [])
 
   const renderItem = useCallback(
-    ({ item, index }) => {
+    ({
+      item,
+      index,
+    }: {
+      item: 'ExampleHotspotBLE' | 'ExampleHotspotQR'
+      index: number
+    }) => {
       const isFirst = index === 0
       const isLast = index === data.length - 1
       return (

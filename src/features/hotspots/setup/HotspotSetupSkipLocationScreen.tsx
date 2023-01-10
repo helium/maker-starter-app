@@ -1,6 +1,9 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
+import { useOnboarding } from '@helium/react-native-sdk'
+import Config from 'react-native-config'
+import { HotspotType } from '@helium/onboarding'
 import {
   HotspotSetupNavigationProp,
   HotspotSetupStackParamList,
@@ -20,14 +23,43 @@ const HotspotSetupSkipLocationScreen = () => {
   const { t } = useTranslation()
   const navigation = useNavigation<HotspotSetupNavigationProp>()
   const rootNav = useNavigation<RootNavigationProp>()
+  const { getOnboardTransactions, getOnboardingRecord } = useOnboarding()
+  const [loading, setLoading] = useState(false)
 
   const { params } = useRoute<Route>()
 
   const handleClose = useCallback(() => rootNav.navigate('MainTabs'), [rootNav])
 
   const navNext = useCallback(async () => {
-    navigation.replace('HotspotTxnsProgressScreen', params)
-  }, [navigation, params])
+    setLoading(true)
+    try {
+      const onboardingRecord = await getOnboardingRecord(params.hotspotAddress)
+      let hotspotTypes = ['iot', 'mobile'] as HotspotType[]
+      /*
+           TODO: USE YOUR MAKER ADDRESS TO DETERMINE WHAT NETWORKS THIS HOTSPOT SUPPORTS
+           Something like this 👇
+           */
+      if (Config.MAKER_ADDRESS === onboardingRecord?.maker.address) {
+        hotspotTypes = ['iot']
+      }
+
+      const onboardTxns = await getOnboardTransactions({
+        txn: params.addGatewayTxn,
+        hotspotAddress: params.hotspotAddress,
+        hotspotTypes,
+      })
+      navigation.replace('HotspotTxnsProgressScreen', {
+        addGatewayTxn: onboardTxns.addGatewayTxn || '',
+        hotspotAddress: params.hotspotAddress,
+        solanaTransactions:
+          onboardTxns.solanaTransactions?.map((tx) => tx.toString('base64')) ||
+          [],
+        assertLocationTxn: '',
+      })
+    } catch (e) {
+      setLoading(false)
+    }
+  }, [getOnboardTransactions, getOnboardingRecord, navigation, params])
 
   return (
     <BackScreen onClose={handleClose}>
@@ -54,9 +86,11 @@ const HotspotSetupSkipLocationScreen = () => {
       </Box>
       <Box>
         <DebouncedButton
+          loading={loading}
           title={t('hotspot_setup.location_fee.next')}
           mode="contained"
           variant="secondary"
+          disabled={loading}
           onPress={navNext}
         />
       </Box>

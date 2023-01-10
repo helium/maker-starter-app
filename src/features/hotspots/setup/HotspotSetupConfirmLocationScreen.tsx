@@ -1,17 +1,13 @@
-import React, { useCallback, useEffect, useState } from 'react'
-import { ActivityIndicator, ScrollView } from 'react-native'
+import React, { useCallback, useMemo, useState } from 'react'
+import { ScrollView } from 'react-native'
 import { useTranslation } from 'react-i18next'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
-import {
-  Balance,
-  DataCredits,
-  Location,
-  NetworkTokens,
-  USDollars,
-  useOnboarding,
-} from '@helium/react-native-sdk'
-import type { Account } from '@helium/http'
+import { useOnboarding, AssertData } from '@helium/react-native-sdk'
 import { useAsync } from 'react-async-hook'
+import Config from 'react-native-config'
+import { first, last } from 'lodash'
+import animalName from 'angry-purple-tiger'
+import { HotspotType } from '@helium/onboarding'
 import {
   HotspotSetupNavigationProp,
   HotspotSetupStackParamList,
@@ -20,10 +16,8 @@ import BackScreen from '../../../components/BackScreen'
 import Box from '../../../components/Box'
 import { DebouncedButton } from '../../../components/Button'
 import Text from '../../../components/Text'
-import { decimalSeparator, groupSeparator } from '../../../utils/i18n'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
 import { getAddress } from '../../../utils/secureAccount'
-import { getAccount } from '../../../utils/appDataClient'
 import HotspotLocationPreview from './HotspotLocationPreview'
 
 type Route = RouteProp<
@@ -35,64 +29,93 @@ const HotspotSetupConfirmLocationScreen = () => {
   const { t } = useTranslation()
   const navigation = useNavigation<HotspotSetupNavigationProp>()
   const rootNav = useNavigation<RootNavigationProp>()
-  const [account, setAccount] = useState<Account>()
-  const [ownerAddress, setOwnerAddress] = useState<string | null>(null)
-  const [feeData, setFeeData] = useState<{
-    isFree: boolean
-    hasSufficientBalance: boolean
-    remainingFreeAsserts: number
-    totalStakingAmount: Balance<NetworkTokens>
-    totalStakingAmountDC: Balance<DataCredits>
-    totalStakingAmountUsd: Balance<USDollars>
-  }>()
+  const [assertData, setAssertData] = useState<AssertData>()
+  const [assertLocationTxn, setAssertLocationTxn] = useState<string>()
+  const [addGatewayTxn, setAddGatewayTxn] = useState<string>()
+  const [solanaTransactions, setSolanaTransactions] = useState<string[]>()
   const { params } = useRoute<Route>()
-  const { elevation, gain, coords } = params
-  const { getOnboardingRecord } = useOnboarding()
+  const { getAssertData, getOnboardingRecord, getOnboardTransactions } =
+    useOnboarding()
 
   useAsync(async () => {
-    const address = await getAddress()
-    if (!address) return
-    setOwnerAddress(address)
-  }, [])
+    const { elevation, gain, coords } = params
 
-  useEffect(() => {
-    if (!ownerAddress) return
-    getAccount(ownerAddress).then(setAccount)
-  }, [ownerAddress])
+    const userAddress = await getAddress()
 
-  useAsync(async () => {
-    const onboardingRecord = await getOnboardingRecord(params.hotspotAddress)
-    if (!onboardingRecord || !ownerAddress || !account?.balance) {
-      return
+    const lat = last(coords)
+    const lng = first(coords)
+
+    if (!lat || !lng || !userAddress) return
+
+    try {
+      let hotspotTypes = ['iot', 'mobile'] as HotspotType[]
+      const onboardingRecord = await getOnboardingRecord(params.hotspotAddress)
+      /*
+         TODO: USE YOUR MAKER ADDRESS TO DETERMINE WHAT NETWORKS THIS HOTSPOT SUPPORTS
+         Something like this 👇
+         */
+      if (Config.MAKER_ADDRESS === onboardingRecord?.maker.address) {
+        hotspotTypes = ['iot']
+      }
+
+      const isAddingGateway = !!params.addGatewayTxn
+
+      if (isAddingGateway) {
+        const onboardData = await getOnboardTransactions({
+          txn: params.addGatewayTxn,
+          hotspotAddress: params.hotspotAddress,
+          hotspotTypes,
+          elevation,
+          decimalGain: gain,
+          lat,
+          lng,
+        })
+
+        setAddGatewayTxn(onboardData.addGatewayTxn)
+        setSolanaTransactions(
+          onboardData.solanaTransactions?.map((tx) => tx.toString('base64')),
+        )
+      } else {
+        const data = await getAssertData({
+          decimalGain: gain,
+          elevation,
+          gateway: params.hotspotAddress,
+          lat,
+          lng,
+          owner: userAddress,
+          onboardingRecord,
+          hotspotTypes,
+        })
+
+        setAssertData(data)
+        setAssertLocationTxn(data.assertLocationTxn)
+        setSolanaTransactions(
+          data.solanaTransactions?.map((tx) => tx.toString('base64')),
+        )
+      }
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.error(e)
     }
+  }, [getAssertData, params])
 
-    Location.loadLocationFeeData({
-      nonce: 0,
-      accountIntegerBalance: account.balance.integerBalance,
-      dataOnly: false,
-      owner: ownerAddress,
-      locationNonceLimit: onboardingRecord.maker.locationNonceLimit,
-      makerAddress: onboardingRecord.maker.address,
-    }).then(setFeeData)
-  }, [ownerAddress, account, getOnboardingRecord, params.hotspotAddress])
+  const isFree = useMemo(() => {
+    if (!assertData) {
+      return true
+    }
+    return assertData.isFree
+  }, [assertData])
 
   const navNext = useCallback(async () => {
-    navigation.replace('HotspotTxnsProgressScreen', params)
-  }, [navigation, params])
+    navigation.replace('HotspotTxnsProgressScreen', {
+      addGatewayTxn: addGatewayTxn || '',
+      assertLocationTxn: assertLocationTxn || '',
+      solanaTransactions: solanaTransactions || [],
+      hotspotAddress: params.hotspotAddress,
+    })
+  }, [assertLocationTxn, addGatewayTxn, navigation, params, solanaTransactions])
 
   const handleClose = useCallback(() => rootNav.navigate('MainTabs'), [rootNav])
-
-  if (!feeData) {
-    return (
-      <BackScreen onClose={handleClose}>
-        <Box flex={1} justifyContent="center" paddingBottom="xxl">
-          <ActivityIndicator color="#687A8C" />
-        </Box>
-      </BackScreen>
-    )
-  }
-
-  const { isFree, hasSufficientBalance, totalStakingAmount } = feeData
 
   return (
     <BackScreen onClose={handleClose}>
@@ -125,6 +148,17 @@ const HotspotSetupConfirmLocationScreen = () => {
           >
             {t('hotspot_setup.location_fee.confirm_location')}
           </Text>
+
+          <Text
+            variant="body1"
+            marginBottom={{ phone: 'xl', smallPhone: 'ms' }}
+            numberOfLines={1}
+            adjustsFontSizeToFit
+            maxFontSizeMultiplier={1.3}
+            textAlign="center"
+          >
+            {animalName(params.hotspotAddress)}
+          </Text>
           <Box
             height={200}
             borderRadius="l"
@@ -132,7 +166,7 @@ const HotspotSetupConfirmLocationScreen = () => {
             marginBottom={{ phone: 'm', smallPhone: 'ms' }}
           >
             <HotspotLocationPreview
-              mapCenter={coords}
+              mapCenter={params.coords}
               locationName={params.locationName}
             />
           </Box>
@@ -146,7 +180,7 @@ const HotspotSetupConfirmLocationScreen = () => {
               {t('hotspot_setup.location_fee.gain_label')}
             </Text>
             <Text variant="body1" color="primaryText">
-              {t('hotspot_setup.location_fee.gain', { gain })}
+              {t('hotspot_setup.location_fee.gain', { gain: params.gain })}
             </Text>
           </Box>
 
@@ -159,7 +193,9 @@ const HotspotSetupConfirmLocationScreen = () => {
               {t('hotspot_setup.location_fee.elevation_label')}
             </Text>
             <Text variant="body1" color="primaryText">
-              {t('hotspot_setup.location_fee.elevation', { count: elevation })}
+              {t('hotspot_setup.location_fee.elevation', {
+                count: params.elevation,
+              })}
             </Text>
           </Box>
 
@@ -176,12 +212,13 @@ const HotspotSetupConfirmLocationScreen = () => {
                 </Text>
                 <Text
                   variant="body1"
-                  color={hasSufficientBalance ? 'secondaryText' : 'error'}
+                  color={
+                    assertData?.hasSufficientBalance ? 'secondaryText' : 'error'
+                  }
                 >
-                  {account?.balance?.toString(2, {
-                    groupSeparator,
-                    decimalSeparator,
-                  })}
+                  {`${assertData?.balances?.hnt?.toString(
+                    4,
+                  )} - ${assertData?.balances?.sol?.toString(4)}`}
                 </Text>
               </Box>
 
@@ -194,11 +231,14 @@ const HotspotSetupConfirmLocationScreen = () => {
                   {t('hotspot_setup.location_fee.fee')}
                 </Text>
                 <Text variant="body1" color="primaryText">
-                  {totalStakingAmount.toString(2)}
+                  {assertData?.heliumFee?.usd.toString(2)}
+                </Text>
+                <Text variant="body1" color="primaryText">
+                  {assertData?.solFee?.toString(2)}
                 </Text>
               </Box>
 
-              {!hasSufficientBalance && (
+              {!assertData?.hasSufficientBalance && (
                 <Box marginTop={{ phone: 'l', smallPhone: 'xxs' }}>
                   <Text variant="body2" color="error" textAlign="center">
                     {t('hotspot_setup.location_fee.no_funds')}
@@ -219,7 +259,7 @@ const HotspotSetupConfirmLocationScreen = () => {
           mode="contained"
           variant="secondary"
           onPress={navNext}
-          disabled={isFree ? false : !hasSufficientBalance}
+          disabled={isFree ? false : !assertData?.hasSufficientBalance}
         />
       </Box>
     </BackScreen>
