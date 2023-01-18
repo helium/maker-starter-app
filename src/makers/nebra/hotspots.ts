@@ -63,4 +63,31 @@ const HHRK4IN1BLE = {
   },
 } as MakerHotspot
 
-export default { IN1BLE, OUT1BLE, HHRK4IN1BLE }
+const NEBRA5GMAGMA = {
+    name: 'Nebra HNT 5G Gateway',
+    icon: IN1Icon,
+    onboardType: 'WEB',
+    translations: {
+      en: {
+        externalOnboard:
+        'Please onboard your Nebra HNT 5G Gateway by tapping the link below:',
+        power: [
+            "Attach the antenna's and plug in the provided power adapter.",
+            'The Hotspot PWR LED will light up once it’s powered on.',
+          ],
+        internal: [
+            {
+                title: "Onboard the hotspot",
+                body: "Please onboard your Nebra 5G Gateway by tapping the link below:",
+                button: 'Continue',
+            },
+        ],
+        },
+        ja: {},
+        ko: {},
+        zh: {},
+    },
+    onboardUrl: 'https://nebra.dashboard.helium.freedomfi.com//?wallet_id=WALLET',
+  } as MakerHotspot
+
+export default { IN1BLE, OUT1BLE, HHRK4IN1BLE, NEBRA5GMAGMA }

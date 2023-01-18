@@ -85,7 +85,7 @@ const HotspotSetupExternalConfirmScreen = () => {
         alignItems="center"
         justifyContent="center"
       >
-        <Fingerprint color={colors.primary} width={26} height={26} />
+        <Fingerprint color={colors.secondaryText} width={26} height={26} />
       </Box>
       <Text
         variant="h1"
@@ -106,11 +106,11 @@ const HotspotSetupExternalConfirmScreen = () => {
         marginTop={{ smallPhone: 'm', phone: 'xl' }}
         justifyContent="center"
       >
-        <Text variant="body1" maxFontSizeMultiplier={1}>
+        <Text variant="body1secondary" maxFontSizeMultiplier={1}>
           {t('hotspot_setup.confirm.public_key')}
         </Text>
         <Text
-          variant="body1"
+          variant="body1secondary"
           marginTop="xs"
           maxFontSizeMultiplier={1}
           numberOfLines={2}
@@ -126,11 +126,11 @@ const HotspotSetupExternalConfirmScreen = () => {
         justifyContent="center"
         alignItems="flex-start"
       >
-        <Text variant="body1" maxFontSizeMultiplier={1}>
+        <Text variant="body1secondary" maxFontSizeMultiplier={1}>
           {t('hotspot_setup.confirm.mac_address')}
         </Text>
         {macAddress ? (
-          <Text variant="body1" marginTop="xs" maxFontSizeMultiplier={1}>
+          <Text variant="body1secondary" marginTop="xs" maxFontSizeMultiplier={1}>
             {macAddress}
           </Text>
         ) : (
@@ -147,11 +147,11 @@ const HotspotSetupExternalConfirmScreen = () => {
         padding="l"
         justifyContent="center"
       >
-        <Text variant="body1" maxFontSizeMultiplier={1}>
+        <Text variant="body1secondary" maxFontSizeMultiplier={1}>
           {t('hotspot_setup.confirm.owner_address')}
         </Text>
         <Text
-          variant="body1"
+          variant="body1secondary"
           maxFontSizeMultiplier={1}
           marginTop="xs"
           numberOfLines={2}
