@@ -158,7 +158,7 @@ const HotspotSetupExternalScreen = () => {
           justifyContent="center"
         >
           {isQr ? (
-            <QrIcon color={colors.secondaryText } width={24} height={24} />
+            <QrIcon color={colors.secondaryText} width={24} height={24} />
           ) : (
             <LinkIcon color={colors.secondaryText} width={30} height={30} />
           )}

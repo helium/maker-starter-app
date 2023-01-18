@@ -130,7 +130,11 @@ const HotspotSetupExternalConfirmScreen = () => {
           {t('hotspot_setup.confirm.mac_address')}
         </Text>
         {macAddress ? (
-          <Text variant="body1secondary" marginTop="xs" maxFontSizeMultiplier={1}>
+          <Text
+            variant="body1secondary"
+            marginTop="xs"
+            maxFontSizeMultiplier={1}
+          >
             {macAddress}
           </Text>
         ) : (
