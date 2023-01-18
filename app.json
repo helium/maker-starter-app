@@ -2,6 +2,6 @@
   "name": "Nebra",
   "displayName": "Nebra Hotspot",
   "expo": {
-    "scheme": "makerappscheme"
+    "scheme": "nebrahotspot"
   }
 }
