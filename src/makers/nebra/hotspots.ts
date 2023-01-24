@@ -1,6 +1,7 @@
 import IN1Icon from './in1.svg'
 import OUT1Icon from './out1.svg'
 import INROCKPIIcon from './inrockpi.svg'
+import IN5GIcon from './in5g.svg'
 import { MakerHotspot } from '../hotspotMakerTypes'
 
 const IN1BLE = {
@@ -65,7 +66,7 @@ const HHRK4IN1BLE = {
 
 const NEBRA5GMAGMA = {
   name: 'Nebra HNT 5G Gateway',
-  icon: IN1Icon,
+  icon: IN5GIcon,
   onboardType: 'WEB',
   translations: {
     en: {

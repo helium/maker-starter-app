@@ -25,6 +25,7 @@ import { getAddress } from '../../../utils/secureAccount'
 import { getAccount, getHotspotDetails } from '../../../utils/appDataClient'
 import HotspotLocationPreview from './HotspotLocationPreview'
 import { loadLocationFeeData } from '../../../utils/assertLocationUtils'
+import * as Logger from '../../../utils/logger'
 
 type Route = RouteProp<
   HotspotSetupStackParamList,
@@ -68,7 +69,9 @@ const HotspotSetupConfirmLocationScreen = () => {
     let onboardingRecord
     try {
       onboardingRecord = await getOnboardingRecord(params.hotspotAddress)
-    } catch (error) {}
+    } catch (error) {
+      Logger.error(error)
+    }
 
     let hotspot
     try {
