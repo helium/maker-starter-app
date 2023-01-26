@@ -14,6 +14,7 @@ import { useAppDispatch } from '../../store/store'
 import { wp } from '../../utils/layout'
 import appSlice from '../../store/user/appSlice'
 import { fetchHotspotsData } from '../../store/hotspots/hotspotsSlice'
+import { openDashboardBrowser } from '../../utils/analytics/utils'
 
 const MainTab = createBottomTabNavigator()
 
@@ -91,7 +92,14 @@ const MainTabs = () => {
         }}
       />
       <MainTab.Screen name="More" component={More} />
-      <MainTab.Screen name="HmDashboard" component={HmDashboard} />
+      <MainTab.Screen
+        name="HmDashboard"
+        // using home screen instead of HmDashboard and open browser
+        component={Hotspots}
+        listeners={{
+          tabPress: openDashboardBrowser,
+        }}
+      />
       <MainTab.Screen name="Support" component={Support} />
     </MainTab.Navigator>
   )

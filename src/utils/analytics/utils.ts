@@ -1,3 +1,7 @@
+import { Linking } from 'react-native'
+import { URLSearchParams } from 'react-native-url-polyfill'
+import * as Logger from '../logger'
+
 const SOURCE = 'app'
 
 type Event = {
@@ -39,4 +43,23 @@ export const getEvent = (event: Event) => {
     return `${SOURCE}.${event.scope}_${event.sub_scope}.${event.action}`
   }
   return `${SOURCE}.${event.scope}.${event.action}`
+}
+
+const utmCampaign = {
+  utm_id: 'nebra_app.1',
+  utm_source: Platform.OS === 'ios' ? 'nebra_app_ios' : 'nebra_app_android',
+  utm_medium: 'app_home',
+  utm_campaign: 'nebra_app',
+}
+
+const utmQueryString = new URLSearchParams(utmCampaign).toString()
+
+export const getNebraDashboardUrl = () => {
+  return `https://dashboard.nebra.com/?${utmQueryString}`
+}
+
+export const openDashboardBrowser = () => {
+  Linking.openURL(getNebraDashboardUrl()).catch((err) =>
+    Logger.error("Couldn't load page", err),
+  )
 }

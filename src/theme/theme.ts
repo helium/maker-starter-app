@@ -35,6 +35,11 @@ const textVariants = {
     fontWeight: 'bold',
     color: 'primaryText',
   },
+  h4b: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    color: 'secondaryText',
+  },
   light: {
     fontFamily: Font.main.light,
     color: 'primaryText',
