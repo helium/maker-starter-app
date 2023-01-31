@@ -210,14 +210,20 @@ const App = () => {
   // hide splash screen
   useAsync(async () => {
     if (isRestored) {
-      await SplashScreen.hideAsync()
+      try {
+        await SplashScreen.hideAsync()
+      } catch (e) {
+        // not using expo splash screen, should be removed.
+      }
     }
   }, [isRestored])
 
   useEffect(() => {
     // Hide splash after 5 seconds, deal with the consequences?
     const timeout = setTimeout(() => {
-      SplashScreen.hideAsync()
+      SplashScreen.hideAsync().catch(() => {
+        // not using expo splash screen
+      })
     }, 5000)
     return () => clearInterval(timeout)
   }, [dispatch])

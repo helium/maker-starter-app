@@ -35,6 +35,11 @@ const textVariants = {
     fontWeight: 'bold',
     color: 'primaryText',
   },
+  h4b: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    color: 'secondaryText',
+  },
   light: {
     fontFamily: Font.main.light,
     color: 'primaryText',
@@ -56,6 +61,14 @@ const textVariants = {
   body1: {
     fontSize: 17,
     color: 'primaryText',
+  },
+  bodylink: {
+    fontSize: 17,
+    color: 'linkText',
+  },
+  body1secondary: {
+    fontSize: 17,
+    color: 'secondaryText',
   },
   body2: {
     fontSize: 14,
@@ -111,6 +124,7 @@ const palette = {
   offWhite: '#F9FAFC',
   nebraBlue: '#02A8F5',
   nebraDarkBlue: '#6169D0',
+  nebraLinkBlue: '#1323ee',
   nebraDarkGrey: '#5C636A',
   nebraGrey: '#424242',
   nebraBrown: '#1D1D1D',
@@ -139,6 +153,7 @@ export const lightThemeColors = {
   primaryTransparent: palette.nebraBlueTransparent,
   primaryBackground: palette.white,
   primaryText: palette.nebraBlue,
+  linkText: palette.nebraLinkBlue,
   secondaryBackground: palette.nebraBlue,
   secondary: palette.nebraGrey,
   secondaryText: palette.white,
@@ -164,6 +179,7 @@ export const darkThemeColors = {
   primaryTransparent: palette.nebraDarkTransparent,
   primaryBackground: palette.nebraGrey,
   primaryText: palette.white,
+  linkText: palette.nebraBlue,
   secondaryBackground: palette.nebraBrown,
   secondary: palette.nebraBrown,
   secondaryText: palette.white,

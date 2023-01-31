@@ -3,7 +3,10 @@ import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
 import Fingerprint from '@assets/images/fingerprint.svg'
 import { ActivityIndicator } from 'react-native'
-import { AddGateway, useOnboarding } from '@helium/react-native-sdk'
+import { useOnboarding } from '@helium/react-native-sdk'
+import { AddGatewayV1 } from '@helium/transactions'
+import { OnboardingRecord } from '@helium/onboarding'
+import Toast from 'react-native-simple-toast'
 import BackScreen from '../../../components/BackScreen'
 import Box from '../../../components/Box'
 import Text from '../../../components/Text'
@@ -17,6 +20,7 @@ import { DebouncedButton } from '../../../components/Button'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
 import { getAddress } from '../../../utils/secureAccount'
 import useMount from '../../../utils/useMount'
+import * as Logger from '../../../utils/logger'
 
 type Route = RouteProp<
   HotspotSetupStackParamList,
@@ -46,10 +50,22 @@ const HotspotSetupExternalConfirmScreen = () => {
     if (!publicKey) return
 
     const getRecord = async () => {
-      const onboardingRecord = await getOnboardingRecord(publicKey)
-      if (!onboardingRecord) return
+      let onboardingRecord: OnboardingRecord | null = null
+      try {
+        onboardingRecord = await getOnboardingRecord(publicKey)
+      } catch (e) {
+        if (e.message) {
+          Toast.showWithGravity(
+            `onboarding server: ${e.message}`,
+            Toast.LONG,
+            Toast.CENTER,
+          )
+        }
+        Logger.error(e)
+      }
+
       animateTransition('HotspotSetupExternalConfirmScreen.GetMac')
-      setMacAddress(onboardingRecord.macEth0 || t('generic.unknown'))
+      setMacAddress(onboardingRecord?.macEth0 || t('generic.unknown'))
     }
     getRecord()
   }, [getOnboardingRecord, publicKey, t])
@@ -57,7 +73,7 @@ const HotspotSetupExternalConfirmScreen = () => {
   useEffect(() => {
     if (!params.addGatewayTxn) return
 
-    const addGatewayTxn = AddGateway.txnFromString(params.addGatewayTxn)
+    const addGatewayTxn = AddGatewayV1.fromString(params.addGatewayTxn)
 
     setPublicKey(addGatewayTxn.gateway?.b58 || '')
     setOwnerAddress(addGatewayTxn.owner?.b58 || '')
@@ -85,7 +101,7 @@ const HotspotSetupExternalConfirmScreen = () => {
         alignItems="center"
         justifyContent="center"
       >
-        <Fingerprint color={colors.primary} width={26} height={26} />
+        <Fingerprint color={colors.secondaryText} width={26} height={26} />
       </Box>
       <Text
         variant="h1"
@@ -106,11 +122,11 @@ const HotspotSetupExternalConfirmScreen = () => {
         marginTop={{ smallPhone: 'm', phone: 'xl' }}
         justifyContent="center"
       >
-        <Text variant="body1" maxFontSizeMultiplier={1}>
+        <Text variant="body1secondary" maxFontSizeMultiplier={1}>
           {t('hotspot_setup.confirm.public_key')}
         </Text>
         <Text
-          variant="body1"
+          variant="body1secondary"
           marginTop="xs"
           maxFontSizeMultiplier={1}
           numberOfLines={2}
@@ -126,11 +142,15 @@ const HotspotSetupExternalConfirmScreen = () => {
         justifyContent="center"
         alignItems="flex-start"
       >
-        <Text variant="body1" maxFontSizeMultiplier={1}>
+        <Text variant="body1secondary" maxFontSizeMultiplier={1}>
           {t('hotspot_setup.confirm.mac_address')}
         </Text>
         {macAddress ? (
-          <Text variant="body1" marginTop="xs" maxFontSizeMultiplier={1}>
+          <Text
+            variant="body1secondary"
+            marginTop="xs"
+            maxFontSizeMultiplier={1}
+          >
             {macAddress}
           </Text>
         ) : (
@@ -147,11 +167,11 @@ const HotspotSetupExternalConfirmScreen = () => {
         padding="l"
         justifyContent="center"
       >
-        <Text variant="body1" maxFontSizeMultiplier={1}>
+        <Text variant="body1secondary" maxFontSizeMultiplier={1}>
           {t('hotspot_setup.confirm.owner_address')}
         </Text>
         <Text
-          variant="body1"
+          variant="body1secondary"
           maxFontSizeMultiplier={1}
           marginTop="xs"
           numberOfLines={2}

@@ -22,7 +22,7 @@ const LinkAccount = () => {
         const url = createWalletLinkUrl({
           universalLink: app.universalLink,
           requestAppId: getBundleId(),
-          callbackUrl: 'makerappscheme://',
+          callbackUrl: 'nebrahotspot://',
           appName: 'Nebra Hotspot',
         })
 

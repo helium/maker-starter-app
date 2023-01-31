@@ -6,7 +6,6 @@
   <uses-permission android:name="android.permission.INTERNET"/>
   <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
   <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-  <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
   
   <!-- Request legacy Bluetooth permissions on older devices. -->
   <uses-permission android:name="android.permission.BLUETOOTH" android:maxSdkVersion="30"/>
@@ -49,17 +48,23 @@
       android:configChanges="keyboard|keyboardHidden|orientation|screenSize|uiMode"
       android:launchMode="singleTask"
       android:windowSoftInputMode="adjustPan"
-      android:theme="@style/Theme.App.SplashScreen"
     >
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
         <category android:name="android.intent.category.LAUNCHER"/>
       </intent-filter>
+      <intent-filter android:autoVerify="true">
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+        <data android:host="www.nebra.com" />
+        <data android:scheme="https" />
+      </intent-filter>
       <intent-filter>
         <action android:name="android.intent.action.VIEW"/>
         <category android:name="android.intent.category.DEFAULT"/>
         <category android:name="android.intent.category.BROWSABLE"/>
-        <data android:scheme="makerappscheme"/>
+        <data android:scheme="nebrahotspot"/>
       </intent-filter>
     </activity>
   </application>

@@ -2,6 +2,10 @@
   "name": "Nebra",
   "displayName": "Nebra Hotspot",
   "expo": {
-    "scheme": "makerappscheme"
+    "scheme": "nebrahotspot",
+    "splash": {
+      "image": "./res/drawable/splashscreen_image.png",
+      "backgroundColor": "#21749A"
+    }
   }
 }

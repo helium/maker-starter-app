@@ -1,13 +1,10 @@
 import React, { useCallback, useMemo, useState } from 'react'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
-import Icon from '@assets/images/placeholder.svg'
-import {
-  BarCodeScanner,
-  BarCodeScannerResult,
-  usePermissions,
-} from 'expo-barcode-scanner'
-import { Camera } from 'expo-camera'
+import QrIcon from '@assets/images/qr.svg'
+import LinkIcon from '@assets/images/webLink.svg'
+import { BarCodeScanner } from 'expo-barcode-scanner'
+import { BarCodeScanningResult, Camera } from 'expo-camera'
 import { useDebouncedCallback } from 'use-debounce/lib'
 import Toast from 'react-native-simple-toast'
 import { StyleSheet, Linking, ScrollView } from 'react-native'
@@ -37,10 +34,6 @@ const HotspotSetupExternalScreen = () => {
   const { triggerNotification } = useHaptic()
   const navigation = useNavigation<RootNavigationProp>()
 
-  const [perms] = usePermissions({
-    request: true,
-  })
-
   useMount(() => {
     getAddress().then(setAddress)
   })
@@ -56,7 +49,7 @@ const HotspotSetupExternalScreen = () => {
   )
 
   const handleBarCodeScanned = useDebouncedCallback(
-    (result: BarCodeScannerResult) => {
+    (result: BarCodeScanningResult) => {
       try {
         handleBarCode(result, 'add_gateway', {
           hotspotType: params.hotspotType,
@@ -108,7 +101,7 @@ const HotspotSetupExternalScreen = () => {
       <TouchableOpacity onPress={openMakerUrl(url)}>
         <Text
           fontSize={{ smallPhone: 15, phone: 19 }}
-          color="primary"
+          color="linkText"
           lineHeight={{ smallPhone: 20, phone: 26 }}
           maxFontSizeMultiplier={1}
           numberOfLines={1}
@@ -164,7 +157,11 @@ const HotspotSetupExternalScreen = () => {
           alignItems="center"
           justifyContent="center"
         >
-          <Icon color={colors.primary} width={24} height={24} />
+          {isQr ? (
+            <QrIcon color={colors.secondaryText} width={24} height={24} />
+          ) : (
+            <LinkIcon color={colors.secondaryText} width={30} height={30} />
+          )}
         </Box>
         <Text
           variant="h1"
@@ -203,7 +200,7 @@ const HotspotSetupExternalScreen = () => {
           </Text>
         </TouchableOpacity>
 
-        {isQr && perms?.granted && (
+        {isQr && (
           <>
             <Box flex={1} />
             <Box

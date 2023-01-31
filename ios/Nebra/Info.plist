@@ -27,7 +27,7 @@
 				<string>Editor</string>
 				<key>CFBundleURLSchemes</key>
 				<array>
-					<string>makerappscheme</string>
+					<string>nebrahotspot</string>
 				</array>
                         </dict>
                 </array>

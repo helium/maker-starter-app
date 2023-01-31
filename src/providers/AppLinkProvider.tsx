@@ -28,7 +28,7 @@ import {
 import { useAppDispatch } from '../store/store'
 import appSlice from '../store/user/appSlice'
 
-export const APP_LINK_PROTOCOL = 'makerappscheme://'
+export const APP_LINK_PROTOCOL = 'nebrahotspot://'
 
 export const createAppLink = (
   resource: AppLinkCategoryType,

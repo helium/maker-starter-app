@@ -28,6 +28,8 @@ export default {
     goto: {
       nebra_dashboard: {
         title: 'Advanced Fleet Management',
+        external_browser:
+          'The dashboard opens in a separate browser window for account security.',
         subtitle:
           'Remotely control and monitor the health of all your Nebra hotspots',
       },
@@ -65,7 +67,7 @@ export default {
       create_account: 'Create an account on the Helium Network',
       login_with_helium: 'Already have a Helium Wallet?\nTap to get started.',
       subtitle:
-        'Nebra Hotspot currently supports hotspot onboarding, location assertion, and device transfers.\n\n<b>You must also have the official Helium App installed in order to continue.</b>',
+        'Nebra Hotspot currently supports hotspot onboarding, location assertion, and device transfers.\n\n<b>You must also have the official Helium Wallet App installed in order to continue.</b>',
       title: 'Welcome\nto Nebra',
     },
     linkAccount: {
