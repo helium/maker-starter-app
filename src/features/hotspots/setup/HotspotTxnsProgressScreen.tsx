@@ -28,19 +28,10 @@ const HotspotTxnsProgressScreen = () => {
     const updateParams = {
       token,
       platform: Platform.OS,
+      addGatewayTxn: params.addGatewayTxn,
+      assertLocationTxn: params.assertLocationTxn,
+      solanaTransactions: params.solanaTransactions?.join(','),
     } as SignHotspotRequest
-
-    if (params.addGatewayTxn) {
-      updateParams.addGatewayTxn = params.addGatewayTxn
-    }
-
-    if (params.assertLocationTxn) {
-      updateParams.assertLocationTxn = params.assertLocationTxn
-    }
-
-    if (params.solanaTransactions?.length) {
-      updateParams.solanaTransactions = params.solanaTransactions.join(',')
-    }
 
     const url = createUpdateHotspotUrl(updateParams)
     if (!url) {

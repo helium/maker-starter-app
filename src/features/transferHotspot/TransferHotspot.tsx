@@ -43,7 +43,7 @@ const TransferHotspot = () => {
 
     try {
       const userAddress = (await getAddress()) || ''
-      const { solanaTransaction, transferHotspotTxn } =
+      const { solanaTransactions, transferHotspotTxn } =
         await createTransferTransaction({
           hotspotAddress,
           userAddress,
@@ -54,7 +54,7 @@ const TransferHotspot = () => {
         platform: Platform.OS,
         token,
         transferHotspotTxn,
-        solanaTransactions: solanaTransaction,
+        solanaTransactions: solanaTransactions?.join(','),
       })
       if (!url) throw new Error('Link could not be created')
       // open in the Helium wallet app
