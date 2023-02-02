@@ -26,14 +26,14 @@ const HotspotScreen = () => {
     return [`${pieces[0]} ${pieces[1]}`, pieces[2]]
   }, [hotspot])
 
-  const assertHotspot = useCallback(
-    () =>
-      navigation.navigate('HotspotAssert', {
-        screen: 'HotspotSetupPickLocationScreen',
-        params: { hotspotAddress: hotspot.address },
-      }),
-    [hotspot.address, navigation],
-  )
+  const assertHotspot = useCallback(() => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    navigation.navigate('HotspotAssert', {
+      screen: 'HotspotSetupPickLocationScreen',
+      params: { hotspotAddress: hotspot.address },
+    })
+  }, [hotspot.address, navigation])
 
   const transferHotspot = useCallback(
     () =>

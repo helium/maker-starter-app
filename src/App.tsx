@@ -32,6 +32,7 @@ import AppLinkProvider from './providers/AppLinkProvider'
 import { navigationRef } from './navigation/navigator'
 import useMount from './utils/useMount'
 import { getAddress } from './utils/secureAccount'
+import useCheckWalletLink from './utils/useCheckWalletLink'
 
 SplashScreen.preventAutoHideAsync().catch(() => {
   /* reloading the app might trigger some race conditions, ignore them */
@@ -39,6 +40,8 @@ SplashScreen.preventAutoHideAsync().catch(() => {
 
 const App = () => {
   const colorScheme = useColorScheme()
+
+  useCheckWalletLink()
 
   if (Platform.OS === 'android') {
     if (UIManager.setLayoutAnimationEnabledExperimental) {

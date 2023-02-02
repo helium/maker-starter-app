@@ -34,12 +34,9 @@ export default {
       subtitle: 'Let’s secure your account with a PIN Code.',
       title: 'Set PIN Code',
     },
-    createAccount: {
-      signInWith: 'Sign in with:',
-    },
     generating: 'GENERATING YOUR 12 WORDS...',
     linkAccount: {
-      stepOne: '1. Download a supported Wallet App',
+      stepOne: '1. Download the Wallet App',
       stepThree: '3. Come back to this app and sign in.',
       stepTwo: '2. Create account',
     },
@@ -57,7 +54,8 @@ export default {
     },
     welcome: {
       create_account: 'Create an account on the Helium Network',
-      login_with_helium: 'Already have a Helium Wallet?\nTap to get started.',
+      login_with_helium:
+        'Already have the Helium Wallet App?\nTap to get started.',
       subtitle:
         'Lorem ipsum <b><errorText>$HNT</errorText></b> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
       title: 'Welcome\nto Maker App',
@@ -364,5 +362,11 @@ export default {
   },
   wallet: {
     copiedToClipboard: 'Copied {{address}} to clipboard',
+    checkLink: {
+      title: 'Update required',
+      message:
+        "You're currently linked to the Helium Hotspot app. You must download the Helium Wallet App and update your link",
+      link: 'Link to Helium Wallet App',
+    },
   },
 }
