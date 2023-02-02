@@ -50,16 +50,11 @@ const TransferHotspot = () => {
           newOwnerAddress,
         })
 
-      let solanaTransactions: string | undefined
-      if (solanaTransaction) {
-        solanaTransactions = solanaTransaction.toString('base64')
-      }
-
       const url = createUpdateHotspotUrl({
         platform: Platform.OS,
         token,
         transferHotspotTxn,
-        solanaTransactions,
+        solanaTransactions: solanaTransaction,
       })
       if (!url) throw new Error('Link could not be created')
       // open in the Helium wallet app

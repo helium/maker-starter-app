@@ -100,9 +100,9 @@ export type HotspotSetupStackParamList = {
   }
   HotspotTxnsProgressScreen: {
     addGatewayTxn: string
-    assertLocationTxn: string
-    solanaTransactions: string[]
-    hotspotAddress: string
+    assertLocationTxn?: string
+    solanaTransactions?: string[]
+    hotspotAddress?: string
   }
   NotHotspotOwnerErrorScreen: undefined
   OwnedHotspotErrorScreen: undefined

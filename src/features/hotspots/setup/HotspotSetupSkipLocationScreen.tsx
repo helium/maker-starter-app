@@ -34,12 +34,14 @@ const HotspotSetupSkipLocationScreen = () => {
     setLoading(true)
     try {
       const onboardingRecord = await getOnboardingRecord(params.hotspotAddress)
-      let hotspotTypes = ['iot', 'mobile'] as HotspotType[]
+      let hotspotTypes = [] as HotspotType[]
       /*
-           TODO: USE YOUR MAKER ADDRESS TO DETERMINE WHAT NETWORKS THIS HOTSPOT SUPPORTS
-           Something like this 👇
-           */
-      if (Config.MAKER_ADDRESS === onboardingRecord?.maker.address) {
+         TODO: Determine which network types this hotspot supports
+         Could possibly use the maker address
+      */
+      if (Config.MAKER_ADDRESS_5G === onboardingRecord?.maker.address) {
+        hotspotTypes = ['iot', 'mobile']
+      } else {
         hotspotTypes = ['iot']
       }
 
@@ -51,9 +53,7 @@ const HotspotSetupSkipLocationScreen = () => {
       navigation.replace('HotspotTxnsProgressScreen', {
         addGatewayTxn: onboardTxns.addGatewayTxn || '',
         hotspotAddress: params.hotspotAddress,
-        solanaTransactions:
-          onboardTxns.solanaTransactions?.map((tx) => tx.toString('base64')) ||
-          [],
+        solanaTransactions: onboardTxns.solanaTransactions,
         assertLocationTxn: '',
       })
     } catch (e) {

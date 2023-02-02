@@ -29,9 +29,9 @@ export type HotspotAssertStackParamList = {
   }
 
   HotspotTxnsProgressScreen: {
-    addGatewayTxn: string
-    assertLocationTxn: string
-    solanaTransactions: string[]
+    addGatewayTxn?: string
+    assertLocationTxn?: string
+    solanaTransactions?: string[]
     hotspotAddress: string
   }
 

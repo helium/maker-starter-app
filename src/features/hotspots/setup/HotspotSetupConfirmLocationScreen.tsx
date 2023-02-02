@@ -48,13 +48,15 @@ const HotspotSetupConfirmLocationScreen = () => {
     if (!lat || !lng || !userAddress) return
 
     try {
-      let hotspotTypes = ['iot', 'mobile'] as HotspotType[]
+      let hotspotTypes = [] as HotspotType[]
       const onboardingRecord = await getOnboardingRecord(params.hotspotAddress)
       /*
-         TODO: USE YOUR MAKER ADDRESS TO DETERMINE WHAT NETWORKS THIS HOTSPOT SUPPORTS
-         Something like this 👇
-         */
-      if (Config.MAKER_ADDRESS === onboardingRecord?.maker.address) {
+         TODO: Determine which network types this hotspot supports
+         Could possibly use the maker address
+      */
+      if (Config.MAKER_ADDRESS_5G === onboardingRecord?.maker.address) {
+        hotspotTypes = ['iot', 'mobile']
+      } else {
         hotspotTypes = ['iot']
       }
 
@@ -72,9 +74,7 @@ const HotspotSetupConfirmLocationScreen = () => {
         })
 
         setAddGatewayTxn(onboardData.addGatewayTxn)
-        setSolanaTransactions(
-          onboardData.solanaTransactions?.map((tx) => tx.toString('base64')),
-        )
+        setSolanaTransactions(onboardData.solanaTransactions)
       } else {
         const data = await getAssertData({
           decimalGain: gain,
@@ -89,9 +89,7 @@ const HotspotSetupConfirmLocationScreen = () => {
 
         setAssertData(data)
         setAssertLocationTxn(data.assertLocationTxn)
-        setSolanaTransactions(
-          data.solanaTransactions?.map((tx) => tx.toString('base64')),
-        )
+        setSolanaTransactions(data.solanaTransactions)
       }
     } catch (e) {
       // eslint-disable-next-line no-console
@@ -231,10 +229,12 @@ const HotspotSetupConfirmLocationScreen = () => {
                   {t('hotspot_setup.location_fee.fee')}
                 </Text>
                 <Text variant="body1" color="primaryText">
-                  {assertData?.heliumFee?.usd.toString(2)}
+                  {assertData?.fees?.dc
+                    ?.toUsd(assertData.oraclePrice)
+                    .toString(2)}
                 </Text>
                 <Text variant="body1" color="primaryText">
-                  {assertData?.solFee?.toString(2)}
+                  {assertData?.fees?.sol?.toString(2)}
                 </Text>
               </Box>
 

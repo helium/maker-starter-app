@@ -23,6 +23,7 @@ import {
   SolanaProvider,
 } from '@helium/react-native-sdk'
 import { parseWalletLinkToken } from '@helium/wallet-link'
+import { Cluster } from '@solana/web3.js'
 import { theme, darkThemeColors, lightThemeColors } from './theme/theme'
 import NavigationRoot from './navigation/NavigationRoot'
 import { useAppDispatch } from './store/store'
@@ -141,10 +142,7 @@ const App = () => {
 
   return (
     <SolanaProvider
-      cluster={
-        (Config.SOLANA_CLUSTER as 'devnet' | 'testnet' | 'mainnet-beta') ||
-        'devnet'
-      }
+      cluster={(Config.SOLANA_CLUSTER as Cluster) || 'devnet'}
       heliumWallet={heliumWallet}
     >
       <OnboardingProvider

@@ -16,12 +16,7 @@ const HotspotTxnsSubmitScreen = () => {
   const { t } = useTranslation()
   const { params } = useRoute<Route>()
   const navigation = useNavigation<RootNavigationProp>()
-  const {
-    submitAssertLocation,
-    submitAddGateway,
-    submitSolanaTransactions,
-    submitTransferHotspot,
-  } = useOnboarding()
+  const { submitTransactions } = useOnboarding()
   const submitted = useRef(false)
 
   useAsync(async () => {
@@ -33,61 +28,27 @@ const HotspotTxnsSubmitScreen = () => {
 
     submitted.current = true
 
-    if (params.gatewayTxn) {
-      try {
-        const { pendingTxn: pendingGatewayTxn } = await submitAddGateway({
-          hotspotAddress: params.gatewayAddress,
-          addGatewayTxn: params.gatewayTxn,
-        })
-        // eslint-disable-next-line no-console
-        console.log({ pendingGatewayTxn })
-      } catch (e) {
-        // eslint-disable-next-line no-console
-        console.error(e)
-      }
-    }
+    const solanaTransactions = params.solanaTransactions?.split(',') || []
+    const {
+      pendingAssertTxn,
+      pendingGatewayTxn,
+      pendingTransferTxn,
+      solanaTxnIds,
+    } = await submitTransactions({
+      addGatewayTxn: params.gatewayTxn,
+      assertLocationTxn: params.assertTxn,
+      hotspotAddress: params.gatewayAddress,
+      solanaTransactions,
+      transferHotspotTxn: params.transferTxn,
+    })
 
-    if (params.assertTxn) {
-      try {
-        const { pendingTxn: pendingAssertTxn } = await submitAssertLocation({
-          assertLocationTxn: params.assertTxn,
-          gateway: params.gatewayAddress,
-        })
-
-        // eslint-disable-next-line no-console
-        console.log({ pendingAssertTxn })
-      } catch (e) {
-        // eslint-disable-next-line no-console
-        console.error(e)
-      }
-    }
-
-    if (params.transferTxn) {
-      try {
-        const { pendingTxn: pendingTransferTxn } = await submitTransferHotspot({
-          transferHotspotTxn: params.transferTxn,
-        })
-        // eslint-disable-next-line no-console
-        console.log({ pendingTransferTxn })
-      } catch (e) {
-        // eslint-disable-next-line no-console
-        console.error(e)
-      }
-    }
-
-    if (params.solanaTransactions) {
-      try {
-        const txns = params.solanaTransactions.split(',')
-        const txnIds = await submitSolanaTransactions({
-          solanaTransactions: txns,
-        })
-        // eslint-disable-next-line no-console
-        console.log({ txnIds })
-      } catch (e) {
-        // eslint-disable-next-line no-console
-        console.log(e)
-      }
-    }
+    // eslint-disable-next-line no-console
+    console.log({
+      pendingAssertTxn,
+      pendingGatewayTxn,
+      pendingTransferTxn,
+      solanaTxnIds,
+    })
   }, [])
 
   return (
