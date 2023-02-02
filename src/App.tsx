@@ -22,8 +22,6 @@ import {
   OnboardingProvider,
   SolanaProvider,
 } from '@helium/react-native-sdk'
-import { parseWalletLinkToken } from '@helium/wallet-link'
-import { Cluster } from '@solana/web3.js'
 import { theme, darkThemeColors, lightThemeColors } from './theme/theme'
 import NavigationRoot from './navigation/NavigationRoot'
 import { useAppDispatch } from './store/store'
@@ -33,6 +31,7 @@ import SecurityScreen from './features/security/SecurityScreen'
 import AppLinkProvider from './providers/AppLinkProvider'
 import { navigationRef } from './navigation/navigator'
 import useMount from './utils/useMount'
+import { getAddress } from './utils/secureAccount'
 
 SplashScreen.preventAutoHideAsync().catch(() => {
   /* reloading the app might trigger some race conditions, ignore them */
@@ -73,11 +72,7 @@ const App = () => {
   } = useSelector((state: RootState) => state.app)
 
   const { walletLinkToken } = useSelector((state: RootState) => state.app)
-  const [heliumWallet, setHeliumWallet] = useState('')
-
-  useMount(() => {
-    dispatch(restoreAppSettings())
-  })
+  const [heliumWallet, setHeliumWallet] = useState<string>()
 
   useEffect(() => {
     if (!walletLinkToken) {
@@ -87,9 +82,12 @@ const App = () => {
       return
     }
 
-    const addr = parseWalletLinkToken(walletLinkToken).address
-    setHeliumWallet(addr)
+    getAddress().then(setHeliumWallet)
   }, [heliumWallet, walletLinkToken])
+
+  useMount(() => {
+    dispatch(restoreAppSettings())
+  })
 
   useEffect(() => {
     MapboxGL.setAccessToken(Config.MAPBOX_ACCESS_TOKEN || '')
@@ -141,15 +139,8 @@ const App = () => {
   )
 
   return (
-    <SolanaProvider
-      cluster={(Config.SOLANA_CLUSTER as Cluster) || 'devnet'}
-      heliumWallet={heliumWallet}
-    >
-      <OnboardingProvider
-        baseUrl={
-          Config.ONBOARDING_BASE_URL || 'https://onboarding.dewi.org/api'
-        }
-      >
+    <SolanaProvider heliumWallet={heliumWallet} cluster="mainnet-beta">
+      <OnboardingProvider baseUrl="https://onboarding.dewi.org/api">
         <HotspotBleProvider>
           <ThemeProvider theme={colorAdaptedTheme}>
             <BottomSheetModalProvider>
