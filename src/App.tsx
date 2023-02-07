@@ -142,8 +142,12 @@ const App = () => {
   )
 
   return (
-    <SolanaProvider heliumWallet={heliumWallet} cluster="mainnet-beta">
-      <OnboardingProvider baseUrl="https://onboarding.dewi.org/api">
+    <SolanaProvider
+      heliumWallet={heliumWallet}
+      cluster="devnet"
+      solanaStatusOverride="complete"
+    >
+      <OnboardingProvider baseUrl="https://onboarding.oracle.test-helium.com/api">
         <HotspotBleProvider>
           <ThemeProvider theme={colorAdaptedTheme}>
             <BottomSheetModalProvider>

@@ -229,12 +229,12 @@ const HotspotSetupConfirmLocationScreen = () => {
                   {t('hotspot_setup.location_fee.fee')}
                 </Text>
                 <Text variant="body1" color="primaryText">
-                  {assertData?.fees?.dc
+                  {assertData?.ownerFees?.dc
                     ?.toUsd(assertData.oraclePrice)
                     .toString(2)}
                 </Text>
                 <Text variant="body1" color="primaryText">
-                  {assertData?.fees?.sol?.toString(2)}
+                  {assertData?.ownerFees?.sol?.toString(2)}
                 </Text>
               </Box>
 

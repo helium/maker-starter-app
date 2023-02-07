@@ -27,7 +27,10 @@ const HotspotsScreen = () => {
     }
 
     if (status.isSolana) {
-      const solHotspots = await getSolHotspots({ heliumAddress })
+      const solHotspots = await getSolHotspots({
+        heliumAddress,
+        // makerName: "your_maker_name"
+      })
       const nextHotspots = solHotspots?.map((h) => {
         const address = h.content.json_uri.split('/').slice(-1)[0]
         return { address, ...h }
