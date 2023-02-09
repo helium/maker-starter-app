@@ -31,11 +31,9 @@ const HotspotSetupConfirmLocationScreen = () => {
   const rootNav = useNavigation<RootNavigationProp>()
   const [assertData, setAssertData] = useState<AssertData>()
   const [assertLocationTxn, setAssertLocationTxn] = useState<string>()
-  const [addGatewayTxn, setAddGatewayTxn] = useState<string>()
   const [solanaTransactions, setSolanaTransactions] = useState<string[]>()
   const { params } = useRoute<Route>()
-  const { getAssertData, getOnboardingRecord, getOnboardTransactions } =
-    useOnboarding()
+  const { getAssertData, getOnboardingRecord } = useOnboarding()
 
   useAsync(async () => {
     const { elevation, gain, coords } = params
@@ -60,22 +58,7 @@ const HotspotSetupConfirmLocationScreen = () => {
         hotspotTypes = ['iot']
       }
 
-      const isAddingGateway = !!params.addGatewayTxn
-
-      if (isAddingGateway) {
-        const onboardData = await getOnboardTransactions({
-          txn: params.addGatewayTxn,
-          hotspotAddress: params.hotspotAddress,
-          hotspotTypes,
-          elevation,
-          decimalGain: gain,
-          lat,
-          lng,
-        })
-
-        setAddGatewayTxn(onboardData.addGatewayTxn)
-        setSolanaTransactions(onboardData.solanaTransactions)
-      } else {
+      if (!params.addGatewayTxn) {
         const data = await getAssertData({
           decimalGain: gain,
           elevation,
@@ -106,12 +89,15 @@ const HotspotSetupConfirmLocationScreen = () => {
 
   const navNext = useCallback(async () => {
     navigation.replace('HotspotTxnsProgressScreen', {
-      addGatewayTxn: addGatewayTxn || '',
+      addGatewayTxn: params.addGatewayTxn,
       assertLocationTxn: assertLocationTxn || '',
       solanaTransactions: solanaTransactions || [],
       hotspotAddress: params.hotspotAddress,
+      coords: params.coords,
+      elevation: params.elevation,
+      gain: params.gain,
     })
-  }, [assertLocationTxn, addGatewayTxn, navigation, params, solanaTransactions])
+  }, [assertLocationTxn, navigation, params, solanaTransactions])
 
   const handleClose = useCallback(() => rootNav.navigate('MainTabs'), [rootNav])
 

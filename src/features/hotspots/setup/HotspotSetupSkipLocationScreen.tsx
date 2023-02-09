@@ -1,9 +1,6 @@
 import React, { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
-import { useOnboarding } from '@helium/react-native-sdk'
-import Config from 'react-native-config'
-import { HotspotType } from '@helium/onboarding'
 import {
   HotspotSetupNavigationProp,
   HotspotSetupStackParamList,
@@ -23,7 +20,6 @@ const HotspotSetupSkipLocationScreen = () => {
   const { t } = useTranslation()
   const navigation = useNavigation<HotspotSetupNavigationProp>()
   const rootNav = useNavigation<RootNavigationProp>()
-  const { getOnboardTransactions, getOnboardingRecord } = useOnboarding()
   const [loading, setLoading] = useState(false)
 
   const { params } = useRoute<Route>()
@@ -33,33 +29,14 @@ const HotspotSetupSkipLocationScreen = () => {
   const navNext = useCallback(async () => {
     setLoading(true)
     try {
-      const onboardingRecord = await getOnboardingRecord(params.hotspotAddress)
-      let hotspotTypes = [] as HotspotType[]
-      /*
-         TODO: Determine which network types this hotspot supports
-         Could possibly use the maker address
-      */
-      if (Config.MAKER_ADDRESS_5G === onboardingRecord?.maker.address) {
-        hotspotTypes = ['iot', 'mobile']
-      } else {
-        hotspotTypes = ['iot']
-      }
-
-      const onboardTxns = await getOnboardTransactions({
-        txn: params.addGatewayTxn,
-        hotspotAddress: params.hotspotAddress,
-        hotspotTypes,
-      })
       navigation.replace('HotspotTxnsProgressScreen', {
-        addGatewayTxn: onboardTxns.addGatewayTxn || '',
+        addGatewayTxn: params.addGatewayTxn,
         hotspotAddress: params.hotspotAddress,
-        solanaTransactions: onboardTxns.solanaTransactions,
-        assertLocationTxn: '',
       })
     } catch (e) {
       setLoading(false)
     }
-  }, [getOnboardTransactions, getOnboardingRecord, navigation, params])
+  }, [navigation, params])
 
   return (
     <BackScreen onClose={handleClose}>

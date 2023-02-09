@@ -1,8 +1,12 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
 import { ActivityIndicator, Linking, Platform } from 'react-native'
 import { createUpdateHotspotUrl, SignHotspotRequest } from '@helium/wallet-link'
+import { useOnboarding } from '@helium/react-native-sdk'
+import { first, last } from 'lodash'
+import { HotspotType } from '@helium/onboarding'
+import Config from 'react-native-config'
 import Box from '../../../components/Box'
 import Text from '../../../components/Text'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
@@ -20,31 +24,86 @@ const HotspotTxnsProgressScreen = () => {
   const { params } = useRoute<Route>()
   const navigation = useNavigation<RootNavigationProp>()
   const { primaryText } = useColors()
+  const { createHotspotNFT, getOnboardTransactions, getOnboardingRecord } =
+    useOnboarding()
 
-  const navToHeliumAppForSigning = async () => {
-    const token = await getSecureItem('walletLinkToken')
-    if (!token) throw new Error('Token Not found')
+  const navToHeliumAppForSigning = useCallback(
+    async (onboardTransactions?: string[]) => {
+      const token = await getSecureItem('walletLinkToken')
+      if (!token) throw new Error('Token Not found')
 
-    const updateParams = {
-      token,
-      platform: Platform.OS,
-      addGatewayTxn: params.addGatewayTxn,
-      assertLocationTxn: params.assertLocationTxn,
-      solanaTransactions: params.solanaTransactions?.join(','),
-    } as SignHotspotRequest
+      const solanaTransactions = [
+        ...(onboardTransactions || []),
+        ...(params.solanaTransactions || []),
+      ].join(',')
 
-    const url = createUpdateHotspotUrl(updateParams)
-    if (!url) {
-      // eslint-disable-next-line no-console
-      console.error('Link could not be created')
-      return
+      const updateParams = {
+        token,
+        platform: Platform.OS,
+        addGatewayTxn: params.addGatewayTxn,
+        assertLocationTxn: params.assertLocationTxn,
+        solanaTransactions,
+      } as SignHotspotRequest
+
+      const url = createUpdateHotspotUrl(updateParams)
+      if (!url) {
+        // eslint-disable-next-line no-console
+        console.error('Link could not be created')
+        return
+      }
+
+      Linking.openURL(url)
+    },
+    [params],
+  )
+
+  const handleAddGateway = useCallback(async () => {
+    if (!params.addGatewayTxn || !params.hotspotAddress) return
+
+    // This creates the hotspot, signing not required
+    const createResponse = await createHotspotNFT(params.addGatewayTxn)
+    if (!createResponse?.length) {
+      throw new Error('Could not create hotspot')
     }
 
-    Linking.openURL(url)
-  }
+    let hotspotTypes = [] as HotspotType[]
+    const onboardingRecord = await getOnboardingRecord(params.hotspotAddress)
+    /*
+         TODO: Determine which network types this hotspot supports
+         Could possibly use the maker address
+      */
+    if (Config.MAKER_ADDRESS_5G === onboardingRecord?.maker.address) {
+      hotspotTypes = ['iot', 'mobile']
+    } else {
+      hotspotTypes = ['iot']
+    }
+
+    const { solanaTransactions } = await getOnboardTransactions({
+      txn: params.addGatewayTxn,
+      hotspotAddress: params.hotspotAddress,
+      hotspotTypes,
+      lat: last(params.coords),
+      lng: first(params.coords),
+      elevation: params.elevation,
+      decimalGain: params.gain,
+    })
+    if (!solanaTransactions) return
+
+    navToHeliumAppForSigning(solanaTransactions)
+  }, [
+    createHotspotNFT,
+    getOnboardTransactions,
+    getOnboardingRecord,
+    navToHeliumAppForSigning,
+    params,
+  ])
 
   useMount(() => {
-    navToHeliumAppForSigning()
+    if (params.addGatewayTxn) {
+      handleAddGateway()
+    } else {
+      navToHeliumAppForSigning()
+    }
   })
 
   return (

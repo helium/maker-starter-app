@@ -103,6 +103,9 @@ export type HotspotSetupStackParamList = {
     assertLocationTxn?: string
     solanaTransactions?: string[]
     hotspotAddress?: string
+    elevation?: number
+    gain?: number
+    coords?: number[]
   }
   NotHotspotOwnerErrorScreen: undefined
   OwnedHotspotErrorScreen: undefined

@@ -147,7 +147,11 @@ const App = () => {
       cluster="devnet"
       solanaStatusOverride="complete"
     >
-      <OnboardingProvider baseUrl="https://onboarding.oracle.test-helium.com/api">
+      <OnboardingProvider
+        baseUrl={
+          Config.MAKER_ADDRESS || 'https://onboarding.web.test-helium.com/api'
+        }
+      >
         <HotspotBleProvider>
           <ThemeProvider theme={colorAdaptedTheme}>
             <BottomSheetModalProvider>
