@@ -143,13 +143,15 @@ const App = () => {
 
   return (
     <SolanaProvider
-      heliumWallet={heliumWallet}
       cluster="devnet"
+      rpcEndpoint="https://api.devnet.rpcpool.com/95eb1755-7ea0-4512-acac-822a5f2f9931"
+      heliumWallet={heliumWallet}
       solanaStatusOverride="complete"
     >
       <OnboardingProvider
         baseUrl={
-          Config.MAKER_ADDRESS || 'https://onboarding.web.test-helium.com/api'
+          Config.ONBOARDING_BASE_URL ||
+          'https://onboarding.web.test-helium.com/api'
         }
       >
         <HotspotBleProvider>

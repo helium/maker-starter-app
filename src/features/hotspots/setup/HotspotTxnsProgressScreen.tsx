@@ -24,7 +24,7 @@ const HotspotTxnsProgressScreen = () => {
   const { params } = useRoute<Route>()
   const navigation = useNavigation<RootNavigationProp>()
   const { primaryText } = useColors()
-  const { createHotspotNFT, getOnboardTransactions, getOnboardingRecord } =
+  const { createHotspot, getOnboardTransactions, getOnboardingRecord } =
     useOnboarding()
 
   const navToHeliumAppForSigning = useCallback(
@@ -61,7 +61,7 @@ const HotspotTxnsProgressScreen = () => {
     if (!params.addGatewayTxn || !params.hotspotAddress) return
 
     // This creates the hotspot, signing not required
-    const createResponse = await createHotspotNFT(params.addGatewayTxn)
+    const createResponse = await createHotspot(params.addGatewayTxn)
     if (!createResponse?.length) {
       throw new Error('Could not create hotspot')
     }
@@ -91,7 +91,7 @@ const HotspotTxnsProgressScreen = () => {
 
     navToHeliumAppForSigning(solanaTransactions)
   }, [
-    createHotspotNFT,
+    createHotspot,
     getOnboardTransactions,
     getOnboardingRecord,
     navToHeliumAppForSigning,

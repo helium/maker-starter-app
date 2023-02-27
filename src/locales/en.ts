@@ -203,7 +203,7 @@ export default {
       gain: '{{gain}} dBi',
       gain_label: 'TX / RX Gain:',
       next: 'Register Hotspot',
-      no_funds: 'There is insufficient HNT in your account balance',
+      no_funds: 'There is insufficient funds in your account balance',
       subtitle_fee: 'You need to pay a Location Fee to confirm this location.',
       subtitle_free: 'Your Location Fee has been prepaid.',
       title: 'Location Fee',

@@ -4,12 +4,12 @@ PODS:
   - DoubleConversion (1.1.6)
   - EXApplication (5.0.1):
     - ExpoModulesCore
-  - EXBarCodeScanner (12.1.0):
+  - EXBarCodeScanner (12.3.1):
     - EXImageLoader
     - ExpoModulesCore
     - ZXingObjC/OneD
     - ZXingObjC/PDF417
-  - EXCamera (13.1.0):
+  - EXCamera (13.2.1):
     - ExpoModulesCore
   - EXConstants (14.0.2):
     - ExpoModulesCore
@@ -19,25 +19,25 @@ PODS:
     - ExpoModulesCore
   - EXFont (11.0.1):
     - ExpoModulesCore
-  - EXImageLoader (4.0.0):
+  - EXImageLoader (4.1.1):
     - ExpoModulesCore
     - React-Core
-  - EXLocalAuthentication (13.0.2):
+  - EXLocation (15.1.1):
     - ExpoModulesCore
-  - EXLocation (15.0.1):
-    - ExpoModulesCore
-  - EXPermissions (14.0.0):
+  - EXPermissions (14.1.1):
     - ExpoModulesCore
   - Expo (47.0.13):
     - ExpoModulesCore
-  - ExpoHaptics (12.0.1):
+  - ExpoHaptics (12.2.1):
     - ExpoModulesCore
   - ExpoKeepAwake (11.0.1):
+    - ExpoModulesCore
+  - ExpoLocalAuthentication (13.2.1):
     - ExpoModulesCore
   - ExpoModulesCore (1.1.1):
     - React-Core
     - ReactCommon/turbomodule/core
-  - EXSecureStore (12.0.0):
+  - EXSecureStore (12.1.1):
     - ExpoModulesCore
   - EXSplashScreen (0.17.5):
     - ExpoModulesCore
@@ -113,8 +113,9 @@ PODS:
     - FlipperKit/FlipperKitNetworkPlugin
   - fmt (6.2.1)
   - glog (0.3.5)
-  - helium-react-native-sdk (1.0.0):
+  - helium-react-native-sdk (2.0.0):
     - React-Core
+  - hermes-engine (0.70.6)
   - libevent (2.1.12)
   - Mapbox-iOS-SDK (5.9.0):
     - MapboxMobileEvents (= 0.10.2)
@@ -132,6 +133,12 @@ PODS:
     - DoubleConversion
     - fmt (~> 6.2.1)
     - glog
+  - RCT-Folly/Futures (2021.07.22.00):
+    - boost
+    - DoubleConversion
+    - fmt (~> 6.2.1)
+    - glog
+    - libevent
   - RCTRequired (0.70.6)
   - RCTTypeSafety (0.70.6):
     - FBLazyVector (= 0.70.6)
@@ -309,6 +316,17 @@ PODS:
     - React-logger (= 0.70.6)
     - React-perflogger (= 0.70.6)
     - React-runtimeexecutor (= 0.70.6)
+  - React-hermes (0.70.6):
+    - DoubleConversion
+    - glog
+    - hermes-engine
+    - RCT-Folly (= 2021.07.22.00)
+    - RCT-Folly/Futures (= 2021.07.22.00)
+    - React-cxxreact (= 0.70.6)
+    - React-jsi (= 0.70.6)
+    - React-jsiexecutor (= 0.70.6)
+    - React-jsinspector (= 0.70.6)
+    - React-perflogger (= 0.70.6)
   - React-jsi (0.70.6):
     - boost (= 1.76.0)
     - DoubleConversion
@@ -499,12 +517,12 @@ DEPENDENCIES:
   - EXFileSystem (from `../node_modules/expo-file-system/ios`)
   - EXFont (from `../node_modules/expo-font/ios`)
   - EXImageLoader (from `../node_modules/expo-image-loader/ios`)
-  - EXLocalAuthentication (from `../node_modules/expo-local-authentication/ios`)
   - EXLocation (from `../node_modules/expo-location/ios`)
   - EXPermissions (from `../node_modules/expo-permissions/ios`)
   - Expo (from `../node_modules/expo`)
   - ExpoHaptics (from `../node_modules/expo-haptics/ios`)
   - ExpoKeepAwake (from `../node_modules/expo-keep-awake/ios`)
+  - ExpoLocalAuthentication (from `../node_modules/expo-local-authentication/ios`)
   - ExpoModulesCore (from `../node_modules/expo-modules-core`)
   - EXSecureStore (from `../node_modules/expo-secure-store/ios`)
   - EXSplashScreen (from `../node_modules/expo-splash-screen/ios`)
@@ -533,6 +551,8 @@ DEPENDENCIES:
   - FlipperKit/SKIOSNetworkPlugin (= 0.125.0)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
   - "helium-react-native-sdk (from `../node_modules/@helium/react-native-sdk`)"
+  - hermes-engine (from `../node_modules/react-native/sdks/hermes/hermes-engine.podspec`)
+  - libevent (~> 2.1.12)
   - OpenSSL-Universal (= 1.1.1100)
   - RCT-Folly (from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
   - RCTRequired (from `../node_modules/react-native/Libraries/RCTRequired`)
@@ -546,6 +566,7 @@ DEPENDENCIES:
   - React-Core/RCTWebSocket (from `../node_modules/react-native/`)
   - React-CoreModules (from `../node_modules/react-native/React/CoreModules`)
   - React-cxxreact (from `../node_modules/react-native/ReactCommon/cxxreact`)
+  - React-hermes (from `../node_modules/react-native/ReactCommon/hermes`)
   - React-jsi (from `../node_modules/react-native/ReactCommon/jsi`)
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
@@ -624,8 +645,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/expo-font/ios"
   EXImageLoader:
     :path: "../node_modules/expo-image-loader/ios"
-  EXLocalAuthentication:
-    :path: "../node_modules/expo-local-authentication/ios"
   EXLocation:
     :path: "../node_modules/expo-location/ios"
   EXPermissions:
@@ -636,6 +655,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/expo-haptics/ios"
   ExpoKeepAwake:
     :path: "../node_modules/expo-keep-awake/ios"
+  ExpoLocalAuthentication:
+    :path: "../node_modules/expo-local-authentication/ios"
   ExpoModulesCore:
     :path: "../node_modules/expo-modules-core"
   EXSecureStore:
@@ -650,6 +671,8 @@ EXTERNAL SOURCES:
     :podspec: "../node_modules/react-native/third-party-podspecs/glog.podspec"
   helium-react-native-sdk:
     :path: "../node_modules/@helium/react-native-sdk"
+  hermes-engine:
+    :podspec: "../node_modules/react-native/sdks/hermes/hermes-engine.podspec"
   RCT-Folly:
     :podspec: "../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec"
   RCTRequired:
@@ -670,6 +693,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/React/CoreModules"
   React-cxxreact:
     :path: "../node_modules/react-native/ReactCommon/cxxreact"
+  React-hermes:
+    :path: "../node_modules/react-native/ReactCommon/hermes"
   React-jsi:
     :path: "../node_modules/react-native/ReactCommon/jsi"
   React-jsiexecutor:
@@ -742,21 +767,21 @@ SPEC CHECKSUMS:
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
   DoubleConversion: 5189b271737e1565bdce30deb4a08d647e3f5f54
   EXApplication: 034b1c40a8e9fe1bff76a1e511ee90dff64ad834
-  EXBarCodeScanner: cb4deb49e59b6c7ed6bbf38d187802359908d2a8
-  EXCamera: eaf52a96480d4ae1505a9b5e139c244581b5f8ca
+  EXBarCodeScanner: a0ce3f62afd873351c7a5743649574b57422bb7d
+  EXCamera: a323a5942b5e7fc8349e17d728e91c18840ad561
   EXConstants: 3c86653c422dd77e40d10cbbabb3025003977415
   EXErrorRecovery: ae43433feb0608a64dc5b1c8363b3e7769a9ea24
   EXFileSystem: 60602b6eefa6873f97172c684b7537c9760b50d6
   EXFont: 319606bfe48c33b5b5063fb0994afdc496befe80
-  EXImageLoader: 84b65e6bd9d3345d6fbb3ab936a546c54496a64d
-  EXLocalAuthentication: 78cc5a00b13745b41d16d189ab332b61a01299f9
-  EXLocation: 7d08926d931f4fb619bfa25e73669f1e19b102c6
-  EXPermissions: a2007c82e5d3ffeb2e2dbc78ef65ae464dd1ee57
+  EXImageLoader: fd053169a8ee932dd83bf1fe5487a50c26d27c2b
+  EXLocation: 74a0ba446f54fd585ea6cfcd19a25644bf22c30d
+  EXPermissions: 2291c6736a823b4c680d5bf8e12d3c1c5d11da35
   Expo: b9fa98bf260992312ee3c424400819fb9beadafe
-  ExpoHaptics: 5a56d30a87ea213dd00b09566dc4b441a4dff97f
+  ExpoHaptics: 5156bc5160d8e04c170dd6e645a71154951a2ad9
   ExpoKeepAwake: 69b59d0a8d2b24de9f82759c39b3821fec030318
+  ExpoLocalAuthentication: b870b7a8df5e15b8b0be042185a2bb7764093096
   ExpoModulesCore: 485dff3a59b036a33b6050c0a5aea3cf1037fdd1
-  EXSecureStore: daec0117c922a67c658cb229152a9e252e5c1750
+  EXSecureStore: e8923258361cc406d0401af380f12bd05b2b720f
   EXSplashScreen: 3e989924f61a8dd07ee4ea584c6ba14be9b51949
   FBLazyVector: 48289402952f4f7a4e235de70a9a590aa0b79ef4
   FBReactNativeSpec: dd1186fd05255e3457baa2f4ca65e94c2cd1e3ac
@@ -770,14 +795,15 @@ SPEC CHECKSUMS:
   Flipper-RSocket: d9d9ade67cbecf6ac10730304bf5607266dd2541
   FlipperKit: cbdee19bdd4e7f05472a66ce290f1b729ba3cb86
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
-  glog: 04b94705f318337d7ead9e6d17c019bd9b1f6b1b
-  helium-react-native-sdk: bbe6bc62f4ae96da00c4579a99af5e726e08c8b2
+  glog: 791fe035093b84822da7f0870421a25839ca7870
+  helium-react-native-sdk: 5447e096662e6ec048e07f66c3da8eb3b4891b0b
+  hermes-engine: 2af7b7a59128f250adfd86f15aa1d5a2ecd39995
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   Mapbox-iOS-SDK: a5915700ec84bc1a7f8b3e746d474789e35b7956
   MapboxMobileEvents: 2bc0ca2eedb627b73cf403258dce2b2fa98074a6
   MultiplatformBleAdapter: 5a6a897b006764392f9cef785e4360f54fb9477d
   OpenSSL-Universal: ebc357f1e6bc71fa463ccb2fe676756aff50e88c
-  RCT-Folly: 0080d0a6ebf2577475bda044aa59e2ca1f909cda
+  RCT-Folly: 766adb69dc1d6294bcc94a950a818a87adb3a766
   RCTRequired: e1866f61af7049eb3d8e08e8b133abd38bc1ca7a
   RCTTypeSafety: 27c2ac1b00609a432ced1ae701247593f07f901e
   React: bb3e06418d2cc48a84f9666a576c7b38e89cd7db
@@ -787,6 +813,7 @@ SPEC CHECKSUMS:
   React-Core: b587d0a624f9611b0e032505f3d6f25e8daa2bee
   React-CoreModules: c6ff48b985e7aa622e82ca51c2c353c7803eb04e
   React-cxxreact: ade3d9e63c599afdead3c35f8a8bd12b3da6730b
+  React-hermes: ed09ae33512bbb8d31b2411778f3af1a2eb681a1
   React-jsi: 5a3952e0c6d57460ad9ee2c905025b4c28f71087
   React-jsiexecutor: b4a65947391c658450151275aa406f2b8263178f
   React-jsinspector: 60769e5a0a6d4b32294a2456077f59d0266f9a8b
@@ -825,6 +852,6 @@ SPEC CHECKSUMS:
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
   ZXingObjC: fdbb269f25dd2032da343e06f10224d62f537bdb
 
-PODFILE CHECKSUM: ae1b6572cac75bcd8878a32fc870b585861af3d8
+PODFILE CHECKSUM: 1664b911dbc43f3d9616e039017ca5221136fc22
 
 COCOAPODS: 1.11.3

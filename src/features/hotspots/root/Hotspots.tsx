@@ -1,21 +1,23 @@
-import React, { memo, useCallback, useMemo } from 'react'
+import React, { memo, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-import { FlatList } from 'react-native'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { FlatList, StatusBar } from 'react-native'
 import animalName from 'angry-purple-tiger'
 import { useNavigation } from '@react-navigation/native'
+import AddIcon from '@assets/images/add.svg'
 import Text from '../../../components/Text'
 import TouchableOpacityBox from '../../../components/TouchableOpacityBox'
 import Chevron from '../../../assets/images/chevron-right.svg'
 import { Hotspot, HotspotNavigationProp } from './hotspotTypes'
+import Box from '../../../components/Box'
+import { useColors } from '../../../theme/themeHooks'
+import { RootNavigationProp } from '../../../navigation/main/tabTypes'
 
 type Props = { hotspots: Hotspot[] }
 const Hotspots = ({ hotspots }: Props) => {
   const { t } = useTranslation()
-  const { top } = useSafeAreaInsets()
+  const colors = useColors()
   const navigation = useNavigation<HotspotNavigationProp>()
-
-  const contentContainerStyle = useMemo(() => ({ paddingVertical: top }), [top])
+  const rootNav = useNavigation<RootNavigationProp>()
 
   const handleNav = useCallback(
     (hotspot: Hotspot) => () => {
@@ -23,6 +25,8 @@ const Hotspots = ({ hotspots }: Props) => {
     },
     [navigation],
   )
+
+  const addHotspot = useCallback(() => rootNav.push('HotspotSetup'), [rootNav])
 
   const renderItem = useCallback(
     // eslint-disable-next-line react/no-unused-prop-types
@@ -52,17 +56,30 @@ const Hotspots = ({ hotspots }: Props) => {
   }, [])
 
   return (
-    <FlatList
-      contentContainerStyle={contentContainerStyle}
-      ListHeaderComponent={
-        <Text variant="h1" textAlign="center" marginBottom="l">
-          {t('hotspots.title')}
-        </Text>
-      }
-      data={hotspots}
-      renderItem={renderItem}
-      keyExtractor={keyExtractor}
-    />
+    <>
+      <StatusBar hidden />
+      <FlatList
+        ListHeaderComponent={
+          <Box>
+            <Box alignItems="flex-end">
+              <TouchableOpacityBox
+                paddingVertical="l"
+                paddingHorizontal="lx"
+                onPress={addHotspot}
+              >
+                <AddIcon color={colors.primaryText} />
+              </TouchableOpacityBox>
+            </Box>
+            <Text variant="h1" textAlign="center" marginBottom="l">
+              {t('hotspots.title')}
+            </Text>
+          </Box>
+        }
+        data={hotspots}
+        renderItem={renderItem}
+        keyExtractor={keyExtractor}
+      />
+    </>
   )
 }
 

@@ -1,13 +1,19 @@
 import React, { useCallback, useMemo, useState } from 'react'
-import { ScrollView } from 'react-native'
+import { ActivityIndicator, ScrollView } from 'react-native'
 import { useTranslation } from 'react-i18next'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
-import { useOnboarding, AssertData } from '@helium/react-native-sdk'
+import {
+  useOnboarding,
+  AssertData,
+  useSolana,
+  Balance,
+} from '@helium/react-native-sdk'
 import { useAsync } from 'react-async-hook'
 import Config from 'react-native-config'
 import { first, last } from 'lodash'
 import animalName from 'angry-purple-tiger'
 import { HotspotType } from '@helium/onboarding'
+import { CurrencyType } from '@helium/currency'
 import {
   HotspotSetupNavigationProp,
   HotspotSetupStackParamList,
@@ -34,6 +40,7 @@ const HotspotSetupConfirmLocationScreen = () => {
   const [solanaTransactions, setSolanaTransactions] = useState<string[]>()
   const { params } = useRoute<Route>()
   const { getAssertData, getOnboardingRecord } = useOnboarding()
+  const { status } = useSolana()
 
   useAsync(async () => {
     const { elevation, gain, coords } = params
@@ -55,7 +62,7 @@ const HotspotSetupConfirmLocationScreen = () => {
       if (Config.MAKER_ADDRESS_5G === onboardingRecord?.maker.address) {
         hotspotTypes = ['iot', 'mobile']
       } else {
-        hotspotTypes = ['iot']
+        hotspotTypes = ['mobile']
       }
 
       if (!params.addGatewayTxn) {
@@ -81,11 +88,28 @@ const HotspotSetupConfirmLocationScreen = () => {
   }, [getAssertData, params])
 
   const isFree = useMemo(() => {
-    if (!assertData) {
-      return true
-    }
-    return assertData.isFree
+    return assertData?.isFree
   }, [assertData])
+
+  const disabled = useMemo(() => {
+    if (isFree) return false
+
+    if (status.inProgress) return true
+
+    if (assertData?.hasSufficientBalance || status.isHelium) {
+      return !assertData?.hasSufficientBalance
+    }
+
+    if (assertData?.hasSufficientSol && !assertData?.hasSufficientDc) {
+      const walletHntBalance =
+        assertData.balances?.hnt || new Balance(0, CurrencyType.networkToken)
+      return !(
+        (assertData.dcNeeded?.integerBalance || 0) <=
+        walletHntBalance.toDataCredits(assertData.oraclePrice).integerBalance
+      )
+    }
+    return true
+  }, [assertData, isFree, status])
 
   const navNext = useCallback(async () => {
     navigation.replace('HotspotTxnsProgressScreen', {
@@ -100,6 +124,14 @@ const HotspotSetupConfirmLocationScreen = () => {
   }, [assertLocationTxn, navigation, params, solanaTransactions])
 
   const handleClose = useCallback(() => rootNav.navigate('MainTabs'), [rootNav])
+
+  if (isFree === undefined) {
+    return (
+      <Box flex={1} alignItems="center" justifyContent="center">
+        <ActivityIndicator color="black" />
+      </Box>
+    )
+  }
 
   return (
     <BackScreen onClose={handleClose}>
@@ -194,16 +226,28 @@ const HotspotSetupConfirmLocationScreen = () => {
                 <Text variant="body1" color="secondaryText">
                   {t('hotspot_setup.location_fee.balance')}
                 </Text>
-                <Text
-                  variant="body1"
-                  color={
-                    assertData?.hasSufficientBalance ? 'secondaryText' : 'error'
-                  }
-                >
-                  {`${assertData?.balances?.hnt?.toString(
-                    4,
-                  )} - ${assertData?.balances?.sol?.toString(4)}`}
-                </Text>
+                <Box>
+                  <Text
+                    variant="body1"
+                    color={disabled ? 'error' : 'secondaryText'}
+                  >
+                    {assertData?.balances?.hnt?.toString(4)}
+                  </Text>
+                  <Text
+                    variant="body1"
+                    color={disabled ? 'error' : 'secondaryText'}
+                  >
+                    {assertData?.balances?.dc?.toString(4)}
+                  </Text>
+                  <Text
+                    variant="body1"
+                    color={
+                      assertData?.hasSufficientSol ? 'secondaryText' : 'error'
+                    }
+                  >
+                    {assertData?.balances?.sol?.toString(4)}
+                  </Text>
+                </Box>
               </Box>
 
               <Box
@@ -224,7 +268,7 @@ const HotspotSetupConfirmLocationScreen = () => {
                 </Text>
               </Box>
 
-              {!assertData?.hasSufficientBalance && (
+              {disabled && (
                 <Box marginTop={{ phone: 'l', smallPhone: 'xxs' }}>
                   <Text variant="body2" color="error" textAlign="center">
                     {t('hotspot_setup.location_fee.no_funds')}
@@ -245,7 +289,7 @@ const HotspotSetupConfirmLocationScreen = () => {
           mode="contained"
           variant="secondary"
           onPress={navNext}
-          disabled={isFree ? false : !assertData?.hasSufficientBalance}
+          disabled={disabled}
         />
       </Box>
     </BackScreen>
