@@ -40,10 +40,14 @@ const HotspotTxnsProgressScreen = () => {
       const updateParams = {
         token,
         platform: Platform.OS,
-        addGatewayTxn: params.addGatewayTxn,
-        assertLocationTxn: params.assertLocationTxn,
-        solanaTransactions,
       } as SignHotspotRequest
+
+      if (solanaTransactions.length) {
+        updateParams.solanaTransactions = solanaTransactions
+      } else {
+        updateParams.addGatewayTxn = params.addGatewayTxn
+        updateParams.assertLocationTxn = params.assertLocationTxn
+      }
 
       const url = createUpdateHotspotUrl(updateParams)
       if (!url) {
@@ -61,10 +65,7 @@ const HotspotTxnsProgressScreen = () => {
     if (!params.addGatewayTxn || !params.hotspotAddress) return
 
     // This creates the hotspot, signing not required
-    const createResponse = await createHotspot(params.addGatewayTxn)
-    if (!createResponse?.length) {
-      throw new Error('Could not create hotspot')
-    }
+    await createHotspot(params.addGatewayTxn)
 
     let hotspotTypes = [] as HotspotType[]
     const onboardingRecord = await getOnboardingRecord(params.hotspotAddress)

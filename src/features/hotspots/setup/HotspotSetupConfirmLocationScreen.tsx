@@ -2,18 +2,12 @@ import React, { useCallback, useMemo, useState } from 'react'
 import { ActivityIndicator, ScrollView } from 'react-native'
 import { useTranslation } from 'react-i18next'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
-import {
-  useOnboarding,
-  AssertData,
-  useSolana,
-  Balance,
-} from '@helium/react-native-sdk'
+import { useOnboarding, AssertData, useSolana } from '@helium/react-native-sdk'
 import { useAsync } from 'react-async-hook'
 import Config from 'react-native-config'
 import { first, last } from 'lodash'
 import animalName from 'angry-purple-tiger'
 import { HotspotType } from '@helium/onboarding'
-import { CurrencyType } from '@helium/currency'
 import {
   HotspotSetupNavigationProp,
   HotspotSetupStackParamList,
@@ -36,10 +30,12 @@ const HotspotSetupConfirmLocationScreen = () => {
   const navigation = useNavigation<HotspotSetupNavigationProp>()
   const rootNav = useNavigation<RootNavigationProp>()
   const [assertData, setAssertData] = useState<AssertData>()
+  const [isFree, setIsFree] = useState<boolean>()
   const [assertLocationTxn, setAssertLocationTxn] = useState<string>()
   const [solanaTransactions, setSolanaTransactions] = useState<string[]>()
   const { params } = useRoute<Route>()
-  const { getAssertData, getOnboardingRecord } = useOnboarding()
+  const { getAssertData, getOnboardingRecord, getOnboardTransactions } =
+    useOnboarding()
   const { status } = useSolana()
 
   useAsync(async () => {
@@ -62,24 +58,43 @@ const HotspotSetupConfirmLocationScreen = () => {
       if (Config.MAKER_ADDRESS_5G === onboardingRecord?.maker.address) {
         hotspotTypes = ['iot', 'mobile']
       } else {
-        hotspotTypes = ['mobile']
+        hotspotTypes = ['iot']
       }
 
-      if (!params.addGatewayTxn) {
-        const data = await getAssertData({
-          decimalGain: gain,
-          elevation,
+      const locationParams = {
+        decimalGain: gain,
+        elevation,
+        lat,
+        lng,
+      }
+      if (params.addGatewayTxn) {
+        setIsFree(true)
+      } else {
+        // This updates the hotspot, but it's possible the hotspot hasn't been onboarded yet
+        const assert = await getAssertData({
+          ...locationParams,
           gateway: params.hotspotAddress,
-          lat,
-          lng,
           owner: userAddress,
           onboardingRecord,
           hotspotTypes,
         })
 
-        setAssertData(data)
-        setAssertLocationTxn(data.assertLocationTxn)
-        setSolanaTransactions(data.solanaTransactions)
+        if (assert.solanaTransactions?.length || assert.assertLocationTxn) {
+          setAssertData(assert)
+          setAssertLocationTxn(assert.assertLocationTxn)
+          setSolanaTransactions(assert.solanaTransactions)
+          setIsFree(assert.isFree)
+        } else {
+          // Edge  case - hotspot hasn't been onboarded yet
+          const onboard = await getOnboardTransactions({
+            txn: '',
+            hotspotAddress: params.hotspotAddress,
+            hotspotTypes,
+            ...locationParams,
+          })
+          setSolanaTransactions(onboard.solanaTransactions)
+          setIsFree(true)
+        }
       }
     } catch (e) {
       // eslint-disable-next-line no-console
@@ -87,28 +102,12 @@ const HotspotSetupConfirmLocationScreen = () => {
     }
   }, [getAssertData, params])
 
-  const isFree = useMemo(() => {
-    return assertData?.isFree
-  }, [assertData])
-
   const disabled = useMemo(() => {
     if (isFree) return false
 
     if (status.inProgress) return true
 
-    if (assertData?.hasSufficientBalance || status.isHelium) {
-      return !assertData?.hasSufficientBalance
-    }
-
-    if (assertData?.hasSufficientSol && !assertData?.hasSufficientDc) {
-      const walletHntBalance =
-        assertData.balances?.hnt || new Balance(0, CurrencyType.networkToken)
-      return !(
-        (assertData.dcNeeded?.integerBalance || 0) <=
-        walletHntBalance.toDataCredits(assertData.oraclePrice).integerBalance
-      )
-    }
-    return true
+    return !assertData?.hasSufficientBalance
   }, [assertData, isFree, status])
 
   const navNext = useCallback(async () => {

@@ -1,20 +1,61 @@
-import React, { memo, useCallback, useMemo } from 'react'
+import React, { memo, useCallback, useEffect, useMemo, useState } from 'react'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import animalName from 'angry-purple-tiger'
 import { useTranslation } from 'react-i18next'
+import { useSolana } from '@helium/react-native-sdk'
+import MapboxGL from '@react-native-mapbox-gl/maps'
+import Config from 'react-native-config'
 import { HotspotStackParamList } from './hotspotTypes'
 import Text from '../../../components/Text'
 import SafeAreaBox from '../../../components/SafeAreaBox'
 import Button from '../../../components/Button'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
+import { getHotspotDetails as getHeliumHotspotDetails } from '../../../utils/appDataClient'
+import Box from '../../../components/Box'
 
 type Route = RouteProp<HotspotStackParamList, 'HotspotScreen'>
+type HotspotDetails = {
+  lat?: number
+  lng?: number
+  location?: string
+  elevation?: number
+  gain?: number
+}
 const HotspotScreen = () => {
   const {
     params: { hotspot },
   } = useRoute<Route>()
   const { t } = useTranslation()
   const navigation = useNavigation<RootNavigationProp>()
+  const [details, setDetails] = useState<HotspotDetails>()
+  const { status, getHotspotDetails: getSolHotspotDetails } = useSolana()
+
+  const updateHotspotDetails = useCallback(async () => {
+    if (status.isHelium) {
+      const heliumDetails = await getHeliumHotspotDetails(hotspot.address)
+      setDetails(heliumDetails)
+    } else if (status.isSolana) {
+      let solDetails: HotspotDetails | undefined
+      try {
+        solDetails = await getSolHotspotDetails({
+          type: 'IOT',
+          address: hotspot.address,
+        })
+      } catch {
+        solDetails = await getSolHotspotDetails({
+          type: 'MOBILE',
+          address: hotspot.address,
+        })
+      }
+      setDetails(solDetails)
+    }
+  }, [getSolHotspotDetails, hotspot, status])
+
+  useEffect(() => {
+    return navigation.addListener('focus', () => {
+      updateHotspotDetails()
+    })
+  }, [navigation, updateHotspotDetails])
 
   const formattedHotspotName = useMemo(() => {
     if (!hotspot || !hotspot.address) return ''
@@ -71,6 +112,46 @@ const HotspotScreen = () => {
       >
         {formattedHotspotName[1]}
       </Text>
+      {details?.lat && details.lng && (
+        <Box
+          height={200}
+          width="100%"
+          borderRadius="xl"
+          overflow="hidden"
+          marginTop="xxl"
+        >
+          <MapboxGL.MapView
+            zoomEnabled
+            styleURL={Config.MAPBOX_STYLE_URL}
+            style={{ height: 200, width: '100%' }}
+          >
+            <MapboxGL.Camera
+              defaultSettings={{
+                centerCoordinate: [details.lng, details.lat],
+                zoomLevel: 9,
+              }}
+            />
+          </MapboxGL.MapView>
+          <Box
+            position="absolute"
+            top={0}
+            bottom={0}
+            left={0}
+            right={0}
+            alignItems="center"
+            justifyContent="center"
+            pointerEvents="none"
+          >
+            <Box
+              height={16}
+              borderRadius="round"
+              width={16}
+              backgroundColor="peacockGreen"
+              pointerEvents="none"
+            />
+          </Box>
+        </Box>
+      )}
 
       <Button
         onPress={assertHotspot}

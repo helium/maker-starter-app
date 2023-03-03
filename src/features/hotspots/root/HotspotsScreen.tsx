@@ -22,7 +22,11 @@ const HotspotsScreen = () => {
 
     if (status.isHelium) {
       const nextHotspots = await getHeliumHotspots(heliumAddress)
-      setHotspots(nextHotspots)
+      setHotspots(
+        nextHotspots.map(({ address }) => ({
+          address,
+        })),
+      )
       return
     }
 
@@ -33,7 +37,7 @@ const HotspotsScreen = () => {
       })
       const nextHotspots = solHotspots?.map((h) => {
         const address = h.content.json_uri.split('/').slice(-1)[0]
-        return { address, ...h }
+        return { address }
       })
 
       setHotspots(nextHotspots || [])

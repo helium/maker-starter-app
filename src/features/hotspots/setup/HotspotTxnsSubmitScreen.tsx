@@ -29,26 +29,30 @@ const HotspotTxnsSubmitScreen = () => {
     submitted.current = true
 
     const solanaTransactions = params.solanaTransactions?.split(',') || []
-    const {
-      pendingAssertTxn,
-      pendingGatewayTxn,
-      pendingTransferTxn,
-      solanaTxnIds,
-    } = await submitTransactions({
-      addGatewayTxn: params.gatewayTxn,
-      assertLocationTxn: params.assertTxn,
-      hotspotAddress: params.gatewayAddress,
-      solanaTransactions,
-      transferHotspotTxn: params.transferTxn,
-    })
+    try {
+      const {
+        pendingAssertTxn,
+        pendingGatewayTxn,
+        pendingTransferTxn,
+        solanaTxnIds,
+      } = await submitTransactions({
+        addGatewayTxn: params.gatewayTxn,
+        assertLocationTxn: params.assertTxn,
+        hotspotAddress: params.gatewayAddress,
+        solanaTransactions,
+        transferHotspotTxn: params.transferTxn,
+      })
 
-    // eslint-disable-next-line no-console
-    console.log({
-      pendingAssertTxn,
-      pendingGatewayTxn,
-      pendingTransferTxn,
-      solanaTxnIds,
-    })
+      // eslint-disable-next-line no-console
+      console.log({
+        pendingAssertTxn,
+        pendingGatewayTxn,
+        pendingTransferTxn,
+        solanaTxnIds,
+      })
+    } catch (e) {
+      console.log({ e })
+    }
   }, [])
 
   return (

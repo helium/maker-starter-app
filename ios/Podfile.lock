@@ -4,7 +4,7 @@ PODS:
   - DoubleConversion (1.1.6)
   - EXApplication (5.0.1):
     - ExpoModulesCore
-  - EXBarCodeScanner (12.3.1):
+  - EXBarCodeScanner (12.3.2):
     - EXImageLoader
     - ExpoModulesCore
     - ZXingObjC/OneD
@@ -113,7 +113,7 @@ PODS:
     - FlipperKit/FlipperKitNetworkPlugin
   - fmt (6.2.1)
   - glog (0.3.5)
-  - helium-react-native-sdk (2.0.0):
+  - helium-react-native-sdk (2.0.3):
     - React-Core
   - hermes-engine (0.70.6)
   - libevent (2.1.12)
@@ -767,7 +767,7 @@ SPEC CHECKSUMS:
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
   DoubleConversion: 5189b271737e1565bdce30deb4a08d647e3f5f54
   EXApplication: 034b1c40a8e9fe1bff76a1e511ee90dff64ad834
-  EXBarCodeScanner: a0ce3f62afd873351c7a5743649574b57422bb7d
+  EXBarCodeScanner: 8e23fae8d267dbef9f04817833a494200f1fce35
   EXCamera: a323a5942b5e7fc8349e17d728e91c18840ad561
   EXConstants: 3c86653c422dd77e40d10cbbabb3025003977415
   EXErrorRecovery: ae43433feb0608a64dc5b1c8363b3e7769a9ea24
@@ -796,8 +796,8 @@ SPEC CHECKSUMS:
   FlipperKit: cbdee19bdd4e7f05472a66ce290f1b729ba3cb86
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
   glog: 791fe035093b84822da7f0870421a25839ca7870
-  helium-react-native-sdk: 5447e096662e6ec048e07f66c3da8eb3b4891b0b
-  hermes-engine: 2af7b7a59128f250adfd86f15aa1d5a2ecd39995
+  helium-react-native-sdk: 78bd8001480779f2ce62eac15fdaf738a1e76377
+  hermes-engine: e86cc2a4cd10ed276799de42ea326bc551115bc7
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   Mapbox-iOS-SDK: a5915700ec84bc1a7f8b3e746d474789e35b7956
   MapboxMobileEvents: 2bc0ca2eedb627b73cf403258dce2b2fa98074a6
