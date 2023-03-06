@@ -49,7 +49,7 @@ export const getHotpotTypes = ({
    */
 
   if (Config.MAKER_ADDRESS_5G === hotspotMakerAddress) {
-    return ['iot', 'mobile']
+    return ['IOT', 'MOBILE']
   }
-  return ['iot']
+  return ['IOT']
 }
