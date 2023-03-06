@@ -5,8 +5,6 @@ import { ActivityIndicator, Linking, Platform } from 'react-native'
 import { createUpdateHotspotUrl, SignHotspotRequest } from '@helium/wallet-link'
 import { useOnboarding } from '@helium/react-native-sdk'
 import { first, last } from 'lodash'
-import { HotspotType } from '@helium/onboarding'
-import Config from 'react-native-config'
 import Box from '../../../components/Box'
 import Text from '../../../components/Text'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
@@ -16,6 +14,7 @@ import { getSecureItem } from '../../../utils/secureAccount'
 import { useColors } from '../../../theme/themeHooks'
 import { DebouncedButton } from '../../../components/Button'
 import useMount from '../../../utils/useMount'
+import { getHotpotTypes } from '../root/hotspotTypes'
 
 type Route = RouteProp<HotspotSetupStackParamList, 'HotspotTxnsProgressScreen'>
 
@@ -67,17 +66,15 @@ const HotspotTxnsProgressScreen = () => {
     // This creates the hotspot, signing not required
     await createHotspot(params.addGatewayTxn)
 
-    let hotspotTypes = [] as HotspotType[]
     const onboardingRecord = await getOnboardingRecord(params.hotspotAddress)
+
     /*
          TODO: Determine which network types this hotspot supports
          Could possibly use the maker address
       */
-    if (Config.MAKER_ADDRESS_5G === onboardingRecord?.maker.address) {
-      hotspotTypes = ['iot', 'mobile']
-    } else {
-      hotspotTypes = ['iot']
-    }
+    const hotspotTypes = getHotpotTypes({
+      hotspotMakerAddress: onboardingRecord?.maker.address || '',
+    })
 
     const { solanaTransactions } = await getOnboardTransactions({
       txn: params.addGatewayTxn,

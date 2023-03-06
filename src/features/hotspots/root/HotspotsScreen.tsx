@@ -1,17 +1,27 @@
 import React, { memo, useState } from 'react'
-import { useSolana } from '@helium/react-native-sdk'
+import { Asset, useOnboarding } from '@helium/react-native-sdk'
 import { useAsync } from 'react-async-hook'
+import Config from 'react-native-config'
+import { Hotspot } from '@helium/http'
 import Box from '../../../components/Box'
 import HotspotsEmpty from './HotspotsEmpty'
 import Hotspots from './Hotspots'
-import { getHotspots as getHeliumHotspots } from '../../../utils/appDataClient'
 import { getAddress } from '../../../utils/secureAccount'
-import { Hotspot } from './hotspotTypes'
 
-// TODO: Implement paging and a loading screen before initial hotspots are fetched
+const getHotspotAddress = (item: Asset | Hotspot): string => {
+  const asset = item as Asset
+  if (asset?.content?.json_uri) {
+    return asset.content.json_uri.split('/').slice(-1)[0]
+  }
+
+  const hotspot = item as Hotspot
+  return hotspot.address
+}
+
 const HotspotsScreen = () => {
-  const [hotspots, setHotspots] = useState<Hotspot[]>([])
-  const { status, getHotspots: getSolHotspots } = useSolana()
+  const [hotspots, setHotspots] = useState<{ address: string }[]>([])
+
+  const { getHotspots } = useOnboarding()
 
   useAsync(async () => {
     const heliumAddress = await getAddress()
@@ -20,35 +30,14 @@ const HotspotsScreen = () => {
       return
     }
 
-    if (status.isHelium) {
-      const nextHotspots = await getHeliumHotspots(heliumAddress)
-      setHotspots(
-        nextHotspots.map(({ address }) => ({
-          address,
-        })),
-      )
-      return
-    }
+    const nextHotspots = await getHotspots({
+      heliumAddress,
+      makerName: Config.MAKER_NAME,
+    })
+    if (!nextHotspots) return
 
-    if (status.isSolana) {
-      const solHotspots = await getSolHotspots({
-        heliumAddress,
-        // makerName: "your_maker_name"
-      })
-      const nextHotspots = solHotspots?.map((h) => {
-        const address = h.content.json_uri.split('/').slice(-1)[0]
-        return { address }
-      })
-
-      setHotspots(nextHotspots || [])
-
-      return
-    }
-    if (status.inProgress) {
-      // eslint-disable-next-line no-console
-      console.error('Blockchain transition in progress')
-    }
-  }, [getSolHotspots, status])
+    setHotspots(nextHotspots?.map((h) => ({ address: getHotspotAddress(h) })))
+  }, [getHotspots])
 
   return (
     <Box backgroundColor="primaryBackground" flex={1}>

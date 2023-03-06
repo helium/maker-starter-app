@@ -2,15 +2,14 @@ import React, { memo, useCallback, useEffect, useMemo, useState } from 'react'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import animalName from 'angry-purple-tiger'
 import { useTranslation } from 'react-i18next'
-import { useSolana } from '@helium/react-native-sdk'
+import { HotspotMeta, useOnboarding } from '@helium/react-native-sdk'
 import MapboxGL from '@react-native-mapbox-gl/maps'
 import Config from 'react-native-config'
-import { HotspotStackParamList } from './hotspotTypes'
+import { getHotpotTypes, HotspotStackParamList } from './hotspotTypes'
 import Text from '../../../components/Text'
 import SafeAreaBox from '../../../components/SafeAreaBox'
 import Button from '../../../components/Button'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
-import { getHotspotDetails as getHeliumHotspotDetails } from '../../../utils/appDataClient'
 import Box from '../../../components/Box'
 
 type Route = RouteProp<HotspotStackParamList, 'HotspotScreen'>
@@ -28,28 +27,35 @@ const HotspotScreen = () => {
   const { t } = useTranslation()
   const navigation = useNavigation<RootNavigationProp>()
   const [details, setDetails] = useState<HotspotDetails>()
-  const { status, getHotspotDetails: getSolHotspotDetails } = useSolana()
+  const [loadingDetails, setLoadingDetails] = useState(true)
+  const { getOnboardingRecord, getHotspotDetails } = useOnboarding()
+
+  const needsOnboarding = useMemo(
+    () => !loadingDetails && !details,
+    [details, loadingDetails],
+  )
 
   const updateHotspotDetails = useCallback(async () => {
-    if (status.isHelium) {
-      const heliumDetails = await getHeliumHotspotDetails(hotspot.address)
-      setDetails(heliumDetails)
-    } else if (status.isSolana) {
-      let solDetails: HotspotDetails | undefined
-      try {
-        solDetails = await getSolHotspotDetails({
-          type: 'IOT',
-          address: hotspot.address,
-        })
-      } catch {
-        solDetails = await getSolHotspotDetails({
-          type: 'MOBILE',
-          address: hotspot.address,
-        })
-      }
-      setDetails(solDetails)
+    const onboardingRecord = await getOnboardingRecord(hotspot.address)
+
+    /*
+         TODO: Determine which network types this hotspot supports
+         Could possibly use the maker address
+      */
+    const hotspotTypes = getHotpotTypes({
+      hotspotMakerAddress: onboardingRecord?.maker.address || '',
+    })
+
+    let hotspotMeta: HotspotMeta | undefined
+    if (hotspotTypes.length) {
+      hotspotMeta = await getHotspotDetails({
+        address: hotspot.address,
+        type: hotspotTypes[0],
+      })
     }
-  }, [getSolHotspotDetails, hotspot, status])
+    setDetails(hotspotMeta)
+    setLoadingDetails(false)
+  }, [getHotspotDetails, getOnboardingRecord, hotspot])
 
   useEffect(() => {
     return navigation.addListener('focus', () => {
@@ -112,6 +118,9 @@ const HotspotScreen = () => {
       >
         {formattedHotspotName[1]}
       </Text>
+      {needsOnboarding && (
+        <Text variant="body1">{t('hotspots.notOnboarded')}</Text>
+      )}
       {details?.lat && details.lng && (
         <Box
           height={200}

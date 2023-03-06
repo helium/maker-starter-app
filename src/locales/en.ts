@@ -287,6 +287,7 @@ export default {
     title: 'Assert Location',
   },
   hotspots: {
+    notOnboarded: 'This hotspot has not been onboarded',
     empty: {
       body: 'Your add hotspot\ninstructions',
       hotspots: {

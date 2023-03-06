@@ -4,10 +4,8 @@ import { useTranslation } from 'react-i18next'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { useOnboarding, AssertData, useSolana } from '@helium/react-native-sdk'
 import { useAsync } from 'react-async-hook'
-import Config from 'react-native-config'
 import { first, last } from 'lodash'
 import animalName from 'angry-purple-tiger'
-import { HotspotType } from '@helium/onboarding'
 import {
   HotspotSetupNavigationProp,
   HotspotSetupStackParamList,
@@ -19,6 +17,7 @@ import Text from '../../../components/Text'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
 import { getAddress } from '../../../utils/secureAccount'
 import HotspotLocationPreview from './HotspotLocationPreview'
+import { getHotpotTypes } from '../root/hotspotTypes'
 
 type Route = RouteProp<
   HotspotSetupStackParamList,
@@ -34,8 +33,12 @@ const HotspotSetupConfirmLocationScreen = () => {
   const [assertLocationTxn, setAssertLocationTxn] = useState<string>()
   const [solanaTransactions, setSolanaTransactions] = useState<string[]>()
   const { params } = useRoute<Route>()
-  const { getAssertData, getOnboardingRecord, getOnboardTransactions } =
-    useOnboarding()
+  const {
+    getAssertData,
+    getOnboardingRecord,
+    getOnboardTransactions,
+    getHotspotDetails,
+  } = useOnboarding()
   const { status } = useSolana()
 
   useAsync(async () => {
@@ -49,17 +52,15 @@ const HotspotSetupConfirmLocationScreen = () => {
     if (!lat || !lng || !userAddress) return
 
     try {
-      let hotspotTypes = [] as HotspotType[]
       const onboardingRecord = await getOnboardingRecord(params.hotspotAddress)
+
       /*
          TODO: Determine which network types this hotspot supports
          Could possibly use the maker address
       */
-      if (Config.MAKER_ADDRESS_5G === onboardingRecord?.maker.address) {
-        hotspotTypes = ['iot', 'mobile']
-      } else {
-        hotspotTypes = ['iot']
-      }
+      const hotspotTypes = getHotpotTypes({
+        hotspotMakerAddress: onboardingRecord?.maker.address || '',
+      })
 
       const locationParams = {
         decimalGain: gain,
@@ -70,16 +71,20 @@ const HotspotSetupConfirmLocationScreen = () => {
       if (params.addGatewayTxn) {
         setIsFree(true)
       } else {
-        // This updates the hotspot, but it's possible the hotspot hasn't been onboarded yet
-        const assert = await getAssertData({
-          ...locationParams,
-          gateway: params.hotspotAddress,
-          owner: userAddress,
-          onboardingRecord,
-          hotspotTypes,
+        const hotspotDetails = await getHotspotDetails({
+          address: params.hotspotAddress,
+          type: hotspotTypes[0],
         })
+        const hotspotExists = !!hotspotDetails
+        if (hotspotExists) {
+          const assert = await getAssertData({
+            ...locationParams,
+            gateway: params.hotspotAddress,
+            owner: userAddress,
+            onboardingRecord,
+            hotspotTypes,
+          })
 
-        if (assert.solanaTransactions?.length || assert.assertLocationTxn) {
           setAssertData(assert)
           setAssertLocationTxn(assert.assertLocationTxn)
           setSolanaTransactions(assert.solanaTransactions)

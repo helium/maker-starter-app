@@ -1,4 +1,6 @@
+import { HotspotType } from '@helium/onboarding'
 import { StackNavigationProp } from '@react-navigation/stack'
+import Config from 'react-native-config'
 
 export type Hotspot = { address: string }
 
@@ -34,3 +36,20 @@ export type HotspotSyncStatus = 'full' | 'partial'
 
 export const GLOBAL_OPTS = ['explore', 'search', 'home'] as const
 export type GlobalOpt = (typeof GLOBAL_OPTS)[number]
+
+export const getHotpotTypes = ({
+  hotspotMakerAddress,
+}: {
+  hotspotMakerAddress: string
+}): HotspotType[] => {
+  /*
+      TODO: Determine which network types this hotspot supports
+      Could possibly use your maker address
+      This is ultimately up to the maker to decide which types they support
+   */
+
+  if (Config.MAKER_ADDRESS_5G === hotspotMakerAddress) {
+    return ['iot', 'mobile']
+  }
+  return ['iot']
+}

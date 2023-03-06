@@ -7,11 +7,12 @@ import AddIcon from '@assets/images/add.svg'
 import Text from '../../../components/Text'
 import TouchableOpacityBox from '../../../components/TouchableOpacityBox'
 import Chevron from '../../../assets/images/chevron-right.svg'
-import { Hotspot, HotspotNavigationProp } from './hotspotTypes'
+import { HotspotNavigationProp } from './hotspotTypes'
 import Box from '../../../components/Box'
 import { useColors } from '../../../theme/themeHooks'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
 
+type Hotspot = { address: string }
 type Props = { hotspots: Hotspot[] }
 const Hotspots = ({ hotspots }: Props) => {
   const { t } = useTranslation()

@@ -3,7 +3,11 @@ import { FlatList } from 'react-native'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
 import { uniq } from 'lodash'
-import { useHotspotBle } from '@helium/react-native-sdk'
+import {
+  HotspotMeta,
+  useHotspotBle,
+  useOnboarding,
+} from '@helium/react-native-sdk'
 import BackScreen from '../../../components/BackScreen'
 import Text from '../../../components/Text'
 import {
@@ -18,7 +22,7 @@ import TouchableOpacityBox from '../../../components/TouchableOpacityBox'
 import Checkmark from '../../../assets/images/check.svg'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
 import { getAddress, getSecureItem } from '../../../utils/secureAccount'
-import { getHotspotDetails } from '../../../utils/appDataClient'
+import { getHotpotTypes } from '../root/hotspotTypes'
 
 const WifiItem = ({
   name,
@@ -72,6 +76,7 @@ const HotspotSetupPickWifiScreen = () => {
     },
   } = useRoute<Route>()
   const { readWifiNetworks } = useHotspotBle()
+  const { getHotspotDetails, getOnboardingRecord } = useOnboarding()
 
   const [wifiNetworks, setWifiNetworks] = useState(networks)
   const [connectedWifiNetworks, setConnectedWifiNetworks] =
@@ -89,7 +94,23 @@ const HotspotSetupPickWifiScreen = () => {
     const token = await getSecureItem('walletLinkToken')
     if (!token) return
     const address = await getAddress()
-    const hotspot = await getHotspotDetails(hotspotAddress)
+    const onboardingRecord = await getOnboardingRecord(hotspotAddress)
+
+    /*
+         TODO: Determine which network types this hotspot supports
+         Could possibly use the maker address
+      */
+    const hotspotTypes = getHotpotTypes({
+      hotspotMakerAddress: onboardingRecord?.maker.address || '',
+    })
+
+    let hotspot: HotspotMeta | undefined
+    if (hotspotTypes.length) {
+      hotspot = await getHotspotDetails({
+        address: hotspotAddress,
+        type: hotspotTypes[0],
+      })
+    }
 
     if (hotspot && hotspot.owner === address) {
       navigation.replace('OwnedHotspotErrorScreen')
@@ -102,7 +123,14 @@ const HotspotSetupPickWifiScreen = () => {
         hotspotType,
       })
     }
-  }, [addGatewayTxn, hotspotAddress, navigation, hotspotType])
+  }, [
+    getOnboardingRecord,
+    hotspotAddress,
+    getHotspotDetails,
+    navigation,
+    addGatewayTxn,
+    hotspotType,
+  ])
 
   const navNext = (network: string) => {
     navigation.navigate('HotspotSetupWifiScreen', {
