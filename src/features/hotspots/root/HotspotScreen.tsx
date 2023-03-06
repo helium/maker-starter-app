@@ -98,7 +98,7 @@ const HotspotScreen = () => {
       <Text
         fontSize={29}
         lineHeight={31}
-        color="black"
+        color="primaryText"
         fontWeight="200"
         numberOfLines={1}
         width="100%"
@@ -111,7 +111,7 @@ const HotspotScreen = () => {
         fontSize={29}
         lineHeight={31}
         paddingRight="s"
-        color="black"
+        color="primaryText"
         numberOfLines={1}
         adjustsFontSizeToFit
         marginBottom="l"
@@ -119,7 +119,9 @@ const HotspotScreen = () => {
         {formattedHotspotName[1]}
       </Text>
       {needsOnboarding && (
-        <Text variant="body1">{t('hotspots.notOnboarded')}</Text>
+        <Text color="primaryText" variant="body1">
+          {t('hotspots.notOnboarded')}
+        </Text>
       )}
       {details?.lat && details.lng && (
         <Box

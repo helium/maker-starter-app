@@ -51,7 +51,7 @@ const WifiItem = ({
       borderBottomLeftRadius={isLast ? 'm' : 'none'}
       borderBottomRightRadius={isLast ? 'm' : 'none'}
     >
-      <Text variant="body2" color="black">
+      <Text variant="body2" color="primaryText">
         {name}
       </Text>
       {icon === 'carot' && <CarotRight color={colors.secondaryBackground} />}

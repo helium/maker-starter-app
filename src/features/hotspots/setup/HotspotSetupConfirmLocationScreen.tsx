@@ -132,7 +132,7 @@ const HotspotSetupConfirmLocationScreen = () => {
   if (isFree === undefined) {
     return (
       <Box flex={1} alignItems="center" justifyContent="center">
-        <ActivityIndicator color="black" />
+        <ActivityIndicator color="primaryText" />
       </Box>
     )
   }

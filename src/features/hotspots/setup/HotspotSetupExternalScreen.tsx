@@ -218,7 +218,7 @@ const HotspotSetupExternalScreen = () => {
               overflow="hidden"
               width="100%"
               aspectRatio={1}
-              backgroundColor="black"
+              backgroundColor="primaryText"
             >
               <Camera
                 barCodeScannerSettings={{
