@@ -58,7 +58,7 @@ export default {
         'Already have the Helium Wallet App?\nTap to get started.',
       subtitle:
         'Lorem ipsum <b><errorText>$HNT</errorText></b> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-      title: 'Welcome\nto Maker App',
+      title: 'Welcome\nto Helium',
     },
   },
   antennas: {
