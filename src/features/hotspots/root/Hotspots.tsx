@@ -1,16 +1,15 @@
 import React, { memo, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FlatList, StatusBar } from 'react-native'
-import animalName from 'angry-purple-tiger'
 import { useNavigation } from '@react-navigation/native'
 import AddIcon from '@assets/images/add.svg'
 import Text from '../../../components/Text'
 import TouchableOpacityBox from '../../../components/TouchableOpacityBox'
-import Chevron from '../../../assets/images/chevron-right.svg'
 import { HotspotNavigationProp } from './hotspotTypes'
 import Box from '../../../components/Box'
 import { useColors } from '../../../theme/themeHooks'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
+import HotspotListItem from './HotspotListItem'
 
 type Hotspot = { address: string }
 type Props = { hotspots: Hotspot[] }
@@ -33,23 +32,10 @@ const Hotspots = ({ hotspots }: Props) => {
     // eslint-disable-next-line react/no-unused-prop-types
     ({ item }: { item: Hotspot }) => {
       return (
-        <TouchableOpacityBox
-          padding="l"
-          backgroundColor="secondaryBackground"
-          flexDirection="row"
-          alignItems="center"
-          borderBottomColor="white"
-          borderBottomWidth={2}
-          onPress={handleNav(item)}
-        >
-          <Text variant="body1" color="secondaryText" flex={1}>
-            {animalName(item.address)}
-          </Text>
-          <Chevron color={colors.graySteel} />
-        </TouchableOpacityBox>
+        <HotspotListItem address={item.address} onPress={handleNav(item)} />
       )
     },
-    [colors.graySteel, handleNav],
+    [handleNav],
   )
 
   const keyExtractor = useCallback((item: Hotspot) => {

@@ -69,6 +69,7 @@ const palette = {
   graySteel: '#74869A',
   greenMain: '#32C48D',
   purpleDark: '#161B3D',
+  purpleDarkMuted: '#4C5280',
   purpleMain: '#474DFF',
   redMain: '#F97570',
 }
@@ -77,8 +78,8 @@ export const darkThemeColors = {
   ...palette,
 
   primary: palette.purpleMain,
-  primaryBackground: palette.purpleDark,
-  primaryText: palette.white,
+  primaryBackground: palette.white,
+  primaryText: palette.black,
   secondaryBackground: palette.offWhite,
   secondary: palette.graySteel,
   secondaryText: palette.black,
@@ -87,8 +88,8 @@ export const darkThemeColors = {
   surfaceText: palette.black,
   surfaceSecondary: palette.offWhite,
   surfaceSecondaryText: palette.black,
-  surfaceContrast: palette.white,
-  surfaceContrastText: palette.black,
+  surfaceContrast: palette.purpleDark,
+  surfaceContrastText: palette.white,
 }
 
 export const theme = createTheme({
