@@ -32,7 +32,7 @@ const useCheckWalletLink = () => {
           const url = createWalletLinkUrl({
             universalLink: walletApp.universalLink,
             requestAppId: getBundleId(),
-            callbackUrl: 'makerappscheme://',
+            callbackUrl: 'helium://',
             appName: 'Maker App',
           })
           Linking.openURL(url)

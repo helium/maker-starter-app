@@ -73,6 +73,8 @@ const palette = {
   bobcatRed: '#EE2737',
   bobcatDarkGrey: '#333333',
   bobcatGrey: '#aeaeae',
+
+  purpleDark: '#161B3D',
 }
 
 export const lightThemeColors = {
@@ -96,7 +98,7 @@ export const darkThemeColors = {
   ...palette,
 
   primary: palette.bobcatRed,
-  primaryBackground: palette.black,
+  primaryBackground: palette.purpleDark,
   primaryText: palette.white,
   secondaryBackground: palette.bobcatDarkGrey,
   secondary: palette.bobcatDarkGrey,

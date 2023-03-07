@@ -233,7 +233,7 @@ export default {
         title: 'Enable Bluetooth',
       },
       alert_no_permissions: {
-        body: 'MakerApp needs permission to use Bluetooth. You can enable Bluetooth permission in Settings.',
+        body: 'Helium needs permission to use Bluetooth. You can enable Bluetooth permission in Settings.',
         title: 'Authorize Bluetooth',
       },
       scan: 'Scan for my Hotspot',
@@ -350,7 +350,7 @@ export default {
   permissions: {
     location: {
       message:
-        'MakerApp needs access to your location for Bluetooth discovery and to enable location assertion. This information will never be sold or shared.',
+        'Helium needs access to your location for Bluetooth discovery and to enable location assertion. This information will never be sold or shared.',
       title: 'Location Permission',
     },
   },

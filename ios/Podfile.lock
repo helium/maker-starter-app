@@ -792,15 +792,21 @@ SPEC CHECKSUMS:
   Flipper-RSocket: d9d9ade67cbecf6ac10730304bf5607266dd2541
   FlipperKit: cbdee19bdd4e7f05472a66ce290f1b729ba3cb86
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
+<<<<<<< HEAD
   glog: 791fe035093b84822da7f0870421a25839ca7870
   helium-react-native-sdk: 1637f4100e91e3ce8600eff547a304bcb49d3622
   hermes-engine: e86cc2a4cd10ed276799de42ea326bc551115bc7
+=======
+  glog: 04b94705f318337d7ead9e6d17c019bd9b1f6b1b
+  helium-react-native-sdk: f8912747ef35f84d1fa8de617c8019137d6ea96e
+  hermes-engine: 2af7b7a59128f250adfd86f15aa1d5a2ecd39995
+>>>>>>> d057bee (Rename app and id. Update splash and app icons.)
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   Mapbox-iOS-SDK: a5915700ec84bc1a7f8b3e746d474789e35b7956
   MapboxMobileEvents: 2bc0ca2eedb627b73cf403258dce2b2fa98074a6
   MultiplatformBleAdapter: 5a6a897b006764392f9cef785e4360f54fb9477d
   OpenSSL-Universal: ebc357f1e6bc71fa463ccb2fe676756aff50e88c
-  RCT-Folly: 766adb69dc1d6294bcc94a950a818a87adb3a766
+  RCT-Folly: 0080d0a6ebf2577475bda044aa59e2ca1f909cda
   RCTRequired: e1866f61af7049eb3d8e08e8b133abd38bc1ca7a
   RCTTypeSafety: 27c2ac1b00609a432ced1ae701247593f07f901e
   React: bb3e06418d2cc48a84f9666a576c7b38e89cd7db
@@ -849,6 +855,6 @@ SPEC CHECKSUMS:
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
   ZXingObjC: fdbb269f25dd2032da343e06f10224d62f537bdb
 
-PODFILE CHECKSUM: 1664b911dbc43f3d9616e039017ca5221136fc22
+PODFILE CHECKSUM: 45297ba5bd0c21da30de207070bf006703c5e539
 
 COCOAPODS: 1.11.3

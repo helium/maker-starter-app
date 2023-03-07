@@ -174,7 +174,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.maker.makerapp"
+        applicationId "com.helium.wallet"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode getVersionCode()

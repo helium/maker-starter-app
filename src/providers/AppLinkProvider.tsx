@@ -28,7 +28,7 @@ import {
 import { useAppDispatch } from '../store/store'
 import appSlice from '../store/user/appSlice'
 
-export const APP_LINK_PROTOCOL = 'makerappscheme://'
+export const APP_LINK_PROTOCOL = 'helium://'
 
 export const createAppLink = (
   resource: AppLinkCategoryType,
@@ -68,7 +68,7 @@ const useAppLink = () => {
 
   const navToAppLink = useCallback(
     async (record: AppLink | WalletLink) => {
-      if (isLocked) {
+      if (isLocked && record.type !== 'link_wallet') {
         setUnhandledLink(record)
         return
       }
