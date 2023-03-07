@@ -1721,10 +1721,10 @@
   dependencies:
     protobufjs "^6.11.3"
 
-"@helium/react-native-sdk@^2.0.9":
-  version "2.0.9"
-  resolved "https://registry.yarnpkg.com/@helium/react-native-sdk/-/react-native-sdk-2.0.9.tgz#bfa1de85420457bd82886c3cc77ff8a74960396e"
-  integrity sha512-taz46kqC5m+KLS3tC+LE0mNcyJmimVkOTJ/JyVj9dMv4i3V/Ku/bkVSEmG60CI4WwszBcTo3KnuPk0ojXkLUBw==
+"@helium/react-native-sdk@^2.0.10":
+  version "2.0.10"
+  resolved "https://registry.yarnpkg.com/@helium/react-native-sdk/-/react-native-sdk-2.0.10.tgz#8effaf66f1a425e5c900630c240b535d6a030906"
+  integrity sha512-qqm66Iv0QLBxycm3FZmy+fieva5rs2dszHcDeMuJByY/t6pvskbNCOFXGkB33ijmyPF+FJ7W+vb9vXQyPqflyQ==
   dependencies:
     "@azure/core-asynciterator-polyfill" "^1.0.2"
     "@coral-xyz/anchor" "^0.26.0"
@@ -1752,7 +1752,6 @@
     bs58 "^5.0.0"
     react-native-crypto "^2.2.0"
     react-native-quick-crypto "^0.5.0"
-    swr "^2.0.0"
     text-encoding-polyfill "^0.6.7"
     typescript-collections "^1.3.3"
 
@@ -12561,13 +12560,6 @@ svgo@^1.2.2:
     unquote "~1.1.1"
     util.promisify "~1.0.0"
 
-swr@^2.0.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/swr/-/swr-2.1.0.tgz#10245d5a50f6d5d208ea9278f76839ab3058d5b8"
-  integrity sha512-4hYl5p3/KalQ1MORealM79g/DtLohmud6yyfXw5l4wjtFksYUnocRFudvyaoUtgj3FrVNK9lS25Av9dsZYvz0g==
-  dependencies:
-    use-sync-external-store "^1.2.0"
-
 symbol-tree@^3.2.4:
   version "3.2.4"
   resolved "https://registry.yarnpkg.com/symbol-tree/-/symbol-tree-3.2.4.tgz#430637d248ba77e078883951fb9aa0eed7c63fa2"
@@ -13125,7 +13117,7 @@ use-state-with-callback@^2.0.3:
   resolved "https://registry.yarnpkg.com/use-state-with-callback/-/use-state-with-callback-2.0.5.tgz#d4098fd7c5cdf2af2be8dbed30fda206db4585b9"
   integrity sha512-7++vOwsVviTNmv9q3I1Kpq7RtdhgaEXebjZrqkxLunFJwPmucV8a5zQKEaUZi9wdUd554ZukC/sNqT/IxDe00A==
 
-use-sync-external-store@^1.0.0, use-sync-external-store@^1.2.0:
+use-sync-external-store@^1.0.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/use-sync-external-store/-/use-sync-external-store-1.2.0.tgz#7dbefd6ef3fe4e767a0cf5d7287aacfb5846928a"
   integrity sha512-eEgnFxGQ1Ife9bzYs6VLi8/4X6CObHMw9Qr9tPY43iKwsPw8xE8+EFsf/2cFZ5S3esXgpWgtSCtLNS41F+sKPA==

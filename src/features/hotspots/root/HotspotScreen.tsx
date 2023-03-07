@@ -132,7 +132,6 @@ const HotspotScreen = () => {
           marginTop="xxl"
         >
           <MapboxGL.MapView
-            zoomEnabled
             styleURL={Config.MAPBOX_STYLE_URL}
             style={{ height: 200, width: '100%' }}
           >

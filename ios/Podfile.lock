@@ -113,7 +113,7 @@ PODS:
     - FlipperKit/FlipperKitNetworkPlugin
   - fmt (6.2.1)
   - glog (0.3.5)
-  - helium-react-native-sdk (2.0.9):
+  - helium-react-native-sdk (2.0.10):
     - React-Core
   - hermes-engine (0.70.6)
   - libevent (2.1.12)
@@ -796,7 +796,7 @@ SPEC CHECKSUMS:
   FlipperKit: cbdee19bdd4e7f05472a66ce290f1b729ba3cb86
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
   glog: 791fe035093b84822da7f0870421a25839ca7870
-  helium-react-native-sdk: 3400f404f9a627deb3b4df43cde07f0acc133754
+  helium-react-native-sdk: f8912747ef35f84d1fa8de617c8019137d6ea96e
   hermes-engine: e86cc2a4cd10ed276799de42ea326bc551115bc7
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   Mapbox-iOS-SDK: a5915700ec84bc1a7f8b3e746d474789e35b7956

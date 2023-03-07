@@ -2,7 +2,7 @@ import React, { useCallback, useMemo, useState } from 'react'
 import { ActivityIndicator, ScrollView } from 'react-native'
 import { useTranslation } from 'react-i18next'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
-import { useOnboarding, AssertData, useSolana } from '@helium/react-native-sdk'
+import { useOnboarding, AssertData } from '@helium/react-native-sdk'
 import { useAsync } from 'react-async-hook'
 import { first, last } from 'lodash'
 import animalName from 'angry-purple-tiger'
@@ -39,7 +39,6 @@ const HotspotSetupConfirmLocationScreen = () => {
     getOnboardTransactions,
     getHotspotDetails,
   } = useOnboarding()
-  const { status } = useSolana()
 
   useAsync(async () => {
     const { elevation, gain, coords } = params
@@ -110,10 +109,8 @@ const HotspotSetupConfirmLocationScreen = () => {
   const disabled = useMemo(() => {
     if (isFree) return false
 
-    if (status.inProgress) return true
-
     return !assertData?.hasSufficientBalance
-  }, [assertData, isFree, status])
+  }, [assertData, isFree])
 
   const navNext = useCallback(async () => {
     navigation.replace('HotspotTxnsProgressScreen', {
