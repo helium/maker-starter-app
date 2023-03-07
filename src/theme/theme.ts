@@ -185,11 +185,12 @@ export const theme = createTheme({
       fontSize: 18,
       color: 'primaryText',
       borderRadius: 'm',
+      padding: 'm',
     },
     secondary: {
       backgroundColor: 'surfaceSecondary',
       height: 52,
-      paddingHorizontal: 'm',
+      padding: 'm',
       fontSize: 18,
       color: 'surfaceSecondaryText',
       borderRadius: 'm',

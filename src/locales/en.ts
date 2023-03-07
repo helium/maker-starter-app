@@ -35,6 +35,11 @@ export default {
       title: 'Set PIN Code',
     },
     generating: 'GENERATING YOUR 12 WORDS...',
+    linkAccount: {
+      stepOne: '1. Download the Wallet App',
+      stepThree: '3. Come back to this app and sign in.',
+      stepTwo: '2. Create account',
+    },
     passphrase: {
       next: 'I have written these down',
       subtitle:
@@ -49,29 +54,20 @@ export default {
     },
     welcome: {
       create_account: 'Create an account on the Helium Network',
-      login_with_helium: 'Already have a Helium Wallet?\nTap to get started.',
+      login_with_helium:
+        'Already have the Helium Wallet App?\nTap to get started.',
       subtitle:
         'Lorem ipsum <b><errorText>$HNT</errorText></b> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
       title: 'Welcome\nto Maker App',
     },
-    linkAccount: {
-      stepOne: '1. Download a supported Wallet App',
-      stepTwo: '2. Create account',
-      stepThree: '3. Come back to this app and sign in.',
-    },
-    createAccount: {
-      signInWith: 'Sign in with:',
-    },
   },
   antennas: {
     elevation_info: {
-      desc:
-        'Estimate how high the antenna is placed relative to the ground. An antenna located on the roof of a single-story house is typically 5 meters.',
+      desc: 'Estimate how high the antenna is placed relative to the ground. An antenna located on the roof of a single-story house is typically 5 meters.',
       title: 'Hotspot Height',
     },
     gain_info: {
-      desc:
-        'A value between 1 and 15 to one decimal point. This is provided by your hotspot or antenna manufacturer.',
+      desc: 'A value between 1 and 15 to one decimal point. This is provided by your hotspot or antenna manufacturer.',
       title: 'Antenna TX / RX Gain',
     },
     onboarding: {
@@ -99,13 +95,13 @@ export default {
     invalid_password: 'You password is incorrect',
     next: 'Next',
     ok: 'OK',
+    period: '.',
     scan_again: 'Scan Again',
     search_location: 'Search for an address or place',
     skip: '[skip button]',
     something_went_wrong: 'Something went wrong',
     understand: 'I understand',
     unknown: 'Unknown',
-    period: '.',
   },
   hotspot_details: {
     no_location_body: 'Pair with the Hotspot to begin.',
@@ -207,10 +203,9 @@ export default {
       gain: '{{gain}} dBi',
       gain_label: 'TX / RX Gain:',
       next: 'Register Hotspot',
-      no_funds: 'There is insufficient HNT in your account balance',
-      subtitle_fee:
-        'You need to pay a $10 Location Fee (in DC) to confirm this location.',
-      subtitle_free: 'Your Location Fee ($10) has been prepaid.',
+      no_funds: 'There is insufficient funds in your account balance',
+      subtitle_fee: 'You need to pay a Location Fee to confirm this location.',
+      subtitle_free: 'Your Location Fee has been prepaid.',
       title: 'Location Fee',
     },
     not_owner: {
@@ -234,13 +229,11 @@ export default {
     },
     pair: {
       alert_ble_off: {
-        body:
-          'To start pairing, turn on Bluetooth. Keep Bluetooth on until you finish registration.',
+        body: 'To start pairing, turn on Bluetooth. Keep Bluetooth on until you finish registration.',
         title: 'Enable Bluetooth',
       },
       alert_no_permissions: {
-        body:
-          'MakerApp needs permission to use Bluetooth. You can enable Bluetooth permission in Settings.',
+        body: 'MakerApp needs permission to use Bluetooth. You can enable Bluetooth permission in Settings.',
         title: 'Authorize Bluetooth',
       },
       scan: 'Scan for my Hotspot',
@@ -254,7 +247,7 @@ export default {
       next: 'Go to Wallet',
       subtitle:
         'This can take a few minutes so feel free to close this screen.',
-      title: 'REGISTERING HOTSPOT',
+      title: 'REGISTERING TRANSACTION',
     },
     selection: {
       subtitle: '[Placeholder instructions]',
@@ -289,9 +282,12 @@ export default {
       title: 'Wi-Fi',
     },
   },
+  hotspotAssertAddress: {
+    enterHotspot: 'Enter Hotspot Address',
+    title: 'Assert Location',
+  },
   hotspots: {
-    view_activity: 'After adding a Hotspot, you can view your account on the ',
-    explorer: 'Helium Explorer',
+    notOnboarded: 'This hotspot has not been onboarded',
     empty: {
       body: 'Your add hotspot\ninstructions',
       hotspots: {
@@ -301,6 +297,9 @@ export default {
       },
       title: 'Add a\n[Placeholder] Miner',
     },
+    explorer: 'Helium Explorer',
+    view_activity: 'After adding a Hotspot, you can view your account on the ',
+    title: 'Your Hotspots',
   },
   learn: {
     next: '[next button]',
@@ -310,20 +309,20 @@ export default {
       app: {
         language: 'Language',
         signOut: 'Sign Out',
-        signOutWithLink: 'Sign Out - Linked as: {{address}}',
         signOutAlert: {
           body: 'You are signing out of your account.',
           title: 'Warning!',
         },
+        signOutWithLink: 'Sign Out - Linked as: {{address}}',
         title: 'App',
       },
       security: {
         authIntervals: {
-          after_15_min: 'After 15 minutes',
           after_1_hr: 'After 1 hour',
           after_1_min: 'After 1 minute',
           after_4_hr: 'After 4 hours',
           after_5_min: 'After 5 minutes',
+          after_15_min: 'After 15 minutes',
           immediately: 'Immediately',
         },
         enablePin: 'Enable PIN',
@@ -355,14 +354,20 @@ export default {
       title: 'Location Permission',
     },
   },
-  wallet: {
-    copiedToClipboard: 'Copied {{address}} to clipboard',
-  },
   transferHotspot: {
-    title: 'Transfer Hotspot',
     enterHotspot: 'Enter Hotspot Address',
     enterOwner: 'Enter New Owner Address',
-    submit: 'Submit Transaction',
+    submit: 'Sign with Helium App',
     submitComplete: 'Transfer Successfully Submitted!\n Pending Txn Hash:',
+    title: 'Transfer Hotspot',
+  },
+  wallet: {
+    copiedToClipboard: 'Copied {{address}} to clipboard',
+    checkLink: {
+      title: 'Update required',
+      message:
+        "You're currently linked to the Helium Hotspot app. You must download the Helium Wallet App and update your link",
+      link: 'Link to Helium Wallet App',
+    },
   },
 }

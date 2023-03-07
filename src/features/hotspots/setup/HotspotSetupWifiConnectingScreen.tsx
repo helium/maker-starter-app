@@ -3,7 +3,12 @@ import { uniq } from 'lodash'
 import { useAsync } from 'react-async-hook'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
-import { BleError, useHotspotBle } from '@helium/react-native-sdk'
+import {
+  BleError,
+  HotspotMeta,
+  useHotspotBle,
+  useOnboarding,
+} from '@helium/react-native-sdk'
 import useAlert from '../../../utils/useAlert'
 import {
   HotspotSetupNavigationProp,
@@ -12,8 +17,8 @@ import {
 import Text from '../../../components/Text'
 import Box from '../../../components/Box'
 import SafeAreaBox from '../../../components/SafeAreaBox'
-import { getHotspotDetails } from '../../../utils/appDataClient'
 import { getAddress } from '../../../utils/secureAccount'
+import { getHotpotTypes } from '../root/hotspotTypes'
 
 type Route = RouteProp<
   HotspotSetupStackParamList,
@@ -29,6 +34,7 @@ const HotspotSetupWifiConnectingScreen = () => {
   } = useRoute<Route>()
 
   const { readWifiNetworks, setWifi, removeConfiguredWifi } = useHotspotBle()
+  const { getHotspotDetails, getOnboardingRecord } = useOnboarding()
 
   const { showOKAlert } = useAlert()
 
@@ -49,7 +55,23 @@ const HotspotSetupWifiConnectingScreen = () => {
 
   const goToNextStep = useCallback(async () => {
     const address = await getAddress()
-    const hotspot = await getHotspotDetails(hotspotAddress)
+    const onboardingRecord = await getOnboardingRecord(hotspotAddress)
+
+    /*
+         TODO: Determine which network types this hotspot supports
+         Could possibly use the maker address
+      */
+    const hotspotTypes = getHotpotTypes({
+      hotspotMakerAddress: onboardingRecord?.maker.address || '',
+    })
+    let hotspot: HotspotMeta | undefined
+    if (hotspotTypes.length) {
+      hotspot = await getHotspotDetails({
+        address: hotspotAddress,
+        type: hotspotTypes[0],
+      })
+    }
+
     if (hotspot && hotspot.owner === address) {
       navigation.replace('OwnedHotspotErrorScreen')
     } else if (hotspot && hotspot.owner !== address) {
@@ -61,7 +83,14 @@ const HotspotSetupWifiConnectingScreen = () => {
         hotspotType,
       })
     }
-  }, [addGatewayTxn, hotspotAddress, hotspotType, navigation])
+  }, [
+    addGatewayTxn,
+    getHotspotDetails,
+    getOnboardingRecord,
+    hotspotAddress,
+    hotspotType,
+    navigation,
+  ])
 
   const connectToWifi = useCallback(async () => {
     const response = await setWifi(network, password)

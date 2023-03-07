@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler'
-import React, { useEffect, useMemo } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import {
   LogBox,
@@ -20,6 +20,7 @@ import { NavigationContainer } from '@react-navigation/native'
 import {
   HotspotBleProvider,
   OnboardingProvider,
+  SolanaProvider,
 } from '@helium/react-native-sdk'
 import { theme, darkThemeColors, lightThemeColors } from './theme/theme'
 import NavigationRoot from './navigation/NavigationRoot'
@@ -30,6 +31,8 @@ import SecurityScreen from './features/security/SecurityScreen'
 import AppLinkProvider from './providers/AppLinkProvider'
 import { navigationRef } from './navigation/navigator'
 import useMount from './utils/useMount'
+import { getAddress } from './utils/secureAccount'
+import useCheckWalletLink from './utils/useCheckWalletLink'
 
 SplashScreen.preventAutoHideAsync().catch(() => {
   /* reloading the app might trigger some race conditions, ignore them */
@@ -37,6 +40,8 @@ SplashScreen.preventAutoHideAsync().catch(() => {
 
 const App = () => {
   const colorScheme = useColorScheme()
+
+  useCheckWalletLink()
 
   if (Platform.OS === 'android') {
     if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -69,12 +74,26 @@ const App = () => {
     isLocked,
   } = useSelector((state: RootState) => state.app)
 
+  const { walletLinkToken } = useSelector((state: RootState) => state.app)
+  const [heliumWallet, setHeliumWallet] = useState<string>()
+
+  useEffect(() => {
+    if (!walletLinkToken) {
+      if (heliumWallet) {
+        setHeliumWallet('')
+      }
+      return
+    }
+
+    getAddress().then(setHeliumWallet)
+  }, [heliumWallet, walletLinkToken])
+
   useMount(() => {
     dispatch(restoreAppSettings())
   })
 
   useEffect(() => {
-    MapboxGL.setAccessToken(Config.MAPBOX_ACCESS_TOKEN)
+    MapboxGL.setAccessToken(Config.MAPBOX_ACCESS_TOKEN || '')
   }, [dispatch])
 
   // handle app state changes
@@ -123,29 +142,43 @@ const App = () => {
   )
 
   return (
-    <OnboardingProvider baseUrl="https://onboarding.dewi.org/api/v2">
-      <HotspotBleProvider>
-        <ThemeProvider theme={colorAdaptedTheme}>
-          <BottomSheetModalProvider>
-            <SafeAreaProvider>
-              {/* TODO: Will need to adapt status bar for light/dark modes */}
-              {Platform.OS === 'ios' && <StatusBar barStyle="light-content" />}
-              {Platform.OS === 'android' && (
-                <StatusBar translucent backgroundColor="transparent" />
-              )}
-              <NavigationContainer ref={navigationRef}>
-                <AppLinkProvider>
-                  <NavigationRoot />
-                </AppLinkProvider>
-              </NavigationContainer>
-            </SafeAreaProvider>
-            <SecurityScreen
-              visible={appState !== 'active' && appState !== 'unknown'}
-            />
-          </BottomSheetModalProvider>
-        </ThemeProvider>
-      </HotspotBleProvider>
-    </OnboardingProvider>
+    <SolanaProvider
+      cluster="devnet"
+      rpcEndpoint={Config.SOLANA_RPC_ENDPOINT || ''}
+      heliumWallet={heliumWallet}
+      solanaStatusOverride="complete"
+    >
+      <OnboardingProvider
+        baseUrl={
+          Config.ONBOARDING_BASE_URL ||
+          'https://onboarding.web.test-helium.com/api'
+        }
+      >
+        <HotspotBleProvider>
+          <ThemeProvider theme={colorAdaptedTheme}>
+            <BottomSheetModalProvider>
+              <SafeAreaProvider>
+                {/* TODO: Will need to adapt status bar for light/dark modes */}
+                {Platform.OS === 'ios' && (
+                  <StatusBar barStyle="light-content" />
+                )}
+                {Platform.OS === 'android' && (
+                  <StatusBar translucent backgroundColor="transparent" />
+                )}
+                <NavigationContainer ref={navigationRef}>
+                  <AppLinkProvider>
+                    <NavigationRoot />
+                  </AppLinkProvider>
+                </NavigationContainer>
+              </SafeAreaProvider>
+              <SecurityScreen
+                visible={appState !== 'active' && appState !== 'unknown'}
+              />
+            </BottomSheetModalProvider>
+          </ThemeProvider>
+        </HotspotBleProvider>
+      </OnboardingProvider>
+    </SolanaProvider>
   )
 }
 

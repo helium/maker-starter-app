@@ -1,8 +1,7 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
 import { useAsync } from 'react-async-hook'
-import { AssertLocationV2 } from '@helium/transactions'
 import { useOnboarding } from '@helium/react-native-sdk'
 import Box from '../../../components/Box'
 import { DebouncedButton } from '../../../components/Button'
@@ -10,7 +9,6 @@ import Text from '../../../components/Text'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
 import SafeAreaBox from '../../../components/SafeAreaBox'
 import { HotspotSetupStackParamList } from './hotspotSetupTypes'
-import { submitTxn } from '../../../utils/appDataClient'
 
 type Route = RouteProp<HotspotSetupStackParamList, 'HotspotTxnsSubmitScreen'>
 
@@ -18,40 +16,42 @@ const HotspotTxnsSubmitScreen = () => {
   const { t } = useTranslation()
   const { params } = useRoute<Route>()
   const navigation = useNavigation<RootNavigationProp>()
-  const { postPaymentTransaction } = useOnboarding()
+  const { submitTransactions } = useOnboarding()
+  const submitted = useRef(false)
 
   useAsync(async () => {
+    if (submitted.current) return
+
     if (!params.gatewayAddress) {
       throw new Error('Gateway address not found')
     }
-    if (params.gatewayTxn) {
-      const gatewayTxn = await postPaymentTransaction(
-        params.gatewayAddress,
-        params.gatewayTxn,
-      )
 
-      if (!gatewayTxn) {
-        return
-      }
-      await submitTxn(gatewayTxn)
-    }
+    submitted.current = true
 
-    if (params.assertTxn) {
-      let finalTxn = params.assertTxn
-      const assertTxn = AssertLocationV2.fromString(finalTxn)
+    const solanaTransactions = params.solanaTransactions?.split(',') || []
+    try {
+      const {
+        pendingAssertTxn,
+        pendingGatewayTxn,
+        pendingTransferTxn,
+        solanaTxnIds,
+      } = await submitTransactions({
+        addGatewayTxn: params.gatewayTxn,
+        assertLocationTxn: params.assertTxn,
+        hotspotAddress: params.gatewayAddress,
+        solanaTransactions,
+        transferHotspotTxn: params.transferTxn,
+      })
 
-      const isFree = assertTxn.owner?.b58 !== assertTxn.payer?.b58 // Maker is paying
-      if (isFree) {
-        // If the maker is paying, post to onboarding
-        const onboardAssertTxn = await postPaymentTransaction(
-          params.gatewayAddress,
-          params.assertTxn,
-        )
-        if (!onboardAssertTxn) return
-
-        finalTxn = onboardAssertTxn
-      }
-      await submitTxn(finalTxn)
+      // eslint-disable-next-line no-console
+      console.log({
+        pendingAssertTxn,
+        pendingGatewayTxn,
+        pendingTransferTxn,
+        solanaTxnIds,
+      })
+    } catch (e) {
+      console.log({ e })
     }
   }, [])
 

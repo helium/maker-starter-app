@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unused-prop-types */
 import React, { memo } from 'react'
 import { SvgProps } from 'react-native-svg'
 import { useColors } from '../theme/themeHooks'

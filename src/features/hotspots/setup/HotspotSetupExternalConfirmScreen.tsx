@@ -16,7 +16,6 @@ import animateTransition from '../../../utils/animateTransition'
 import { DebouncedButton } from '../../../components/Button'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
 import { getAddress } from '../../../utils/secureAccount'
-import useMount from '../../../utils/useMount'
 
 type Route = RouteProp<
   HotspotSetupStackParamList,
@@ -38,9 +37,9 @@ const HotspotSetupExternalConfirmScreen = () => {
 
   const handleClose = useCallback(() => rootNav.navigate('MainTabs'), [rootNav])
 
-  useMount(() => {
+  useEffect(() => {
     getAddress().then(setAddress)
-  })
+  }, [])
 
   useEffect(() => {
     if (!publicKey) return

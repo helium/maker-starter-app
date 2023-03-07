@@ -1,16 +1,14 @@
 import * as React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
-import HotspotSetupScanningScreen from './HotspotSetupScanningScreen'
-import HotspotSetupPickHotspotScreen from './HotspotSetupPickHotspotScreen'
 import defaultScreenOptions from '../../../navigation/defaultScreenOptions'
 import HotspotSetupPickLocationScreen from './HotspotSetupPickLocationScreen'
 import HotspotTxnsProgressScreen from './HotspotTxnsProgressScreen'
 import HotspotSetupConfirmLocationScreen from './HotspotSetupConfirmLocationScreen'
-import OnboardingErrorScreen from './OnboardingErrorScreen'
 import NotHotspotOwnerError from './NotHotspotOwnerError'
 import OwnedHotspotError from './OwnedHotspotError'
 import AntennaSetupScreen from './AntennaSetupScreen'
 import HotspotTxnsSubmitScreen from './HotspotTxnsSubmitScreen'
+import HotspotAssertAddressScreen from './HotspotAssertAddressScreen'
 
 const HotspotAssertStack = createStackNavigator()
 
@@ -21,20 +19,8 @@ const HotspotAssert = () => {
       screenOptions={{ ...defaultScreenOptions }}
     >
       <HotspotAssertStack.Screen
-        name="HotspotSetupScanningScreen"
-        component={HotspotSetupScanningScreen}
-        initialParams={{
-          hotspotType: 'ExampleHotspotBLE',
-          gatewayAction: 'assertLocation',
-        }}
-      />
-      <HotspotAssertStack.Screen
-        name="HotspotSetupPickHotspotScreen"
-        component={HotspotSetupPickHotspotScreen}
-      />
-      <HotspotAssertStack.Screen
-        name="OnboardingErrorScreen"
-        component={OnboardingErrorScreen}
+        name="HotspotAssertAddressScreen"
+        component={HotspotAssertAddressScreen}
       />
       <HotspotAssertStack.Screen
         name="HotspotSetupPickLocationScreen"

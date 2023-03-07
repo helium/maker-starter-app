@@ -17,7 +17,7 @@ import { Hotspot, Witness } from '@helium/http'
 import { BoxProps } from '@shopify/restyle'
 import { StyleProp, ViewStyle } from 'react-native'
 import { useTranslation } from 'react-i18next'
-import { h3ToGeo } from 'h3-js'
+import { cellToLatLng } from 'h3-js'
 import Config from 'react-native-config'
 import { isFinite } from 'lodash'
 import LocationIcon from '@assets/images/location-icon.svg'
@@ -130,9 +130,10 @@ const Map = ({
     setLoaded(true)
   }, [])
 
-  const selectedHex = useMemo(() => selectedHotspot?.locationHex, [
-    selectedHotspot?.locationHex,
-  ])
+  const selectedHex = useMemo(
+    () => selectedHotspot?.locationHex,
+    [selectedHotspot?.locationHex],
+  )
 
   useEffect(() => {
     if (loaded && userCoords) {
@@ -158,12 +159,12 @@ const Map = ({
 
     if (selectedHotspot && selectedHotspot.locationHex) {
       const h3Location = selectedHotspot.locationHex
-      hotspotCoords = h3ToGeo(h3Location).reverse()
+      hotspotCoords = cellToLatLng(h3Location).reverse()
       boundsLocations.push(hotspotCoords)
     }
 
     if (selectedHex && !selectedHotspot) {
-      boundsLocations.push(h3ToGeo(selectedHex).reverse())
+      boundsLocations.push(cellToLatLng(selectedHex).reverse())
     }
 
     if (hotspotCoords) {
@@ -174,7 +175,7 @@ const Map = ({
       witnesses.forEach((w) => {
         if (w.locationHex) {
           const h3Location = w.locationHex
-          const coords = h3ToGeo(h3Location).reverse()
+          const coords = cellToLatLng(h3Location).reverse()
           const distanceKM = distance(
             { latitude: coords[1], longitude: coords[0] },
             hotspotLatLng,

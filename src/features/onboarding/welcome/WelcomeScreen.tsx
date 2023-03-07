@@ -1,24 +1,42 @@
 import React, { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigation } from '@react-navigation/native'
+import { createWalletLinkUrl } from '@helium/wallet-link'
+import { Linking } from 'react-native'
+import { getBundleId } from 'react-native-device-info'
 import Text from '../../../components/Text'
 import { OnboardingNavigationProp } from '../onboardingTypes'
 import Box from '../../../components/Box'
 import TextTransform from '../../../components/TextTransform'
 import SafeAreaBox from '../../../components/SafeAreaBox'
 import TouchableOpacityBox from '../../../components/TouchableOpacityBox'
+import useDelegateApps from '../../../utils/useDelegateApps'
 
 const WelcomeScreen = () => {
   const { t } = useTranslation()
+  const { walletApp } = useDelegateApps()
   const navigation = useNavigation<OnboardingNavigationProp>()
 
-  const createAccount = useCallback(() => navigation.push('CreateAccount'), [
-    navigation,
-  ])
+  const createAccount = useCallback(
+    () => navigation.push('CreateAccount'),
+    [navigation],
+  )
 
-  const importAccount = useCallback(() => navigation.push('LinkAccount'), [
-    navigation,
-  ])
+  const importAccount = useCallback(() => {
+    try {
+      const url = createWalletLinkUrl({
+        universalLink: walletApp?.universalLink,
+        requestAppId: getBundleId(),
+        callbackUrl: 'makerappscheme://',
+        appName: 'Maker App',
+      })
+
+      Linking.openURL(url)
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error(error)
+    }
+  }, [walletApp?.universalLink])
 
   return (
     <SafeAreaBox

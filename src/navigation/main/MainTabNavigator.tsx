@@ -1,4 +1,4 @@
-import React, { useEffect, memo, useMemo, useCallback } from 'react'
+import React, { useEffect, memo, useMemo } from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { useNavigation } from '@react-navigation/native'
 import { useSelector } from 'react-redux'
@@ -41,39 +41,29 @@ const MainTabs = () => {
     [isLocked],
   )
 
-  const tabBarOptions = useMemo(
-    () => ({
-      showLabel: false,
-      style: {
-        backgroundColor: surfaceContrast,
-        paddingHorizontal: wp(12),
-      },
-    }),
-    [surfaceContrast],
-  )
-
-  const screenOptions = useCallback(
-    ({ route }) => ({
-      tabBarIcon: ({ focused, color, size }: TabBarIconType) => {
-        return (
-          <TabBarIcon
-            name={route.name as MainTabType}
-            focused={focused}
-            color={color}
-            size={Math.min(size, 22)}
-          />
-        )
-      },
-    }),
-    [],
-  )
-
   return (
     <MainTab.Navigator
       sceneContainerStyle={sceneContainerStyle}
       initialRouteName="Hotspots"
-      tabBarOptions={tabBarOptions}
-      screenOptions={screenOptions}
+      tabBarOptions={{
+        showLabel: false,
+        style: {
+          backgroundColor: surfaceContrast,
+          paddingHorizontal: wp(12),
+        },
+      }}
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color, size }: TabBarIconType) => {
+          return (
+            <TabBarIcon
+              name={route.name as MainTabType}
+              focused={focused}
+              color={color}
+              size={Math.min(size, 22)}
+            />
+          )
+        },
+      })}
     >
       <MainTab.Screen name="Hotspots" component={Hotspots} />
       <MainTab.Screen name="More" component={More} />
