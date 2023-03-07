@@ -50,7 +50,13 @@ const HotspotLocationPreview = ({
     () =>
       hasLocationName ? (
         <Box padding="m" backgroundColor="surface">
-          <Text variant="h4" numberOfLines={1} maxFontSizeMultiplier={1.2}>
+          <Text
+            textAlign="center"
+            variant="body1"
+            color="surfaceText"
+            numberOfLines={1}
+            maxFontSizeMultiplier={1.2}
+          >
             {locationName ||
               `${geocode?.longStreet}, ${geocode?.shortCity}, ${geocode?.shortCountry}`}
           </Text>

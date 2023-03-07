@@ -6,7 +6,7 @@ import {
   Platform,
   StatusBar,
   UIManager,
-  useColorScheme,
+  // useColorScheme,
 } from 'react-native'
 import useAppState from 'react-native-appstate-hook'
 import { ThemeProvider } from '@shopify/restyle'
@@ -22,7 +22,7 @@ import {
   OnboardingProvider,
   SolanaProvider,
 } from '@helium/react-native-sdk'
-import { theme, darkThemeColors, lightThemeColors } from './theme/theme'
+import { theme, darkThemeColors } from './theme/theme'
 import NavigationRoot from './navigation/NavigationRoot'
 import { useAppDispatch } from './store/store'
 import appSlice, { restoreAppSettings } from './store/user/appSlice'
@@ -39,7 +39,7 @@ SplashScreen.preventAutoHideAsync().catch(() => {
 })
 
 const App = () => {
-  const colorScheme = useColorScheme()
+  // const colorScheme = useColorScheme()
 
   useCheckWalletLink()
 
@@ -136,9 +136,10 @@ const App = () => {
   const colorAdaptedTheme = useMemo(
     () => ({
       ...theme,
-      colors: colorScheme === 'light' ? lightThemeColors : darkThemeColors,
+      // colors: colorScheme === 'light' ? lightThemeColors : darkThemeColors,
+      colors: darkThemeColors,
     }),
-    [colorScheme],
+    [],
   )
 
   return (

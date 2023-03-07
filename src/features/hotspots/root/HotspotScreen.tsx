@@ -156,7 +156,7 @@ const HotspotScreen = () => {
               height={16}
               borderRadius="round"
               width={16}
-              backgroundColor="peacockGreen"
+              backgroundColor="greenMain"
               pointerEvents="none"
             />
           </Box>

@@ -42,14 +42,14 @@ const Hotspots = ({ hotspots }: Props) => {
           borderBottomWidth={2}
           onPress={handleNav(item)}
         >
-          <Text variant="body1" flex={1}>
+          <Text variant="body1" color="secondaryText" flex={1}>
             {animalName(item.address)}
           </Text>
-          <Chevron color="#C1CFEE" />
+          <Chevron color={colors.graySteel} />
         </TouchableOpacityBox>
       )
     },
-    [handleNav],
+    [colors.graySteel, handleNav],
   )
 
   const keyExtractor = useCallback((item: Hotspot) => {
@@ -60,8 +60,9 @@ const Hotspots = ({ hotspots }: Props) => {
     <>
       <StatusBar hidden />
       <FlatList
+        stickyHeaderIndices={[0]}
         ListHeaderComponent={
-          <Box>
+          <Box backgroundColor="primaryBackground">
             <Box alignItems="flex-end">
               <TouchableOpacityBox
                 paddingVertical="l"
@@ -71,7 +72,12 @@ const Hotspots = ({ hotspots }: Props) => {
                 <AddIcon color={colors.primaryText} />
               </TouchableOpacityBox>
             </Box>
-            <Text variant="h1" textAlign="center" marginBottom="l">
+            <Text
+              color="primaryText"
+              variant="h1"
+              textAlign="center"
+              marginBottom="l"
+            >
               {t('hotspots.title')}
             </Text>
           </Box>
