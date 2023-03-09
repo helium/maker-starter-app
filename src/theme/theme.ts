@@ -70,8 +70,10 @@ const palette = {
   greenMain: '#32C48D',
   purpleDark: '#161B3D',
   purpleDarkMuted: '#4C5280',
+  purpleLight: '#A0A5DA',
   purpleMain: '#474DFF',
   redMain: '#F97570',
+  redMedium: '#FF6666',
 }
 
 export const darkThemeColors = {

@@ -11,6 +11,8 @@ export type MoreStackParamList = {
     fromImport?: boolean
     pinReset?: boolean
   }
+  RevealWordsScreen: undefined
+  RevealPrivateKeyScreen: undefined
 }
 
 export type MoreNavigationProp = StackNavigationProp<MoreStackParamList>

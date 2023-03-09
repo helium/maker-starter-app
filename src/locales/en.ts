@@ -34,6 +34,23 @@ export default {
       subtitle: 'Let’s secure your account with a PIN Code.',
       title: 'Set PIN Code',
     },
+    revealPrivateKey: {
+      alertMessage:
+        "This will access and display your private key from your device's secure storage",
+      alertTitle: 'Are you sure?',
+      done: 'Done',
+      subtitle:
+        '<secondaryText>Do not share your private key!</secondaryText><red>\n\nIf someone has your private key they will have full control of your wallet!</red>',
+      tap: 'Tap to reveal your private key',
+      tapCopy: 'Tap to copy. Your private key is:',
+      title: 'Your Private Key',
+      privateKey: 'private key',
+      export: 'Export to Wallet App',
+      download: 'Download Wallet App',
+      passMessage:
+        'Enter a password to secure your private key. You will need to enter this again in Wallet App.',
+      inputPlaceholder: 'Enter Password',
+    },
     generating: 'GENERATING YOUR 12 WORDS...',
     linkAccount: {
       stepOne: '1. Download the Wallet App',
@@ -329,6 +346,8 @@ export default {
         requirePin: 'Require PIN',
         resetPin: 'Reset PIN',
         title: 'Security',
+        revealWords: 'Reveal Words',
+        revealPrivateKey: 'Export Private Key',
       },
     },
     title: 'Settings',
