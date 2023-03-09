@@ -11,6 +11,7 @@ import {
 } from '@helium/react-native-sdk'
 import { isString, uniq } from 'lodash'
 import { parseWalletLinkToken } from '@helium/wallet-link'
+import Config from 'react-native-config'
 import Box from '../../../components/Box'
 import HotspotPairingList from '../../../components/HotspotPairingList'
 import Text from '../../../components/Text'
@@ -177,7 +178,7 @@ const HotspotSetupBluetoothSuccess = () => {
           const { address: ownerAddress } = parsed
           const addGatewayTxn = await createGatewayTxn({
             ownerAddress,
-            payerAddress: onboardingRecord.maker.address,
+            payerAddress,
           })
           navigation.replace('HotspotSetupPickWifiScreen', {
             networks,

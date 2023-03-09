@@ -59,6 +59,17 @@ allprojects {
             // expo-camera bundles a custom com.google.android:cameraview
             url "$rootDir/../node_modules/expo-camera/android/maven"
         }
+
+        maven {
+            url 'https://api.mapbox.com/downloads/v2/releases/maven'
+            authentication {
+                basic(BasicAuthentication)
+            }
+            credentials {
+                username = 'mapbox'
+                password = System.getenv("MAPBOX_DOWNLOAD_TOKEN")
+            }
+        }
     }
 }
 
