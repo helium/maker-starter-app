@@ -1721,10 +1721,10 @@
   dependencies:
     protobufjs "^6.11.3"
 
-"@helium/react-native-sdk@^2.0.10":
-  version "2.0.10"
-  resolved "https://registry.yarnpkg.com/@helium/react-native-sdk/-/react-native-sdk-2.0.10.tgz#8effaf66f1a425e5c900630c240b535d6a030906"
-  integrity sha512-qqm66Iv0QLBxycm3FZmy+fieva5rs2dszHcDeMuJByY/t6pvskbNCOFXGkB33ijmyPF+FJ7W+vb9vXQyPqflyQ==
+"@helium/react-native-sdk@^2.0.11":
+  version "2.0.11"
+  resolved "https://registry.yarnpkg.com/@helium/react-native-sdk/-/react-native-sdk-2.0.11.tgz#b4ac35bd2a12ad90558d622d20f978e09f16c5cc"
+  integrity sha512-IGdzOOcNE/FnPNSXfsRo4V+438V7WmlogIb8yDlWGO3ii51RsIcUffyUKEjAzSm9GWsy54O1IcMt0Mo5ztyxJw==
   dependencies:
     "@azure/core-asynciterator-polyfill" "^1.0.2"
     "@coral-xyz/anchor" "^0.26.0"
@@ -11257,6 +11257,14 @@ react-native-navigation-bar-color@^2.0.1:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/react-native-navigation-bar-color/-/react-native-navigation-bar-color-2.0.2.tgz#2e14ca79a656d81d5b4b7433ae43966ef5206444"
   integrity sha512-ZmpLWRocyme1au11e5ZuecMS/UCi57nlzgnioi03Q6ERMbeUOqqbWgNBaNB7SsCeqBV6fZPjo3+A64zEIpzw4w==
+
+react-native-permissions@^3.7.3:
+  version "3.7.3"
+  resolved "https://registry.yarnpkg.com/react-native-permissions/-/react-native-permissions-3.7.3.tgz#4a417f3a0ece03cf682fb5b80b8c72adcf05860a"
+  integrity sha512-kHf79ygx1jP58IuaUimxj8McQK85OwerN8dnndOhgG8eyLeJMNiBFafKizbxFSCCCo1jmAAbTpA3iLM0UhHpbQ==
+  dependencies:
+    picocolors "^1.0.0"
+    pkg-dir "^5.0.0"
 
 react-native-quick-base64@^2.0.2, react-native-quick-base64@^2.0.5:
   version "2.0.5"
