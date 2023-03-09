@@ -25,7 +25,7 @@ type Route = RouteProp<
   'HotspotSetupInstructionsScreen'
 >
 
-const HotspotSetupDiagnosticsScreen = () => {
+const HotspotSetupInstructionsScreen = () => {
   const {
     params: { hotspotType, gatewayAction, slideIndex },
   } = useRoute<Route>()
@@ -177,4 +177,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default HotspotSetupDiagnosticsScreen
+export default HotspotSetupInstructionsScreen

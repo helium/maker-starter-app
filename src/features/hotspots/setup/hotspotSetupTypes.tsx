@@ -14,7 +14,6 @@ export type HotspotConnectStatus =
 type GatewayAction = 'addGateway' | 'assertLocation'
 
 export type HotspotSetupStackParamList = {
-  HotspotSetupSelectionScreen: { gatewayAction: GatewayAction }
   HotspotSetupEducationScreen: {
     hotspotType: HotspotType
     gatewayAction: GatewayAction

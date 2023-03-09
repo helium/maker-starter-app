@@ -1,6 +1,5 @@
 import * as React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
-import HotspotSetupSelectionScreen from './HotspotSetupSelectionScreen'
 import HotspotSetupEducationScreen from './HotspotSetupEducationScreen'
 import HotspotSetupScanningScreen from './HotspotSetupScanningScreen'
 import HotspotSetupPickHotspotScreen from './HotspotSetupPickHotspotScreen'
@@ -32,15 +31,12 @@ const HotspotSetup = () => {
       screenOptions={{ ...defaultScreenOptions }}
     >
       <HotspotSetupStack.Screen
-        name="HotspotSetupSelectionScreen"
-        component={HotspotSetupSelectionScreen}
-        initialParams={{
-          gatewayAction: 'addGateway',
-        }}
-      />
-      <HotspotSetupStack.Screen
         name="HotspotSetupEducationScreen"
         component={HotspotSetupEducationScreen}
+        initialParams={{
+          gatewayAction: 'addGateway',
+          hotspotType: 'Helium',
+        }}
       />
       <HotspotSetupStack.Screen
         name="HotspotSetupExternalScreen"

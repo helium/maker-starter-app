@@ -115,7 +115,7 @@ export default {
     period: '.',
     scan_again: 'Scan Again',
     search_location: 'Search for an address or place',
-    skip: '[skip button]',
+    skip: 'Skip',
     something_went_wrong: 'Something went wrong',
     understand: 'I understand',
     unknown: 'Unknown',
@@ -162,25 +162,30 @@ export default {
       title: 'Diagnostics',
     },
     education: {
+      title: 'Placing\nyour Hotspot.',
       cards: [
         {
-          subtitle: '[Placeholder]',
-          title: '[Placeholder]',
+          title: 'Give me a nice view',
+          subtitle:
+            'Hotspots love places where they can see plenty of sky and spaced at least 300 meters away from other Hotspots. ',
         },
         {
-          subtitle: '[Placeholder]',
-          title: '[Placeholder]',
+          title: "Don't hide me",
+          subtitle:
+            "Hotspots shouldn't hide in a nightstand or bookcase. Put it next to a window instead.",
         },
         {
-          subtitle: '[Placeholder]',
-          title: '[Placeholder]',
+          title: 'Buildings may block my signals',
+          subtitle:
+            "Nearby buildings may decrease your Hotspot's coverage for nearby devices.",
         },
         {
-          subtitle: '[Placeholder]',
-          title: '[Placeholder]',
+          title: 'Finally - I hate bug screens!',
+          subtitle:
+            'Try to keep your Hotspot away from metal meshes, which can block radio signals dramatically.',
         },
       ],
-      title: '[Your Hotspot\nSetup Instructions]',
+      next: "I've read the guide",
     },
     enable_location: {
       cancel: "No thanks, I'll set it up later",
@@ -317,9 +322,6 @@ export default {
     explorer: 'Helium Explorer',
     view_activity: 'After adding a Hotspot, you can view your account on the ',
     title: 'Your Hotspots',
-  },
-  learn: {
-    next: '[next button]',
   },
   more: {
     sections: {

@@ -65,7 +65,6 @@ const palette = {
   white: '#FFFFFF',
   transparent: '#00000000',
   offWhite: '#F9FAFC',
-
   graySteel: '#74869A',
   greenMain: '#32C48D',
   purpleDark: '#161B3D',
@@ -74,6 +73,7 @@ const palette = {
   purpleMain: '#474DFF',
   redMain: '#F97570',
   redMedium: '#FF6666',
+  yellow: '#FCC945',
 }
 
 export const darkThemeColors = {

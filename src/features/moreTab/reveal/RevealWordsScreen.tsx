@@ -34,18 +34,10 @@ const RevealWordsScreen = () => {
         alignItems="center"
         flexDirection="row"
       >
-        <Text
-          // variant="bold"
-          fontSize={39}
-          color="purpleLight"
-          maxFontSizeMultiplier={1}
-        >{`${index + 1}. `}</Text>
-        <Text
-          // variant="bold"
-          fontSize={39}
-          color="purpleDark"
-          maxFontSizeMultiplier={1}
-        >
+        <Text fontSize={39} color="purpleLight" maxFontSizeMultiplier={1}>{`${
+          index + 1
+        }. `}</Text>
+        <Text fontSize={39} color="purpleDark" maxFontSizeMultiplier={1}>
           {upperCase(item)}
         </Text>
       </Card>
@@ -66,7 +58,6 @@ const RevealWordsScreen = () => {
         maxFontSizeMultiplier={1}
         marginVertical="l"
         variant="subtitle1"
-        // variant="subtitle"
         i18nKey="account_setup.passphrase.subtitle"
       />
       <Box

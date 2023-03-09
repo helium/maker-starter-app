@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { FlatList, StatusBar } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import AddIcon from '@assets/images/add.svg'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import Text from '../../../components/Text'
 import TouchableOpacityBox from '../../../components/TouchableOpacityBox'
 import { HotspotNavigationProp } from './hotspotTypes'
@@ -18,6 +19,7 @@ const Hotspots = ({ hotspots }: Props) => {
   const colors = useColors()
   const navigation = useNavigation<HotspotNavigationProp>()
   const rootNav = useNavigation<RootNavigationProp>()
+  const { top } = useSafeAreaInsets()
 
   const handleNav = useCallback(
     (hotspot: Hotspot) => () => {
@@ -44,28 +46,37 @@ const Hotspots = ({ hotspots }: Props) => {
 
   return (
     <>
-      <StatusBar hidden />
+      <StatusBar barStyle="dark-content" />
       <FlatList
         stickyHeaderIndices={[0]}
         ListHeaderComponent={
-          <Box backgroundColor="primaryBackground">
-            <Box alignItems="flex-end">
-              <TouchableOpacityBox
-                paddingVertical="l"
-                paddingHorizontal="lx"
-                onPress={addHotspot}
-              >
-                <AddIcon color={colors.primaryText} />
-              </TouchableOpacityBox>
-            </Box>
-            <Text
-              color="primaryText"
-              variant="h1"
-              textAlign="center"
-              marginBottom="l"
+          <Box
+            backgroundColor="primaryBackground"
+            flexDirection="row"
+            width="100%"
+            alignItems="center"
+            justifyContent="center"
+            style={{ paddingTop: top }}
+          >
+            <TouchableOpacityBox
+              paddingVertical="l"
+              paddingHorizontal="lx"
+              onPress={addHotspot}
+              disabled
+              opacity={0}
             >
+              <AddIcon color={colors.primaryText} />
+            </TouchableOpacityBox>
+            <Text color="primaryText" variant="h2" textAlign="center">
               {t('hotspots.title')}
             </Text>
+            <TouchableOpacityBox
+              paddingVertical="l"
+              paddingHorizontal="lx"
+              onPress={addHotspot}
+            >
+              <AddIcon color={colors.primaryText} />
+            </TouchableOpacityBox>
           </Box>
         }
         data={hotspots}
