@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+	<dict>
+		<key>CFBundleDevelopmentRegion</key>
+		<string>en</string>
+		<key>CFBundleDisplayName</key>
+		<string>Maker App</string>
+		<key>CFBundleExecutable</key>
+		<string>$(EXECUTABLE_NAME)</string>
+		<key>CFBundleIdentifier</key>
+		<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+		<key>CFBundleInfoDictionaryVersion</key>
+		<string>6.0</string>
+		<key>CFBundleName</key>
+		<string>$(PRODUCT_NAME)</string>
+		<key>CFBundlePackageType</key>
+		<string>APPL</string>
+		<key>CFBundleShortVersionString</key>
+		<string>$(MARKETING_VERSION)</string>
+		<key>CFBundleSignature</key>
+		<string>????</string>
+		<key>CFBundleURLTypes</key>
+		<array>
+			<dict>
+				<key>CFBundleTypeRole</key>
+				<string>Editor</string>
+				<key>CFBundleURLSchemes</key>
+				<array>
+					<string>makerappscheme</string>
+				</array>
+			</dict>
+		</array>
+		<key>CFBundleVersion</key>
+		<string>1</string>
+		<key>LSRequiresIPhoneOS</key>
+		<true />
+		<key>NSAppTransportSecurity</key>
+		<dict>
+			<key>NSExceptionDomains</key>
+			<dict>
+				<key>localhost</key>
+				<dict>
+					<key>NSExceptionAllowsInsecureHTTPLoads</key>
+					<true />
+				</dict>
+			</dict>
+		</dict>
+		<key>NSBluetoothAlwaysUsageDescription</key>
+		<string>Allow Maker App to connect to and manage your Hotspots</string>
+		<key>NSBluetoothPeripheralUsageDescription</key>
+		<string>Allow Maker App to connect to and manage your Hotspots</string>
+		<key>NSCameraUsageDescription</key>
+		<string>Allow Maker App to use the camera to scan QR codes</string>
+		<key>NSFaceIDUsageDescription</key>
+		<string>Allow Maker App to authenticate with Face ID</string>
+		<key>NSLocationAlwaysUsageDescription</key>
+		<string>Allow Maker App to use your location to add your Maker App Hotspots to the network</string>
+		<key>NSLocationWhenInUseUsageDescription</key>
+		<string>Allow Maker App to use your location to add Hotspots to the network and explore Hotspots around you</string>
+		<key>NSMicrophoneUsageDescription</key>
+		<string>Allow Maker App to use the microphone</string>
+		<key>UIAppFonts</key>
+		<array />
+		<key>UILaunchStoryboardName</key>
+		<string>LaunchScreen</string>
+		<key>UIRequiredDeviceCapabilities</key>
+		<array>
+			<string>armv7</string>
+		</array>
+		<key>UIRequiresFullScreen</key>
+		<true />
+		<key>UISupportedInterfaceOrientations</key>
+		<array>
+			<string>UIInterfaceOrientationPortrait</string>
+		</array>
+		<key>UIViewControllerBasedStatusBarAppearance</key>
+		<false />
+		<key>LSApplicationQueriesSchemes</key>
+		<array>
+			<string>helium</string>
+		</array>
+	</dict>
+</plist>

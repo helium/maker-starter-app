@@ -1,25 +1,24 @@
 import React, { memo, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ActivityIndicator, FlatList, StatusBar } from 'react-native'
+import { FlatList, StatusBar } from 'react-native'
+import animalName from 'angry-purple-tiger'
 import { useNavigation } from '@react-navigation/native'
 import AddIcon from '@assets/images/add.svg'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import Text from '../../../components/Text'
 import TouchableOpacityBox from '../../../components/TouchableOpacityBox'
+import Chevron from '../../../assets/images/chevron-right.svg'
 import { HotspotNavigationProp } from './hotspotTypes'
 import Box from '../../../components/Box'
 import { useColors } from '../../../theme/themeHooks'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
-import HotspotListItem from './HotspotListItem'
 
 type Hotspot = { address: string }
-type Props = { hotspots: Hotspot[]; loading: boolean }
-const Hotspots = ({ hotspots, loading }: Props) => {
+type Props = { hotspots: Hotspot[] }
+const Hotspots = ({ hotspots }: Props) => {
   const { t } = useTranslation()
   const colors = useColors()
   const navigation = useNavigation<HotspotNavigationProp>()
   const rootNav = useNavigation<RootNavigationProp>()
-  const { top } = useSafeAreaInsets()
 
   const handleNav = useCallback(
     (hotspot: Hotspot) => () => {
@@ -34,7 +33,20 @@ const Hotspots = ({ hotspots, loading }: Props) => {
     // eslint-disable-next-line react/no-unused-prop-types
     ({ item }: { item: Hotspot }) => {
       return (
-        <HotspotListItem address={item.address} onPress={handleNav(item)} />
+        <TouchableOpacityBox
+          padding="l"
+          backgroundColor="secondaryBackground"
+          flexDirection="row"
+          alignItems="center"
+          borderBottomColor="white"
+          borderBottomWidth={2}
+          onPress={handleNav(item)}
+        >
+          <Text variant="body1" flex={1}>
+            {animalName(item.address)}
+          </Text>
+          <Chevron color="#C1CFEE" />
+        </TouchableOpacityBox>
       )
     },
     [handleNav],
@@ -46,38 +58,22 @@ const Hotspots = ({ hotspots, loading }: Props) => {
 
   return (
     <>
-      <StatusBar barStyle="dark-content" />
+      <StatusBar hidden />
       <FlatList
-        stickyHeaderIndices={[0]}
-        ListEmptyComponent={loading ? <ActivityIndicator /> : null}
         ListHeaderComponent={
-          <Box
-            backgroundColor="primaryBackground"
-            flexDirection="row"
-            width="100%"
-            alignItems="center"
-            justifyContent="center"
-            style={{ paddingTop: top }}
-          >
-            <TouchableOpacityBox
-              paddingVertical="l"
-              paddingHorizontal="lx"
-              onPress={addHotspot}
-              disabled
-              opacity={0}
-            >
-              <AddIcon color={colors.primaryText} />
-            </TouchableOpacityBox>
-            <Text color="primaryText" variant="h2" textAlign="center">
+          <Box>
+            <Box alignItems="flex-end">
+              <TouchableOpacityBox
+                paddingVertical="l"
+                paddingHorizontal="lx"
+                onPress={addHotspot}
+              >
+                <AddIcon color={colors.primaryText} />
+              </TouchableOpacityBox>
+            </Box>
+            <Text variant="h1" textAlign="center" marginBottom="l">
               {t('hotspots.title')}
             </Text>
-            <TouchableOpacityBox
-              paddingVertical="l"
-              paddingHorizontal="lx"
-              onPress={addHotspot}
-            >
-              <AddIcon color={colors.primaryText} />
-            </TouchableOpacityBox>
           </Box>
         }
         data={hotspots}

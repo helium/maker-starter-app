@@ -93,11 +93,6 @@ const HotspotSetupBluetoothSuccess = () => {
     const configureHotspot = async () => {
       if (connectStatus !== true) return
 
-      if (gatewayAction === 'diagnostics') {
-        navigation.navigate('HotspotSetupDiagnostics')
-        return
-      }
-
       try {
         // check firmware
         const minFirmware = await getMinFirmware()
@@ -124,7 +119,7 @@ const HotspotSetupBluetoothSuccess = () => {
         }
 
         // navigate to next screen
-        if (gatewayAction === 'addGateway' || gatewayAction === 'wifi') {
+        if (gatewayAction === 'addGateway') {
           const token = await getSecureItem('walletLinkToken')
           if (!token) throw new Error('Token Not found')
           const parsed = parseWalletLinkToken(token)
@@ -141,7 +136,6 @@ const HotspotSetupBluetoothSuccess = () => {
             hotspotAddress,
             hotspotType,
             addGatewayTxn,
-            gatewayAction,
           })
         } else {
           navigation.replace('HotspotSetupPickLocationScreen', {

@@ -10,7 +10,6 @@ const components = {
   errorText: <Text color="error" />,
   secondaryText: <Text color="secondaryText" />,
   primaryText: <Text color="primaryText" />,
-  red: <Text color="redMedium" />,
 }
 
 type Props = TextProps<Theme> & {

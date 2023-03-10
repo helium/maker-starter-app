@@ -1,7 +1,7 @@
 {
-  "name": "Helium",
-  "displayName": "Helium",
+  "name": "MakerApp",
+  "displayName": "Maker App",
   "expo": {
-    "scheme": "helium"
+    "scheme": "makerappscheme"
   }
 }

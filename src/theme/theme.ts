@@ -61,41 +61,57 @@ const textVariants = {
 }
 
 const palette = {
+  charcoal: '#264653',
+  peacockGreen: '#2A9D8F',
+  yellow: '#E9C46A',
+  deepOrange: '#F4A261',
+  burntSienna: '#E76F51',
   black: '#000000',
   white: '#FFFFFF',
   transparent: '#00000000',
   offWhite: '#F9FAFC',
-  graySteel: '#74869A',
-  greenMain: '#32C48D',
-  purpleDark: '#161B3D',
-  purpleDarkMuted: '#4C5280',
-  purpleLight: '#A0A5DA',
-  purpleMain: '#474DFF',
-  redMain: '#F97570',
-  redMedium: '#FF6666',
-  yellow: '#FCC945',
+  bobcatRed: '#EE2737',
+  bobcatDarkGrey: '#333333',
+  bobcatGrey: '#aeaeae',
 }
 
-export const darkThemeColors = {
+export const lightThemeColors = {
   ...palette,
 
-  primary: palette.purpleMain,
+  primary: palette.bobcatRed,
   primaryBackground: palette.white,
   primaryText: palette.black,
   secondaryBackground: palette.offWhite,
-  secondary: palette.graySteel,
-  secondaryText: palette.black,
-  error: palette.redMain,
-  surface: palette.white,
-  surfaceText: palette.black,
+  secondary: palette.bobcatGrey,
+  secondaryText: palette.bobcatDarkGrey,
+  error: palette.bobcatRed,
+  surface: palette.offWhite,
+  surfaceText: palette.bobcatDarkGrey,
   surfaceSecondary: palette.offWhite,
-  surfaceSecondaryText: palette.black,
-  surfaceContrast: palette.purpleDark,
+  surfaceSecondaryText: palette.bobcatDarkGrey,
+  surfaceContrast: palette.bobcatDarkGrey,
   surfaceContrastText: palette.white,
+}
+export const darkThemeColors = {
+  ...palette,
+
+  primary: palette.bobcatRed,
+  primaryBackground: palette.black,
+  primaryText: palette.white,
+  secondaryBackground: palette.bobcatDarkGrey,
+  secondary: palette.bobcatDarkGrey,
+  secondaryText: palette.white,
+  error: palette.bobcatRed,
+  surface: palette.bobcatDarkGrey,
+  surfaceText: palette.white,
+  surfaceSecondary: palette.offWhite,
+  surfaceSecondaryText: palette.bobcatDarkGrey,
+  surfaceContrast: palette.white,
+  surfaceContrastText: palette.bobcatDarkGrey,
 }
 
 export const theme = createTheme({
-  colors: darkThemeColors,
+  colors: lightThemeColors,
   spacing: {
     n_xxxxl: -240,
     n_xxxl: -120,

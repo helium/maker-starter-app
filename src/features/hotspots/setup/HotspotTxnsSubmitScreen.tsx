@@ -51,7 +51,6 @@ const HotspotTxnsSubmitScreen = () => {
         solanaTxnIds,
       })
     } catch (e) {
-      // eslint-disable-next-line no-console
       console.log({ e })
     }
   }, [])
