@@ -4,18 +4,20 @@ import { useNavigation } from '@react-navigation/native'
 import { createWalletLinkUrl } from '@helium/wallet-link'
 import { Linking } from 'react-native'
 import { getBundleId } from 'react-native-device-info'
+import HotspotIcon from '@assets/images/hotspot.svg'
 import Text from '../../../components/Text'
 import { OnboardingNavigationProp } from '../onboardingTypes'
 import Box from '../../../components/Box'
 import TextTransform from '../../../components/TextTransform'
-import SafeAreaBox from '../../../components/SafeAreaBox'
-import TouchableOpacityBox from '../../../components/TouchableOpacityBox'
 import useDelegateApps from '../../../utils/useDelegateApps'
+import Button from '../../../components/Button'
+import { useColors } from '../../../theme/themeHooks'
 
 const WelcomeScreen = () => {
   const { t } = useTranslation()
   const { walletApp } = useDelegateApps()
   const navigation = useNavigation<OnboardingNavigationProp>()
+  const colors = useColors()
 
   const createAccount = useCallback(
     () => navigation.push('CreateAccount'),
@@ -39,31 +41,38 @@ const WelcomeScreen = () => {
   }, [walletApp?.universalLink])
 
   return (
-    <SafeAreaBox
-      backgroundColor="primaryBackground"
-      flex={1}
-      paddingHorizontal="l"
-      alignItems="center"
-      paddingTop="xxxl"
-    >
-      <Text variant="h1">{t('account_setup.welcome.title')}</Text>
-      <TextTransform
-        variant="subtitle1"
-        marginVertical="xxl"
-        i18nKey="account_setup.welcome.subtitle"
-      />
-      <Box flex={1} />
-
-      <TouchableOpacityBox onPress={createAccount} width="100%" padding="l">
-        <Text variant="body1">{t('account_setup.welcome.create_account')}</Text>
-      </TouchableOpacityBox>
-
-      <TouchableOpacityBox onPress={importAccount} width="100%" padding="l">
-        <Text variant="body1">
-          {t('account_setup.welcome.login_with_helium')}
-        </Text>
-      </TouchableOpacityBox>
-    </SafeAreaBox>
+    <Box backgroundColor="primaryBackground" flex={1}>
+      <Box flex={2} height="100%" alignItems="center" justifyContent="center">
+        <HotspotIcon color={colors.purpleDark} height={200} width={200} />
+      </Box>
+      <Box
+        flex={1}
+        paddingVertical="l"
+        paddingHorizontal="lx"
+        justifyContent="flex-end"
+      >
+        <Text variant="h1">{t('account_setup.welcome.title')}</Text>
+        <TextTransform
+          variant="subtitle1"
+          marginVertical="lx"
+          i18nKey="account_setup.welcome.subtitle"
+        />
+        <Button
+          mode="contained"
+          variant="primary"
+          width="100%"
+          marginBottom="s"
+          onPress={createAccount}
+          title={t('account_setup.welcome.create_account')}
+        />
+        <Button
+          onPress={importAccount}
+          mode="text"
+          variant="primary"
+          title={t('account_setup.welcome.import_account')}
+        />
+      </Box>
+    </Box>
   )
 }
 

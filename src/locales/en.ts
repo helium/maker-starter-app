@@ -34,23 +34,6 @@ export default {
       subtitle: 'Let’s secure your account with a PIN Code.',
       title: 'Set PIN Code',
     },
-    revealPrivateKey: {
-      alertMessage:
-        "This will access and display your private key from your device's secure storage",
-      alertTitle: 'Are you sure?',
-      done: 'Done',
-      subtitle:
-        '<secondaryText>Do not share your private key!</secondaryText><red>\n\nIf someone has your private key they will have full control of your wallet!</red>',
-      tap: 'Tap to reveal your private key',
-      tapCopy: 'Tap to copy. Your private key is:',
-      title: 'Your Private Key',
-      privateKey: 'private key',
-      export: 'Export to Wallet App',
-      download: 'Download Wallet App',
-      passMessage:
-        'Enter a password to secure your private key. You will need to enter this again in Wallet App.',
-      inputPlaceholder: 'Enter Password',
-    },
     generating: 'GENERATING YOUR 12 WORDS...',
     linkAccount: {
       stepOne: '1. Download the Wallet App',
@@ -63,6 +46,23 @@ export default {
         'It is crucial you <b>write all of these\n12 words down, in order</b>.\n\n<errorText>They cannot be recovered.</errorText>',
       title: 'Your 12 Word\nPassword',
     },
+    revealPrivateKey: {
+      alertMessage:
+        "This will access and display your private key from your device's secure storage",
+      alertTitle: 'Are you sure?',
+      done: 'Done',
+      download: 'Download Wallet App',
+      export: 'Export to Wallet App',
+      inputPlaceholder: 'Enter Password',
+      passMessage:
+        'Enter a password to secure your private key. You will need to enter this again in Wallet App.',
+      privateKey: 'private key',
+      subtitle:
+        '<secondaryText>Do not share your private key!</secondaryText><red>\n\nIf someone has your private key they will have full control of your wallet!</red>',
+      tap: 'Tap to reveal your private key',
+      tapCopy: 'Tap to copy. Your private key is:',
+      title: 'Your Private Key',
+    },
     warning: {
       generate: 'Generate my 12 words',
       subtitle:
@@ -70,11 +70,12 @@ export default {
       title: 'Creating\nSecure Account.',
     },
     welcome: {
-      create_account: 'Create an account on the Helium Network',
+      create_account: 'Create an account',
+      import_account: 'Import Existing Account',
       login_with_helium:
         'Already have the Helium Wallet App?\nTap to get started.',
       subtitle:
-        'Lorem ipsum <b><errorText>$HNT</errorText></b> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+        'Host a Hotspot and earn <b><purple>$HNT</purple></b>,\na new cryptocurrency,\nfor building The People’s Network.',
       title: 'Welcome\nto Helium',
     },
   },
@@ -126,137 +127,137 @@ export default {
     no_location_title: 'No Asserted Location',
   },
   hotspot_settings: {
-    wifi: {
-      hide_password: 'Hide Password',
-      show_password: 'Show Password',
-    },
-    title: 'Hotspot Settings',
-    pairing: {
-      title: 'Update Wi-Fi or Run Diagnostics',
-      subtitle:
-        'Pairing required before proceeding.\nSome Hotspot models are not supported, check with your manufacturer.',
-      scan: 'Pair',
-    },
-    transfer: {
-      title: 'Transfer Hotspot',
-      subtitle: 'Send to another Helium Wallet.',
-      begin: 'Begin Hotspot Transfer',
-    },
-    update: {
-      title: 'Update Hotspot',
-      subtitle: 'Hotspot location or antenna details.',
-    },
-    visibility_on: {
-      title: 'Show Hotspot',
-      subtitle: 'Makes the Hotspot visible in the app.',
-    },
-    visibility_off: {
-      title: 'Hide Hotspot',
-      subtitle: 'Hides the Hotspot in the app.',
-    },
-    visibility_popup: {
-      title: 'Hide Hotspot',
-      message:
-        'Hotspot will be hidden from view in the app but stays linked to your account.\n\nTo view Hidden Hotspots and unhide them, go to Settings.',
-    },
-    discovery: {
-      title: 'Discovery Mode',
-      subtitle: 'Identify ideal Hotspot placement.',
-      no_location_error: {
-        title: 'Unable to Start Discovery Mode',
-        message:
-          'Please set a Hotspot location before initiating Discovery Mode.',
-      },
-      unasserted_hotspot_warning: {
-        title: 'Hotspot Does Not Have A Location',
-        message:
-          "To visualize Hotspots that respond, we will use your phone's location as a placeholder for the Hotspot.",
-      },
-    },
     diagnostics: {
-      title: 'Diagnostic Report',
+      activity: 'Activity',
+      app_version: 'App Version',
+      block_height: 'Block Height',
+      blockchain_height_help:
+        'Hotspot must be 100% synced before it can start mining. This can take several hours or more depending on your internet speed. Keep the Hotspot powered on and connected to the internet.',
+      blockchain_sync: 'Blockchain Sync',
       desc_info:
         "Please add more details to the issue you're experiencing below",
-      no_hotspots: 'No Hotspots Found',
-      scan_again: 'Scan again',
+      disk: 'Disk',
+      disk_no_data: 'No Data Available',
+      disk_read_only: 'Read-Only',
+      disk_read_only_instructions:
+        'Contact your Manufacturer for a replacement. Hotspot unable to sync due to hardware failure.',
+      email_client_missing:
+        'Could not find a compatible email client installed',
+      eth_mac: 'Ethernet MAC',
+      firmware: 'Hotspot Firmware',
       generating_report: 'Generating Report',
-      p2p: 'Peer-to-Peer Connections',
-      no_connection: 'No Connection',
-      outbound: 'Outbound',
-      outbound_help:
-        'Hotspot unable to connect to peers on the blockchain. This can be due to router issues, no internet connection, or a firewall blocking incoming connections.',
+      help_link: 'Read more for possible solutions',
+      hotspot_type: 'Hotspot Maker',
       inbound: 'Inbound',
       inbound_help:
         'Blockchain peers cannot to reach Hotspot. This can be due to router issues, no internet connection, or a firewall blocking incoming connections.',
-      activity: 'Activity',
-      blockchain_sync: 'Blockchain Sync',
-      block_height: 'Block Height',
-      synced: '{{percent}} Synced',
-      blockchain_height_help:
-        'Hotspot must be 100% synced before it can start mining. This can take several hours or more depending on your internet speed. Keep the Hotspot powered on and connected to the internet.',
+      ip: 'IP Address',
       last_challenged: 'Last Challenged',
       last_challenged_help:
         'Neighboring Hotspots have not been able to verify your Hotspot location. In most cases, this is because the antenna is in an area where radio signals can’t reach (buildings blocking, antenna pointed down, antenna indoors).',
-      firmware: 'Hotspot Firmware',
-      hotspot_type: 'Hotspot Maker',
-      app_version: 'App Version',
-      wifi_mac: 'Wi-Fi MAC',
-      eth_mac: 'Ethernet MAC',
       nat_type: 'NAT Type',
-      ip: 'IP Address',
-      disk: 'Disk',
-      disk_read_only: 'Read-Only',
-      disk_no_data: 'No Data Available',
-      disk_read_only_instructions:
-        'Contact your Manufacturer for a replacement. Hotspot unable to sync due to hardware failure.',
-      report_generated: 'Report Generated',
-      send_to_support: 'Send Report to Support',
-      help_link: 'Read more for possible solutions',
-      email_client_missing:
-        'Could not find a compatible email client installed',
+      no_connection: 'No Connection',
+      no_hotspots: 'No Hotspots Found',
       other_info: 'Other Information',
+      outbound: 'Outbound',
+      outbound_help:
+        'Hotspot unable to connect to peers on the blockchain. This can be due to router issues, no internet connection, or a firewall blocking incoming connections.',
+      p2p: 'Peer-to-Peer Connections',
+      report_generated: 'Report Generated',
+      scan_again: 'Scan again',
+      send_to_support: 'Send Report to Support',
+      synced: '{{percent}} Synced',
+      title: 'Diagnostic Report',
       unavailable_warning:
         '* Diagnostics may be unavailable before a Hotspot is fully booted. If data is missing, please go back and generate the diagnostic report again.',
+      wifi_mac: 'Wi-Fi MAC',
     },
-    wifi: {
-      title: 'Wi-Fi Network',
-      connected_via: 'Connected via',
-      not_connected: 'Not Connected',
-      available_wifi: 'Available Wi-Fi Networks',
-      show_password: 'Show Password',
-      hide_password: 'Hide Password',
-      ethernet: 'Ethernet',
+    discovery: {
+      no_location_error: {
+        message:
+          'Please set a Hotspot location before initiating Discovery Mode.',
+        title: 'Unable to Start Discovery Mode',
+      },
+      subtitle: 'Identify ideal Hotspot placement.',
+      title: 'Discovery Mode',
+      unasserted_hotspot_warning: {
+        message:
+          "To visualize Hotspots that respond, we will use your phone's location as a placeholder for the Hotspot.",
+        title: 'Hotspot Does Not Have A Location',
+      },
     },
     options: {
-      paired: 'Paired with Hotspot',
       diagnostic: 'Diagnostics',
-      wifi: 'Wi-Fi Network',
-      reassert: 'Update Location',
       firmware: 'Hotspot Firmware',
+      paired: 'Paired with Hotspot',
+      reassert: 'Update Location',
+      wifi: 'Wi-Fi Network',
+    },
+    pairing: {
+      scan: 'Pair',
+      subtitle:
+        'Pairing required before proceeding.\nSome Hotspot models are not supported, check with your manufacturer.',
+      title: 'Update Wi-Fi or Run Diagnostics',
     },
     reassert: {
+      already_pending:
+        'Unable to update Hotspot while a transaction is pending. Please try again later.',
+      antenna_details: 'Antenna/Height Details',
+      assert_pending: 'Assert Pending...',
+      change_location: 'Change Location',
+      charge: 'You will be charged {{amount}}.',
+      confirm: 'I Confirm',
+      confirm_location: "Please confirm your Hotspot's change in location",
+      cost: 'The cost of reasserting location is:',
+      current_location: 'Current Location',
+      failSubtitle: 'Please try again later',
+      failTitle: 'Failed to reassert hotspot',
+      insufficient_funds:
+        'You do not have the funds available to make\nthis assert. Acquire HNT.',
+      new_location: 'New Location',
+      pending_message: 'Location update pending.',
       remaining:
         'You have <b><purple>{{count}} free remaining</purple></b> Hotspot Location Assert Update.',
       remaining_plural:
         'You have <b><purple>{{count}} free remaining</purple></b> Hotspot Location Assert Updates.',
-      change_location: 'Change Location',
-      confirm: 'I Confirm',
-      cost: 'The cost of reasserting location is:',
-      insufficient_funds:
-        'You do not have the funds available to make\nthis assert. Acquire HNT.',
-      confirm_location: "Please confirm your Hotspot's change in location",
-      charge: 'You will be charged {{amount}}.',
-      pending_message: 'Location update pending.',
-      assert_pending: 'Assert Pending...',
-      failTitle: 'Failed to reassert hotspot',
-      failSubtitle: 'Please try again later',
-      current_location: 'Current Location',
-      new_location: 'New Location',
-      antenna_details: 'Antenna/Height Details',
-      update_antenna: 'Update Antenna',
       submit: 'Update Hotspot transaction submitted and now pending.',
-      already_pending:
-        'Unable to update Hotspot while a transaction is pending. Please try again later.',
+      update_antenna: 'Update Antenna',
+    },
+    title: 'Hotspot Settings',
+    transfer: {
+      begin: 'Begin Hotspot Transfer',
+      subtitle: 'Send to another Helium Wallet.',
+      title: 'Transfer Hotspot',
+    },
+    update: {
+      subtitle: 'Hotspot location or antenna details.',
+      title: 'Update Hotspot',
+    },
+    visibility_off: {
+      subtitle: 'Hides the Hotspot in the app.',
+      title: 'Hide Hotspot',
+    },
+    visibility_on: {
+      subtitle: 'Makes the Hotspot visible in the app.',
+      title: 'Show Hotspot',
+    },
+    visibility_popup: {
+      message:
+        'Hotspot will be hidden from view in the app but stays linked to your account.\n\nTo view Hidden Hotspots and unhide them, go to Settings.',
+      title: 'Hide Hotspot',
+    },
+    wifi: {
+      hide_password: 'Hide Password',
+      show_password: 'Show Password',
+    },
+    wifi: {
+      available_wifi: 'Available Wi-Fi Networks',
+      connected_via: 'Connected via',
+      ethernet: 'Ethernet',
+      hide_password: 'Hide Password',
+      not_connected: 'Not Connected',
+      show_password: 'Show Password',
+      title: 'Wi-Fi Network',
     },
   },
   hotspot_setup: {
@@ -291,30 +292,30 @@ export default {
       title: 'Diagnostics',
     },
     education: {
-      title: 'Placing\nyour Hotspot.',
       cards: [
         {
-          title: 'Give me a nice view',
           subtitle:
             'Hotspots love places where they can see plenty of sky and spaced at least 300 meters away from other Hotspots. ',
+          title: 'Give me a nice view',
         },
         {
-          title: "Don't hide me",
           subtitle:
             "Hotspots shouldn't hide in a nightstand or bookcase. Put it next to a window instead.",
+          title: "Don't hide me",
         },
         {
-          title: 'Buildings may block my signals',
           subtitle:
             "Nearby buildings may decrease your Hotspot's coverage for nearby devices.",
+          title: 'Buildings may block my signals',
         },
         {
-          title: 'Finally - I hate bug screens!',
           subtitle:
             'Try to keep your Hotspot away from metal meshes, which can block radio signals dramatically.',
+          title: 'Finally - I hate bug screens!',
         },
       ],
       next: "I've read the guide",
+      title: 'Placing\nyour Hotspot.',
     },
     enable_location: {
       cancel: "No thanks, I'll set it up later",
@@ -439,8 +440,6 @@ export default {
   },
   hotspots: {
     diagnostics: 'Run Diagnostics',
-    wifi: 'Update Wifi',
-    notOnboarded: 'This hotspot has not been onboarded',
     empty: {
       body: 'Your add hotspot\ninstructions',
       hotspots: {
@@ -451,8 +450,10 @@ export default {
       title: 'Add a\n[Placeholder] Miner',
     },
     explorer: 'Helium Explorer',
-    view_activity: 'After adding a Hotspot, you can view your account on the ',
+    notOnboarded: 'This hotspot has not been onboarded',
     title: 'Your Hotspots',
+    view_activity: 'After adding a Hotspot, you can view your account on the ',
+    wifi: 'Update Wifi',
   },
   more: {
     sections: {
@@ -478,9 +479,9 @@ export default {
         enablePin: 'Enable PIN',
         requirePin: 'Require PIN',
         resetPin: 'Reset PIN',
-        title: 'Security',
-        revealWords: 'Reveal Words',
         revealPrivateKey: 'Export Private Key',
+        revealWords: 'Reveal Words',
+        title: 'Security',
       },
     },
     title: 'Settings',
@@ -514,12 +515,12 @@ export default {
     title: 'Transfer Hotspot',
   },
   wallet: {
-    copiedToClipboard: 'Copied {{address}} to clipboard',
     checkLink: {
-      title: 'Update required',
+      link: 'Link to Helium Wallet App',
       message:
         "You're currently linked to the Helium Hotspot app. You must download the Helium Wallet App and update your link",
-      link: 'Link to Helium Wallet App',
+      title: 'Update required',
     },
+    copiedToClipboard: 'Copied {{address}} to clipboard',
   },
 }
