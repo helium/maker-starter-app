@@ -117,6 +117,7 @@ export default {
     search_location: 'Search for an address or place',
     skip: 'Skip',
     something_went_wrong: 'Something went wrong',
+    unavailable: 'Unavailable',
     understand: 'I understand',
     unknown: 'Unknown',
   },
@@ -128,6 +129,134 @@ export default {
     wifi: {
       hide_password: 'Hide Password',
       show_password: 'Show Password',
+    },
+    title: 'Hotspot Settings',
+    pairing: {
+      title: 'Update Wi-Fi or Run Diagnostics',
+      subtitle:
+        'Pairing required before proceeding.\nSome Hotspot models are not supported, check with your manufacturer.',
+      scan: 'Pair',
+    },
+    transfer: {
+      title: 'Transfer Hotspot',
+      subtitle: 'Send to another Helium Wallet.',
+      begin: 'Begin Hotspot Transfer',
+    },
+    update: {
+      title: 'Update Hotspot',
+      subtitle: 'Hotspot location or antenna details.',
+    },
+    visibility_on: {
+      title: 'Show Hotspot',
+      subtitle: 'Makes the Hotspot visible in the app.',
+    },
+    visibility_off: {
+      title: 'Hide Hotspot',
+      subtitle: 'Hides the Hotspot in the app.',
+    },
+    visibility_popup: {
+      title: 'Hide Hotspot',
+      message:
+        'Hotspot will be hidden from view in the app but stays linked to your account.\n\nTo view Hidden Hotspots and unhide them, go to Settings.',
+    },
+    discovery: {
+      title: 'Discovery Mode',
+      subtitle: 'Identify ideal Hotspot placement.',
+      no_location_error: {
+        title: 'Unable to Start Discovery Mode',
+        message:
+          'Please set a Hotspot location before initiating Discovery Mode.',
+      },
+      unasserted_hotspot_warning: {
+        title: 'Hotspot Does Not Have A Location',
+        message:
+          "To visualize Hotspots that respond, we will use your phone's location as a placeholder for the Hotspot.",
+      },
+    },
+    diagnostics: {
+      title: 'Diagnostic Report',
+      desc_info:
+        "Please add more details to the issue you're experiencing below",
+      no_hotspots: 'No Hotspots Found',
+      scan_again: 'Scan again',
+      generating_report: 'Generating Report',
+      p2p: 'Peer-to-Peer Connections',
+      no_connection: 'No Connection',
+      outbound: 'Outbound',
+      outbound_help:
+        'Hotspot unable to connect to peers on the blockchain. This can be due to router issues, no internet connection, or a firewall blocking incoming connections.',
+      inbound: 'Inbound',
+      inbound_help:
+        'Blockchain peers cannot to reach Hotspot. This can be due to router issues, no internet connection, or a firewall blocking incoming connections.',
+      activity: 'Activity',
+      blockchain_sync: 'Blockchain Sync',
+      block_height: 'Block Height',
+      synced: '{{percent}} Synced',
+      blockchain_height_help:
+        'Hotspot must be 100% synced before it can start mining. This can take several hours or more depending on your internet speed. Keep the Hotspot powered on and connected to the internet.',
+      last_challenged: 'Last Challenged',
+      last_challenged_help:
+        'Neighboring Hotspots have not been able to verify your Hotspot location. In most cases, this is because the antenna is in an area where radio signals can’t reach (buildings blocking, antenna pointed down, antenna indoors).',
+      firmware: 'Hotspot Firmware',
+      hotspot_type: 'Hotspot Maker',
+      app_version: 'App Version',
+      wifi_mac: 'Wi-Fi MAC',
+      eth_mac: 'Ethernet MAC',
+      nat_type: 'NAT Type',
+      ip: 'IP Address',
+      disk: 'Disk',
+      disk_read_only: 'Read-Only',
+      disk_no_data: 'No Data Available',
+      disk_read_only_instructions:
+        'Contact your Manufacturer for a replacement. Hotspot unable to sync due to hardware failure.',
+      report_generated: 'Report Generated',
+      send_to_support: 'Send Report to Support',
+      help_link: 'Read more for possible solutions',
+      email_client_missing:
+        'Could not find a compatible email client installed',
+      other_info: 'Other Information',
+      unavailable_warning:
+        '* Diagnostics may be unavailable before a Hotspot is fully booted. If data is missing, please go back and generate the diagnostic report again.',
+    },
+    wifi: {
+      title: 'Wi-Fi Network',
+      connected_via: 'Connected via',
+      not_connected: 'Not Connected',
+      available_wifi: 'Available Wi-Fi Networks',
+      show_password: 'Show Password',
+      hide_password: 'Hide Password',
+      ethernet: 'Ethernet',
+    },
+    options: {
+      paired: 'Paired with Hotspot',
+      diagnostic: 'Diagnostics',
+      wifi: 'Wi-Fi Network',
+      reassert: 'Update Location',
+      firmware: 'Hotspot Firmware',
+    },
+    reassert: {
+      remaining:
+        'You have <b><purple>{{count}} free remaining</purple></b> Hotspot Location Assert Update.',
+      remaining_plural:
+        'You have <b><purple>{{count}} free remaining</purple></b> Hotspot Location Assert Updates.',
+      change_location: 'Change Location',
+      confirm: 'I Confirm',
+      cost: 'The cost of reasserting location is:',
+      insufficient_funds:
+        'You do not have the funds available to make\nthis assert. Acquire HNT.',
+      confirm_location: "Please confirm your Hotspot's change in location",
+      charge: 'You will be charged {{amount}}.',
+      pending_message: 'Location update pending.',
+      assert_pending: 'Assert Pending...',
+      failTitle: 'Failed to reassert hotspot',
+      failSubtitle: 'Please try again later',
+      current_location: 'Current Location',
+      new_location: 'New Location',
+      antenna_details: 'Antenna/Height Details',
+      update_antenna: 'Update Antenna',
+      submit: 'Update Hotspot transaction submitted and now pending.',
+      already_pending:
+        'Unable to update Hotspot while a transaction is pending. Please try again later.',
     },
   },
   hotspot_setup: {
@@ -309,6 +438,8 @@ export default {
     title: 'Assert Location',
   },
   hotspots: {
+    diagnostics: 'Run Diagnostics',
+    wifi: 'Update Wifi',
     notOnboarded: 'This hotspot has not been onboarded',
     empty: {
       body: 'Your add hotspot\ninstructions',

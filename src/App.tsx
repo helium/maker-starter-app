@@ -1,4 +1,4 @@
-import 'react-native-gesture-handler'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import React, { useEffect, useMemo, useState } from 'react'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import {
@@ -33,6 +33,7 @@ import { navigationRef } from './navigation/navigator'
 import useMount from './utils/useMount'
 import { getAddress } from './utils/secureAccount'
 import useCheckWalletLink from './utils/useCheckWalletLink'
+import globalStyles from './theme/globalStyles'
 
 SplashScreen.preventAutoHideAsync().catch(() => {
   /* reloading the app might trigger some race conditions, ignore them */
@@ -143,43 +144,45 @@ const App = () => {
   )
 
   return (
-    <SolanaProvider
-      cluster="devnet"
-      rpcEndpoint={Config.SOLANA_RPC_ENDPOINT || ''}
-      heliumWallet={heliumWallet}
-      solanaStatusOverride="complete"
-    >
-      <OnboardingProvider
-        baseUrl={
-          Config.ONBOARDING_BASE_URL ||
-          'https://onboarding.web.test-helium.com/api'
-        }
+    <GestureHandlerRootView style={globalStyles.container}>
+      <SolanaProvider
+        cluster="devnet"
+        rpcEndpoint={Config.SOLANA_RPC_ENDPOINT || ''}
+        heliumWallet={heliumWallet}
+        solanaStatusOverride="complete"
       >
-        <HotspotBleProvider>
-          <ThemeProvider theme={colorAdaptedTheme}>
-            <BottomSheetModalProvider>
-              <SafeAreaProvider>
-                {/* TODO: Will need to adapt status bar for light/dark modes */}
-                {Platform.OS === 'ios' && (
-                  <StatusBar barStyle="light-content" />
-                )}
-                {Platform.OS === 'android' && (
-                  <StatusBar translucent backgroundColor="transparent" />
-                )}
-                <NavigationContainer ref={navigationRef}>
-                  <AppLinkProvider>
-                    <NavigationRoot />
-                  </AppLinkProvider>
-                </NavigationContainer>
-              </SafeAreaProvider>
-              <SecurityScreen
-                visible={appState !== 'active' && appState !== 'unknown'}
-              />
-            </BottomSheetModalProvider>
-          </ThemeProvider>
-        </HotspotBleProvider>
-      </OnboardingProvider>
-    </SolanaProvider>
+        <OnboardingProvider
+          baseUrl={
+            Config.ONBOARDING_BASE_URL ||
+            'https://onboarding.web.test-helium.com/api'
+          }
+        >
+          <HotspotBleProvider>
+            <ThemeProvider theme={colorAdaptedTheme}>
+              <BottomSheetModalProvider>
+                <SafeAreaProvider>
+                  {/* TODO: Will need to adapt status bar for light/dark modes */}
+                  {Platform.OS === 'ios' && (
+                    <StatusBar barStyle="light-content" />
+                  )}
+                  {Platform.OS === 'android' && (
+                    <StatusBar translucent backgroundColor="transparent" />
+                  )}
+                  <NavigationContainer ref={navigationRef}>
+                    <AppLinkProvider>
+                      <NavigationRoot />
+                    </AppLinkProvider>
+                  </NavigationContainer>
+                </SafeAreaProvider>
+                <SecurityScreen
+                  visible={appState !== 'active' && appState !== 'unknown'}
+                />
+              </BottomSheetModalProvider>
+            </ThemeProvider>
+          </HotspotBleProvider>
+        </OnboardingProvider>
+      </SolanaProvider>
+    </GestureHandlerRootView>
   )
 }
 

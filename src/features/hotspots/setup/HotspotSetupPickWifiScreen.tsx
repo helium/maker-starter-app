@@ -73,6 +73,7 @@ const HotspotSetupPickWifiScreen = () => {
       hotspotAddress,
       addGatewayTxn,
       hotspotType,
+      gatewayAction,
     },
   } = useRoute<Route>()
   const { readWifiNetworks } = useHotspotBle()
@@ -91,6 +92,11 @@ const HotspotSetupPickWifiScreen = () => {
   }, [wifiNetworks])
 
   const navSkip = useCallback(async () => {
+    if (gatewayAction === 'wifi') {
+      rootNav.navigate('MainTabs')
+      return
+    }
+
     const token = await getSecureItem('walletLinkToken')
     if (!token) return
     const address = await getAddress()
@@ -124,8 +130,10 @@ const HotspotSetupPickWifiScreen = () => {
       })
     }
   }, [
+    gatewayAction,
     getOnboardingRecord,
     hotspotAddress,
+    rootNav,
     getHotspotDetails,
     navigation,
     addGatewayTxn,
@@ -138,6 +146,7 @@ const HotspotSetupPickWifiScreen = () => {
       hotspotAddress,
       addGatewayTxn,
       hotspotType,
+      gatewayAction,
     })
   }
 
