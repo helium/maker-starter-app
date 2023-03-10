@@ -5,7 +5,6 @@ import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
 import {
   BleError,
-  HotspotMeta,
   useHotspotBle,
   useOnboarding,
 } from '@helium/react-native-sdk'
@@ -18,7 +17,7 @@ import Text from '../../../components/Text'
 import Box from '../../../components/Box'
 import SafeAreaBox from '../../../components/SafeAreaBox'
 import { getAddress } from '../../../utils/secureAccount'
-import { getHotpotTypes } from '../root/hotspotTypes'
+import { HOTSPOT_TYPE } from '../root/hotspotTypes'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
 
 type Route = RouteProp<
@@ -43,7 +42,7 @@ const HotspotSetupWifiConnectingScreen = () => {
   } = useRoute<Route>()
 
   const { readWifiNetworks, setWifi, removeConfiguredWifi } = useHotspotBle()
-  const { getHotspotDetails, getOnboardingRecord } = useOnboarding()
+  const { getHotspotDetails } = useOnboarding()
 
   const { showOKAlert } = useAlert()
 
@@ -67,22 +66,11 @@ const HotspotSetupWifiConnectingScreen = () => {
       rootNav.navigate('MainTabs')
     } else {
       const address = await getAddress()
-      const onboardingRecord = await getOnboardingRecord(hotspotAddress)
 
-      /*
-           TODO: Determine which network types this hotspot supports
-           Could possibly use the maker address
-        */
-      const hotspotTypes = getHotpotTypes({
-        hotspotMakerAddress: onboardingRecord?.maker.address || '',
+      const hotspot = await getHotspotDetails({
+        address: hotspotAddress,
+        type: HOTSPOT_TYPE,
       })
-      let hotspot: HotspotMeta | undefined
-      if (hotspotTypes.length) {
-        hotspot = await getHotspotDetails({
-          address: hotspotAddress,
-          type: hotspotTypes[0],
-        })
-      }
 
       if (hotspot && hotspot.owner === address) {
         navigation.replace('OwnedHotspotErrorScreen')
@@ -100,7 +88,6 @@ const HotspotSetupWifiConnectingScreen = () => {
     addGatewayTxn,
     gatewayAction,
     getHotspotDetails,
-    getOnboardingRecord,
     hotspotAddress,
     hotspotType,
     navigation,

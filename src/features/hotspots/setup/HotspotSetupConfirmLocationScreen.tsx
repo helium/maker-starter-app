@@ -17,7 +17,7 @@ import Text from '../../../components/Text'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
 import { getAddress } from '../../../utils/secureAccount'
 import HotspotLocationPreview from './HotspotLocationPreview'
-import { getHotpotTypes } from '../root/hotspotTypes'
+import { HOTSPOT_TYPE } from '../root/hotspotTypes'
 
 type Route = RouteProp<
   HotspotSetupStackParamList,
@@ -53,14 +53,6 @@ const HotspotSetupConfirmLocationScreen = () => {
     try {
       const onboardingRecord = await getOnboardingRecord(params.hotspotAddress)
 
-      /*
-         TODO: Determine which network types this hotspot supports
-         Could possibly use the maker address
-      */
-      const hotspotTypes = getHotpotTypes({
-        hotspotMakerAddress: onboardingRecord?.maker.address || '',
-      })
-
       const locationParams = {
         decimalGain: gain,
         elevation,
@@ -72,7 +64,7 @@ const HotspotSetupConfirmLocationScreen = () => {
       } else {
         const hotspotDetails = await getHotspotDetails({
           address: params.hotspotAddress,
-          type: hotspotTypes[0],
+          type: HOTSPOT_TYPE,
         })
         const hotspotExists = !!hotspotDetails
         if (hotspotExists) {
@@ -81,7 +73,7 @@ const HotspotSetupConfirmLocationScreen = () => {
             gateway: params.hotspotAddress,
             owner: userAddress,
             onboardingRecord,
-            hotspotTypes,
+            hotspotTypes: [HOTSPOT_TYPE],
           })
 
           setAssertData(assert)
@@ -93,7 +85,7 @@ const HotspotSetupConfirmLocationScreen = () => {
           const onboard = await getOnboardTransactions({
             txn: '',
             hotspotAddress: params.hotspotAddress,
-            hotspotTypes,
+            hotspotTypes: [HOTSPOT_TYPE],
             ...locationParams,
           })
           setSolanaTransactions(onboard.solanaTransactions)

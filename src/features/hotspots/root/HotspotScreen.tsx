@@ -9,7 +9,7 @@ import React, {
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import animalName from 'angry-purple-tiger'
 import { useTranslation } from 'react-i18next'
-import { HotspotMeta, useOnboarding } from '@helium/react-native-sdk'
+import { useOnboarding } from '@helium/react-native-sdk'
 import MapboxGL from '@react-native-mapbox-gl/maps'
 import Config from 'react-native-config'
 import {
@@ -19,7 +19,7 @@ import {
   BottomSheetModal,
 } from '@gorhom/bottom-sheet'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { getHotpotTypes, HotspotStackParamList } from './hotspotTypes'
+import { HOTSPOT_TYPE, HotspotStackParamList } from './hotspotTypes'
 import Text from '../../../components/Text'
 import SafeAreaBox from '../../../components/SafeAreaBox'
 import Button from '../../../components/Button'
@@ -54,7 +54,7 @@ const HotspotScreen = () => {
   const nav = useNavigation<RootNavigationProp>()
   const [details, setDetails] = useState<HotspotDetails>()
   const [loadingDetails, setLoadingDetails] = useState(true)
-  const { getOnboardingRecord, getHotspotDetails } = useOnboarding()
+  const { getHotspotDetails } = useOnboarding()
   const colors = useColors()
   const bottomSheetModalRef = useRef<BottomSheetModal>(null)
   const { bottom } = useSafeAreaInsets()
@@ -84,26 +84,13 @@ const HotspotScreen = () => {
   )
 
   const updateHotspotDetails = useCallback(async () => {
-    const onboardingRecord = await getOnboardingRecord(hotspot.address)
-
-    /*
-         TODO: Determine which network types this hotspot supports
-         Could possibly use the maker address
-      */
-    const hotspotTypes = getHotpotTypes({
-      hotspotMakerAddress: onboardingRecord?.maker.address || '',
+    const hotspotMeta = await getHotspotDetails({
+      address: hotspot.address,
+      type: HOTSPOT_TYPE,
     })
-
-    let hotspotMeta: HotspotMeta | undefined
-    if (hotspotTypes.length) {
-      hotspotMeta = await getHotspotDetails({
-        address: hotspot.address,
-        type: hotspotTypes[0],
-      })
-    }
     setDetails(hotspotMeta)
     setLoadingDetails(false)
-  }, [getHotspotDetails, getOnboardingRecord, hotspot])
+  }, [getHotspotDetails, hotspot])
 
   useEffect(() => {
     return nav.addListener('focus', () => {

@@ -14,7 +14,7 @@ import { getSecureItem } from '../../../utils/secureAccount'
 import { useColors } from '../../../theme/themeHooks'
 import { DebouncedButton } from '../../../components/Button'
 import useMount from '../../../utils/useMount'
-import { getHotpotTypes } from '../root/hotspotTypes'
+import { HOTSPOT_TYPE } from '../root/hotspotTypes'
 
 type Route = RouteProp<HotspotSetupStackParamList, 'HotspotTxnsProgressScreen'>
 
@@ -23,8 +23,7 @@ const HotspotTxnsProgressScreen = () => {
   const { params } = useRoute<Route>()
   const navigation = useNavigation<RootNavigationProp>()
   const { primaryText } = useColors()
-  const { createHotspot, getOnboardTransactions, getOnboardingRecord } =
-    useOnboarding()
+  const { createHotspot, getOnboardTransactions } = useOnboarding()
 
   const navToHeliumAppForSigning = useCallback(
     async (onboardTransactions?: string[]) => {
@@ -66,20 +65,10 @@ const HotspotTxnsProgressScreen = () => {
     // This creates the hotspot, signing not required
     await createHotspot(params.addGatewayTxn)
 
-    const onboardingRecord = await getOnboardingRecord(params.hotspotAddress)
-
-    /*
-         TODO: Determine which network types this hotspot supports
-         Could possibly use the maker address
-      */
-    const hotspotTypes = getHotpotTypes({
-      hotspotMakerAddress: onboardingRecord?.maker.address || '',
-    })
-
     const { solanaTransactions } = await getOnboardTransactions({
       txn: params.addGatewayTxn,
       hotspotAddress: params.hotspotAddress,
-      hotspotTypes,
+      hotspotTypes: [HOTSPOT_TYPE],
       lat: last(params.coords),
       lng: first(params.coords),
       elevation: params.elevation,
@@ -88,13 +77,7 @@ const HotspotTxnsProgressScreen = () => {
     if (!solanaTransactions) return
 
     navToHeliumAppForSigning(solanaTransactions)
-  }, [
-    createHotspot,
-    getOnboardTransactions,
-    getOnboardingRecord,
-    navToHeliumAppForSigning,
-    params,
-  ])
+  }, [createHotspot, getOnboardTransactions, navToHeliumAppForSigning, params])
 
   useMount(() => {
     if (params.addGatewayTxn) {
