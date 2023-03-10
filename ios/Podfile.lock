@@ -113,7 +113,7 @@ PODS:
     - FlipperKit/FlipperKitNetworkPlugin
   - fmt (6.2.1)
   - glog (0.3.5)
-  - helium-react-native-sdk (2.0.10):
+  - helium-react-native-sdk (2.0.14):
     - React-Core
   - hermes-engine (0.70.6)
   - libevent (2.1.12)
@@ -359,6 +359,8 @@ PODS:
     - React-Core
   - react-native-get-random-values (1.8.0):
     - React-Core
+  - react-native-mail (6.1.1):
+    - React-Core
   - react-native-mapbox-gl (8.5.0):
     - Mapbox-iOS-SDK (~> 5.9.0)
     - React
@@ -372,11 +374,6 @@ PODS:
   - react-native-mapbox-gl/StaticLibraryFixer (8.5.0):
     - Mapbox-iOS-SDK (~> 5.9.0)
     - React
-    - React-Core
-  - react-native-quick-crypto (0.5.0):
-    - OpenSSL-Universal
-    - React
-    - React-callinvoker
     - React-Core
   - react-native-safe-area-context (4.3.1):
     - RCT-Folly
@@ -462,6 +459,8 @@ PODS:
   - RNGestureHandler (2.5.0):
     - React-Core
   - RNLocalize (1.4.3):
+    - React-Core
+  - RNPermissions (3.7.3):
     - React-Core
   - RNReanimated (2.14.4):
     - DoubleConversion
@@ -575,8 +574,8 @@ DEPENDENCIES:
   - "react-native-blur (from `../node_modules/@react-native-community/blur`)"
   - react-native-config (from `../node_modules/react-native-config`)
   - react-native-get-random-values (from `../node_modules/react-native-get-random-values`)
+  - react-native-mail (from `../node_modules/react-native-mail`)
   - "react-native-mapbox-gl (from `../node_modules/@react-native-mapbox-gl/maps`)"
-  - react-native-quick-crypto (from `../node_modules/react-native-quick-crypto`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-simple-toast (from `../node_modules/react-native-simple-toast`)
   - react-native-sodium (from `../node_modules/react-native-sodium`)
@@ -596,6 +595,7 @@ DEPENDENCIES:
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNLocalize (from `../node_modules/react-native-localize`)
+  - RNPermissions (from `../node_modules/react-native-permissions`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNSVG (from `../node_modules/react-native-svg`)
@@ -711,10 +711,10 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-config"
   react-native-get-random-values:
     :path: "../node_modules/react-native-get-random-values"
+  react-native-mail:
+    :path: "../node_modules/react-native-mail"
   react-native-mapbox-gl:
     :path: "../node_modules/@react-native-mapbox-gl/maps"
-  react-native-quick-crypto:
-    :path: "../node_modules/react-native-quick-crypto"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
   react-native-simple-toast:
@@ -753,6 +753,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-gesture-handler"
   RNLocalize:
     :path: "../node_modules/react-native-localize"
+  RNPermissions:
+    :path: "../node_modules/react-native-permissions"
   RNReanimated:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
@@ -796,7 +798,7 @@ SPEC CHECKSUMS:
   FlipperKit: cbdee19bdd4e7f05472a66ce290f1b729ba3cb86
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
   glog: 791fe035093b84822da7f0870421a25839ca7870
-  helium-react-native-sdk: f8912747ef35f84d1fa8de617c8019137d6ea96e
+  helium-react-native-sdk: 1637f4100e91e3ce8600eff547a304bcb49d3622
   hermes-engine: e86cc2a4cd10ed276799de42ea326bc551115bc7
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   Mapbox-iOS-SDK: a5915700ec84bc1a7f8b3e746d474789e35b7956
@@ -822,8 +824,8 @@ SPEC CHECKSUMS:
   react-native-blur: cad4d93b364f91e7b7931b3fa935455487e5c33c
   react-native-config: 5330c8258265c1e5fdb8c009d2cabd6badd96727
   react-native-get-random-values: a6ea6a8a65dc93e96e24a11105b1a9c8cfe1d72a
+  react-native-mail: 8fdcd3aef007c33a6877a18eb4cf7447a1d4ce4a
   react-native-mapbox-gl: 955d2c064b56ef058b9cc0fbbf6cf743b05c928e
-  react-native-quick-crypto: a903ff39ac8fea78bb9d37cccc5cc0596afc9670
   react-native-safe-area-context: 6c12e3859b6f27b25de4fee8201cfb858432d8de
   react-native-simple-toast: 8ee5d23f0b92b935ab7434cdb65159ce12dfb4b7
   react-native-sodium: 274874541aa6bd00040f28c2e1e5118cbf113c0e
@@ -843,6 +845,7 @@ SPEC CHECKSUMS:
   RNDeviceInfo: aad3c663b25752a52bf8fce93f2354001dd185aa
   RNGestureHandler: bad495418bcbd3ab47017a38d93d290ebd406f50
   RNLocalize: 7c7aeda16c01db7a0918981c14875c0a53be9b79
+  RNPermissions: f63bf8e9e2e2697e70d825abb9ba28def8f5c4ea
   RNReanimated: 6668b0587bebd4b15dd849b99e5a9c70fc12ed95
   RNScreens: 4a1af06327774490d97342c00aee0c2bafb497b7
   RNSVG: 302bfc9905bd8122f08966dc2ce2d07b7b52b9f8
@@ -852,6 +855,6 @@ SPEC CHECKSUMS:
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
   ZXingObjC: fdbb269f25dd2032da343e06f10224d62f537bdb
 
-PODFILE CHECKSUM: 1664b911dbc43f3d9616e039017ca5221136fc22
+PODFILE CHECKSUM: 45297ba5bd0c21da30de207070bf006703c5e539
 
 COCOAPODS: 1.11.3

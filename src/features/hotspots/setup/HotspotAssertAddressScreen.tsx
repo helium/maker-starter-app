@@ -33,7 +33,7 @@ const HotspotAssertAddressScreen = () => {
   const onSubmit = useCallback(() => {
     navigation.navigate('HotspotSetupPickLocationScreen', {
       hotspotAddress,
-      hotspotType: 'ExampleHotspotBLE',
+      hotspotType: 'Helium',
       addGatewayTxn: '',
     })
   }, [hotspotAddress, navigation])

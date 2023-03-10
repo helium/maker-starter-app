@@ -1,19 +1,19 @@
-import example from './example'
+import helium from './helium'
 import customAntennas from './custom/antennas'
 import { LangType, supportedLangs } from '../utils/i18n/i18nTypes'
 import { HotspotMakerLangField } from './hotspotMakerTypes'
 
 export const Makers: Record<string, { id: number; supportEmail: string }> = {
-  example,
+  helium,
 }
 
 export const AntennaModels = {
-  ...example.antennas,
+  ...helium.antennas,
   ...customAntennas,
 }
 
 export const HotspotMakerModels = {
-  ...example.hotspots,
+  ...helium.hotspots,
 }
 
 export type HotspotType = keyof typeof HotspotMakerModels

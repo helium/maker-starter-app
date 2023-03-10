@@ -1,4 +1,4 @@
-import 'react-native-gesture-handler'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import React, { useEffect, useMemo, useState } from 'react'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import {
@@ -6,7 +6,7 @@ import {
   Platform,
   StatusBar,
   UIManager,
-  useColorScheme,
+  // useColorScheme,
 } from 'react-native'
 import useAppState from 'react-native-appstate-hook'
 import { ThemeProvider } from '@shopify/restyle'
@@ -22,7 +22,7 @@ import {
   OnboardingProvider,
   SolanaProvider,
 } from '@helium/react-native-sdk'
-import { theme, darkThemeColors, lightThemeColors } from './theme/theme'
+import { theme, darkThemeColors } from './theme/theme'
 import NavigationRoot from './navigation/NavigationRoot'
 import { useAppDispatch } from './store/store'
 import appSlice, { restoreAppSettings } from './store/user/appSlice'
@@ -33,13 +33,14 @@ import { navigationRef } from './navigation/navigator'
 import useMount from './utils/useMount'
 import { getAddress } from './utils/secureAccount'
 import useCheckWalletLink from './utils/useCheckWalletLink'
+import globalStyles from './theme/globalStyles'
 
 SplashScreen.preventAutoHideAsync().catch(() => {
   /* reloading the app might trigger some race conditions, ignore them */
 })
 
 const App = () => {
-  const colorScheme = useColorScheme()
+  // const colorScheme = useColorScheme()
 
   useCheckWalletLink()
 
@@ -136,49 +137,52 @@ const App = () => {
   const colorAdaptedTheme = useMemo(
     () => ({
       ...theme,
-      colors: colorScheme === 'light' ? lightThemeColors : darkThemeColors,
+      // colors: colorScheme === 'light' ? lightThemeColors : darkThemeColors,
+      colors: darkThemeColors,
     }),
-    [colorScheme],
+    [],
   )
 
   return (
-    <SolanaProvider
-      cluster="devnet"
-      rpcEndpoint={Config.SOLANA_RPC_ENDPOINT || ''}
-      heliumWallet={heliumWallet}
-      solanaStatusOverride="complete"
-    >
-      <OnboardingProvider
-        baseUrl={
-          Config.ONBOARDING_BASE_URL ||
-          'https://onboarding.web.test-helium.com/api'
-        }
+    <GestureHandlerRootView style={globalStyles.container}>
+      <SolanaProvider
+        cluster="devnet"
+        rpcEndpoint={Config.SOLANA_RPC_ENDPOINT || ''}
+        heliumWallet={heliumWallet}
+        solanaStatusOverride="complete"
       >
-        <HotspotBleProvider>
-          <ThemeProvider theme={colorAdaptedTheme}>
-            <BottomSheetModalProvider>
-              <SafeAreaProvider>
-                {/* TODO: Will need to adapt status bar for light/dark modes */}
-                {Platform.OS === 'ios' && (
-                  <StatusBar barStyle="light-content" />
-                )}
-                {Platform.OS === 'android' && (
-                  <StatusBar translucent backgroundColor="transparent" />
-                )}
-                <NavigationContainer ref={navigationRef}>
-                  <AppLinkProvider>
-                    <NavigationRoot />
-                  </AppLinkProvider>
-                </NavigationContainer>
-              </SafeAreaProvider>
-              <SecurityScreen
-                visible={appState !== 'active' && appState !== 'unknown'}
-              />
-            </BottomSheetModalProvider>
-          </ThemeProvider>
-        </HotspotBleProvider>
-      </OnboardingProvider>
-    </SolanaProvider>
+        <OnboardingProvider
+          baseUrl={
+            Config.ONBOARDING_BASE_URL ||
+            'https://onboarding.web.test-helium.com/api'
+          }
+        >
+          <HotspotBleProvider>
+            <ThemeProvider theme={colorAdaptedTheme}>
+              <BottomSheetModalProvider>
+                <SafeAreaProvider>
+                  {/* TODO: Will need to adapt status bar for light/dark modes */}
+                  {Platform.OS === 'ios' && (
+                    <StatusBar barStyle="light-content" />
+                  )}
+                  {Platform.OS === 'android' && (
+                    <StatusBar translucent backgroundColor="transparent" />
+                  )}
+                  <NavigationContainer ref={navigationRef}>
+                    <AppLinkProvider>
+                      <NavigationRoot />
+                    </AppLinkProvider>
+                  </NavigationContainer>
+                </SafeAreaProvider>
+                <SecurityScreen
+                  visible={appState !== 'active' && appState !== 'unknown'}
+                />
+              </BottomSheetModalProvider>
+            </ThemeProvider>
+          </HotspotBleProvider>
+        </OnboardingProvider>
+      </SolanaProvider>
+    </GestureHandlerRootView>
   )
 }
 

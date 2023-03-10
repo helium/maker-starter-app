@@ -9,6 +9,7 @@ import {
 } from '@helium/react-native-sdk'
 import { isString, uniq } from 'lodash'
 import { parseWalletLinkToken } from '@helium/wallet-link'
+import Config from 'react-native-config'
 import Box from '../../../components/Box'
 import HotspotPairingList from '../../../components/HotspotPairingList'
 import Text from '../../../components/Text'
@@ -92,6 +93,11 @@ const HotspotSetupBluetoothSuccess = () => {
     const configureHotspot = async () => {
       if (connectStatus !== true) return
 
+      if (gatewayAction === 'diagnostics') {
+        navigation.navigate('HotspotSetupDiagnostics')
+        return
+      }
+
       try {
         // check firmware
         const minFirmware = await getMinFirmware()
@@ -107,10 +113,18 @@ const HotspotSetupBluetoothSuccess = () => {
         const connectedNetworks = uniq((await readWifiNetworks(true)) || [])
         const hotspotAddress = await getOnboardingAddress()
         const onboardingRecord = await getOnboardingRecord(hotspotAddress)
-        if (!onboardingRecord) return
+        if (!onboardingRecord) {
+          console.log('onboarding record not found')
+        }
+        const payerAddress = onboardingRecord?.maker.address || Config.MAKER_ID
+
+        if (!payerAddress) {
+          console.log('Payer address not found')
+          return
+        }
 
         // navigate to next screen
-        if (gatewayAction === 'addGateway') {
+        if (gatewayAction === 'addGateway' || gatewayAction === 'wifi') {
           const token = await getSecureItem('walletLinkToken')
           if (!token) throw new Error('Token Not found')
           const parsed = parseWalletLinkToken(token)
@@ -119,7 +133,7 @@ const HotspotSetupBluetoothSuccess = () => {
           const { address: ownerAddress } = parsed
           const addGatewayTxn = await createGatewayTxn({
             ownerAddress,
-            payerAddress: onboardingRecord.maker.address,
+            payerAddress,
           })
           navigation.replace('HotspotSetupPickWifiScreen', {
             networks,
@@ -127,6 +141,7 @@ const HotspotSetupBluetoothSuccess = () => {
             hotspotAddress,
             hotspotType,
             addGatewayTxn,
+            gatewayAction,
           })
         } else {
           navigation.replace('HotspotSetupPickLocationScreen', {

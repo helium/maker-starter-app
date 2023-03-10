@@ -23,7 +23,7 @@ type Route = RouteProp<
   'HotspotSetupEducationScreen'
 >
 
-const HotspotEducationScreen = () => {
+const HotspotSetupEducationScreen = () => {
   const { t } = useTranslation()
   const navigation = useNavigation<HotspotSetupNavigationProp>()
   const rootNav = useNavigation<RootNavigationProp>()
@@ -49,7 +49,7 @@ const HotspotEducationScreen = () => {
           onPress={navNext}
           variant="primary"
           mode="contained"
-          title={t('learn.next')}
+          title={t('hotspot_setup.education.next')}
         />
       )
     }
@@ -75,13 +75,14 @@ const HotspotEducationScreen = () => {
 
   return (
     <BackScreen
-      backgroundColor="primaryBackground"
+      hideBack
+      backgroundColor="secondaryBackground"
       padding="none"
       justifyContent="center"
       onClose={handleClose}
     >
       <Text
-        variant="h2"
+        variant="h1"
         numberOfLines={2}
         paddingHorizontal="lx"
         maxFontSizeMultiplier={1}
@@ -91,7 +92,7 @@ const HotspotEducationScreen = () => {
         {t('hotspot_setup.education.title')}
       </Text>
 
-      <Box flex={1} maxHeight={473}>
+      <Box flex={1} maxHeight={473} marginTop="s">
         <Carousel
           layout="default"
           ref={carouselRef}
@@ -111,7 +112,7 @@ const HotspotEducationScreen = () => {
             height: 6,
             borderRadius: 3,
             marginHorizontal: spacing.s,
-            backgroundColor: colors.white,
+            backgroundColor: colors.secondaryText,
           }}
           inactiveDotOpacity={0.4}
           inactiveDotScale={1}
@@ -124,4 +125,4 @@ const HotspotEducationScreen = () => {
   )
 }
 
-export default HotspotEducationScreen
+export default HotspotSetupEducationScreen

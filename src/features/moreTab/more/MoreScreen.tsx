@@ -95,6 +95,22 @@ const MoreScreen = () => {
     [app.isPinRequired, navigation],
   )
 
+  const handleRevealWords = useCallback(() => {
+    if (app.isPinRequired) {
+      navigation.push('LockScreen', { requestType: 'revealWords' })
+    } else {
+      navigation.push('RevealWordsScreen')
+    }
+  }, [app.isPinRequired, navigation])
+
+  const handleRevealPrivateKey = useCallback(() => {
+    if (app.isPinRequired) {
+      navigation.push('LockScreen', { requestType: 'revealPrivateKey' })
+    } else {
+      navigation.push('RevealPrivateKeyScreen')
+    }
+  }, [app.isPinRequired, navigation])
+
   const handleResetPin = useCallback(() => {
     navigation.push('LockScreen', { requestType: 'resetPin' })
   }, [navigation])
@@ -133,6 +149,16 @@ const MoreScreen = () => {
         title: t('more.sections.security.enablePin'),
         onToggle: handlePinRequired,
         value: app.isPinRequired,
+      },
+      {
+        title: t('more.sections.security.revealWords'),
+        onPress: handleRevealWords,
+        disabled: app.isDeployModeEnabled,
+      },
+      {
+        title: t('more.sections.security.revealPrivateKey'),
+        onPress: handleRevealPrivateKey,
+        disabled: app.isDeployModeEnabled,
       },
     ]
 
