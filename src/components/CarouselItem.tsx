@@ -1,23 +1,18 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { SvgProps } from 'react-native-svg'
-import { useColors } from '../theme/themeHooks'
+import { ImageSourcePropType } from 'react-native'
 import Box from './Box'
 import Card from './Card'
+import ImageBox from './ImageBox'
 import Text from './Text'
 
 export type CarouselItemData = {
   title: string
   desc: string
-  Icon: React.FC<SvgProps>
+  image: ImageSourcePropType
 }
 
-const CarouselItem = ({
-  item: { Icon, title, desc },
-}: {
-  item: CarouselItemData
-}) => {
-  const { surfaceContrast } = useColors()
+const CarouselItem = ({ item }: { item: CarouselItemData }) => {
   const { t } = useTranslation()
   return (
     <Card
@@ -27,17 +22,9 @@ const CarouselItem = ({
       overflow="hidden"
       height={500}
     >
+      <ImageBox source={item.image} width="100%" flex={1} />
       <Box
-        width="100%"
-        flex={1}
-        backgroundColor="surfaceSecondary"
-        justifyContent="center"
-        borderRadius="l"
-      >
-        <Icon color={surfaceContrast} height={90} />
-      </Box>
-      <Box
-        backgroundColor="surface"
+        backgroundColor="primaryBackground"
         paddingHorizontal="m"
         justifyContent="center"
         height={175}
@@ -50,7 +37,7 @@ const CarouselItem = ({
           numberOfLines={1}
           adjustsFontSizeToFit
         >
-          {t(title)}
+          {t(item.title)}
         </Text>
         <Text
           numberOfLines={5}
@@ -59,7 +46,7 @@ const CarouselItem = ({
           color="surfaceText"
           adjustsFontSizeToFit
         >
-          {t(desc)}
+          {t(item.desc)}
         </Text>
       </Box>
     </Card>

@@ -1,5 +1,5 @@
 {
-  "name": "MakerApp",
+  "name": "helium",
   "version": "2.0.0",
   "private": true,
   "scripts": {
@@ -44,7 +44,7 @@
     "Notifications"
   ],
   "dependencies": {
-    "@gorhom/bottom-sheet": "^4.0.3",
+    "@gorhom/bottom-sheet": "^4.4.5",
     "@helium/address": "^4.8.1",
     "@helium/crypto-react-native": "^4.6.2",
     "@helium/currency": "^4.7.3",
@@ -107,6 +107,7 @@
     "react-native-get-random-values": "^1.8.0",
     "react-native-keyboard-aware-scroll-view": "^0.9.3",
     "react-native-localize": "^1.4.3",
+    "react-native-mail": "^6.1.1",
     "react-native-navigation-bar-color": "^2.0.1",
     "react-native-permissions": "^3.7.3",
     "react-native-reanimated": "^2.13.0",

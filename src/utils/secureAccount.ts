@@ -1,5 +1,6 @@
 import { parseWalletLinkToken } from '@helium/wallet-link'
 import * as SecureStore from 'expo-secure-store'
+import { Mnemonic } from '@helium/crypto-react-native'
 
 type AccountStoreKey = BooleanKey | StringKey
 
@@ -8,6 +9,7 @@ const stringKeys = [
   'authInterval',
   'language',
   'walletLinkToken',
+  'mnemonic',
 ] as const
 type StringKey = (typeof stringKeys)[number]
 
@@ -45,4 +47,18 @@ export const signOut = async () => {
   return Promise.all(
     [...stringKeys, ...boolKeys].map((key) => deleteSecureItem(key)),
   )
+}
+
+export const getMnemonic = async (): Promise<Mnemonic | undefined> => {
+  const wordsStr = await getSecureItem('mnemonic')
+  if (!wordsStr) return
+
+  let words: string[] = []
+  try {
+    words = JSON.parse(wordsStr) // The new (v3) app uses JSON.stringify ['hello', 'one', 'two', 'etc'] => "[\"hello\",\"one\",\"two\",\"etc\"]"
+  } catch (e) {
+    words = wordsStr.split(' ') // The old (v2) app space separated "hello one two etc"
+    setSecureItem('mnemonic', JSON.stringify(words)) // upgrade the users to the new format
+  }
+  return new Mnemonic(words)
 }

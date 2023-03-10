@@ -13,7 +13,7 @@ import Text from '../../../components/Text'
 import { DebouncedButton } from '../../../components/Button'
 import HotspotConfigurationPicker from '../../../components/HotspotConfigurationPicker'
 import { MakerAntenna } from '../../../makers/antennaMakerTypes'
-import Example from '../../../makers/example'
+import Helium from '../../../makers/helium'
 import { HotspotMakerModels } from '../../../makers'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
 
@@ -31,12 +31,12 @@ const AntennaSetupScreen = () => {
     const country = getCountry()
     const isUS = country === 'US'
     const makerAntenna =
-      HotspotMakerModels[params.hotspotType || 'ExampleHotspotBLE'].antenna
+      HotspotMakerModels[params.hotspotType || 'HeliumHotspotBLE'].antenna
     const ant =
       isUS && makerAntenna?.us ? makerAntenna.us : makerAntenna?.default
 
     if (!ant)
-      return isUS ? Example.antennas.EXAMPLE_US : Example.antennas.EXAMPLE_US
+      return isUS ? Helium.antennas.HELIUM_US : Helium.antennas.HELIUM_EU
 
     return ant
   }, [params.hotspotType])

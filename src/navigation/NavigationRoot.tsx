@@ -16,8 +16,8 @@ const NavigationRoot = () => {
   const colors = useColors()
 
   useEffect(() => {
-    changeNavigationBarColor(colors.primaryBackground, true, false)
-  }, [colors.primaryBackground])
+    changeNavigationBarColor(colors.purpleDark, true, false)
+  }, [colors.purpleDark])
 
   if (!walletLinkToken) {
     return (

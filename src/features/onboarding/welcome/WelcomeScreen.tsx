@@ -27,8 +27,8 @@ const WelcomeScreen = () => {
       const url = createWalletLinkUrl({
         universalLink: walletApp?.universalLink,
         requestAppId: getBundleId(),
-        callbackUrl: 'makerappscheme://',
-        appName: 'Maker App',
+        callbackUrl: 'helium://',
+        appName: 'Helium',
       })
 
       Linking.openURL(url)

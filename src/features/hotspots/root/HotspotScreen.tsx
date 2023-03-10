@@ -1,16 +1,39 @@
-import React, { memo, useCallback, useEffect, useMemo, useState } from 'react'
+import React, {
+  memo,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import animalName from 'angry-purple-tiger'
 import { useTranslation } from 'react-i18next'
 import { HotspotMeta, useOnboarding } from '@helium/react-native-sdk'
 import MapboxGL from '@react-native-mapbox-gl/maps'
 import Config from 'react-native-config'
+import {
+  BottomSheetBackdrop,
+  BottomSheetBackdropProps,
+  BottomSheetFlatList,
+  BottomSheetModal,
+} from '@gorhom/bottom-sheet'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { getHotpotTypes, HotspotStackParamList } from './hotspotTypes'
 import Text from '../../../components/Text'
 import SafeAreaBox from '../../../components/SafeAreaBox'
 import Button from '../../../components/Button'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
 import Box from '../../../components/Box'
+import Settings from '../../../assets/images/settings.svg'
+import {
+  useColors,
+  useHitSlop,
+  useOpacity,
+  useSpacing,
+} from '../../../theme/themeHooks'
+import TouchableOpacityBox from '../../../components/TouchableOpacityBox'
+import ListSeparator from '../../../components/ListSeparator'
 
 type Route = RouteProp<HotspotStackParamList, 'HotspotScreen'>
 type HotspotDetails = {
@@ -20,19 +43,44 @@ type HotspotDetails = {
   elevation?: number
   gain?: number
 }
+const LIST_ITEM_HEIGHT = 80
+const SETTINGS_DATA = ['diagnostics', 'wifi'] as const
+export type Setting = (typeof SETTINGS_DATA)[number]
 const HotspotScreen = () => {
   const {
     params: { hotspot },
   } = useRoute<Route>()
   const { t } = useTranslation()
-  const navigation = useNavigation<RootNavigationProp>()
+  const nav = useNavigation<RootNavigationProp>()
   const [details, setDetails] = useState<HotspotDetails>()
   const [loadingDetails, setLoadingDetails] = useState(true)
   const { getOnboardingRecord, getHotspotDetails } = useOnboarding()
+  const colors = useColors()
+  const bottomSheetModalRef = useRef<BottomSheetModal>(null)
+  const { bottom } = useSafeAreaInsets()
+  const spacing = useSpacing()
+  const hitSlop = useHitSlop('l')
 
   const needsOnboarding = useMemo(
     () => !loadingDetails && !details,
     [details, loadingDetails],
+  )
+
+  const handleSettingPress = useCallback(
+    (setting: Setting) => () => {
+      bottomSheetModalRef.current?.dismiss()
+
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      nav.navigate('HotspotSetup', {
+        screen: 'HotspotSetupScanningScreen',
+        params: {
+          hotspotType: 'Helium',
+          gatewayAction: setting,
+        },
+      })
+    },
+    [nav],
   )
 
   const updateHotspotDetails = useCallback(async () => {
@@ -58,10 +106,10 @@ const HotspotScreen = () => {
   }, [getHotspotDetails, getOnboardingRecord, hotspot])
 
   useEffect(() => {
-    return navigation.addListener('focus', () => {
+    return nav.addListener('focus', () => {
       updateHotspotDetails()
     })
-  }, [navigation, updateHotspotDetails])
+  }, [nav, updateHotspotDetails])
 
   const formattedHotspotName = useMemo(() => {
     if (!hotspot || !hotspot.address) return ''
@@ -76,17 +124,70 @@ const HotspotScreen = () => {
   const assertHotspot = useCallback(() => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    navigation.navigate('HotspotAssert', {
+    nav.navigate('HotspotAssert', {
       screen: 'HotspotSetupPickLocationScreen',
       params: { hotspotAddress: hotspot.address },
     })
-  }, [hotspot.address, navigation])
+  }, [hotspot.address, nav])
 
   const transferHotspot = useCallback(
-    () =>
-      navigation.push('TransferHotspot', { hotspotAddress: hotspot.address }),
-    [hotspot.address, navigation],
+    () => nav.push('TransferHotspot', { hotspotAddress: hotspot.address }),
+    [hotspot.address, nav],
   )
+
+  const snapPoints = useMemo(() => {
+    const handleHeight = 72
+    return [SETTINGS_DATA.length * LIST_ITEM_HEIGHT + bottom + handleHeight]
+  }, [bottom])
+
+  const handleIndicatorStyle = useMemo(
+    () => ({
+      backgroundColor: colors.graySteel,
+      opacity: 0.5,
+      marginVertical: spacing.l,
+      width: 80,
+    }),
+    [colors.graySteel, spacing.l],
+  )
+
+  const { backgroundStyle } = useOpacity('primaryBackground', 0.98)
+
+  const renderBackdrop = useCallback(
+    (props: BottomSheetBackdropProps) => (
+      <BottomSheetBackdrop
+        disappearsOnIndex={-1}
+        appearsOnIndex={0}
+        // eslint-disable-next-line react/jsx-props-no-spreading
+        {...props}
+      />
+    ),
+    [],
+  )
+
+  const settingsKeyExtractor = useCallback((item: string) => {
+    return item
+  }, [])
+
+  const renderSetting = useCallback(
+    ({ item }: { item: Setting; index: number }) => {
+      return (
+        <TouchableOpacityBox
+          justifyContent="center"
+          height={LIST_ITEM_HEIGHT}
+          marginHorizontal="m"
+          onPress={handleSettingPress(item)}
+        >
+          <Text variant="body1">{t(`hotspots.${item}`)}</Text>
+        </TouchableOpacityBox>
+      )
+    },
+    [handleSettingPress, t],
+  )
+
+  const handleSettings = useCallback(() => {
+    bottomSheetModalRef.current?.present()
+    // setSelectedHotspot(item)
+  }, [])
 
   return (
     <SafeAreaBox
@@ -95,31 +196,46 @@ const HotspotScreen = () => {
       paddingHorizontal="l"
       justifyContent="center"
     >
-      <Text
-        fontSize={29}
-        lineHeight={31}
-        color="primaryText"
-        fontWeight="200"
-        numberOfLines={1}
-        width="100%"
-        adjustsFontSizeToFit
-      >
-        {formattedHotspotName[0]}
-      </Text>
-      <Text
-        variant="body1"
-        fontSize={29}
-        lineHeight={31}
-        paddingRight="s"
-        color="primaryText"
-        numberOfLines={1}
-        adjustsFontSizeToFit
-        marginBottom="l"
-      >
-        {formattedHotspotName[1]}
-      </Text>
+      <Box flexDirection="row" marginHorizontal="s" alignItems="center">
+        <Box flex={1}>
+          <Text
+            fontSize={29}
+            lineHeight={31}
+            color="primaryText"
+            fontWeight="200"
+            numberOfLines={1}
+            adjustsFontSizeToFit
+          >
+            {formattedHotspotName[0]}
+          </Text>
+
+          <Text
+            variant="body1"
+            fontSize={29}
+            lineHeight={31}
+            paddingRight="s"
+            color="primaryText"
+            numberOfLines={1}
+            adjustsFontSizeToFit
+          >
+            {formattedHotspotName[1]}
+          </Text>
+        </Box>
+        <TouchableOpacityBox
+          marginBottom="s"
+          hitSlop={hitSlop}
+          onPress={handleSettings}
+        >
+          <Settings width={22} height={22} color={colors.graySteel} />
+        </TouchableOpacityBox>
+      </Box>
       {needsOnboarding && (
-        <Text color="primaryText" variant="body1">
+        <Text
+          color="primaryText"
+          variant="body1"
+          marginHorizontal="s"
+          marginTop="s"
+        >
           {t('hotspots.notOnboarded')}
         </Text>
       )}
@@ -156,7 +272,7 @@ const HotspotScreen = () => {
               height={16}
               borderRadius="round"
               width={16}
-              backgroundColor="peacockGreen"
+              backgroundColor="greenMain"
               pointerEvents="none"
             />
           </Box>
@@ -177,6 +293,21 @@ const HotspotScreen = () => {
         mode="contained"
         title={t('hotspots.empty.hotspots.transfer')}
       />
+
+      <BottomSheetModal
+        ref={bottomSheetModalRef}
+        snapPoints={snapPoints}
+        handleIndicatorStyle={handleIndicatorStyle}
+        backgroundStyle={backgroundStyle}
+        backdropComponent={renderBackdrop}
+      >
+        <BottomSheetFlatList
+          data={SETTINGS_DATA}
+          renderItem={renderSetting}
+          keyExtractor={settingsKeyExtractor}
+          ItemSeparatorComponent={ListSeparator}
+        />
+      </BottomSheetModal>
     </SafeAreaBox>
   )
 }

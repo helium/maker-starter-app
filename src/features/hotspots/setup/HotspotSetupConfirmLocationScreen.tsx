@@ -167,7 +167,8 @@ const HotspotSetupConfirmLocationScreen = () => {
           </Text>
 
           <Text
-            variant="body1"
+            variant="subtitle1"
+            marginTop="s"
             marginBottom={{ phone: 'xl', smallPhone: 'ms' }}
             numberOfLines={1}
             adjustsFontSizeToFit
@@ -193,7 +194,7 @@ const HotspotSetupConfirmLocationScreen = () => {
             justifyContent="space-between"
             marginTop={{ phone: 'm', smallPhone: 'xxs' }}
           >
-            <Text variant="body1" color="secondaryText">
+            <Text variant="body1" color="primaryText">
               {t('hotspot_setup.location_fee.gain_label')}
             </Text>
             <Text variant="body1" color="primaryText">
@@ -206,7 +207,7 @@ const HotspotSetupConfirmLocationScreen = () => {
             justifyContent="space-between"
             marginTop={{ phone: 'm', smallPhone: 'xxs' }}
           >
-            <Text variant="body1" color="secondaryText">
+            <Text variant="body1" color="primaryText">
               {t('hotspot_setup.location_fee.elevation_label')}
             </Text>
             <Text variant="body1" color="primaryText">
@@ -224,26 +225,26 @@ const HotspotSetupConfirmLocationScreen = () => {
                 paddingTop="m"
                 marginTop={{ phone: 'm', smallPhone: 'xxs' }}
               >
-                <Text variant="body1" color="secondaryText">
+                <Text variant="body1" color="primaryText">
                   {t('hotspot_setup.location_fee.balance')}
                 </Text>
                 <Box>
                   <Text
                     variant="body1"
-                    color={disabled ? 'error' : 'secondaryText'}
+                    color={disabled ? 'error' : 'primaryText'}
                   >
                     {assertData?.balances?.hnt?.toString(4)}
                   </Text>
                   <Text
                     variant="body1"
-                    color={disabled ? 'error' : 'secondaryText'}
+                    color={disabled ? 'error' : 'primaryText'}
                   >
                     {assertData?.balances?.dc?.toString(4)}
                   </Text>
                   <Text
                     variant="body1"
                     color={
-                      assertData?.hasSufficientSol ? 'secondaryText' : 'error'
+                      assertData?.hasSufficientSol ? 'primaryText' : 'error'
                     }
                   >
                     {assertData?.balances?.sol?.toString(4)}
@@ -256,7 +257,7 @@ const HotspotSetupConfirmLocationScreen = () => {
                 justifyContent="space-between"
                 marginTop={{ phone: 'm', smallPhone: 'xxs' }}
               >
-                <Text variant="body1" color="secondaryText">
+                <Text variant="body1" color="primaryText">
                   {t('hotspot_setup.location_fee.fee')}
                 </Text>
                 <Text variant="body1" color="primaryText">
