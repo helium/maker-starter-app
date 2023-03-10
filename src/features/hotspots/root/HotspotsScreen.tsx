@@ -19,7 +19,7 @@ const getHotspotAddress = (item: Asset | Hotspot): string => {
 }
 
 const HotspotsScreen = () => {
-  const [hotspots, setHotspots] = useState<{ address: string }[]>([])
+  const [hotspots, setHotspots] = useState<{ address: string }[]>()
   const nav = useNavigation<RootNavigationProp>()
 
   const { getHotspots } = useOnboarding()
@@ -51,10 +51,10 @@ const HotspotsScreen = () => {
 
   return (
     <Box backgroundColor="primaryBackground" flex={1}>
-      {hotspots.length === 0 ? (
+      {hotspots !== undefined && hotspots.length === 0 ? (
         <HotspotsEmpty />
       ) : (
-        <Hotspots hotspots={hotspots} />
+        <Hotspots hotspots={hotspots || []} loading={hotspots === undefined} />
       )}
     </Box>
   )

@@ -792,9 +792,9 @@ SPEC CHECKSUMS:
   Flipper-RSocket: d9d9ade67cbecf6ac10730304bf5607266dd2541
   FlipperKit: cbdee19bdd4e7f05472a66ce290f1b729ba3cb86
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
-  glog: 04b94705f318337d7ead9e6d17c019bd9b1f6b1b
-  helium-react-native-sdk: f8912747ef35f84d1fa8de617c8019137d6ea96e
-  hermes-engine: 2af7b7a59128f250adfd86f15aa1d5a2ecd39995
+  glog: 791fe035093b84822da7f0870421a25839ca7870
+  helium-react-native-sdk: 1637f4100e91e3ce8600eff547a304bcb49d3622
+  hermes-engine: e86cc2a4cd10ed276799de42ea326bc551115bc7
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   Mapbox-iOS-SDK: a5915700ec84bc1a7f8b3e746d474789e35b7956
   MapboxMobileEvents: 2bc0ca2eedb627b73cf403258dce2b2fa98074a6

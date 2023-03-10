@@ -9,6 +9,7 @@ import Button from '../../../components/Button'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
 import { EXPLORER_BASE_URL } from '../../../utils/config'
 import { getAddress } from '../../../utils/secureAccount'
+import Fade from '../../../components/Fade'
 
 const HotspotsEmpty = () => {
   const { t } = useTranslation()
@@ -39,46 +40,48 @@ const HotspotsEmpty = () => {
     [accountAddress],
   )
   return (
-    <Box
-      padding="l"
-      flex={1}
-      justifyContent="center"
-      backgroundColor="primaryBackground"
-    >
-      <Text variant="h2">{t('hotspots.empty.title')}</Text>
-      <Text variant="body1" marginTop="ms">
-        {t('hotspots.empty.body')}
-      </Text>
-      <Button
-        onPress={addHotspot}
-        height={48}
-        marginTop="l"
-        mode="contained"
-        title={t('hotspots.empty.hotspots.add')}
-        Icon={AddIcon}
-      />
-      <Button
-        onPress={assertHotspot}
-        height={48}
-        marginTop="l"
-        mode="contained"
-        title={t('hotspots.empty.hotspots.assertLocation')}
-      />
-      <Button
-        onPress={transferHotspot}
-        height={48}
-        marginTop="l"
-        mode="contained"
-        title={t('hotspots.empty.hotspots.transfer')}
-      />
-      <Text variant="body1" marginTop="l">
-        {t('hotspots.view_activity')}
-        <Text variant="body1" color="primary" onPress={openExplorer}>
-          {t('hotspots.explorer')}
+    <Fade>
+      <Box
+        padding="l"
+        flex={1}
+        justifyContent="center"
+        backgroundColor="primaryBackground"
+      >
+        <Text variant="h2">{t('hotspots.empty.title')}</Text>
+        <Text variant="body1" marginTop="ms">
+          {t('hotspots.empty.body')}
         </Text>
-        {t('generic.period')}
-      </Text>
-    </Box>
+        <Button
+          onPress={addHotspot}
+          height={48}
+          marginTop="l"
+          mode="contained"
+          title={t('hotspots.empty.hotspots.add')}
+          Icon={AddIcon}
+        />
+        <Button
+          onPress={assertHotspot}
+          height={48}
+          marginTop="l"
+          mode="contained"
+          title={t('hotspots.empty.hotspots.assertLocation')}
+        />
+        <Button
+          onPress={transferHotspot}
+          height={48}
+          marginTop="l"
+          mode="contained"
+          title={t('hotspots.empty.hotspots.transfer')}
+        />
+        <Text variant="body1" marginTop="l">
+          {t('hotspots.view_activity')}
+          <Text variant="body1" color="primary" onPress={openExplorer}>
+            {t('hotspots.explorer')}
+          </Text>
+          {t('generic.period')}
+        </Text>
+      </Box>
+    </Fade>
   )
 }
 

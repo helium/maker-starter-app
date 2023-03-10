@@ -1,6 +1,6 @@
 import React, { memo, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-import { FlatList, StatusBar } from 'react-native'
+import { ActivityIndicator, FlatList, StatusBar } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import AddIcon from '@assets/images/add.svg'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
@@ -13,8 +13,8 @@ import { RootNavigationProp } from '../../../navigation/main/tabTypes'
 import HotspotListItem from './HotspotListItem'
 
 type Hotspot = { address: string }
-type Props = { hotspots: Hotspot[] }
-const Hotspots = ({ hotspots }: Props) => {
+type Props = { hotspots: Hotspot[]; loading: boolean }
+const Hotspots = ({ hotspots, loading }: Props) => {
   const { t } = useTranslation()
   const colors = useColors()
   const navigation = useNavigation<HotspotNavigationProp>()
@@ -49,6 +49,7 @@ const Hotspots = ({ hotspots }: Props) => {
       <StatusBar barStyle="dark-content" />
       <FlatList
         stickyHeaderIndices={[0]}
+        ListEmptyComponent={loading ? <ActivityIndicator /> : null}
         ListHeaderComponent={
           <Box
             backgroundColor="primaryBackground"
