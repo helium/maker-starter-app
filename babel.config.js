@@ -17,7 +17,6 @@ const baseConfig = {
       {
         alias: {
           ...getAliasesFromTsConfig(),
-          crypto: 'react-native-quick-crypto',
         },
         extensions: ['.ios.js', '.android.js', '.js', '.ts', '.tsx', '.json'],
         root: ['./src'],

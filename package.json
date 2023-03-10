@@ -19,7 +19,7 @@
     "pod-install": "cd ios && pod install && cd ..",
     "clean-install": "watchman watch-del-all && rm -rf $TMPDIR/react-native-packager-cache-* && rm -rf $TMPDIR/metro-bundler-cache-* && rm -rf node_modules/ && yarn cache clean && yarn install && yarn android-clean && yarn ios-clean && yarn pod-install",
     "clean-start": "yarn start -- --reset-cache",
-    "postinstall": "yarn patch-package",
+    "postinstall": "react-native setup-ios-permissions && pod-install && yarn patch-package",
     "bump-patch": "npx react-native bump-version --skip-semver-for android --skip-code-for all --type patch",
     "bump-minor": "npx react-native bump-version --skip-semver-for android --skip-code-for all --type minor",
     "bump-major": "npx react-native bump-version --skip-semver-for android --skip-code-for all --type major"
@@ -37,12 +37,19 @@
       "eslint --quiet --fix"
     ]
   },
+  "reactNativePermissionsIOS": [
+    "BluetoothPeripheral",
+    "LocationAccuracy",
+    "LocationAlways",
+    "LocationWhenInUse",
+    "Notifications"
+  ],
   "dependencies": {
     "@gorhom/bottom-sheet": "^4.0.3",
     "@helium/address": "^4.8.1",
     "@helium/crypto-react-native": "^4.6.2",
     "@helium/currency": "^4.7.3",
-    "@helium/currency-utils": "^0.0.41",
+    "@helium/currency-utils": "^0.0.43",
     "@helium/http": "^4.7.5",
     "@helium/onboarding": "^4.10.0",
     "@helium/proto-ble": "^4.0.0",
@@ -111,7 +118,6 @@
     "react-native-localize": "^1.4.3",
     "react-native-navigation-bar-color": "^2.0.1",
     "react-native-permissions": "^3.7.3",
-    "react-native-quick-crypto": "^0.5.0",
     "react-native-reanimated": "^2.13.0",
     "react-native-safe-area-context": "4.3.1",
     "react-native-screens": "~3.15.0",
@@ -170,6 +176,7 @@
     "jest-expo": "^46.0.0",
     "lint-staged": "^10.5.1",
     "metro-react-native-babel-preset": "0.72.3",
+    "pod-install": "0.1.38",
     "prettier": "^2.0.5",
     "prettier-eslint": "^11.0.0",
     "react-native-cli-bump-version": "^1.1.0",
