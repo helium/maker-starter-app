@@ -596,7 +596,7 @@
 				INFOPLIST_FILE = Helium/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Helium;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.0.0;
+				MARKETING_VERSION = 5.0.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -627,7 +627,7 @@
 				INFOPLIST_FILE = Helium/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Helium;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.0.0;
+				MARKETING_VERSION = 5.0.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
