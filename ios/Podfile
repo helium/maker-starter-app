@@ -5,7 +5,7 @@ require_relative '../node_modules/@react-native-community/cli-platform-ios/nativ
 platform :ios, '13.0'
 install! 'cocoapods', :deterministic_uuids => false
 
-target 'Helium' do
+target 'MakerApp' do
   use_expo_modules!
   post_integrate do |installer|
     begin
@@ -35,7 +35,7 @@ target 'Helium' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
-  target 'HeliumTests' do
+  target 'MakerAppTests' do
     inherit! :complete
     # Pods for testing
   end

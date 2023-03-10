@@ -19,7 +19,6 @@ import Box from '../../../components/Box'
 import SafeAreaBox from '../../../components/SafeAreaBox'
 import { getAddress } from '../../../utils/secureAccount'
 import { getHotpotTypes } from '../root/hotspotTypes'
-import { RootNavigationProp } from '../../../navigation/main/tabTypes'
 
 type Route = RouteProp<
   HotspotSetupStackParamList,
@@ -29,17 +28,9 @@ type Route = RouteProp<
 const HotspotSetupWifiConnectingScreen = () => {
   const { t } = useTranslation()
   const navigation = useNavigation<HotspotSetupNavigationProp>()
-  const rootNav = useNavigation<RootNavigationProp>()
 
   const {
-    params: {
-      network,
-      password,
-      hotspotAddress,
-      addGatewayTxn,
-      hotspotType,
-      gatewayAction,
-    },
+    params: { network, password, hotspotAddress, addGatewayTxn, hotspotType },
   } = useRoute<Route>()
 
   const { readWifiNetworks, setWifi, removeConfiguredWifi } = useHotspotBle()
@@ -63,48 +54,42 @@ const HotspotSetupWifiConnectingScreen = () => {
   )
 
   const goToNextStep = useCallback(async () => {
-    if (gatewayAction === 'wifi') {
-      rootNav.navigate('MainTabs')
-    } else {
-      const address = await getAddress()
-      const onboardingRecord = await getOnboardingRecord(hotspotAddress)
+    const address = await getAddress()
+    const onboardingRecord = await getOnboardingRecord(hotspotAddress)
 
-      /*
-           TODO: Determine which network types this hotspot supports
-           Could possibly use the maker address
-        */
-      const hotspotTypes = getHotpotTypes({
-        hotspotMakerAddress: onboardingRecord?.maker.address || '',
+    /*
+         TODO: Determine which network types this hotspot supports
+         Could possibly use the maker address
+      */
+    const hotspotTypes = getHotpotTypes({
+      hotspotMakerAddress: onboardingRecord?.maker.address || '',
+    })
+    let hotspot: HotspotMeta | undefined
+    if (hotspotTypes.length) {
+      hotspot = await getHotspotDetails({
+        address: hotspotAddress,
+        type: hotspotTypes[0],
       })
-      let hotspot: HotspotMeta | undefined
-      if (hotspotTypes.length) {
-        hotspot = await getHotspotDetails({
-          address: hotspotAddress,
-          type: hotspotTypes[0],
-        })
-      }
+    }
 
-      if (hotspot && hotspot.owner === address) {
-        navigation.replace('OwnedHotspotErrorScreen')
-      } else if (hotspot && hotspot.owner !== address) {
-        navigation.replace('NotHotspotOwnerErrorScreen')
-      } else {
-        navigation.replace('HotspotSetupLocationInfoScreen', {
-          hotspotAddress,
-          addGatewayTxn,
-          hotspotType,
-        })
-      }
+    if (hotspot && hotspot.owner === address) {
+      navigation.replace('OwnedHotspotErrorScreen')
+    } else if (hotspot && hotspot.owner !== address) {
+      navigation.replace('NotHotspotOwnerErrorScreen')
+    } else {
+      navigation.replace('HotspotSetupLocationInfoScreen', {
+        hotspotAddress,
+        addGatewayTxn,
+        hotspotType,
+      })
     }
   }, [
     addGatewayTxn,
-    gatewayAction,
     getHotspotDetails,
     getOnboardingRecord,
     hotspotAddress,
     hotspotType,
     navigation,
-    rootNav,
   ])
 
   const connectToWifi = useCallback(async () => {

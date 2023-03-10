@@ -11,9 +11,10 @@ export type HotspotConnectStatus =
   | 'service_unavailable'
   | 'details_fetch_failure'
 
-type GatewayAction = 'addGateway' | 'assertLocation' | 'diagnostics' | 'wifi'
+type GatewayAction = 'addGateway' | 'assertLocation'
 
 export type HotspotSetupStackParamList = {
+  HotspotSetupSelectionScreen: { gatewayAction: GatewayAction }
   HotspotSetupEducationScreen: {
     hotspotType: HotspotType
     gatewayAction: GatewayAction
@@ -41,9 +42,7 @@ export type HotspotSetupStackParamList = {
     gatewayAction: GatewayAction
   }
   OnboardingErrorScreen: { connectStatus: HotspotConnectStatus }
-  HotspotSetupDiagnostics: undefined
   HotspotSetupPickWifiScreen: {
-    gatewayAction: GatewayAction
     networks: string[]
     connectedNetworks: string[]
     addGatewayTxn: string
@@ -60,7 +59,6 @@ export type HotspotSetupStackParamList = {
     addGatewayTxn: string
     hotspotAddress: string
     hotspotType: HotspotType
-    gatewayAction: GatewayAction
   }
   HotspotSetupWifiConnectingScreen: {
     network: string
@@ -68,7 +66,6 @@ export type HotspotSetupStackParamList = {
     addGatewayTxn: string
     hotspotAddress: string
     hotspotType: HotspotType
-    gatewayAction: GatewayAction
   }
   HotspotSetupLocationInfoScreen: {
     hotspotType: HotspotType
