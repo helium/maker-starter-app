@@ -113,7 +113,7 @@ const HotspotScreen = () => {
     // @ts-ignore
     nav.navigate('HotspotAssert', {
       screen: 'HotspotSetupPickLocationScreen',
-      params: { hotspotAddress: hotspot.address },
+      params: { hotspotAddress: hotspot.address, hotspotType: 'Helium' },
     })
   }, [hotspot.address, nav])
 
