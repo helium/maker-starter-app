@@ -70,6 +70,12 @@ const MoreScreen = () => {
       case 'resetPin':
         navigation.push('AccountCreatePinScreen', { pinReset: true })
         break
+      case 'revealWords':
+        navigation.push('RevealWordsScreen')
+        break
+      case 'revealPrivateKey':
+        navigation.push('RevealPrivateKeyScreen')
+        break
     }
   }, [dispatch, params, navigation])
 
