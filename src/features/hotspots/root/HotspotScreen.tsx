@@ -10,8 +10,6 @@ import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import animalName from 'angry-purple-tiger'
 import { useTranslation } from 'react-i18next'
 import { useOnboarding } from '@helium/react-native-sdk'
-import MapboxGL from '@react-native-mapbox-gl/maps'
-import Config from 'react-native-config'
 import {
   BottomSheetBackdrop,
   BottomSheetBackdropProps,
@@ -21,7 +19,7 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import Clipboard from '@react-native-community/clipboard'
 import Toast from 'react-native-simple-toast'
-import { HOTSPOT_TYPE, HotspotStackParamList } from './hotspotTypes'
+import { HotspotStackParamList } from './hotspotTypes'
 import Text from '../../../components/Text'
 import SafeAreaBox from '../../../components/SafeAreaBox'
 import Button from '../../../components/Button'
@@ -38,6 +36,7 @@ import {
 import TouchableOpacityBox from '../../../components/TouchableOpacityBox'
 import ListSeparator from '../../../components/ListSeparator'
 import useHaptic from '../../../utils/useHaptic'
+import HotspotLocationPreview from '../setup/HotspotLocationPreview'
 
 type Route = RouteProp<HotspotStackParamList, 'HotspotScreen'>
 type HotspotDetails = {
@@ -113,9 +112,9 @@ const HotspotScreen = () => {
   const updateHotspotDetails = useCallback(async () => {
     const hotspotMeta = await getHotspotDetails({
       address: hotspot.address,
-      type: HOTSPOT_TYPE,
+      type: 'IOT', // Both freedomfi and helium support iot
     })
-    setDetails(hotspotMeta)
+    setDetails(hotspotMeta || {})
     setLoadingDetails(false)
   }, [getHotspotDetails, hotspot])
 
@@ -229,6 +228,12 @@ const HotspotScreen = () => {
     setMenuType('kabob')
   }, [])
 
+  const centerCoordinate = useMemo(() => {
+    if (!details?.lat || !details?.lng) return
+
+    return [details.lng, details.lat]
+  }, [details])
+
   return (
     <SafeAreaBox
       backgroundColor="primaryBackground"
@@ -290,45 +295,33 @@ const HotspotScreen = () => {
           {t('hotspots.notOnboarded')}
         </Text>
       )}
-      {details?.lat && details.lng && (
-        <Box
-          height={200}
-          width="100%"
-          borderRadius="xl"
-          overflow="hidden"
-          marginTop="xxl"
+      <Box
+        height={200}
+        width="100%"
+        borderRadius="xl"
+        overflow="hidden"
+        marginTop="xxl"
+      >
+        <HotspotLocationPreview
+          mapCenter={centerCoordinate}
+          locationName={
+            details && !centerCoordinate ? 'No asserted Location' : undefined
+          }
+        />
+        {/* <MapboxGL.MapView
+          styleURL={Config.MAPBOX_STYLE_URL}
+          style={{ height: 200, width: '100%' }}
         >
-          <MapboxGL.MapView
-            styleURL={Config.MAPBOX_STYLE_URL}
-            style={{ height: 200, width: '100%' }}
-          >
+          {centerCoordinate && (
             <MapboxGL.Camera
               defaultSettings={{
-                centerCoordinate: [details.lng, details.lat],
+                centerCoordinate,
                 zoomLevel: 9,
               }}
             />
-          </MapboxGL.MapView>
-          <Box
-            position="absolute"
-            top={0}
-            bottom={0}
-            left={0}
-            right={0}
-            alignItems="center"
-            justifyContent="center"
-            pointerEvents="none"
-          >
-            <Box
-              height={16}
-              borderRadius="round"
-              width={16}
-              backgroundColor="greenMain"
-              pointerEvents="none"
-            />
-          </Box>
-        </Box>
-      )}
+          )}
+        </MapboxGL.MapView> */}
+      </Box>
 
       <Button
         onPress={assertHotspot}

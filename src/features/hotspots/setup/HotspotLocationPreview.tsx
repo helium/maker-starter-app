@@ -1,11 +1,16 @@
-import React, { memo, useCallback, useMemo, useRef, useState } from 'react'
+import React, {
+  memo,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
 import MapboxGL from '@react-native-mapbox-gl/maps'
 import Config from 'react-native-config'
 import LocationIcon from '@assets/images/location-icon.svg'
 import Box from '../../../components/Box'
 import Text from '../../../components/Text'
-
-const defaultLngLat = [-122.419418, 37.774929] // San Francisco
 
 type Geocode = {
   shortStreet?: string
@@ -34,6 +39,11 @@ const HotspotLocationPreview = ({
   const map = useRef<MapboxGL.MapView>(null)
   const [coords, setCoords] = useState(mapCenter)
 
+  useEffect(() => {
+    if (mapCenter === coords) return
+    setCoords(mapCenter)
+  }, [coords, mapCenter])
+
   const onRegionDidChange = useCallback(async () => {
     if (!movable) return
     const center = (await map.current?.getCenter()) as number[]
@@ -49,7 +59,7 @@ const HotspotLocationPreview = ({
   const LocationName = useCallback(
     () =>
       hasLocationName ? (
-        <Box padding="m" backgroundColor="secondaryBackground">
+        <Box padding="m" backgroundColor="whitePurple">
           <Text
             textAlign="center"
             variant="body1"
@@ -62,13 +72,7 @@ const HotspotLocationPreview = ({
           </Text>
         </Box>
       ) : null,
-    [
-      geocode?.longStreet,
-      geocode?.shortCity,
-      geocode?.shortCountry,
-      hasLocationName,
-      locationName,
-    ],
+    [geocode, hasLocationName, locationName],
   )
 
   return (
@@ -85,19 +89,21 @@ const HotspotLocationPreview = ({
         compassEnabled={false}
         onRegionDidChange={onRegionDidChange}
       >
-        <MapboxGL.Camera
-          defaultSettings={{
-            centerCoordinate: mapCenter || defaultLngLat,
-            zoomLevel: 17,
-          }}
-          maxZoomLevel={17}
-        />
-        <MapboxGL.PointAnnotation
-          id="locationMarker"
-          coordinate={coords || defaultLngLat}
-        >
-          <LocationIcon color="white" />
-        </MapboxGL.PointAnnotation>
+        {mapCenter && (
+          <MapboxGL.Camera
+            defaultSettings={{
+              centerCoordinate: mapCenter,
+              zoomLevel: 17,
+            }}
+            maxZoomLevel={17}
+          />
+        )}
+
+        {coords && (
+          <MapboxGL.PointAnnotation id="locationMarker" coordinate={coords}>
+            <LocationIcon color="white" />
+          </MapboxGL.PointAnnotation>
+        )}
       </MapboxGL.MapView>
       <LocationName />
     </Box>

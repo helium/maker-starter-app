@@ -18,7 +18,6 @@ import TouchableOpacityBox from '../../../components/TouchableOpacityBox'
 import Checkmark from '../../../assets/images/check.svg'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
 import { getAddress } from '../../../utils/secureAccount'
-import { HOTSPOT_TYPE } from '../root/hotspotTypes'
 
 const WifiItem = ({
   name,
@@ -97,7 +96,7 @@ const HotspotSetupPickWifiScreen = () => {
 
     const hotspot = await getHotspotDetails({
       address: hotspotAddress,
-      type: HOTSPOT_TYPE,
+      type: 'IOT', // both helium and freedomfi hotspots support iot
     })
 
     if (hotspot && hotspot.owner === address) {

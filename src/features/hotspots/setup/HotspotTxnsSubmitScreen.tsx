@@ -61,7 +61,7 @@ const HotspotTxnsSubmitScreen = () => {
       })
     } catch (e) {
       setState('error')
-      setError(e.toString())
+      setError(JSON.stringify(e))
       console.log('.........submit transactions error.................')
       console.log({ e })
     }

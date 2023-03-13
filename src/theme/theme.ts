@@ -73,6 +73,7 @@ const palette = {
   purpleMain: '#474DFF',
   redMain: '#F97570',
   redMedium: '#FF6666',
+  whitePurple: '#F0F1FA',
   yellow: '#FCC945',
 }
 

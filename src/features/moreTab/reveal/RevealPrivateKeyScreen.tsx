@@ -45,7 +45,7 @@ const RevealPrivateKeyScreen = () => {
     Linking.openURL(`${Articles.Wallet_Site}/import_key/${encodedData}`)
   }, [password])
 
-  const onChangeText = useCallback((text) => {
+  const onChangeText = useCallback((text: string) => {
     setPassword(text)
   }, [])
 

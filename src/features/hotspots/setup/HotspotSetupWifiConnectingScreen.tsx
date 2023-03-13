@@ -17,7 +17,6 @@ import Text from '../../../components/Text'
 import Box from '../../../components/Box'
 import SafeAreaBox from '../../../components/SafeAreaBox'
 import { getAddress } from '../../../utils/secureAccount'
-import { HOTSPOT_TYPE } from '../root/hotspotTypes'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
 
 type Route = RouteProp<
@@ -69,7 +68,7 @@ const HotspotSetupWifiConnectingScreen = () => {
 
       const hotspot = await getHotspotDetails({
         address: hotspotAddress,
-        type: HOTSPOT_TYPE,
+        type: 'IOT', // both freedomfi and helium hotspots support iot
       })
 
       if (hotspot && hotspot.owner === address) {

@@ -25,7 +25,7 @@ const Helium = {
           button: 'Next',
         },
       ],
-      externalOnboard: [],
+      externalOnboard: '',
     },
     ja: {
       internal: [
@@ -45,7 +45,7 @@ const Helium = {
           button: '電源が入っています',
         },
       ],
-      externalOnboard: [],
+      externalOnboard: '',
     },
     ko: {
       internal: [
@@ -65,7 +65,7 @@ const Helium = {
           button: '전원을 켰습니다',
         },
       ],
-      externalOnboard: [],
+      externalOnboard: '',
     },
     zh: {
       internal: [
@@ -85,7 +85,7 @@ const Helium = {
           button: '我已开机',
         },
       ],
-      externalOnboard: [],
+      externalOnboard: '',
     },
   },
   antenna: {

@@ -40,7 +40,7 @@ const AddressSearchModal = ({ onSelectPlace }: Props) => {
   }, 500)
 
   const handleSearchChange = useCallback(
-    (term) => {
+    (term: string) => {
       triggerAutocompleteSearch.callback(term)
     },
     [triggerAutocompleteSearch],
@@ -69,11 +69,11 @@ const AddressSearchModal = ({ onSelectPlace }: Props) => {
   }, [handleSearchChange, t])
 
   const renderItem = useCallback(
-    ({ item: searchResult }) => {
+    // eslint-disable-next-line react/no-unused-prop-types
+    ({ item: searchResult }: { item: AutocompleteSearchResult }) => {
       return (
         <TouchableOpacityBox
           onPress={handleSelectPlace(searchResult)}
-          // backgroundColor="secondary"
           padding="s"
           marginVertical="xxs"
         >

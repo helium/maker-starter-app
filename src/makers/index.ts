@@ -1,19 +1,23 @@
 import helium from './helium'
+import freedomfi from './freedomfi'
 import customAntennas from './custom/antennas'
 import { LangType, supportedLangs } from '../utils/i18n/i18nTypes'
 import { HotspotMakerLangField } from './hotspotMakerTypes'
 
 export const Makers: Record<string, { id: number; supportEmail: string }> = {
   helium,
+  freedomfi,
 }
 
 export const AntennaModels = {
   ...helium.antennas,
+  ...freedomfi.antennas,
   ...customAntennas,
 }
 
 export const HotspotMakerModels = {
   ...helium.hotspots,
+  ...freedomfi.hotspots,
 }
 
 export type HotspotType = keyof typeof HotspotMakerModels

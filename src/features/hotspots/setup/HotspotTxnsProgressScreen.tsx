@@ -25,8 +25,8 @@ import {
 import { useColors } from '../../../theme/themeHooks'
 import { DebouncedButton } from '../../../components/Button'
 import useMount from '../../../utils/useMount'
-import { HOTSPOT_TYPE } from '../root/hotspotTypes'
 import { HotspotAssertNavigationProp } from './HotspotAssertTypes'
+import { getHotspotTypes } from '../root/hotspotTypes'
 
 type Route = RouteProp<HotspotSetupStackParamList, 'HotspotTxnsProgressScreen'>
 
@@ -36,7 +36,8 @@ const HotspotTxnsProgressScreen = () => {
   const rootNav = useNavigation<RootNavigationProp>()
   const nav = useNavigation<HotspotAssertNavigationProp>()
   const { primaryText } = useColors()
-  const { createHotspot, getOnboardTransactions } = useOnboarding()
+  const { createHotspot, getOnboardTransactions, getOnboardingRecord } =
+    useOnboarding()
   const { result: token } = useAsync(getSecureItem, ['walletLinkToken'])
 
   const navToHeliumAppForSigning = useCallback(
@@ -148,10 +149,13 @@ const HotspotTxnsProgressScreen = () => {
     // This creates the hotspot, signing not required
     await createHotspot(params.addGatewayTxn)
 
+    const onboardingRecord = await getOnboardingRecord(params.hotspotAddress)
+    const types = getHotspotTypes(onboardingRecord?.maker.name)
+
     const { solanaTransactions } = await getOnboardTransactions({
       txn: params.addGatewayTxn,
       hotspotAddress: params.hotspotAddress,
-      hotspotTypes: [HOTSPOT_TYPE],
+      hotspotTypes: types,
       lat: last(params.coords),
       lng: first(params.coords),
       elevation: params.elevation,
@@ -160,7 +164,13 @@ const HotspotTxnsProgressScreen = () => {
     if (!solanaTransactions) return
 
     handleTxns(solanaTransactions)
-  }, [createHotspot, getOnboardTransactions, handleTxns, params])
+  }, [
+    createHotspot,
+    getOnboardTransactions,
+    getOnboardingRecord,
+    handleTxns,
+    params,
+  ])
 
   useMount(() => {
     if (params.addGatewayTxn) {

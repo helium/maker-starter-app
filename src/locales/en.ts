@@ -247,10 +247,6 @@ export default {
       title: 'Hide Hotspot',
     },
     wifi: {
-      hide_password: 'Hide Password',
-      show_password: 'Show Password',
-    },
-    wifi: {
       available_wifi: 'Available Wi-Fi Networks',
       connected_via: 'Connected via',
       ethernet: 'Ethernet',
@@ -402,7 +398,7 @@ export default {
       title: 'REGISTERING TRANSACTION',
     },
     selection: {
-      subtitle: '[Placeholder instructions]',
+      subtitle: 'Choose Your Maker',
       title: 'Add\nyour Hotspot.',
     },
     skip_location: {
@@ -439,8 +435,8 @@ export default {
     title: 'Assert Location',
   },
   hotspots: {
-    copyAddress: 'Copy Address',
     copiedToClipboard: 'Copied {{address}} to clipboard',
+    copyAddress: 'Copy Address',
     diagnostics: 'Run Diagnostics',
     empty: {
       body: 'Your add hotspot\ninstructions',
