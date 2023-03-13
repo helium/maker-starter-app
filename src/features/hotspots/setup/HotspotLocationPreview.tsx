@@ -100,6 +100,8 @@ const HotspotLocationPreview = ({
         )}
 
         {coords && (
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
           <MapboxGL.PointAnnotation id="locationMarker" coordinate={coords}>
             <LocationIcon color="white" />
           </MapboxGL.PointAnnotation>
