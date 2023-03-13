@@ -351,10 +351,10 @@ export default {
       elevation_label: 'Height:',
       elevation_plural: '{{count}} meters',
       fee: 'Fee:',
-      fee_next: 'Pay Fee & Register Hotspot',
+      fee_next: 'Pay Fee & Submit',
       gain: '{{gain}} dBi',
       gain_label: 'TX / RX Gain:',
-      next: 'Register Hotspot',
+      next: 'Submit',
       no_funds: 'There is insufficient funds in your account balance',
       subtitle_fee: 'You need to pay a Location Fee to confirm this location.',
       subtitle_free: 'Your Location Fee has been prepaid.',
@@ -439,6 +439,8 @@ export default {
     title: 'Assert Location',
   },
   hotspots: {
+    copyAddress: 'Copy Address',
+    copiedToClipboard: 'Copied {{address}} to clipboard',
     diagnostics: 'Run Diagnostics',
     empty: {
       body: 'Your add hotspot\ninstructions',
@@ -462,6 +464,8 @@ export default {
         signOut: 'Sign Out',
         signOutAlert: {
           body: 'You are signing out of your account.',
+          bodyWithWords:
+            'You are signing out of your account. Do you have your recovery words? If you don’t, you will lose access to:\n\n- your Hotspots\n- your HNT\n- your Wallet',
           title: 'Warning!',
         },
         signOutWithLink: 'Sign Out - Linked as: {{address}}',
@@ -510,7 +514,7 @@ export default {
   transferHotspot: {
     enterHotspot: 'Enter Hotspot Address',
     enterOwner: 'Enter New Owner Address',
-    submit: 'Sign with Helium App',
+    submit: 'Submit',
     submitComplete: 'Transfer Successfully Submitted!\n Pending Txn Hash:',
     title: 'Transfer Hotspot',
   },

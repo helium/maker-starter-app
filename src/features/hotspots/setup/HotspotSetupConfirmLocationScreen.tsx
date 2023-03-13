@@ -18,6 +18,7 @@ import { RootNavigationProp } from '../../../navigation/main/tabTypes'
 import { getAddress } from '../../../utils/secureAccount'
 import HotspotLocationPreview from './HotspotLocationPreview'
 import { HOTSPOT_TYPE } from '../root/hotspotTypes'
+import { useSpacing } from '../../../theme/themeHooks'
 
 type Route = RouteProp<
   HotspotSetupStackParamList,
@@ -33,6 +34,7 @@ const HotspotSetupConfirmLocationScreen = () => {
   const [assertLocationTxn, setAssertLocationTxn] = useState<string>()
   const [solanaTransactions, setSolanaTransactions] = useState<string[]>()
   const { params } = useRoute<Route>()
+  const spacing = useSpacing()
   const {
     getAssertData,
     getOnboardingRecord,
@@ -127,8 +129,8 @@ const HotspotSetupConfirmLocationScreen = () => {
   }
 
   return (
-    <BackScreen onClose={handleClose}>
-      <ScrollView>
+    <BackScreen onClose={handleClose} padding="none">
+      <ScrollView style={{ padding: spacing.lx }}>
         <Box flex={1} justifyContent="center" paddingBottom="xxl">
           <Text variant="h1" marginBottom="l" maxFontSizeMultiplier={1}>
             {t('hotspot_setup.location_fee.title')}
@@ -181,11 +183,7 @@ const HotspotSetupConfirmLocationScreen = () => {
             />
           </Box>
 
-          <Box
-            flexDirection="row"
-            justifyContent="space-between"
-            marginTop={{ phone: 'm', smallPhone: 'xxs' }}
-          >
+          <Box flexDirection="row" justifyContent="space-between">
             <Text variant="body1" color="primaryText">
               {t('hotspot_setup.location_fee.gain_label')}
             </Text>
@@ -215,12 +213,11 @@ const HotspotSetupConfirmLocationScreen = () => {
                 flexDirection="row"
                 justifyContent="space-between"
                 paddingTop="m"
-                marginTop={{ phone: 'm', smallPhone: 'xxs' }}
               >
                 <Text variant="body1" color="primaryText">
                   {t('hotspot_setup.location_fee.balance')}
                 </Text>
-                <Box>
+                <Box alignItems="flex-end">
                   <Text
                     variant="body1"
                     color={disabled ? 'error' : 'primaryText'}
@@ -273,7 +270,7 @@ const HotspotSetupConfirmLocationScreen = () => {
           )}
         </Box>
       </ScrollView>
-      <Box>
+      <Box marginHorizontal="lx">
         <DebouncedButton
           title={
             isFree

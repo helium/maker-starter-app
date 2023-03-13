@@ -3,33 +3,119 @@ import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
 import { ActivityIndicator, Linking, Platform } from 'react-native'
 import { createUpdateHotspotUrl, SignHotspotRequest } from '@helium/wallet-link'
-import { useOnboarding } from '@helium/react-native-sdk'
+import {
+  AddGatewayV1,
+  AssertLocationV2,
+  TransferHotspotV2,
+  useOnboarding,
+} from '@helium/react-native-sdk'
 import { first, last } from 'lodash'
+import { useAsync } from 'react-async-hook'
+import { bufferToTransaction, getSolanaKeypair } from '@helium/spl-utils'
 import Box from '../../../components/Box'
 import Text from '../../../components/Text'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
 import SafeAreaBox from '../../../components/SafeAreaBox'
 import { HotspotSetupStackParamList } from './hotspotSetupTypes'
-import { getSecureItem } from '../../../utils/secureAccount'
+import {
+  getKeypair,
+  getKeypairRaw,
+  getSecureItem,
+} from '../../../utils/secureAccount'
 import { useColors } from '../../../theme/themeHooks'
 import { DebouncedButton } from '../../../components/Button'
 import useMount from '../../../utils/useMount'
 import { HOTSPOT_TYPE } from '../root/hotspotTypes'
+import { HotspotAssertNavigationProp } from './HotspotAssertTypes'
 
 type Route = RouteProp<HotspotSetupStackParamList, 'HotspotTxnsProgressScreen'>
 
 const HotspotTxnsProgressScreen = () => {
   const { t } = useTranslation()
   const { params } = useRoute<Route>()
-  const navigation = useNavigation<RootNavigationProp>()
+  const rootNav = useNavigation<RootNavigationProp>()
+  const nav = useNavigation<HotspotAssertNavigationProp>()
   const { primaryText } = useColors()
   const { createHotspot, getOnboardTransactions } = useOnboarding()
+  const { result: token } = useAsync(getSecureItem, ['walletLinkToken'])
 
   const navToHeliumAppForSigning = useCallback(
-    async (onboardTransactions?: string[]) => {
-      const token = await getSecureItem('walletLinkToken')
-      if (!token) throw new Error('Token Not found')
+    async (updateParams: SignHotspotRequest) => {
+      const url = createUpdateHotspotUrl(updateParams)
+      if (!url) {
+        // eslint-disable-next-line no-console
+        console.error('Link could not be created')
+        return
+      }
 
+      Linking.openURL(url)
+    },
+    [],
+  )
+
+  const signTxn = useCallback(
+    async ({
+      addGatewayTxn,
+      solanaTransactions,
+      transferHotspotTxn,
+      assertLocationTxn,
+    }: SignHotspotRequest) => {
+      const keypair = await getKeypair()
+      const keypairRaw = await getKeypairRaw()
+      if (!keypairRaw || !keypair) {
+        throw new Error('keypair not found!')
+      }
+
+      let solanaSignedTransactions: string[] = []
+      let gatewayTxn: string | undefined
+      let assertTxn: string | undefined
+      let transferTxn: string | undefined
+
+      if (addGatewayTxn) {
+        const unsigned = AddGatewayV1.fromString(addGatewayTxn)
+        const signed = await unsigned.sign({ owner: keypair })
+        gatewayTxn = signed.toString()
+      }
+
+      if (assertLocationTxn) {
+        const unsigned = AssertLocationV2.fromString(assertLocationTxn)
+        const ownerIsPayer = unsigned.owner?.b58 === unsigned.payer?.b58
+        const signed = await unsigned.sign({
+          owner: keypair,
+          payer: ownerIsPayer ? keypair : undefined,
+        })
+        assertTxn = signed.toString()
+      }
+
+      if (transferHotspotTxn) {
+        const unsigned = TransferHotspotV2.fromString(transferHotspotTxn)
+        const signed = await unsigned.sign({ owner: keypair })
+        transferTxn = signed.toString()
+      }
+
+      if (solanaTransactions) {
+        const solTxns = solanaTransactions.split(',')
+        const solanaKeypair = getSolanaKeypair(keypairRaw.sk)
+        solanaSignedTransactions = solTxns.map((txn) => {
+          const tx = bufferToTransaction(Buffer.from(txn, 'base64'))
+          tx.partialSign(solanaKeypair)
+          return tx.serialize().toString('base64')
+        })
+      }
+      nav.navigate('HotspotTxnsSubmitScreen', {
+        gatewayTxn,
+        assertTxn,
+        gatewayAddress: params.hotspotAddress,
+        transferTxn,
+        solanaTransactions: solanaSignedTransactions.join(','),
+        status: 'success',
+      })
+    },
+    [nav, params.hotspotAddress],
+  )
+
+  const handleTxns = useCallback(
+    (onboardTransactions?: string[]) => {
       const solanaTransactions = [
         ...(onboardTransactions || []),
         ...(params.solanaTransactions || []),
@@ -47,16 +133,13 @@ const HotspotTxnsProgressScreen = () => {
         updateParams.assertLocationTxn = params.assertLocationTxn
       }
 
-      const url = createUpdateHotspotUrl(updateParams)
-      if (!url) {
-        // eslint-disable-next-line no-console
-        console.error('Link could not be created')
-        return
+      if (token) {
+        navToHeliumAppForSigning(updateParams)
+      } else {
+        signTxn(updateParams)
       }
-
-      Linking.openURL(url)
     },
-    [params],
+    [params, token, navToHeliumAppForSigning, signTxn],
   )
 
   const handleAddGateway = useCallback(async () => {
@@ -76,14 +159,14 @@ const HotspotTxnsProgressScreen = () => {
     })
     if (!solanaTransactions) return
 
-    navToHeliumAppForSigning(solanaTransactions)
-  }, [createHotspot, getOnboardTransactions, navToHeliumAppForSigning, params])
+    handleTxns(solanaTransactions)
+  }, [createHotspot, getOnboardTransactions, handleTxns, params])
 
   useMount(() => {
     if (params.addGatewayTxn) {
       handleAddGateway()
     } else {
-      navToHeliumAppForSigning()
+      handleTxns()
     }
   })
 
@@ -103,7 +186,7 @@ const HotspotTxnsProgressScreen = () => {
         </Box>
       </Box>
       <DebouncedButton
-        onPress={() => navigation.navigate('MainTabs')}
+        onPress={() => rootNav.navigate('MainTabs')}
         variant="primary"
         width="100%"
         mode="contained"

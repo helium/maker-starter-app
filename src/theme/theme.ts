@@ -172,7 +172,7 @@ export const theme = createTheme({
       padding: 'm',
     },
     secondary: {
-      backgroundColor: 'surfaceSecondary',
+      backgroundColor: 'secondaryBackground',
       height: 52,
       padding: 'm',
       fontSize: 18,

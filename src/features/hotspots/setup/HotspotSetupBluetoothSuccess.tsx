@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -8,7 +9,6 @@ import {
   useOnboarding,
 } from '@helium/react-native-sdk'
 import { isString, uniq } from 'lodash'
-import { parseWalletLinkToken } from '@helium/wallet-link'
 import Config from 'react-native-config'
 import Box from '../../../components/Box'
 import HotspotPairingList from '../../../components/HotspotPairingList'
@@ -18,7 +18,7 @@ import {
   HotspotSetupStackParamList,
 } from './hotspotSetupTypes'
 import useAlert from '../../../utils/useAlert'
-import { getSecureItem } from '../../../utils/secureAccount'
+import { getAddress } from '../../../utils/secureAccount'
 
 type Route = RouteProp<
   HotspotSetupStackParamList,
@@ -125,12 +125,7 @@ const HotspotSetupBluetoothSuccess = () => {
 
         // navigate to next screen
         if (gatewayAction === 'addGateway' || gatewayAction === 'wifi') {
-          const token = await getSecureItem('walletLinkToken')
-          if (!token) throw new Error('Token Not found')
-          const parsed = parseWalletLinkToken(token)
-          if (!parsed?.address) throw new Error('Invalid Token')
-
-          const { address: ownerAddress } = parsed
+          const ownerAddress = await getAddress()
           const addGatewayTxn = await createGatewayTxn({
             ownerAddress,
             payerAddress,

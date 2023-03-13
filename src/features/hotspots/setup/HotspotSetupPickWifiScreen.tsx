@@ -17,7 +17,7 @@ import { DebouncedButton } from '../../../components/Button'
 import TouchableOpacityBox from '../../../components/TouchableOpacityBox'
 import Checkmark from '../../../assets/images/check.svg'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
-import { getAddress, getSecureItem } from '../../../utils/secureAccount'
+import { getAddress } from '../../../utils/secureAccount'
 import { HOTSPOT_TYPE } from '../root/hotspotTypes'
 
 const WifiItem = ({
@@ -93,8 +93,6 @@ const HotspotSetupPickWifiScreen = () => {
       return
     }
 
-    const token = await getSecureItem('walletLinkToken')
-    if (!token) return
     const address = await getAddress()
 
     const hotspot = await getHotspotDetails({

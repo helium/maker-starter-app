@@ -1,13 +1,6 @@
 /* eslint-disable */
 // @ts-nocheck
-import React, {
-  memo,
-  ReactText,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react'
+import React, { memo, ReactText, useCallback, useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert, SectionList } from 'react-native'
 import { useSelector } from 'react-redux'
@@ -15,7 +8,6 @@ import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { isEqual } from 'lodash'
 import { Edge } from 'react-native-safe-area-context'
 import { useAsync } from 'react-async-hook'
-import { parseWalletLinkToken } from '@helium/wallet-link'
 import SafeAreaBox from '../../../components/SafeAreaBox'
 import Text from '../../../components/Text'
 import { RootState } from '../../../store/rootReducer'
@@ -32,7 +24,8 @@ import { useSpacing } from '../../../theme/themeHooks'
 import Box from '../../../components/Box'
 import { SUPPORTED_LANGUAGUES } from '../../../utils/i18n/i18nTypes'
 import { useLanguageContext } from '../../../providers/LanguageProvider'
-import { getSecureItem } from '../../../utils/secureAccount'
+import { getAddress } from '../../../utils/secureAccount'
+import { getMnemonic } from '../../../utils/secureAccount'
 
 type Route = RouteProp<RootStackParamList & MoreStackParamList, 'MoreScreen'>
 const MoreScreen = () => {
@@ -44,19 +37,8 @@ const MoreScreen = () => {
   const navigation = useNavigation<MoreNavigationProp & RootNavigationProp>()
   const spacing = useSpacing()
   const { changeLanguage, language } = useLanguageContext()
-  const [address, setAddress] = useState('')
-
-  useAsync(async () => {
-    const token = await getSecureItem('walletLinkToken')
-    if (!token) return ''
-    const parsedToken = parseWalletLinkToken(token)
-
-    const truncatedAddress = [
-      parsedToken.address.slice(0, 8),
-      parsedToken.address.slice(-8),
-    ].join('...')
-    setAddress(truncatedAddress)
-  }, [])
+  const { result: address } = useAsync(getAddress, [])
+  const { result: mnemonic } = useAsync(getMnemonic, [])
 
   useEffect(() => {
     if (!params?.pinVerifiedFor) return
@@ -122,24 +104,23 @@ const MoreScreen = () => {
   }, [navigation])
 
   const handleSignOut = useCallback(() => {
-    Alert.alert(
-      t('more.sections.app.signOutAlert.title'),
-      t('more.sections.app.signOutAlert.body'),
-      [
-        {
-          text: t('generic.cancel'),
-          style: 'cancel',
-        },
-        {
-          text: t('more.sections.app.signOut'),
-          style: 'destructive',
-          onPress: () => {
-            dispatch(appSlice.actions.signOut())
-          },
-        },
-      ],
+    const body = t(
+      `more.sections.app.signOutAlert.${mnemonic ? 'bodyWithWords' : 'body'}`,
     )
-  }, [t, dispatch])
+    Alert.alert(t('more.sections.app.signOutAlert.title'), body, [
+      {
+        text: t('generic.cancel'),
+        style: 'cancel',
+      },
+      {
+        text: t('more.sections.app.signOut'),
+        style: 'destructive',
+        onPress: () => {
+          dispatch(appSlice.actions.signOut())
+        },
+      },
+    ])
+  }, [t, dispatch, mnemonic])
 
   const handleIntervalSelected = useCallback(
     (value: ReactText) => {
@@ -156,17 +137,21 @@ const MoreScreen = () => {
         onToggle: handlePinRequired,
         value: app.isPinRequired,
       },
-      {
-        title: t('more.sections.security.revealWords'),
-        onPress: handleRevealWords,
-        disabled: app.isDeployModeEnabled,
-      },
-      {
-        title: t('more.sections.security.revealPrivateKey'),
-        onPress: handleRevealPrivateKey,
-        disabled: app.isDeployModeEnabled,
-      },
     ]
+
+    if (!!mnemonic) {
+      pin = [
+        ...pin,
+        {
+          title: t('more.sections.security.revealWords'),
+          onPress: handleRevealWords,
+        },
+        {
+          title: t('more.sections.security.revealPrivateKey'),
+          onPress: handleRevealPrivateKey,
+        },
+      ]
+    }
 
     if (app.isPinRequired) {
       pin = [
@@ -203,7 +188,9 @@ const MoreScreen = () => {
             },
           },
           {
-            title: t('more.sections.app.signOutWithLink', { address }),
+            title: t('more.sections.app.signOutWithLink', {
+              address: [address?.slice(0, 8), address?.slice(-8)].join('...'),
+            }),
             onPress: handleSignOut,
             destructive: true,
           },

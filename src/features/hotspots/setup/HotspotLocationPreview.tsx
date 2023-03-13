@@ -49,7 +49,7 @@ const HotspotLocationPreview = ({
   const LocationName = useCallback(
     () =>
       hasLocationName ? (
-        <Box padding="m" backgroundColor="surface">
+        <Box padding="m" backgroundColor="secondaryBackground">
           <Text
             textAlign="center"
             variant="body1"
