@@ -3,7 +3,7 @@ import { FlatList } from 'react-native'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
 import { uniq } from 'lodash'
-import { useHotspotBle, useOnboarding } from '@helium/react-native-sdk'
+import { useHotspotBle, useOnboarding, Account } from '@helium/react-native-sdk'
 import BackScreen from '../../../components/BackScreen'
 import Text from '../../../components/Text'
 import {
@@ -93,13 +93,17 @@ const HotspotSetupPickWifiScreen = () => {
     }
 
     const address = await getAddress()
+    const solAddress = Account.heliumAddressToSolAddress(address)
 
     const hotspot = await getHotspotDetails({
       address: hotspotAddress,
       type: 'IOT', // both helium and freedomfi hotspots support iot
     })
 
-    if (hotspot && hotspot.owner === address) {
+    if (
+      hotspot &&
+      (hotspot.owner === address || hotspot.owner === solAddress)
+    ) {
       navigation.replace('OwnedHotspotErrorScreen')
     } else if (hotspot && hotspot.owner !== address) {
       navigation.replace('NotHotspotOwnerErrorScreen')
