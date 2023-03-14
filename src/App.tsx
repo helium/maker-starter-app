@@ -22,6 +22,7 @@ import {
   OnboardingProvider,
   SolanaProvider,
 } from '@helium/react-native-sdk'
+import { Cluster } from '@solana/web3.js'
 import { theme, darkThemeColors } from './theme/theme'
 import NavigationRoot from './navigation/NavigationRoot'
 import { useAppDispatch } from './store/store'
@@ -131,7 +132,7 @@ const App = () => {
   return (
     <GestureHandlerRootView style={globalStyles.container}>
       <SolanaProvider
-        cluster="devnet"
+        cluster={(Config.SOLANA_CLUSTER || 'devnet') as Cluster}
         rpcEndpoint={Config.SOLANA_RPC_ENDPOINT || ''}
         heliumWallet={heliumWallet}
         solanaStatusOverride={
