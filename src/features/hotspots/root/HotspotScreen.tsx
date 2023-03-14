@@ -110,11 +110,16 @@ const HotspotScreen = () => {
   )
 
   const updateHotspotDetails = useCallback(async () => {
-    const hotspotMeta = await getHotspotDetails({
-      address: hotspot.address,
-      type: 'IOT', // Both freedomfi and helium support iot
-    })
-    setDetails(hotspotMeta || {})
+    try {
+      const hotspotMeta = await getHotspotDetails({
+        address: hotspot.address,
+        type: 'IOT', // Both freedomfi and helium support iot
+      })
+      setDetails(hotspotMeta || {})
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.error(e)
+    }
     setLoadingDetails(false)
   }, [getHotspotDetails, hotspot])
 
@@ -144,7 +149,13 @@ const HotspotScreen = () => {
   }, [hotspot.address, nav])
 
   const transferHotspot = useCallback(
-    () => nav.push('TransferHotspot', { hotspotAddress: hotspot.address }),
+    () =>
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      nav.navigate('TransferHotspot', {
+        screen: 'TransferHotspotScreen',
+        params: { hotspotAddress: hotspot.address },
+      }),
     [hotspot.address, nav],
   )
 

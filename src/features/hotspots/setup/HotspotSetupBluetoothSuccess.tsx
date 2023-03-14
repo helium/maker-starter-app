@@ -116,7 +116,8 @@ const HotspotSetupBluetoothSuccess = () => {
         if (!onboardingRecord) {
           console.log('onboarding record not found')
         }
-        const payerAddress = onboardingRecord?.maker.address || Config.MAKER_ID
+        const payerAddress =
+          onboardingRecord?.maker.address || Config.MAKER_ADDRESS
 
         if (!payerAddress) {
           console.log('Payer address not found')

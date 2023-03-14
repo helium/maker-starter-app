@@ -392,6 +392,7 @@ export default {
       title: 'Power Up',
     },
     progress: {
+      view_pending: 'View Pending Transaction',
       next: 'Go to Wallet',
       subtitle:
         'This can take a few minutes so feel free to close this screen.',

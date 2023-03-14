@@ -1,15 +1,17 @@
 /* eslint-disable no-console */
-import React, { useRef, useState } from 'react'
+import React, { useCallback, useRef, useState } from 'react'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
 import { useAsync } from 'react-async-hook'
 import { useOnboarding } from '@helium/react-native-sdk'
+import { Linking } from 'react-native'
 import Box from '../../../components/Box'
 import { DebouncedButton } from '../../../components/Button'
 import Text from '../../../components/Text'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
 import SafeAreaBox from '../../../components/SafeAreaBox'
 import { HotspotSetupStackParamList } from './hotspotSetupTypes'
+import TouchableOpacityBox from '../../../components/TouchableOpacityBox'
 
 type Route = RouteProp<HotspotSetupStackParamList, 'HotspotTxnsSubmitScreen'>
 
@@ -23,6 +25,7 @@ const HotspotTxnsSubmitScreen = () => {
     'init',
   )
   const [error, setError] = useState('')
+  const [pendingTxn, setPendingTxn] = useState<string>()
 
   useAsync(async () => {
     if (submitted.current) return
@@ -33,7 +36,11 @@ const HotspotTxnsSubmitScreen = () => {
 
     submitted.current = true
 
-    const solanaTransactions = params.solanaTransactions?.split(',') || []
+    let solanaTransactions: string[] = []
+    if (params.solanaTransactions) {
+      solanaTransactions = params.solanaTransactions?.split(',') || []
+    }
+
     try {
       setState('loading')
       console.log('.........submit transactions.................')
@@ -59,6 +66,12 @@ const HotspotTxnsSubmitScreen = () => {
         pendingTransferTxn,
         solanaTxnIds,
       })
+
+      setPendingTxn(
+        pendingAssertTxn?.hash ||
+          pendingGatewayTxn?.hash ||
+          pendingTransferTxn?.hash,
+      )
     } catch (e) {
       setState('error')
       setError(JSON.stringify(e))
@@ -66,6 +79,12 @@ const HotspotTxnsSubmitScreen = () => {
       console.log({ e })
     }
   }, [])
+
+  const viewPending = useCallback(() => {
+    Linking.openURL(
+      `https://api.helium.io/v1/pending_transactions/${pendingTxn}`,
+    )
+  }, [pendingTxn])
 
   return (
     <SafeAreaBox
@@ -86,6 +105,17 @@ const HotspotTxnsSubmitScreen = () => {
               </Text>
             </Box>
           </Box>
+          {pendingTxn && (
+            <TouchableOpacityBox
+              onPress={viewPending}
+              padding="lx"
+              alignSelf="center"
+            >
+              <Text variant="body1">
+                {t('hotspot_setup.progress.view_pending')}
+              </Text>
+            </TouchableOpacityBox>
+          )}
           <DebouncedButton
             onPress={() => navigation.navigate('MainTabs')}
             variant="primary"

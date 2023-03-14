@@ -134,7 +134,13 @@ const App = () => {
         cluster="devnet"
         rpcEndpoint={Config.SOLANA_RPC_ENDPOINT || ''}
         heliumWallet={heliumWallet}
-        solanaStatusOverride="complete"
+        solanaStatusOverride={
+          Config.SOLANA_STATUS_OVERRIDE as
+            | 'not_started'
+            | 'in_progress'
+            | 'complete'
+            | undefined
+        }
       >
         <OnboardingProvider
           baseUrl={

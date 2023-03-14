@@ -2,7 +2,7 @@ import React, { useCallback, useMemo, useState } from 'react'
 import { ActivityIndicator, ScrollView } from 'react-native'
 import { useTranslation } from 'react-i18next'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
-import { useOnboarding, AssertData } from '@helium/react-native-sdk'
+import { useOnboarding, AssertData, useSolana } from '@helium/react-native-sdk'
 import { useAsync } from 'react-async-hook'
 import { first, last } from 'lodash'
 import animalName from 'angry-purple-tiger'
@@ -30,9 +30,11 @@ const HotspotSetupConfirmLocationScreen = () => {
   const navigation = useNavigation<HotspotSetupNavigationProp>()
   const rootNav = useNavigation<RootNavigationProp>()
   const [assertData, setAssertData] = useState<AssertData>()
+  const { getStatus } = useSolana()
   const [isFree, setIsFree] = useState<boolean>()
   const [assertLocationTxn, setAssertLocationTxn] = useState<string>()
   const [solanaTransactions, setSolanaTransactions] = useState<string[]>()
+  const { result: status } = useAsync(getStatus, [])
   const { params } = useRoute<Route>()
   const spacing = useSpacing()
   const {
@@ -231,14 +233,16 @@ const HotspotSetupConfirmLocationScreen = () => {
                   >
                     {assertData?.balances?.dc?.toString(4)}
                   </Text>
-                  <Text
-                    variant="body1"
-                    color={
-                      assertData?.hasSufficientSol ? 'primaryText' : 'error'
-                    }
-                  >
-                    {assertData?.balances?.sol?.toString(4)}
-                  </Text>
+                  {status?.isSolana && (
+                    <Text
+                      variant="body1"
+                      color={
+                        assertData?.hasSufficientSol ? 'primaryText' : 'error'
+                      }
+                    >
+                      {assertData?.balances?.sol?.toString(4)}
+                    </Text>
+                  )}
                 </Box>
               </Box>
 
@@ -255,9 +259,11 @@ const HotspotSetupConfirmLocationScreen = () => {
                     ?.toUsd(assertData.oraclePrice)
                     .toString(2)}
                 </Text>
-                <Text variant="body1" color="primaryText">
-                  {assertData?.ownerFees?.sol?.toString(2)}
-                </Text>
+                {status?.isSolana && (
+                  <Text variant="body1" color="primaryText">
+                    {assertData?.ownerFees?.sol?.toString(2)}
+                  </Text>
+                )}
               </Box>
 
               {disabled && (

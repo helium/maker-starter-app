@@ -33,7 +33,6 @@ const HotspotsScreen = () => {
 
     const nextHotspots = await getHotspots({
       heliumAddress,
-      // makerName: Config.MAKER_NAME,
     })
 
     if (!nextHotspots) return

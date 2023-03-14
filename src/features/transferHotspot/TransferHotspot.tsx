@@ -1,46 +1,103 @@
 import React, { useState, useCallback, useEffect, useMemo } from 'react'
-import { useOnboarding, Account } from '@helium/react-native-sdk'
+import {
+  useOnboarding,
+  Account,
+  TransferHotspotV2,
+} from '@helium/react-native-sdk'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
-import { ActivityIndicator, Keyboard, Linking, Platform } from 'react-native'
+import { Keyboard, Linking, Platform } from 'react-native'
 import { useTranslation } from 'react-i18next'
-import { createUpdateHotspotUrl } from '@helium/wallet-link'
+import { createUpdateHotspotUrl, SignHotspotRequest } from '@helium/wallet-link'
 import animalName from 'angry-purple-tiger'
 import { useAsync } from 'react-async-hook'
 import Address from '@helium/address'
+import { bufferToTransaction, getSolanaKeypair } from '@helium/spl-utils'
 import Text from '../../components/Text'
 import SafeAreaBox from '../../components/SafeAreaBox'
 import TextInput from '../../components/TextInput'
 import Button from '../../components/Button'
 import {
   getAddress,
+  getKeypair,
+  getKeypairRaw,
   getSecureItem,
   isValidSolPubkey,
 } from '../../utils/secureAccount'
 import { RootStackParamList } from '../../navigation/main/tabTypes'
 import Box from '../../components/Box'
+import ActivityIndicator from '../../components/ActivityIndicator'
+import useAlert from '../../utils/useAlert'
+import { TransferHotspotNavigationProp } from './transferHotspotTypes'
 
 type Route = RouteProp<RootStackParamList, 'TransferHotspot'>
 const TransferHotspot = () => {
   const { result: address } = useAsync(getAddress, [])
-  const navigation = useNavigation()
+  const navigation = useNavigation<TransferHotspotNavigationProp>()
   const { t } = useTranslation()
   const { params } = useRoute<Route>()
   const { createTransferTransaction } = useOnboarding()
-
   const [newOwnerAddress, setNewOwnerAddress] = useState('')
   const [loading, setLoading] = useState(false)
   const [hotspotName, setHotspotName] = useState('')
+  const { showOKAlert } = useAlert()
+
+  const navToHeliumAppForSigning = useCallback(
+    async (updateParams: SignHotspotRequest) => {
+      const url = createUpdateHotspotUrl(updateParams)
+      if (!url) {
+        // eslint-disable-next-line no-console
+        console.error('Link could not be created')
+        return
+      }
+
+      Linking.openURL(url)
+    },
+    [],
+  )
+
+  const signTxn = useCallback(
+    async ({ solanaTransactions, transferHotspotTxn }: SignHotspotRequest) => {
+      const keypair = await getKeypair()
+
+      const keypairRaw = await getKeypairRaw()
+      if (!keypairRaw || !keypair) {
+        throw new Error('keypair not found!')
+      }
+
+      let solanaSignedTransactions: string[] = []
+      let transferTxn: string | undefined
+
+      if (transferHotspotTxn) {
+        const unsigned = TransferHotspotV2.fromString(transferHotspotTxn)
+        const signed = await unsigned.sign({ owner: keypair })
+        transferTxn = signed.toString()
+      }
+
+      if (solanaTransactions) {
+        const solTxns = solanaTransactions.split(',')
+        const solanaKeypair = getSolanaKeypair(keypairRaw.sk)
+        solanaSignedTransactions = solTxns.map((txn) => {
+          const tx = bufferToTransaction(Buffer.from(txn, 'base64'))
+          tx.partialSign(solanaKeypair)
+          return tx.serialize().toString('base64')
+        })
+      }
+      navigation.navigate('HotspotTxnsSubmitScreen', {
+        gatewayAddress: params?.hotspotAddress,
+        transferTxn,
+        solanaTransactions: solanaSignedTransactions.join(','),
+        status: 'success',
+      })
+    },
+    [navigation, params?.hotspotAddress],
+  )
 
   const onSubmit = useCallback(async () => {
-    if (!params?.hotspotAddress) return
-
-    setLoading(true)
-
-    // get linked wallet token
-    const token = await getSecureItem('walletLinkToken')
-    if (!token) throw new Error('Token Not found')
-
     try {
+      if (!params?.hotspotAddress) return
+
+      setLoading(true)
+
       const userAddress = await getAddress()
       const { solanaTransactions, transferHotspotTxn } =
         await createTransferTransaction({
@@ -49,21 +106,40 @@ const TransferHotspot = () => {
           newOwnerAddress,
         })
 
-      const url = createUpdateHotspotUrl({
-        platform: Platform.OS,
+      const token = await getSecureItem('walletLinkToken')
+      const updateParams = {
         token,
-        transferHotspotTxn,
-        solanaTransactions: solanaTransactions?.join(','),
-      })
-      if (!url) throw new Error('Link could not be created')
-      // open in the Helium wallet app
-      await Linking.openURL(url)
+        platform: Platform.OS,
+      } as SignHotspotRequest
+
+      if (solanaTransactions?.length) {
+        updateParams.solanaTransactions = solanaTransactions.join(',')
+      } else {
+        updateParams.transferHotspotTxn = transferHotspotTxn
+      }
+
+      if (token) {
+        navToHeliumAppForSigning(updateParams)
+      } else {
+        signTxn(updateParams)
+      }
     } catch (e) {
+      setLoading(false)
+      showOKAlert({
+        titleKey: 'generic.something_went_wrong',
+        messageKey: (e as string).toString(),
+      })
       // eslint-disable-next-line no-console
       console.error(e)
     }
-    setLoading(false)
-  }, [createTransferTransaction, newOwnerAddress, params?.hotspotAddress])
+  }, [
+    params?.hotspotAddress,
+    createTransferTransaction,
+    newOwnerAddress,
+    navToHeliumAppForSigning,
+    signTxn,
+    showOKAlert,
+  ])
 
   useEffect(() => {
     if (!params?.hotspotAddress) return
@@ -127,6 +203,7 @@ const TransferHotspot = () => {
           variant="regular"
         />
       </Box>
+      <ActivityIndicator animating={loading} />
       <Button
         title={t('transferHotspot.submit')}
         mode="contained"
@@ -136,7 +213,6 @@ const TransferHotspot = () => {
         onPress={onSubmit}
       />
       <Button title={t('generic.cancel')} onPress={navigation.goBack} />
-      {loading && <ActivityIndicator size="small" color="white" />}
     </SafeAreaBox>
   )
 }

@@ -3,11 +3,9 @@ buildscript {
         maven { url 'https://plugins.gradle.org/m2/' } // Gradle Plugin Portal
     }
     dependencies {
-        classpath 'gradle.plugin.com.onesignal:onesignal-gradle-plugin:[0.12.9, 0.99.99]'
     }
 }
 
-apply plugin: 'com.onesignal.androidsdk.onesignal-gradle-plugin'
 apply plugin: "com.android.application"
 apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 
