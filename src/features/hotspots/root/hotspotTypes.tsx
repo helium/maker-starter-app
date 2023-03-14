@@ -1,13 +1,18 @@
 import { HotspotType } from '@helium/onboarding'
+import { HotspotMeta } from '@helium/react-native-sdk'
 import { StackNavigationProp } from '@react-navigation/stack'
 
-export type Hotspot = { address: string }
+export type Hotspot = {
+  address: string
+  lat?: number
+  lng?: number
+}
 
 export type HotspotStackParamList = {
   HotspotsScreen:
     | undefined
     | { address: string; resource: 'validator' | 'hotspot' }
-  HotspotScreen: { hotspot: Hotspot }
+  HotspotScreen: { hotspot: Hotspot; meta?: HotspotMeta }
 }
 
 export type HotspotNavigationProp = StackNavigationProp<HotspotStackParamList>

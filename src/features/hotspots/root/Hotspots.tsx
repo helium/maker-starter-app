@@ -12,7 +12,7 @@ import { useColors } from '../../../theme/themeHooks'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
 import HotspotListItem from './HotspotListItem'
 
-type Hotspot = { address: string }
+type Hotspot = { address: string; lng?: number; lat?: number }
 type Props = { hotspots: Hotspot[]; loading: boolean }
 const Hotspots = ({ hotspots, loading }: Props) => {
   const { t } = useTranslation()

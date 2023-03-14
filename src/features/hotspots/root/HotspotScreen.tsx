@@ -240,10 +240,13 @@ const HotspotScreen = () => {
   }, [])
 
   const centerCoordinate = useMemo(() => {
-    if (!details?.lat || !details?.lng) return
+    const lat = details?.lat || hotspot.lat
+    const lng = details?.lng || hotspot.lng
 
-    return [details.lng, details.lat]
-  }, [details])
+    if (!lat || !lng) return
+
+    return [lng, lat]
+  }, [details, hotspot])
 
   return (
     <SafeAreaBox
@@ -314,24 +317,12 @@ const HotspotScreen = () => {
         marginTop="xxl"
       >
         <HotspotLocationPreview
+          loading={loadingDetails}
           mapCenter={centerCoordinate}
           locationName={
             details && !centerCoordinate ? 'No asserted Location' : undefined
           }
         />
-        {/* <MapboxGL.MapView
-          styleURL={Config.MAPBOX_STYLE_URL}
-          style={{ height: 200, width: '100%' }}
-        >
-          {centerCoordinate && (
-            <MapboxGL.Camera
-              defaultSettings={{
-                centerCoordinate,
-                zoomLevel: 9,
-              }}
-            />
-          )}
-        </MapboxGL.MapView> */}
       </Box>
 
       <Button

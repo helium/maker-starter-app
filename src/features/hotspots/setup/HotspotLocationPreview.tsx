@@ -9,8 +9,10 @@ import React, {
 import MapboxGL from '@react-native-mapbox-gl/maps'
 import Config from 'react-native-config'
 import LocationIcon from '@assets/images/location-icon.svg'
+import { StyleSheet } from 'react-native'
 import Box from '../../../components/Box'
 import Text from '../../../components/Text'
+import ActivityIndicator from '../../../components/ActivityIndicator'
 
 type Geocode = {
   shortStreet?: string
@@ -28,6 +30,7 @@ type Props = {
   locationName?: string
   movable?: boolean
   onMapMoved?: (center?: number[]) => void
+  loading?: boolean
 }
 const HotspotLocationPreview = ({
   mapCenter,
@@ -35,6 +38,7 @@ const HotspotLocationPreview = ({
   locationName,
   movable = false,
   onMapMoved = () => {},
+  loading,
 }: Props) => {
   const map = useRef<MapboxGL.MapView>(null)
   const [coords, setCoords] = useState(mapCenter)
@@ -108,6 +112,9 @@ const HotspotLocationPreview = ({
         )}
       </MapboxGL.MapView>
       <LocationName />
+      {loading && (
+        <ActivityIndicator style={StyleSheet.absoluteFill} color="offWhite" />
+      )}
     </Box>
   )
 }

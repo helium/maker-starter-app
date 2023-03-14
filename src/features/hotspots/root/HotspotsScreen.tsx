@@ -19,7 +19,8 @@ const getHotspotAddress = (item: Asset | Hotspot): string => {
 }
 
 const HotspotsScreen = () => {
-  const [hotspots, setHotspots] = useState<{ address: string }[]>()
+  const [hotspots, setHotspots] =
+    useState<{ address: string; lat?: number; lng?: number }[]>()
   const nav = useNavigation<RootNavigationProp>()
 
   const { getHotspots } = useOnboarding()
@@ -37,7 +38,9 @@ const HotspotsScreen = () => {
 
     if (!nextHotspots) return
 
-    setHotspots(nextHotspots?.map((h) => ({ address: getHotspotAddress(h) })))
+    setHotspots(
+      nextHotspots?.map((h) => ({ address: getHotspotAddress(h), ...h })),
+    )
   }, [getHotspots])
 
   useEffect(() => {
