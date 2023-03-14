@@ -63,9 +63,13 @@ const HotspotSetupPickLocationScreen = () => {
       setMarkerCenter(newCoords)
 
       const [longitude, latitude] = newCoords
-      const [{ street, city }] = await reverseGeocode(latitude, longitude)
-      const name = street && city ? [street, city].join(', ') : 'Loading...'
-      setLocationName(name)
+      const reversed = await reverseGeocode(latitude, longitude)
+      const [{ street, city }] = reversed
+      let name = city
+      if (street && city) {
+        name = [street, city].join(', ')
+      }
+      setLocationName(name || 'Loading...')
     }
   }, [])
 

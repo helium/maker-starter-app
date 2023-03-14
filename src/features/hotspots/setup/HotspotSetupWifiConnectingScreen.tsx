@@ -4,6 +4,7 @@ import { useAsync } from 'react-async-hook'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
 import {
+  Account,
   BleError,
   useHotspotBle,
   useOnboarding,
@@ -17,7 +18,6 @@ import Text from '../../../components/Text'
 import Box from '../../../components/Box'
 import SafeAreaBox from '../../../components/SafeAreaBox'
 import { getAddress } from '../../../utils/secureAccount'
-import { HOTSPOT_TYPE } from '../root/hotspotTypes'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
 
 type Route = RouteProp<
@@ -66,13 +66,17 @@ const HotspotSetupWifiConnectingScreen = () => {
       rootNav.navigate('MainTabs')
     } else {
       const address = await getAddress()
+      const solAddress = Account.heliumAddressToSolAddress(address)
 
       const hotspot = await getHotspotDetails({
         address: hotspotAddress,
-        type: HOTSPOT_TYPE,
+        type: 'IOT', // both freedomfi and helium hotspots support iot
       })
 
-      if (hotspot && hotspot.owner === address) {
+      if (
+        hotspot &&
+        (hotspot.owner === address || hotspot.owner === solAddress)
+      ) {
         navigation.replace('OwnedHotspotErrorScreen')
       } else if (hotspot && hotspot.owner !== address) {
         navigation.replace('NotHotspotOwnerErrorScreen')

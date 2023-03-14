@@ -3,7 +3,7 @@ import { FlatList } from 'react-native'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
 import { uniq } from 'lodash'
-import { useHotspotBle, useOnboarding } from '@helium/react-native-sdk'
+import { useHotspotBle, useOnboarding, Account } from '@helium/react-native-sdk'
 import BackScreen from '../../../components/BackScreen'
 import Text from '../../../components/Text'
 import {
@@ -17,8 +17,7 @@ import { DebouncedButton } from '../../../components/Button'
 import TouchableOpacityBox from '../../../components/TouchableOpacityBox'
 import Checkmark from '../../../assets/images/check.svg'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
-import { getAddress, getSecureItem } from '../../../utils/secureAccount'
-import { HOTSPOT_TYPE } from '../root/hotspotTypes'
+import { getAddress } from '../../../utils/secureAccount'
 
 const WifiItem = ({
   name,
@@ -93,16 +92,18 @@ const HotspotSetupPickWifiScreen = () => {
       return
     }
 
-    const token = await getSecureItem('walletLinkToken')
-    if (!token) return
     const address = await getAddress()
+    const solAddress = Account.heliumAddressToSolAddress(address)
 
     const hotspot = await getHotspotDetails({
       address: hotspotAddress,
-      type: HOTSPOT_TYPE,
+      type: 'IOT', // both helium and freedomfi hotspots support iot
     })
 
-    if (hotspot && hotspot.owner === address) {
+    if (
+      hotspot &&
+      (hotspot.owner === address || hotspot.owner === solAddress)
+    ) {
       navigation.replace('OwnedHotspotErrorScreen')
     } else if (hotspot && hotspot.owner !== address) {
       navigation.replace('NotHotspotOwnerErrorScreen')

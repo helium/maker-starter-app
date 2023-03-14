@@ -31,7 +31,7 @@ const AntennaSetupScreen = () => {
     const country = getCountry()
     const isUS = country === 'US'
     const makerAntenna =
-      HotspotMakerModels[params.hotspotType || 'HeliumHotspotBLE'].antenna
+      HotspotMakerModels[params.hotspotType || 'Helium'].antenna
     const ant =
       isUS && makerAntenna?.us ? makerAntenna.us : makerAntenna?.default
 

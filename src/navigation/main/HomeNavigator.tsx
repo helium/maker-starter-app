@@ -6,7 +6,7 @@ import defaultScreenOptions from '../defaultScreenOptions'
 import HotspotSetup from '../../features/hotspots/setup/HotspotSetupNavigator'
 import MainTabs from './MainTabNavigator'
 import HotspotAssert from '../../features/hotspots/setup/HotspotAssertNavigator'
-import TransferHotspot from '../../features/transferHotspot/TransferHotspot'
+import TransferHotspotNavigator from '../../features/transferHotspot/TransferHotspotNavigator'
 
 const HomeStack = createStackNavigator()
 
@@ -39,7 +39,7 @@ const HomeStackScreen = () => {
       />
       <HomeStack.Screen
         name="TransferHotspot"
-        component={TransferHotspot}
+        component={TransferHotspotNavigator}
         options={{ headerShown: false, gestureEnabled: false }}
       />
       <HomeStack.Screen

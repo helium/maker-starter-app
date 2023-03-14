@@ -2,7 +2,7 @@ import React, { useCallback, useMemo, useState } from 'react'
 import { ActivityIndicator, ScrollView } from 'react-native'
 import { useTranslation } from 'react-i18next'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
-import { useOnboarding, AssertData } from '@helium/react-native-sdk'
+import { useOnboarding, AssertData, useSolana } from '@helium/react-native-sdk'
 import { useAsync } from 'react-async-hook'
 import { first, last } from 'lodash'
 import animalName from 'angry-purple-tiger'
@@ -17,7 +17,8 @@ import Text from '../../../components/Text'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
 import { getAddress } from '../../../utils/secureAccount'
 import HotspotLocationPreview from './HotspotLocationPreview'
-import { HOTSPOT_TYPE } from '../root/hotspotTypes'
+import { useSpacing } from '../../../theme/themeHooks'
+import { getHotspotTypes } from '../root/hotspotTypes'
 
 type Route = RouteProp<
   HotspotSetupStackParamList,
@@ -29,10 +30,13 @@ const HotspotSetupConfirmLocationScreen = () => {
   const navigation = useNavigation<HotspotSetupNavigationProp>()
   const rootNav = useNavigation<RootNavigationProp>()
   const [assertData, setAssertData] = useState<AssertData>()
+  const { getStatus } = useSolana()
   const [isFree, setIsFree] = useState<boolean>()
   const [assertLocationTxn, setAssertLocationTxn] = useState<string>()
   const [solanaTransactions, setSolanaTransactions] = useState<string[]>()
+  const { result: status } = useAsync(getStatus, [])
   const { params } = useRoute<Route>()
+  const spacing = useSpacing()
   const {
     getAssertData,
     getOnboardingRecord,
@@ -52,6 +56,7 @@ const HotspotSetupConfirmLocationScreen = () => {
 
     try {
       const onboardingRecord = await getOnboardingRecord(params.hotspotAddress)
+      const types = getHotspotTypes(onboardingRecord?.maker.name)
 
       const locationParams = {
         decimalGain: gain,
@@ -64,7 +69,7 @@ const HotspotSetupConfirmLocationScreen = () => {
       } else {
         const hotspotDetails = await getHotspotDetails({
           address: params.hotspotAddress,
-          type: HOTSPOT_TYPE,
+          type: types[0],
         })
         const hotspotExists = !!hotspotDetails
         if (hotspotExists) {
@@ -73,7 +78,7 @@ const HotspotSetupConfirmLocationScreen = () => {
             gateway: params.hotspotAddress,
             owner: userAddress,
             onboardingRecord,
-            hotspotTypes: [HOTSPOT_TYPE],
+            hotspotTypes: types,
           })
 
           setAssertData(assert)
@@ -85,7 +90,7 @@ const HotspotSetupConfirmLocationScreen = () => {
           const onboard = await getOnboardTransactions({
             txn: '',
             hotspotAddress: params.hotspotAddress,
-            hotspotTypes: [HOTSPOT_TYPE],
+            hotspotTypes: types,
             ...locationParams,
           })
           setSolanaTransactions(onboard.solanaTransactions)
@@ -127,8 +132,8 @@ const HotspotSetupConfirmLocationScreen = () => {
   }
 
   return (
-    <BackScreen onClose={handleClose}>
-      <ScrollView>
+    <BackScreen onClose={handleClose} padding="none">
+      <ScrollView style={{ padding: spacing.lx }}>
         <Box flex={1} justifyContent="center" paddingBottom="xxl">
           <Text variant="h1" marginBottom="l" maxFontSizeMultiplier={1}>
             {t('hotspot_setup.location_fee.title')}
@@ -181,11 +186,7 @@ const HotspotSetupConfirmLocationScreen = () => {
             />
           </Box>
 
-          <Box
-            flexDirection="row"
-            justifyContent="space-between"
-            marginTop={{ phone: 'm', smallPhone: 'xxs' }}
-          >
+          <Box flexDirection="row" justifyContent="space-between">
             <Text variant="body1" color="primaryText">
               {t('hotspot_setup.location_fee.gain_label')}
             </Text>
@@ -215,12 +216,11 @@ const HotspotSetupConfirmLocationScreen = () => {
                 flexDirection="row"
                 justifyContent="space-between"
                 paddingTop="m"
-                marginTop={{ phone: 'm', smallPhone: 'xxs' }}
               >
                 <Text variant="body1" color="primaryText">
                   {t('hotspot_setup.location_fee.balance')}
                 </Text>
-                <Box>
+                <Box alignItems="flex-end">
                   <Text
                     variant="body1"
                     color={disabled ? 'error' : 'primaryText'}
@@ -233,14 +233,16 @@ const HotspotSetupConfirmLocationScreen = () => {
                   >
                     {assertData?.balances?.dc?.toString(4)}
                   </Text>
-                  <Text
-                    variant="body1"
-                    color={
-                      assertData?.hasSufficientSol ? 'primaryText' : 'error'
-                    }
-                  >
-                    {assertData?.balances?.sol?.toString(4)}
-                  </Text>
+                  {status?.isSolana && (
+                    <Text
+                      variant="body1"
+                      color={
+                        assertData?.hasSufficientSol ? 'primaryText' : 'error'
+                      }
+                    >
+                      {assertData?.balances?.sol?.toString(4)}
+                    </Text>
+                  )}
                 </Box>
               </Box>
 
@@ -257,9 +259,11 @@ const HotspotSetupConfirmLocationScreen = () => {
                     ?.toUsd(assertData.oraclePrice)
                     .toString(2)}
                 </Text>
-                <Text variant="body1" color="primaryText">
-                  {assertData?.ownerFees?.sol?.toString(2)}
-                </Text>
+                {status?.isSolana && (
+                  <Text variant="body1" color="primaryText">
+                    {assertData?.ownerFees?.sol?.toString(2)}
+                  </Text>
+                )}
               </Box>
 
               {disabled && (
@@ -273,7 +277,7 @@ const HotspotSetupConfirmLocationScreen = () => {
           )}
         </Box>
       </ScrollView>
-      <Box>
+      <Box marginHorizontal="lx">
         <DebouncedButton
           title={
             isFree

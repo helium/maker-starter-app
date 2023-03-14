@@ -49,7 +49,10 @@ const submitGatewayTxns = (params: HotspotLink) => {
 }
 
 const submitTransferTxn = (params: HotspotLink) => {
-  navigationRef.current?.navigate('TransferHotspot', params)
+  navigationRef.current?.navigate('TransferHotspot', {
+    screen: 'HotspotTxnsSubmitScreen',
+    params,
+  })
 }
 
 const goToMainTabs = () => {

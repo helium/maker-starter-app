@@ -118,7 +118,10 @@ const HeliumActionSheet = ({
     }
   }, [animate, modalVisible, offset, sheetHeight])
 
-  const keyExtractor = useCallback((item) => item.value, [])
+  const keyExtractor = useCallback(
+    (item: HeliumActionSheetItemType) => item.value.toString(),
+    [],
+  )
 
   const buttonTitle = useMemo(() => {
     if (initialValue && !selectedValue) {

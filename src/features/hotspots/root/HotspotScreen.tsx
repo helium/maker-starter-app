@@ -10,8 +10,6 @@ import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import animalName from 'angry-purple-tiger'
 import { useTranslation } from 'react-i18next'
 import { useOnboarding } from '@helium/react-native-sdk'
-import MapboxGL from '@react-native-mapbox-gl/maps'
-import Config from 'react-native-config'
 import {
   BottomSheetBackdrop,
   BottomSheetBackdropProps,
@@ -19,21 +17,26 @@ import {
   BottomSheetModal,
 } from '@gorhom/bottom-sheet'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { HOTSPOT_TYPE, HotspotStackParamList } from './hotspotTypes'
+import Clipboard from '@react-native-community/clipboard'
+import Toast from 'react-native-simple-toast'
+import { HotspotStackParamList } from './hotspotTypes'
 import Text from '../../../components/Text'
 import SafeAreaBox from '../../../components/SafeAreaBox'
 import Button from '../../../components/Button'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
 import Box from '../../../components/Box'
 import Settings from '../../../assets/images/settings.svg'
+import Kabob from '../../../assets/images/kabob.svg'
 import {
   useColors,
-  useHitSlop,
   useOpacity,
   useSpacing,
+  useVerticalHitSlop,
 } from '../../../theme/themeHooks'
 import TouchableOpacityBox from '../../../components/TouchableOpacityBox'
 import ListSeparator from '../../../components/ListSeparator'
+import useHaptic from '../../../utils/useHaptic'
+import HotspotLocationPreview from '../setup/HotspotLocationPreview'
 
 type Route = RouteProp<HotspotStackParamList, 'HotspotScreen'>
 type HotspotDetails = {
@@ -46,6 +49,10 @@ type HotspotDetails = {
 const LIST_ITEM_HEIGHT = 80
 const SETTINGS_DATA = ['diagnostics', 'wifi'] as const
 export type Setting = (typeof SETTINGS_DATA)[number]
+
+const KABOB_DATA = ['copyAddress'] as const
+export type KabobItem = (typeof KABOB_DATA)[number]
+
 const HotspotScreen = () => {
   const {
     params: { hotspot },
@@ -53,13 +60,15 @@ const HotspotScreen = () => {
   const { t } = useTranslation()
   const nav = useNavigation<RootNavigationProp>()
   const [details, setDetails] = useState<HotspotDetails>()
+  const [menuType, setMenuType] = useState<'kabob' | 'settings'>('settings')
   const [loadingDetails, setLoadingDetails] = useState(true)
   const { getHotspotDetails } = useOnboarding()
   const colors = useColors()
   const bottomSheetModalRef = useRef<BottomSheetModal>(null)
   const { bottom } = useSafeAreaInsets()
   const spacing = useSpacing()
-  const hitSlop = useHitSlop('l')
+  const hitSlop = useVerticalHitSlop('l')
+  const { triggerNotification } = useHaptic()
 
   const needsOnboarding = useMemo(
     () => !loadingDetails && !details,
@@ -83,12 +92,34 @@ const HotspotScreen = () => {
     [nav],
   )
 
+  const handleKabobPress = useCallback(
+    (item: KabobItem) => () => {
+      bottomSheetModalRef.current?.dismiss()
+
+      switch (item) {
+        case 'copyAddress': {
+          Clipboard.setString(hotspot.address)
+          triggerNotification('success')
+          Toast.show(
+            t('hotspots.copiedToClipboard', { address: hotspot.address }),
+          )
+        }
+      }
+    },
+    [hotspot.address, t, triggerNotification],
+  )
+
   const updateHotspotDetails = useCallback(async () => {
-    const hotspotMeta = await getHotspotDetails({
-      address: hotspot.address,
-      type: HOTSPOT_TYPE,
-    })
-    setDetails(hotspotMeta)
+    try {
+      const hotspotMeta = await getHotspotDetails({
+        address: hotspot.address,
+        type: 'IOT', // Both freedomfi and helium support iot
+      })
+      setDetails(hotspotMeta || {})
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.error(e)
+    }
     setLoadingDetails(false)
   }, [getHotspotDetails, hotspot])
 
@@ -113,19 +144,30 @@ const HotspotScreen = () => {
     // @ts-ignore
     nav.navigate('HotspotAssert', {
       screen: 'HotspotSetupPickLocationScreen',
-      params: { hotspotAddress: hotspot.address },
+      params: { hotspotAddress: hotspot.address, hotspotType: 'Helium' },
     })
   }, [hotspot.address, nav])
 
   const transferHotspot = useCallback(
-    () => nav.push('TransferHotspot', { hotspotAddress: hotspot.address }),
+    () =>
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      nav.navigate('TransferHotspot', {
+        screen: 'TransferHotspotScreen',
+        params: { hotspotAddress: hotspot.address },
+      }),
     [hotspot.address, nav],
   )
 
   const snapPoints = useMemo(() => {
     const handleHeight = 72
-    return [SETTINGS_DATA.length * LIST_ITEM_HEIGHT + bottom + handleHeight]
-  }, [bottom])
+    return [
+      (menuType === 'settings' ? SETTINGS_DATA.length : KABOB_DATA.length) *
+        LIST_ITEM_HEIGHT +
+        bottom +
+        handleHeight,
+    ]
+  }, [bottom, menuType])
 
   const handleIndicatorStyle = useMemo(
     () => ({
@@ -151,7 +193,7 @@ const HotspotScreen = () => {
     [],
   )
 
-  const settingsKeyExtractor = useCallback((item: string) => {
+  const keyExtractor = useCallback((item: string) => {
     return item
   }, [])
 
@@ -171,10 +213,40 @@ const HotspotScreen = () => {
     [handleSettingPress, t],
   )
 
+  const renderKabob = useCallback(
+    ({ item }: { item: KabobItem; index: number }) => {
+      return (
+        <TouchableOpacityBox
+          justifyContent="center"
+          height={LIST_ITEM_HEIGHT}
+          marginHorizontal="m"
+          onPress={handleKabobPress(item)}
+        >
+          <Text variant="body1">{t(`hotspots.${item}`)}</Text>
+        </TouchableOpacityBox>
+      )
+    },
+    [handleKabobPress, t],
+  )
+
   const handleSettings = useCallback(() => {
     bottomSheetModalRef.current?.present()
-    // setSelectedHotspot(item)
+    setMenuType('settings')
   }, [])
+
+  const handleKabob = useCallback(() => {
+    bottomSheetModalRef.current?.present()
+    setMenuType('kabob')
+  }, [])
+
+  const centerCoordinate = useMemo(() => {
+    const lat = details?.lat || hotspot.lat
+    const lng = details?.lng || hotspot.lng
+
+    if (!lat || !lng) return
+
+    return [lng, lat]
+  }, [details, hotspot])
 
   return (
     <SafeAreaBox
@@ -183,7 +255,7 @@ const HotspotScreen = () => {
       paddingHorizontal="l"
       justifyContent="center"
     >
-      <Box flexDirection="row" marginHorizontal="s" alignItems="center">
+      <Box flexDirection="row" marginStart="s" alignItems="center">
         <Box flex={1}>
           <Text
             fontSize={29}
@@ -209,11 +281,22 @@ const HotspotScreen = () => {
           </Text>
         </Box>
         <TouchableOpacityBox
-          marginBottom="s"
+          paddingLeft="s"
+          paddingRight="xs"
+          paddingBottom="s"
           hitSlop={hitSlop}
           onPress={handleSettings}
         >
           <Settings width={22} height={22} color={colors.graySteel} />
+        </TouchableOpacityBox>
+        <TouchableOpacityBox
+          paddingBottom="s"
+          paddingStart="xs"
+          paddingEnd="s"
+          hitSlop={hitSlop}
+          onPress={handleKabob}
+        >
+          <Kabob width={22} height={22} color={colors.graySteel} />
         </TouchableOpacityBox>
       </Box>
       {needsOnboarding && (
@@ -226,45 +309,21 @@ const HotspotScreen = () => {
           {t('hotspots.notOnboarded')}
         </Text>
       )}
-      {details?.lat && details.lng && (
-        <Box
-          height={200}
-          width="100%"
-          borderRadius="xl"
-          overflow="hidden"
-          marginTop="xxl"
-        >
-          <MapboxGL.MapView
-            styleURL={Config.MAPBOX_STYLE_URL}
-            style={{ height: 200, width: '100%' }}
-          >
-            <MapboxGL.Camera
-              defaultSettings={{
-                centerCoordinate: [details.lng, details.lat],
-                zoomLevel: 9,
-              }}
-            />
-          </MapboxGL.MapView>
-          <Box
-            position="absolute"
-            top={0}
-            bottom={0}
-            left={0}
-            right={0}
-            alignItems="center"
-            justifyContent="center"
-            pointerEvents="none"
-          >
-            <Box
-              height={16}
-              borderRadius="round"
-              width={16}
-              backgroundColor="greenMain"
-              pointerEvents="none"
-            />
-          </Box>
-        </Box>
-      )}
+      <Box
+        height={200}
+        width="100%"
+        borderRadius="xl"
+        overflow="hidden"
+        marginTop="xxl"
+      >
+        <HotspotLocationPreview
+          loading={loadingDetails}
+          mapCenter={centerCoordinate}
+          locationName={
+            details && !centerCoordinate ? 'No asserted Location' : undefined
+          }
+        />
+      </Box>
 
       <Button
         onPress={assertHotspot}
@@ -288,12 +347,22 @@ const HotspotScreen = () => {
         backgroundStyle={backgroundStyle}
         backdropComponent={renderBackdrop}
       >
-        <BottomSheetFlatList
-          data={SETTINGS_DATA}
-          renderItem={renderSetting}
-          keyExtractor={settingsKeyExtractor}
-          ItemSeparatorComponent={ListSeparator}
-        />
+        {menuType === 'settings' && (
+          <BottomSheetFlatList
+            data={SETTINGS_DATA}
+            renderItem={renderSetting}
+            keyExtractor={keyExtractor}
+            ItemSeparatorComponent={ListSeparator}
+          />
+        )}
+        {menuType === 'kabob' && (
+          <BottomSheetFlatList
+            data={KABOB_DATA}
+            renderItem={renderKabob}
+            keyExtractor={keyExtractor}
+            ItemSeparatorComponent={ListSeparator}
+          />
+        )}
       </BottomSheetModal>
     </SafeAreaBox>
   )

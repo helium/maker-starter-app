@@ -1,79 +1,173 @@
-import React, { useState, useCallback, useEffect } from 'react'
-import { useOnboarding } from '@helium/react-native-sdk'
-import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
-import { ActivityIndicator, Linking, Platform } from 'react-native'
-import { useTranslation } from 'react-i18next'
+import React, { useState, useCallback, useEffect, useMemo } from 'react'
 import {
-  createUpdateHotspotUrl,
-  parseWalletLinkToken,
-} from '@helium/wallet-link'
+  useOnboarding,
+  Account,
+  TransferHotspotV2,
+} from '@helium/react-native-sdk'
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
+import { Keyboard, Linking, Platform } from 'react-native'
+import { useTranslation } from 'react-i18next'
+import { createUpdateHotspotUrl, SignHotspotRequest } from '@helium/wallet-link'
 import animalName from 'angry-purple-tiger'
+import { useAsync } from 'react-async-hook'
 import Address from '@helium/address'
+import { bufferToTransaction, getSolanaKeypair } from '@helium/spl-utils'
 import Text from '../../components/Text'
-import BackButton from '../../components/BackButton'
 import SafeAreaBox from '../../components/SafeAreaBox'
 import TextInput from '../../components/TextInput'
 import Button from '../../components/Button'
-import { getAddress, getSecureItem } from '../../utils/secureAccount'
+import {
+  getAddress,
+  getKeypair,
+  getKeypairRaw,
+  getSecureItem,
+  isValidSolPubkey,
+} from '../../utils/secureAccount'
 import { RootStackParamList } from '../../navigation/main/tabTypes'
+import Box from '../../components/Box'
+import ActivityIndicator from '../../components/ActivityIndicator'
+import useAlert from '../../utils/useAlert'
+import { TransferHotspotNavigationProp } from './transferHotspotTypes'
 
 type Route = RouteProp<RootStackParamList, 'TransferHotspot'>
 const TransferHotspot = () => {
-  const navigation = useNavigation()
+  const { result: address } = useAsync(getAddress, [])
+  const navigation = useNavigation<TransferHotspotNavigationProp>()
   const { t } = useTranslation()
   const { params } = useRoute<Route>()
   const { createTransferTransaction } = useOnboarding()
-
-  const [hotspotAddress, setHotspotAddress] = useState(
-    params?.hotspotAddress || '',
-  )
   const [newOwnerAddress, setNewOwnerAddress] = useState('')
   const [loading, setLoading] = useState(false)
   const [hotspotName, setHotspotName] = useState('')
+  const { showOKAlert } = useAlert()
+
+  const navToHeliumAppForSigning = useCallback(
+    async (updateParams: SignHotspotRequest) => {
+      const url = createUpdateHotspotUrl(updateParams)
+      if (!url) {
+        // eslint-disable-next-line no-console
+        console.error('Link could not be created')
+        return
+      }
+
+      Linking.openURL(url)
+    },
+    [],
+  )
+
+  const signTxn = useCallback(
+    async ({ solanaTransactions, transferHotspotTxn }: SignHotspotRequest) => {
+      const keypair = await getKeypair()
+
+      const keypairRaw = await getKeypairRaw()
+      if (!keypairRaw || !keypair) {
+        throw new Error('keypair not found!')
+      }
+
+      let solanaSignedTransactions: string[] = []
+      let transferTxn: string | undefined
+
+      if (transferHotspotTxn) {
+        const unsigned = TransferHotspotV2.fromString(transferHotspotTxn)
+        const signed = await unsigned.sign({ owner: keypair })
+        transferTxn = signed.toString()
+      }
+
+      if (solanaTransactions) {
+        const solTxns = solanaTransactions.split(',')
+        const solanaKeypair = getSolanaKeypair(keypairRaw.sk)
+        solanaSignedTransactions = solTxns.map((txn) => {
+          const tx = bufferToTransaction(Buffer.from(txn, 'base64'))
+          tx.partialSign(solanaKeypair)
+          return tx.serialize().toString('base64')
+        })
+      }
+      navigation.navigate('HotspotTxnsSubmitScreen', {
+        gatewayAddress: params?.hotspotAddress,
+        transferTxn,
+        solanaTransactions: solanaSignedTransactions.join(','),
+        status: 'success',
+      })
+    },
+    [navigation, params?.hotspotAddress],
+  )
 
   const onSubmit = useCallback(async () => {
-    setLoading(true)
-
-    // get linked wallet token
-    const token = await getSecureItem('walletLinkToken')
-    if (!token) throw new Error('Token Not found')
-
-    const parsed = parseWalletLinkToken(token)
-    if (!parsed?.address) throw new Error('Invalid Token')
-
     try {
-      const userAddress = (await getAddress()) || ''
+      if (!params?.hotspotAddress) return
+
+      setLoading(true)
+
+      const userAddress = await getAddress()
       const { solanaTransactions, transferHotspotTxn } =
         await createTransferTransaction({
-          hotspotAddress,
+          hotspotAddress: params?.hotspotAddress,
           userAddress,
           newOwnerAddress,
         })
 
-      const url = createUpdateHotspotUrl({
-        platform: Platform.OS,
+      const token = await getSecureItem('walletLinkToken')
+      const updateParams = {
         token,
-        transferHotspotTxn,
-        solanaTransactions: solanaTransactions?.join(','),
-      })
-      if (!url) throw new Error('Link could not be created')
-      // open in the Helium wallet app
-      await Linking.openURL(url)
+        platform: Platform.OS,
+      } as SignHotspotRequest
+
+      if (solanaTransactions?.length) {
+        updateParams.solanaTransactions = solanaTransactions.join(',')
+      } else {
+        updateParams.transferHotspotTxn = transferHotspotTxn
+      }
+
+      if (token) {
+        navToHeliumAppForSigning(updateParams)
+      } else {
+        signTxn(updateParams)
+      }
     } catch (e) {
+      setLoading(false)
+      showOKAlert({
+        titleKey: 'generic.something_went_wrong',
+        messageKey: (e as string).toString(),
+      })
       // eslint-disable-next-line no-console
       console.error(e)
     }
-    setLoading(false)
-  }, [createTransferTransaction, hotspotAddress, newOwnerAddress])
+  }, [
+    params?.hotspotAddress,
+    createTransferTransaction,
+    newOwnerAddress,
+    navToHeliumAppForSigning,
+    signTxn,
+    showOKAlert,
+  ])
 
   useEffect(() => {
-    if (!Address.isValid(hotspotAddress)) {
-      setHotspotName('')
-      return
+    if (!params?.hotspotAddress) return
+    setHotspotName(animalName(params?.hotspotAddress))
+  }, [params?.hotspotAddress])
+
+  useEffect(() => {
+    setNewOwnerAddress(newOwnerAddress.replace('\n', '').trim())
+  }, [newOwnerAddress])
+
+  const disabled = useMemo(() => {
+    if (!params?.hotspotAddress || !newOwnerAddress || loading || !address) {
+      return true
     }
 
-    setHotspotName(animalName(hotspotAddress))
-  }, [hotspotAddress])
+    if (Address.isValid(newOwnerAddress)) {
+      // new addr is helium address
+      return newOwnerAddress === address
+    }
+
+    if (isValidSolPubkey(newOwnerAddress)) {
+      // new addr is solana address
+      const solAddr = Account.heliumAddressToSolAddress(address)
+      return newOwnerAddress === solAddr
+    }
+
+    return true
+  }, [loading, newOwnerAddress, params, address])
 
   return (
     <SafeAreaBox
@@ -81,57 +175,44 @@ const TransferHotspot = () => {
       flex={1}
       paddingHorizontal="m"
     >
-      <BackButton
-        marginHorizontal="n_lx"
-        onPress={navigation.goBack}
-        marginBottom="l"
-      />
-      <Text variant="h1" marginBottom="l">
-        {t('transferHotspot.title')}
-      </Text>
-      <Text variant="body1" marginBottom="l" textAlign="center">
-        {hotspotName}
-      </Text>
-      <TextInput
-        borderRadius="s"
-        padding="s"
-        marginBottom="m"
-        backgroundColor="white"
-        onChangeText={setHotspotAddress}
-        value={hotspotAddress}
-        placeholderTextColor="black"
-        placeholder={t('transferHotspot.enterHotspot')}
-        numberOfLines={2}
-        multiline
-        editable={!loading}
-        autoCapitalize="none"
-        autoComplete="off"
-        autoCorrect={false}
-      />
-      <TextInput
-        borderRadius="s"
-        padding="s"
-        backgroundColor="white"
-        onChangeText={setNewOwnerAddress}
-        value={newOwnerAddress}
-        placeholderTextColor="black"
-        numberOfLines={2}
-        multiline
-        placeholder={t('transferHotspot.enterOwner')}
-        editable={!loading}
-        autoCapitalize="none"
-        autoComplete="off"
-        autoCorrect={false}
-      />
+      <Box justifyContent="center" flex={1}>
+        <Text variant="h1" marginBottom="l">
+          {t('transferHotspot.title')}
+        </Text>
+        <Text variant="subtitle1" marginBottom="l" textAlign="center">
+          {hotspotName}
+        </Text>
+        <TextInput
+          borderRadius="s"
+          padding="s"
+          backgroundColor="white"
+          onChangeText={setNewOwnerAddress}
+          value={newOwnerAddress}
+          placeholderTextColor="black"
+          numberOfLines={2}
+          multiline
+          minHeight={80}
+          placeholder={t('transferHotspot.enterOwner')}
+          editable={!loading}
+          autoCapitalize="none"
+          autoComplete="off"
+          autoCorrect={false}
+          paddingTop="m"
+          returnKeyType="done"
+          onSubmitEditing={Keyboard.dismiss}
+          variant="regular"
+        />
+      </Box>
+      <ActivityIndicator animating={loading} />
       <Button
         title={t('transferHotspot.submit')}
         mode="contained"
-        marginVertical="l"
+        marginVertical="m"
         height={48}
-        disabled={!hotspotAddress || !newOwnerAddress || loading}
+        disabled={disabled}
         onPress={onSubmit}
       />
-      {loading && <ActivityIndicator size="small" color="white" />}
+      <Button title={t('generic.cancel')} onPress={navigation.goBack} />
     </SafeAreaBox>
   )
 }

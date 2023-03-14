@@ -1,6 +1,7 @@
 import { parseWalletLinkToken } from '@helium/wallet-link'
 import * as SecureStore from 'expo-secure-store'
-import { Mnemonic } from '@helium/crypto-react-native'
+import { Keypair, Mnemonic } from '@helium/crypto-react-native'
+import { PublicKey } from '@solana/web3.js'
 
 type AccountStoreKey = BooleanKey | StringKey
 
@@ -10,6 +11,8 @@ const stringKeys = [
   'language',
   'walletLinkToken',
   'mnemonic',
+  'address',
+  'keypair',
 ] as const
 type StringKey = (typeof stringKeys)[number]
 
@@ -33,11 +36,14 @@ export async function getSecureItem(key: AccountStoreKey) {
 
 export const getAddress = async () => {
   const token = await getSecureItem('walletLinkToken')
-  if (!token) return
-  const parsed = parseWalletLinkToken(token)
-  if (!parsed?.address) return
-  const { address } = parsed
-  return address
+  const addressB58 = await getSecureItem('address')
+  if (token) {
+    const parsed = parseWalletLinkToken(token)
+    const { address } = parsed
+    return address
+  }
+
+  return addressB58 || ''
 }
 
 export const deleteSecureItem = async (key: AccountStoreKey) =>
@@ -61,4 +67,29 @@ export const getMnemonic = async (): Promise<Mnemonic | undefined> => {
     setSecureItem('mnemonic', JSON.stringify(words)) // upgrade the users to the new format
   }
   return new Mnemonic(words)
+}
+
+export const getKeypair = async (): Promise<Keypair | undefined> => {
+  const keypairRaw = await getKeypairRaw()
+  return new Keypair(keypairRaw)
+}
+
+export const getKeypairRaw = async () => {
+  const keypairStr = await getSecureItem('keypair')
+  if (!keypairStr) throw new Error('Keypair not found')
+
+  return JSON.parse(keypairStr) as {
+    sk: string
+    pk: string
+  }
+}
+
+export const isValidSolPubkey = (address: string): boolean => {
+  try {
+    // eslint-disable-next-line no-new
+    new PublicKey(address)
+    return true
+  } catch {
+    return false
+  }
 }

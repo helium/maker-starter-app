@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState, useCallback } from 'react'
 import { ActivityIndicator, FlatList } from 'react-native'
 import { Device } from 'react-native-ble-plx'
 import Hotspot from '@assets/images/placeholder.svg'
+import Fuse from 'fuse.js'
 import Box from './Box'
 import Text from './Text'
 import { DebouncedTouchableHighlightBox } from './TouchableHighlightBox'
@@ -85,21 +86,20 @@ const HotspotPairingItem = ({
   }, [hotspot])
 
   const HotspotImage = useMemo(() => {
-    const results = HotspotModelKeys.map((k) => HotspotMakerModels[k])
+    const svgColor = pressing ? colors.white : colors.secondaryBackground
+    const hotspotArr = HotspotModelKeys.map((k) => HotspotMakerModels[k])
+    const results = new Fuse(hotspotArr, {
+      keys: ['name'],
+      threshold: 0.3,
+    }).search(name)
 
     let Icon = Hotspot
     if (results.length) {
-      Icon = results[0].icon
+      Icon = results[0].item.icon
     }
 
-    return (
-      <Icon
-        color={pressing ? colors.secondary : colors.surfaceContrastText}
-        height="100%"
-        width="100%"
-      />
-    )
-  }, [colors.secondary, colors.surfaceContrastText, pressing])
+    return <Icon color={svgColor} height="100%" width="100%" />
+  }, [pressing, colors, name])
 
   return (
     <DebouncedTouchableHighlightBox

@@ -14,12 +14,14 @@ export type AppState = {
   authInterval: number
   lastIdle: number | null
   isLocked: boolean
+  isLoggedIn: boolean
   isRequestingPermission: boolean
   walletLinkToken?: string
 }
 const initialState: AppState = {
   isSettingUpHotspot: false,
   isRestored: false,
+  isLoggedIn: false,
   isPinRequired: false,
   authInterval: Intervals.IMMEDIATELY,
   lastIdle: null,
@@ -33,16 +35,19 @@ type Restore = {
   authInterval: number
   isLocked: boolean
   walletLinkToken?: string
+  isLoggedIn: boolean
 }
 
 export const restoreAppSettings = createAsyncThunk<Restore>(
   'app/restoreAppSettings',
   async () => {
-    const [isPinRequired, authInterval, walletLinkToken] = await Promise.all([
-      getSecureItem('requirePin'),
-      getSecureItem('authInterval'),
-      getSecureItem('walletLinkToken'),
-    ])
+    const [isPinRequired, authInterval, walletLinkToken, mnemonic] =
+      await Promise.all([
+        getSecureItem('requirePin'),
+        getSecureItem('authInterval'),
+        getSecureItem('walletLinkToken'),
+        getSecureItem('mnemonic'),
+      ])
     return {
       isPinRequired,
       authInterval: authInterval
@@ -50,6 +55,7 @@ export const restoreAppSettings = createAsyncThunk<Restore>(
         : Intervals.IMMEDIATELY,
       isLocked: isPinRequired,
       walletLinkToken,
+      isLoggedIn: !!mnemonic || !!walletLinkToken,
     } as Restore
   },
 )

@@ -22,6 +22,7 @@ import HotspotSetupExternalConfirmScreen from './HotspotSetupExternalConfirmScre
 import HotspotSetupInstructionsScreen from './HotspotSetupInstructionsScreen'
 import HotspotTxnsSubmitScreen from './HotspotTxnsSubmitScreen'
 import HotspotSetupDiagnosticsScreen from './HotspotSetupDiagnosticsScreen'
+import HotspotSetupSelectionScreen from './HotspotSetupSelectionScreen'
 
 const HotspotSetupStack = createStackNavigator()
 
@@ -31,6 +32,10 @@ const HotspotSetup = () => {
       headerMode="none"
       screenOptions={{ ...defaultScreenOptions }}
     >
+      <HotspotSetupStack.Screen
+        name="HotspotSetupSelectionScreen"
+        component={HotspotSetupSelectionScreen}
+      />
       <HotspotSetupStack.Screen
         name="HotspotSetupEducationScreen"
         component={HotspotSetupEducationScreen}

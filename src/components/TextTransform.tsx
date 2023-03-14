@@ -10,6 +10,7 @@ const components = {
   errorText: <Text color="error" />,
   secondaryText: <Text color="secondaryText" />,
   primaryText: <Text color="primaryText" />,
+  purple: <Text color="purpleDark" />,
   red: <Text color="redMedium" />,
 }
 

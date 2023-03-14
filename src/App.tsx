@@ -1,5 +1,5 @@
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import {
   LogBox,
@@ -32,7 +32,6 @@ import AppLinkProvider from './providers/AppLinkProvider'
 import { navigationRef } from './navigation/navigator'
 import useMount from './utils/useMount'
 import { getAddress } from './utils/secureAccount'
-import useCheckWalletLink from './utils/useCheckWalletLink'
 import globalStyles from './theme/globalStyles'
 
 SplashScreen.preventAutoHideAsync().catch(() => {
@@ -41,8 +40,6 @@ SplashScreen.preventAutoHideAsync().catch(() => {
 
 const App = () => {
   // const colorScheme = useColorScheme()
-
-  useCheckWalletLink()
 
   if (Platform.OS === 'android') {
     if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -75,19 +72,7 @@ const App = () => {
     isLocked,
   } = useSelector((state: RootState) => state.app)
 
-  const { walletLinkToken } = useSelector((state: RootState) => state.app)
-  const [heliumWallet, setHeliumWallet] = useState<string>()
-
-  useEffect(() => {
-    if (!walletLinkToken) {
-      if (heliumWallet) {
-        setHeliumWallet('')
-      }
-      return
-    }
-
-    getAddress().then(setHeliumWallet)
-  }, [heliumWallet, walletLinkToken])
+  const { result: heliumWallet } = useAsync(getAddress, [])
 
   useMount(() => {
     dispatch(restoreAppSettings())
@@ -149,7 +134,13 @@ const App = () => {
         cluster="devnet"
         rpcEndpoint={Config.SOLANA_RPC_ENDPOINT || ''}
         heliumWallet={heliumWallet}
-        solanaStatusOverride="complete"
+        solanaStatusOverride={
+          Config.SOLANA_STATUS_OVERRIDE as
+            | 'not_started'
+            | 'in_progress'
+            | 'complete'
+            | undefined
+        }
       >
         <OnboardingProvider
           baseUrl={

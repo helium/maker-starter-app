@@ -73,6 +73,7 @@ const palette = {
   purpleMain: '#474DFF',
   redMain: '#F97570',
   redMedium: '#FF6666',
+  whitePurple: '#F0F1FA',
   yellow: '#FCC945',
 }
 
@@ -172,7 +173,7 @@ export const theme = createTheme({
       padding: 'm',
     },
     secondary: {
-      backgroundColor: 'surfaceSecondary',
+      backgroundColor: 'secondaryBackground',
       height: 52,
       padding: 'm',
       fontSize: 18,
