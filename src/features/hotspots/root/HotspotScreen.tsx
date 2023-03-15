@@ -22,7 +22,10 @@ import Toast from 'react-native-simple-toast'
 import { useSelector } from 'react-redux'
 import { useAsync } from 'react-async-hook'
 import { FadeIn } from 'react-native-reanimated'
-import { HotspotType as HotspotNetworkType } from '@helium/onboarding'
+import {
+  HotspotType as HotspotNetworkType,
+  OnboardingRecord,
+} from '@helium/onboarding'
 import { HotspotStackParamList } from './hotspotTypes'
 import Text from '../../../components/Text'
 import SafeAreaBox from '../../../components/SafeAreaBox'
@@ -83,9 +86,14 @@ const HotspotScreen = () => {
   const dispatch = useAppDispatch()
   const locations = useSelector((state: RootState) => state.location.locations)
   const { status } = useDeveloperOptions()
-  const { result: onboardingRecord } = useAsync(getOnboardingRecord, [
-    hotspot.address,
-  ])
+  const [onboardingRecord, setOnboardingRecord] = useState<OnboardingRecord>()
+
+  useAsync(async () => {
+    const nextRecord = await getOnboardingRecord(hotspot.address)
+    if (nextRecord) {
+      setOnboardingRecord(nextRecord)
+    }
+  }, [hotspot.address])
 
   const centerCoordinate = useMemo(() => {
     const lat = iotDetails?.lat || hotspot.lat
@@ -368,119 +376,150 @@ const HotspotScreen = () => {
       backgroundColor="primaryBackground"
       flex={1}
       paddingHorizontal="l"
-      justifyContent="center"
     >
-      <Box flexDirection="row" marginStart="s" alignItems="center">
-        <Box>
-          <Text
-            fontSize={29}
-            lineHeight={31}
-            color="primaryText"
-            fontWeight="200"
-            numberOfLines={1}
-            adjustsFontSizeToFit
-          >
-            {formattedHotspotName[0]}
-          </Text>
-
-          <Text
-            variant="body1"
-            fontSize={29}
-            lineHeight={31}
-            paddingRight="s"
-            color="primaryText"
-            numberOfLines={1}
-            adjustsFontSizeToFit
-          >
-            {formattedHotspotName[1]}
-          </Text>
-          {status === 'complete' && !showNetworks && (
+      <Box flex={1} justifyContent="center">
+        <Box flexDirection="row" marginStart="s" alignItems="center">
+          <Box>
+            {/* {!onboardingRecord?.maker?.name && (
             <Text
               variant="body1"
               color="primaryText"
-              paddingLeft="s"
               numberOfLines={1}
               adjustsFontSizeToFit
+              marginBottom="xs"
             >
               {' '}
             </Text>
           )}
-          {showNetworks && (
+          {onboardingRecord?.maker?.name && (
             <ReAnimatedBox entering={FadeIn}>
               <Text
                 variant="body1"
                 color="primaryText"
-                paddingLeft="s"
                 numberOfLines={1}
+                marginBottom="xs"
                 adjustsFontSizeToFit
+                fontWeight="100"
               >
-                {`${iotDetails ? 'IOT ' : ''}${mobileDetails ? 'MOBILE' : ''}`}
+                {onboardingRecord.maker.name}
               </Text>
             </ReAnimatedBox>
-          )}
+          )} */}
+            <Text
+              fontSize={29}
+              lineHeight={31}
+              color="primaryText"
+              fontWeight="200"
+              numberOfLines={1}
+              adjustsFontSizeToFit
+            >
+              {formattedHotspotName[0]}
+            </Text>
+
+            <Text
+              variant="body1"
+              fontSize={29}
+              lineHeight={31}
+              paddingRight="s"
+              color="primaryText"
+              numberOfLines={1}
+              adjustsFontSizeToFit
+            >
+              {formattedHotspotName[1]}
+            </Text>
+          </Box>
+          <Box flex={1} flexDirection="row" justifyContent="flex-end">
+            <TouchableOpacityBox
+              paddingLeft="s"
+              paddingRight="xs"
+              paddingBottom="s"
+              hitSlop={hitSlop}
+              onPress={handleSettings}
+            >
+              <Settings width={22} height={22} color={colors.graySteel} />
+            </TouchableOpacityBox>
+            <TouchableOpacityBox
+              paddingBottom="s"
+              paddingStart="xs"
+              paddingEnd="s"
+              hitSlop={hitSlop}
+              onPress={handleKabob}
+            >
+              <Kabob width={22} height={22} color={colors.graySteel} />
+            </TouchableOpacityBox>
+          </Box>
         </Box>
-        <Box flex={1} flexDirection="row" justifyContent="flex-end">
-          <TouchableOpacityBox
-            paddingLeft="s"
-            paddingRight="xs"
-            paddingBottom="s"
-            hitSlop={hitSlop}
-            onPress={handleSettings}
+        {needsOnboarding && (
+          <Text
+            color="primaryText"
+            variant="body1"
+            marginHorizontal="s"
+            marginTop="s"
           >
-            <Settings width={22} height={22} color={colors.graySteel} />
-          </TouchableOpacityBox>
-          <TouchableOpacityBox
-            paddingBottom="s"
-            paddingStart="xs"
-            paddingEnd="s"
-            hitSlop={hitSlop}
-            onPress={handleKabob}
-          >
-            <Kabob width={22} height={22} color={colors.graySteel} />
-          </TouchableOpacityBox>
-        </Box>
-      </Box>
-      {needsOnboarding && (
-        <Text
-          color="primaryText"
-          variant="body1"
-          marginHorizontal="s"
-          marginTop="s"
+            {t('hotspots.notOnboarded')}
+          </Text>
+        )}
+        <ReAnimatedBox
+          height={200}
+          width="100%"
+          borderRadius="xl"
+          overflow="hidden"
+          marginTop="xxl"
+          entering={DelayedFadeIn}
         >
-          {t('hotspots.notOnboarded')}
+          <HotspotLocationPreview
+            loading={(!hotspot.lat || !hotspot.lng) && loadingDetails}
+            movable
+            zoomLevel={14}
+            mapCenter={centerCoordinate}
+            locationName={locationName}
+          />
+        </ReAnimatedBox>
+
+        <Button
+          onPress={assertHotspot}
+          height={48}
+          marginTop="l"
+          mode="contained"
+          title={t('hotspots.empty.hotspots.assertLocation')}
+        />
+        <Button
+          onPress={transferHotspot}
+          height={48}
+          marginTop="l"
+          mode="contained"
+          title={t('hotspots.empty.hotspots.transfer')}
+        />
+      </Box>
+
+      {loadingDetails && (
+        <Text
+          variant="body1"
+          color="primaryText"
+          paddingLeft="s"
+          numberOfLines={1}
+          adjustsFontSizeToFit
+        >
+          {' '}
         </Text>
       )}
-      <ReAnimatedBox
-        height={200}
-        width="100%"
-        borderRadius="xl"
-        overflow="hidden"
-        marginTop="xxl"
-        entering={DelayedFadeIn}
-      >
-        <HotspotLocationPreview
-          loading={(!hotspot.lat || !hotspot.lng) && loadingDetails}
-          movable
-          zoomLevel={14}
-          mapCenter={centerCoordinate}
-          locationName={locationName}
-        />
-      </ReAnimatedBox>
-
-      <Button
-        onPress={assertHotspot}
-        height={48}
-        marginTop="l"
-        mode="contained"
-        title={t('hotspots.empty.hotspots.assertLocation')}
-      />
-      <Button
-        onPress={transferHotspot}
-        height={48}
-        marginTop="l"
-        mode="contained"
-        title={t('hotspots.empty.hotspots.transfer')}
-      />
+      {!loadingDetails && (
+        <ReAnimatedBox entering={FadeIn}>
+          <Text
+            variant="body1"
+            color="primaryText"
+            paddingLeft="xs"
+            numberOfLines={1}
+            adjustsFontSizeToFit
+            textAlign="center"
+            fontWeight="100"
+          >
+            {`${onboardingRecord?.maker?.name || ''} - ${
+              showNetworks && iotDetails ? 'IOT ' : ''
+            }${showNetworks && mobileDetails ? 'MOBILE' : ''}`}
+          </Text>
+        </ReAnimatedBox>
+      )}
 
       <BottomSheetModal
         ref={bottomSheetModalRef}
