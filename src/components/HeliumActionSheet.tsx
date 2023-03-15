@@ -211,8 +211,7 @@ const HeliumActionSheet = ({
               color="surfaceText"
               maxFontSizeMultiplier={1}
               marginRight="xs"
-              variant="body2"
-              fontSize={20}
+              variant="subtitle1"
               {...prefixTextProps}
             >
               {prefix}
@@ -222,8 +221,7 @@ const HeliumActionSheet = ({
             <Text
               maxFontSizeMultiplier={1}
               marginRight="s"
-              variant="body2"
-              fontSize={20}
+              variant="subtitle1"
               color="surfaceText"
               {...textProps}
             >

@@ -26,6 +26,7 @@ import { SUPPORTED_LANGUAGUES } from '../../../utils/i18n/i18nTypes'
 import { useLanguageContext } from '../../../providers/LanguageProvider'
 import { getAddress } from '../../../utils/secureAccount'
 import { getMnemonic } from '../../../utils/secureAccount'
+import developerSlice from '../../../store/developer/developerSlice'
 
 type Route = RouteProp<RootStackParamList & MoreStackParamList, 'MoreScreen'>
 const MoreScreen = () => {
@@ -33,6 +34,7 @@ const MoreScreen = () => {
   const { params } = useRoute<Route>()
   const dispatch = useAppDispatch()
   const app = useSelector((state: RootState) => state.app, isEqual)
+  const devOptions = useSelector((state: RootState) => state.developer)
   const authIntervals = useAuthIntervals()
   const navigation = useNavigation<MoreNavigationProp & RootNavigationProp>()
   const spacing = useSpacing()
@@ -171,6 +173,45 @@ const MoreScreen = () => {
       ]
     }
 
+    let developer: MoreListItemType[] = [
+      {
+        title: t('more.sections.developer.enable'),
+        onToggle: () =>
+          dispatch(developerSlice.actions.toggleDeveloperPermission()),
+        value: devOptions.enabled,
+      },
+    ]
+
+    if (devOptions.enabled) {
+      developer.push({
+        title: t('more.sections.developer.forceSolana'),
+        onToggle: () => dispatch(developerSlice.actions.toggleForceSolana()),
+        value: devOptions.forceSolana,
+      })
+
+      if (devOptions.forceSolana || devOptions.status === 'complete') {
+        developer.push({
+          title: t('more.sections.developer.cluster'),
+          value: devOptions.cluster,
+          select: {
+            items: [
+              { label: 'mainnet-beta', value: 'mainnet-beta' },
+              { label: 'devnet', value: 'devnet' },
+            ],
+            onValueSelect: (cluster: string) => {
+              dispatch(developerSlice.actions.changeCluster(cluster))
+            },
+          },
+        })
+      }
+
+      developer.push({
+        title: t('more.sections.developer.transitionStatus', {
+          status: devOptions.status,
+        }),
+      })
+    }
+
     return [
       {
         title: t('more.sections.security.title'),
@@ -196,12 +237,17 @@ const MoreScreen = () => {
           },
         ] as MoreListItemType[],
       },
+      {
+        title: t('more.sections.developer.title'),
+        data: developer,
+      },
     ]
   }, [
     t,
     handlePinRequired,
     app.isPinRequired,
     app.authInterval,
+    devOptions,
     language,
     handleLanguageChange,
     address,

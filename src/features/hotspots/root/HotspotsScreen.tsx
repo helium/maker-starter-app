@@ -7,6 +7,7 @@ import HotspotsEmpty from './HotspotsEmpty'
 import Hotspots from './Hotspots'
 import { getAddress } from '../../../utils/secureAccount'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
+import useDeveloperOptions from '../../../utils/useDeveloperOptions'
 
 const getHotspotAddress = (item: Asset | Hotspot): string => {
   const asset = item as Asset
@@ -24,6 +25,7 @@ const HotspotsScreen = () => {
       { address: string; lat?: number; lng?: number; location?: string }[]
     >()
   const nav = useNavigation<RootNavigationProp>()
+  const { status, cluster } = useDeveloperOptions()
 
   const { getHotspots } = useOnboarding()
 
@@ -51,7 +53,7 @@ const HotspotsScreen = () => {
     })
 
     return unsubscribe
-  }, [fetch, nav])
+  }, [fetch, nav, status, cluster])
 
   return (
     <Box backgroundColor="primaryBackground" flex={1}>
