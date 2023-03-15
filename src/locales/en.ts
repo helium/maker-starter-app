@@ -449,6 +449,7 @@ export default {
       title: 'Add a\n[Placeholder] Miner',
     },
     explorer: 'Helium Explorer',
+    noLocation: 'No Location',
     notOnboarded: 'This hotspot has not been onboarded',
     title: 'Your Hotspots',
     view_activity: 'After adding a Hotspot, you can view your account on the ',

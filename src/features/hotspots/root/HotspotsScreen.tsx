@@ -20,7 +20,9 @@ const getHotspotAddress = (item: Asset | Hotspot): string => {
 
 const HotspotsScreen = () => {
   const [hotspots, setHotspots] =
-    useState<{ address: string; lat?: number; lng?: number }[]>()
+    useState<
+      { address: string; lat?: number; lng?: number; location?: string }[]
+    >()
   const nav = useNavigation<RootNavigationProp>()
 
   const { getHotspots } = useOnboarding()

@@ -19,6 +19,7 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import Clipboard from '@react-native-community/clipboard'
 import Toast from 'react-native-simple-toast'
+import { useSelector } from 'react-redux'
 import { HotspotStackParamList } from './hotspotTypes'
 import Text from '../../../components/Text'
 import SafeAreaBox from '../../../components/SafeAreaBox'
@@ -37,6 +38,11 @@ import TouchableOpacityBox from '../../../components/TouchableOpacityBox'
 import ListSeparator from '../../../components/ListSeparator'
 import useHaptic from '../../../utils/useHaptic'
 import HotspotLocationPreview from '../setup/HotspotLocationPreview'
+import { ReAnimatedBox } from '../../../components/AnimatedBox'
+import { DelayedFadeIn } from '../../../utils/animations'
+import { useAppDispatch } from '../../../store/store'
+import { getGeocodedAddress } from '../../../store/location/locationSlice'
+import { RootState } from '../../../store/rootReducer'
 
 type Route = RouteProp<HotspotStackParamList, 'HotspotScreen'>
 type HotspotDetails = {
@@ -69,6 +75,46 @@ const HotspotScreen = () => {
   const spacing = useSpacing()
   const hitSlop = useVerticalHitSlop('l')
   const { triggerNotification } = useHaptic()
+  const dispatch = useAppDispatch()
+  const locations = useSelector((state: RootState) => state.location.locations)
+
+  const centerCoordinate = useMemo(() => {
+    const lat = details?.lat || hotspot.lat
+    const lng = details?.lng || hotspot.lng
+
+    if (!lat || !lng) return
+
+    return [lng, lat]
+  }, [details, hotspot])
+
+  const location = useMemo(
+    () => details?.location || hotspot.location,
+    [details?.location, hotspot.location],
+  )
+
+  const locationName = useMemo(() => {
+    if (details && !centerCoordinate) {
+      return t('hotspots.noLocation')
+    }
+
+    if (location && locations[location]) {
+      const loc = locations[location]
+      return loc.city || loc.region || loc.subregion || loc.country
+    }
+  }, [centerCoordinate, details, location, locations, t])
+
+  useEffect(() => {
+    if (!location || !centerCoordinate) {
+      return
+    }
+    dispatch(
+      getGeocodedAddress({
+        lat: centerCoordinate[1],
+        lng: centerCoordinate[0],
+        location,
+      }),
+    )
+  }, [centerCoordinate, dispatch, location])
 
   const needsOnboarding = useMemo(
     () => !loadingDetails && !details,
@@ -111,6 +157,12 @@ const HotspotScreen = () => {
 
   const updateHotspotDetails = useCallback(async () => {
     try {
+      /// //////////////////////////////////////////////////////
+      /// //////////////////////////////////////////////////////
+      // TODO: Get both networks and show a badge for each
+      /// //////////////////////////////////////////////////////
+      /// //////////////////////////////////////////////////////
+
       const hotspotMeta = await getHotspotDetails({
         address: hotspot.address,
         type: 'IOT', // Both freedomfi and helium support iot
@@ -239,15 +291,6 @@ const HotspotScreen = () => {
     setMenuType('kabob')
   }, [])
 
-  const centerCoordinate = useMemo(() => {
-    const lat = details?.lat || hotspot.lat
-    const lng = details?.lng || hotspot.lng
-
-    if (!lat || !lng) return
-
-    return [lng, lat]
-  }, [details, hotspot])
-
   return (
     <SafeAreaBox
       backgroundColor="primaryBackground"
@@ -309,21 +352,22 @@ const HotspotScreen = () => {
           {t('hotspots.notOnboarded')}
         </Text>
       )}
-      <Box
+      <ReAnimatedBox
         height={200}
         width="100%"
         borderRadius="xl"
         overflow="hidden"
         marginTop="xxl"
+        entering={DelayedFadeIn}
       >
         <HotspotLocationPreview
-          loading={loadingDetails}
+          loading={(!hotspot.lat || !hotspot.lng) && loadingDetails}
+          movable
+          zoomLevel={14}
           mapCenter={centerCoordinate}
-          locationName={
-            details && !centerCoordinate ? 'No asserted Location' : undefined
-          }
+          locationName={locationName}
         />
-      </Box>
+      </ReAnimatedBox>
 
       <Button
         onPress={assertHotspot}
