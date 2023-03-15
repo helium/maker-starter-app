@@ -2,6 +2,7 @@ import React, { memo, useCallback, useEffect, useState } from 'react'
 import { Asset, useOnboarding } from '@helium/react-native-sdk'
 import { Hotspot } from '@helium/http'
 import { useNavigation } from '@react-navigation/native'
+import { get } from 'lodash'
 import Box from '../../../components/Box'
 import HotspotsEmpty from './HotspotsEmpty'
 import Hotspots from './Hotspots'
@@ -43,7 +44,12 @@ const HotspotsScreen = () => {
     if (!nextHotspots) return
 
     setHotspots(
-      nextHotspots?.map((h) => ({ address: getHotspotAddress(h), ...h })),
+      nextHotspots?.map((h) => ({
+        address: getHotspotAddress(h),
+        lat: get(h, 'lat'),
+        lng: get(h, 'lng'),
+        location: get(h, 'location'),
+      })),
     )
   }, [getHotspots])
 

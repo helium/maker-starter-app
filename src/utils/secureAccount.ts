@@ -35,15 +35,17 @@ export async function getSecureItem(key: AccountStoreKey) {
 }
 
 export const getAddress = async () => {
-  const token = await getSecureItem('walletLinkToken')
   const addressB58 = await getSecureItem('address')
+  if (addressB58) return addressB58
+
+  const token = await getSecureItem('walletLinkToken')
   if (token) {
     const parsed = parseWalletLinkToken(token)
     const { address } = parsed
     return address
   }
 
-  return addressB58 || ''
+  return ''
 }
 
 export const deleteSecureItem = async (key: AccountStoreKey) =>

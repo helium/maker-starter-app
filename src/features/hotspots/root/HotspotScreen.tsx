@@ -20,6 +20,9 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import Clipboard from '@react-native-community/clipboard'
 import Toast from 'react-native-simple-toast'
 import { useSelector } from 'react-redux'
+import { useAsync } from 'react-async-hook'
+import { FadeIn } from 'react-native-reanimated'
+import { HotspotType as HotspotNetworkType } from '@helium/onboarding'
 import { HotspotStackParamList } from './hotspotTypes'
 import Text from '../../../components/Text'
 import SafeAreaBox from '../../../components/SafeAreaBox'
@@ -43,6 +46,7 @@ import { DelayedFadeIn } from '../../../utils/animations'
 import { useAppDispatch } from '../../../store/store'
 import { getGeocodedAddress } from '../../../store/location/locationSlice'
 import { RootState } from '../../../store/rootReducer'
+import useDeveloperOptions from '../../../utils/useDeveloperOptions'
 
 type Route = RouteProp<HotspotStackParamList, 'HotspotScreen'>
 type HotspotDetails = {
@@ -56,7 +60,7 @@ const LIST_ITEM_HEIGHT = 80
 const SETTINGS_DATA = ['diagnostics', 'wifi'] as const
 export type Setting = (typeof SETTINGS_DATA)[number]
 
-const KABOB_DATA = ['copyAddress'] as const
+const KABOB_DATA = ['copyAddress', 'onboardIot', 'onboardMobile'] as const
 export type KabobItem = (typeof KABOB_DATA)[number]
 
 const HotspotScreen = () => {
@@ -65,10 +69,11 @@ const HotspotScreen = () => {
   } = useRoute<Route>()
   const { t } = useTranslation()
   const nav = useNavigation<RootNavigationProp>()
-  const [details, setDetails] = useState<HotspotDetails>()
+  const [iotDetails, setIotDetails] = useState<HotspotDetails>()
+  const [mobileDetails, setMobileDetails] = useState<HotspotDetails>()
   const [menuType, setMenuType] = useState<'kabob' | 'settings'>('settings')
   const [loadingDetails, setLoadingDetails] = useState(true)
-  const { getHotspotDetails } = useOnboarding()
+  const { getHotspotDetails, getOnboardingRecord } = useOnboarding()
   const colors = useColors()
   const bottomSheetModalRef = useRef<BottomSheetModal>(null)
   const { bottom } = useSafeAreaInsets()
@@ -77,23 +82,27 @@ const HotspotScreen = () => {
   const { triggerNotification } = useHaptic()
   const dispatch = useAppDispatch()
   const locations = useSelector((state: RootState) => state.location.locations)
+  const { status } = useDeveloperOptions()
+  const { result: onboardingRecord } = useAsync(getOnboardingRecord, [
+    hotspot.address,
+  ])
 
   const centerCoordinate = useMemo(() => {
-    const lat = details?.lat || hotspot.lat
-    const lng = details?.lng || hotspot.lng
+    const lat = iotDetails?.lat || hotspot.lat
+    const lng = iotDetails?.lng || hotspot.lng
 
     if (!lat || !lng) return
 
     return [lng, lat]
-  }, [details, hotspot])
+  }, [iotDetails, hotspot])
 
   const location = useMemo(
-    () => details?.location || hotspot.location,
-    [details?.location, hotspot.location],
+    () => iotDetails?.location || hotspot.location,
+    [iotDetails?.location, hotspot.location],
   )
 
   const locationName = useMemo(() => {
-    if (details && !centerCoordinate) {
+    if (iotDetails && !centerCoordinate) {
       return t('hotspots.noLocation')
     }
 
@@ -101,7 +110,7 @@ const HotspotScreen = () => {
       const loc = locations[location]
       return loc.city || loc.region || loc.subregion || loc.country
     }
-  }, [centerCoordinate, details, location, locations, t])
+  }, [centerCoordinate, iotDetails, location, locations, t])
 
   useEffect(() => {
     if (!location || !centerCoordinate) {
@@ -117,8 +126,8 @@ const HotspotScreen = () => {
   }, [centerCoordinate, dispatch, location])
 
   const needsOnboarding = useMemo(
-    () => !loadingDetails && !details,
-    [details, loadingDetails],
+    () => !loadingDetails && !iotDetails,
+    [iotDetails, loadingDetails],
   )
 
   const handleSettingPress = useCallback(
@@ -149,29 +158,59 @@ const HotspotScreen = () => {
           Toast.show(
             t('hotspots.copiedToClipboard', { address: hotspot.address }),
           )
+          break
+        }
+        case 'onboardMobile': {
+          nav.navigate('HotspotAssert', {
+            screen: 'HotspotSetupPickLocationScreen',
+            params: {
+              hotspotAddress: hotspot.address,
+              hotspotType: 'Helium',
+              hotspotNetworkTypes: ['MOBILE'],
+            },
+          })
+          break
+        }
+        case 'onboardIot': {
+          nav.navigate('HotspotAssert', {
+            screen: 'HotspotSetupPickLocationScreen',
+            params: {
+              hotspotAddress: hotspot.address,
+              hotspotType: 'Helium',
+              hotspotNetworkTypes: ['IOT'],
+            },
+          })
+          break
         }
       }
     },
-    [hotspot.address, t, triggerNotification],
+    [hotspot.address, nav, t, triggerNotification],
   )
 
   const updateHotspotDetails = useCallback(async () => {
     try {
-      /// //////////////////////////////////////////////////////
-      /// //////////////////////////////////////////////////////
-      // TODO: Get both networks and show a badge for each
-      /// //////////////////////////////////////////////////////
-      /// //////////////////////////////////////////////////////
-
       const hotspotMeta = await getHotspotDetails({
         address: hotspot.address,
         type: 'IOT', // Both freedomfi and helium support iot
       })
-      setDetails(hotspotMeta || {})
+      setIotDetails(hotspotMeta)
     } catch (e) {
       // eslint-disable-next-line no-console
       console.error(e)
     }
+
+    // See if it has been onboarded to the mobile network as well
+    try {
+      const hotspotMeta = await getHotspotDetails({
+        address: hotspot.address,
+        type: 'MOBILE',
+      })
+      setMobileDetails(hotspotMeta)
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.error(e)
+    }
+
     setLoadingDetails(false)
   }, [getHotspotDetails, hotspot])
 
@@ -192,13 +231,23 @@ const HotspotScreen = () => {
   }, [hotspot])
 
   const assertHotspot = useCallback(() => {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
+    const networkTypes: HotspotNetworkType[] = []
+    if (iotDetails) {
+      networkTypes.push('IOT')
+    }
+    if (mobileDetails) {
+      networkTypes.push('MOBILE')
+    }
+
     nav.navigate('HotspotAssert', {
       screen: 'HotspotSetupPickLocationScreen',
-      params: { hotspotAddress: hotspot.address, hotspotType: 'Helium' },
+      params: {
+        hotspotAddress: hotspot.address,
+        hotspotType: 'Helium',
+        hotspotNetworkTypes: networkTypes,
+      },
     })
-  }, [hotspot.address, nav])
+  }, [hotspot.address, iotDetails, mobileDetails, nav])
 
   const transferHotspot = useCallback(
     () =>
@@ -211,15 +260,33 @@ const HotspotScreen = () => {
     [hotspot.address, nav],
   )
 
+  const moreData = useMemo((): KabobItem[] => {
+    if (
+      status !== 'complete' ||
+      onboardingRecord?.maker.name.toLowerCase().includes('helium') ||
+      (iotDetails && mobileDetails)
+    ) {
+      return ['copyAddress']
+    }
+
+    if (iotDetails) {
+      return ['copyAddress', 'onboardMobile']
+    }
+    if (mobileDetails) {
+      return ['copyAddress', 'onboardIot']
+    }
+    return ['copyAddress']
+  }, [iotDetails, mobileDetails, onboardingRecord, status])
+
   const snapPoints = useMemo(() => {
     const handleHeight = 72
     return [
-      (menuType === 'settings' ? SETTINGS_DATA.length : KABOB_DATA.length) *
+      (menuType === 'settings' ? SETTINGS_DATA.length : moreData.length) *
         LIST_ITEM_HEIGHT +
         bottom +
         handleHeight,
     ]
-  }, [bottom, menuType])
+  }, [bottom, menuType, moreData])
 
   const handleIndicatorStyle = useMemo(
     () => ({
@@ -291,6 +358,11 @@ const HotspotScreen = () => {
     setMenuType('kabob')
   }, [])
 
+  const showNetworks = useMemo(
+    () => status === 'complete' && !loadingDetails,
+    [loadingDetails, status],
+  )
+
   return (
     <SafeAreaBox
       backgroundColor="primaryBackground"
@@ -299,7 +371,7 @@ const HotspotScreen = () => {
       justifyContent="center"
     >
       <Box flexDirection="row" marginStart="s" alignItems="center">
-        <Box flex={1}>
+        <Box>
           <Text
             fontSize={29}
             lineHeight={31}
@@ -322,25 +394,51 @@ const HotspotScreen = () => {
           >
             {formattedHotspotName[1]}
           </Text>
+          {status === 'complete' && !showNetworks && (
+            <Text
+              variant="body1"
+              color="primaryText"
+              paddingLeft="s"
+              numberOfLines={1}
+              adjustsFontSizeToFit
+            >
+              {' '}
+            </Text>
+          )}
+          {showNetworks && (
+            <ReAnimatedBox entering={FadeIn}>
+              <Text
+                variant="body1"
+                color="primaryText"
+                paddingLeft="s"
+                numberOfLines={1}
+                adjustsFontSizeToFit
+              >
+                {`${iotDetails ? 'IOT ' : ''}${mobileDetails ? 'MOBILE' : ''}`}
+              </Text>
+            </ReAnimatedBox>
+          )}
         </Box>
-        <TouchableOpacityBox
-          paddingLeft="s"
-          paddingRight="xs"
-          paddingBottom="s"
-          hitSlop={hitSlop}
-          onPress={handleSettings}
-        >
-          <Settings width={22} height={22} color={colors.graySteel} />
-        </TouchableOpacityBox>
-        <TouchableOpacityBox
-          paddingBottom="s"
-          paddingStart="xs"
-          paddingEnd="s"
-          hitSlop={hitSlop}
-          onPress={handleKabob}
-        >
-          <Kabob width={22} height={22} color={colors.graySteel} />
-        </TouchableOpacityBox>
+        <Box flex={1} flexDirection="row" justifyContent="flex-end">
+          <TouchableOpacityBox
+            paddingLeft="s"
+            paddingRight="xs"
+            paddingBottom="s"
+            hitSlop={hitSlop}
+            onPress={handleSettings}
+          >
+            <Settings width={22} height={22} color={colors.graySteel} />
+          </TouchableOpacityBox>
+          <TouchableOpacityBox
+            paddingBottom="s"
+            paddingStart="xs"
+            paddingEnd="s"
+            hitSlop={hitSlop}
+            onPress={handleKabob}
+          >
+            <Kabob width={22} height={22} color={colors.graySteel} />
+          </TouchableOpacityBox>
+        </Box>
       </Box>
       {needsOnboarding && (
         <Text
@@ -401,7 +499,7 @@ const HotspotScreen = () => {
         )}
         {menuType === 'kabob' && (
           <BottomSheetFlatList
-            data={KABOB_DATA}
+            data={moreData}
             renderItem={renderKabob}
             keyExtractor={keyExtractor}
             ItemSeparatorComponent={ListSeparator}

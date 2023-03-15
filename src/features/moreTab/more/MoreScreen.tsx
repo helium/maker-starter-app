@@ -1,12 +1,20 @@
 /* eslint-disable */
 // @ts-nocheck
-import React, { memo, ReactText, useCallback, useEffect, useMemo } from 'react'
+import React, {
+  Component,
+  memo,
+  ReactText,
+  useCallback,
+  useEffect,
+  useMemo,
+} from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert, SectionList } from 'react-native'
 import { useSelector } from 'react-redux'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { isEqual } from 'lodash'
 import { Edge } from 'react-native-safe-area-context'
+import { Account } from '@helium/react-native-sdk'
 import { useAsync } from 'react-async-hook'
 import SafeAreaBox from '../../../components/SafeAreaBox'
 import Text from '../../../components/Text'
@@ -24,9 +32,10 @@ import { useSpacing } from '../../../theme/themeHooks'
 import Box from '../../../components/Box'
 import { SUPPORTED_LANGUAGUES } from '../../../utils/i18n/i18nTypes'
 import { useLanguageContext } from '../../../providers/LanguageProvider'
-import { getAddress } from '../../../utils/secureAccount'
-import { getMnemonic } from '../../../utils/secureAccount'
+import { getAddress, getMnemonic } from '../../../utils/secureAccount'
+import useCopyText from '../../../utils/useCopyText'
 import developerSlice from '../../../store/developer/developerSlice'
+import ellipsizeAddress from '../../../utils/ellipsizeAddress'
 
 type Route = RouteProp<RootStackParamList & MoreStackParamList, 'MoreScreen'>
 const MoreScreen = () => {
@@ -39,8 +48,14 @@ const MoreScreen = () => {
   const navigation = useNavigation<MoreNavigationProp & RootNavigationProp>()
   const spacing = useSpacing()
   const { changeLanguage, language } = useLanguageContext()
-  const { result: address } = useAsync(getAddress, [])
+  const { result: heliumAddress } = useAsync(getAddress, [])
+  const { result: solanaAddress } = useAsync(() => {
+    if (!heliumAddress) return
+    return Account.heliumAddressToSolAddress(heliumAddress)
+  }, [heliumAddress])
+
   const { result: mnemonic } = useAsync(getMnemonic, [])
+  const copyText = useCopyText()
 
   useEffect(() => {
     if (!params?.pinVerifiedFor) return
@@ -124,6 +139,23 @@ const MoreScreen = () => {
     ])
   }, [t, dispatch, mnemonic])
 
+  const handleCopyAddress = useCallback(
+    (network: 'solana' | 'helium') => () => {
+      if (!heliumAddress) return
+
+      const addr =
+        network === 'solana'
+          ? Account.heliumAddressToSolAddress(heliumAddress)
+          : heliumAddress
+
+      copyText({
+        message: ellipsizeAddress(addr),
+        copyText: addr,
+      })
+    },
+    [heliumAddress, copyText],
+  )
+
   const handleIntervalSelected = useCallback(
     (value: ReactText) => {
       const number = typeof value === 'number' ? value : parseInt(value, 10)
@@ -141,7 +173,7 @@ const MoreScreen = () => {
       },
     ]
 
-    if (!!mnemonic) {
+    if (mnemonic) {
       pin = [
         ...pin,
         {
@@ -173,7 +205,7 @@ const MoreScreen = () => {
       ]
     }
 
-    let developer: MoreListItemType[] = [
+    const developer: MoreListItemType[] = [
       {
         title: t('more.sections.developer.enable'),
         onToggle: () =>
@@ -198,7 +230,7 @@ const MoreScreen = () => {
               { label: 'mainnet-beta', value: 'mainnet-beta' },
               { label: 'devnet', value: 'devnet' },
             ],
-            onValueSelect: (cluster: string) => {
+            onValueSelect: (cluster: ReactText) => {
               dispatch(developerSlice.actions.changeCluster(cluster))
             },
           },
@@ -213,6 +245,23 @@ const MoreScreen = () => {
     }
 
     return [
+      {
+        title: t('more.sections.account.title'),
+        data: [
+          {
+            title: t('more.sections.account.copyHeliumAddress', {
+              heliumAddress: heliumAddress && ellipsizeAddress(heliumAddress),
+            }),
+            onPress: handleCopyAddress('helium'),
+          },
+          {
+            title: t('more.sections.account.copySolanaAddress', {
+              solanaAddress: solanaAddress && ellipsizeAddress(solanaAddress),
+            }),
+            onPress: handleCopyAddress('solana'),
+          },
+        ],
+      },
       {
         title: t('more.sections.security.title'),
         data: pin,
@@ -229,9 +278,7 @@ const MoreScreen = () => {
             },
           },
           {
-            title: t('more.sections.app.signOutWithLink', {
-              address: [address?.slice(0, 8), address?.slice(-8)].join('...'),
-            }),
+            title: t('more.sections.app.signOut'),
             onPress: handleSignOut,
             destructive: true,
           },
@@ -247,14 +294,22 @@ const MoreScreen = () => {
     handlePinRequired,
     app.isPinRequired,
     app.authInterval,
-    devOptions,
+    mnemonic,
+    devOptions.enabled,
+    devOptions.forceSolana,
+    devOptions.status,
+    devOptions.cluster,
+    handleCopyAddress,
     language,
     handleLanguageChange,
-    address,
+    heliumAddress,
     handleSignOut,
+    handleRevealWords,
+    handleRevealPrivateKey,
     authIntervals,
     handleIntervalSelected,
     handleResetPin,
+    dispatch,
   ])
 
   const contentContainer = useMemo(
@@ -266,7 +321,15 @@ const MoreScreen = () => {
   )
 
   const renderItem = useCallback(
-    ({ item, index, section }) => (
+    ({
+      item,
+      index,
+      section,
+    }: {
+      item: MoreListItemType
+      index: number
+      section: { data: [] }
+    }) => (
       <MoreListItem
         item={item}
         isTop={index === 0}
@@ -276,8 +339,9 @@ const MoreScreen = () => {
     [],
   )
 
+  type Asdf = { section: { title: string; icon: Component } }
   const renderSectionHeader = useCallback(
-    ({ section: { title, icon } }) => (
+    ({ section: { title, icon } }: Asdf) => (
       <Box
         flexDirection="row"
         alignItems="center"
@@ -286,10 +350,12 @@ const MoreScreen = () => {
         paddingHorizontal="xs"
         backgroundColor="primaryBackground"
       >
-        {icon !== undefined && icon}
-        <Text variant="body1" marginLeft="s">
-          {title}
-        </Text>
+        <>
+          {icon !== undefined && icon}
+          <Text variant="body1" marginLeft="s">
+            {title}
+          </Text>
+        </>
       </Box>
     ),
     [],
@@ -300,7 +366,10 @@ const MoreScreen = () => {
     [],
   )
 
-  const keyExtractor = useCallback((item, index) => item.title + index, [])
+  const keyExtractor = useCallback(
+    (item: MoreListItemType, index: number) => item.title + index,
+    [],
+  )
 
   const edges = useMemo(() => ['left', 'right', 'top'] as Edge[], [])
   return (

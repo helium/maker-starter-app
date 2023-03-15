@@ -107,6 +107,7 @@ export default {
     clear: 'Clear',
     connect: 'Connect',
     continue: 'Continue',
+    copied: 'Copied {{target}}',
     error: 'Error',
     forget: 'Forget',
     go_to_settings: 'Go to Settings',
@@ -438,6 +439,8 @@ export default {
   hotspots: {
     copiedToClipboard: 'Copied {{address}} to clipboard',
     copyAddress: 'Copy Address',
+    onboardIot: 'Onboard Iot Network',
+    onboardMobile: 'Onboard Mobile Network',
     diagnostics: 'Run Diagnostics',
     empty: {
       hotspots: {
@@ -454,6 +457,11 @@ export default {
   },
   more: {
     sections: {
+      account: {
+        copyHeliumAddress: 'Copy Helium Address - {{heliumAddress}}',
+        copySolanaAddress: 'Copy Solana Address - {{solanaAddress}}',
+        title: 'Account',
+      },
       app: {
         language: 'Language',
         signOut: 'Sign Out',

@@ -15,7 +15,6 @@ const useDeveloperOptions = () => {
     dispatch(getStatus())
   })
 
-  // TODO: MAKE ONBOARDING SERVER CONFIGURABLE
   // TODO: UPDATE APP CENTER SCRIPT FOR CONIG VARS
 
   const solanaRpcEndpoint = useMemo(() => {

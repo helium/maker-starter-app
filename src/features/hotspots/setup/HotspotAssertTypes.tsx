@@ -1,31 +1,35 @@
+import { HotspotType as HotspotNetworkType } from '@helium/onboarding'
 import { StackNavigationProp } from '@react-navigation/stack'
-import { HotspotType } from '../../../makers'
+import { HotspotType as HotspotMakerType } from '../../../makers'
 import { HotspotLink } from '../../../providers/appLinkTypes'
 
 export type HotspotAssertStackParamList = {
-  HotspotAssertAddressScreen: undefined
+  HotspotAssertAddressScreen: undefined | { hotspotTypes?: HotspotMakerType[] }
 
   HotspotSetupPickLocationScreen: {
-    hotspotType: HotspotType
-    addGatewayTxn: string
+    hotspotType: HotspotMakerType
+    addGatewayTxn?: string
     hotspotAddress: string
+    hotspotNetworkTypes?: HotspotNetworkType[]
   }
 
   HotspotSetupConfirmLocationScreen: {
-    addGatewayTxn: string
+    addGatewayTxn?: string
     hotspotAddress: string
     elevation?: number
     gain?: number
     coords?: number[]
     locationName?: string
+    hotspotNetworkTypes?: HotspotNetworkType[]
   }
 
   AntennaSetupScreen: {
-    hotspotType: HotspotType
-    addGatewayTxn: string
+    hotspotType: HotspotMakerType
+    addGatewayTxn?: string
     hotspotAddress: string
     coords?: number[]
     locationName?: string
+    hotspotNetworkTypes?: HotspotNetworkType[]
   }
 
   HotspotTxnsProgressScreen: {
@@ -33,6 +37,7 @@ export type HotspotAssertStackParamList = {
     assertLocationTxn?: string
     solanaTransactions?: string[]
     hotspotAddress: string
+    hotspotNetworkTypes?: HotspotNetworkType[]
   }
 
   NotHotspotOwnerErrorScreen: undefined
