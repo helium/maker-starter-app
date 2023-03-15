@@ -31,6 +31,8 @@ import { useColors, useSpacing } from '../../../theme/themeHooks'
 import BSHandle from '../../../components/BSHandle'
 import AddressSearchModal from './AddressSearchModal'
 import { PlaceGeography } from '../../../utils/googlePlaces'
+import { ReAnimatedBox } from '../../../components/AnimatedBox'
+import { EnterDelayedFade } from '../../../utils/animations'
 
 type Route = RouteProp<
   HotspotSetupStackParamList,
@@ -113,14 +115,16 @@ const HotspotSetupPickLocationScreen = () => {
         <Search width={30} height={30} color="white" />
       </TouchableOpacityBox>
       <Box flex={1.2}>
-        <Map
-          maxZoomLevel={17}
-          mapCenter={mapCenter}
-          onMapMoved={onMapMoved}
-          onDidFinishLoadingMap={onDidFinishLoadingMap}
-          markerLocation={markerCenter}
-          currentLocationEnabled
-        />
+        <ReAnimatedBox entering={EnterDelayedFade}>
+          <Map
+            maxZoomLevel={17}
+            mapCenter={mapCenter}
+            onMapMoved={onMapMoved}
+            onDidFinishLoadingMap={onDidFinishLoadingMap}
+            markerLocation={markerCenter}
+            currentLocationEnabled
+          />
+        </ReAnimatedBox>
       </Box>
       <Box backgroundColor="primaryBackground" padding="l">
         <Box

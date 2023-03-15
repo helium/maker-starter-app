@@ -6,6 +6,7 @@ export type Hotspot = {
   address: string
   lat?: number
   lng?: number
+  location?: string
 }
 
 export type HotspotStackParamList = {

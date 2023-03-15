@@ -2,11 +2,13 @@ import React, { memo, useCallback, useEffect, useState } from 'react'
 import { Asset, useOnboarding } from '@helium/react-native-sdk'
 import { Hotspot } from '@helium/http'
 import { useNavigation } from '@react-navigation/native'
+import { get } from 'lodash'
 import Box from '../../../components/Box'
 import HotspotsEmpty from './HotspotsEmpty'
 import Hotspots from './Hotspots'
 import { getAddress } from '../../../utils/secureAccount'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
+import useDeveloperOptions from '../../../utils/useDeveloperOptions'
 
 const getHotspotAddress = (item: Asset | Hotspot): string => {
   const asset = item as Asset
@@ -20,8 +22,11 @@ const getHotspotAddress = (item: Asset | Hotspot): string => {
 
 const HotspotsScreen = () => {
   const [hotspots, setHotspots] =
-    useState<{ address: string; lat?: number; lng?: number }[]>()
+    useState<
+      { address: string; lat?: number; lng?: number; location?: string }[]
+    >()
   const nav = useNavigation<RootNavigationProp>()
+  const { status, cluster } = useDeveloperOptions()
 
   const { getHotspots } = useOnboarding()
 
@@ -39,7 +44,12 @@ const HotspotsScreen = () => {
     if (!nextHotspots) return
 
     setHotspots(
-      nextHotspots?.map((h) => ({ address: getHotspotAddress(h), ...h })),
+      nextHotspots?.map((h) => ({
+        address: getHotspotAddress(h),
+        lat: get(h, 'lat'),
+        lng: get(h, 'lng'),
+        location: get(h, 'location'),
+      })),
     )
   }, [getHotspots])
 
@@ -49,7 +59,7 @@ const HotspotsScreen = () => {
     })
 
     return unsubscribe
-  }, [fetch, nav])
+  }, [fetch, nav, status, cluster])
 
   return (
     <Box backgroundColor="primaryBackground" flex={1}>

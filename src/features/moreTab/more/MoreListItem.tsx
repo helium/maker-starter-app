@@ -92,7 +92,7 @@ const MoreListItem = ({
           value={value as boolean}
           onValueChange={onToggle}
           trackColor={trackColor}
-          thumbColor={colors.white}
+          thumbColor={colors.whitePurple}
         />
       )}
       {select && (

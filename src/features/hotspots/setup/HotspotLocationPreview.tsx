@@ -27,10 +27,11 @@ type Geocode = {
 type Props = {
   mapCenter?: number[]
   geocode?: Geocode
-  locationName?: string
+  locationName?: string | null
   movable?: boolean
   onMapMoved?: (center?: number[]) => void
   loading?: boolean
+  zoomLevel?: number
 }
 const HotspotLocationPreview = ({
   mapCenter,
@@ -39,6 +40,7 @@ const HotspotLocationPreview = ({
   movable = false,
   onMapMoved = () => {},
   loading,
+  zoomLevel = 17,
 }: Props) => {
   const map = useRef<MapboxGL.MapView>(null)
   const [coords, setCoords] = useState(mapCenter)
@@ -97,7 +99,7 @@ const HotspotLocationPreview = ({
           <MapboxGL.Camera
             defaultSettings={{
               centerCoordinate: mapCenter,
-              zoomLevel: 17,
+              zoomLevel,
             }}
             maxZoomLevel={17}
           />

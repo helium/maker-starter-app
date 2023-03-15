@@ -1,4 +1,5 @@
 import { StackNavigationProp } from '@react-navigation/stack'
+import { HotspotType as HotspotNetworkType } from '@helium/onboarding'
 import { HotspotType } from '../../../makers'
 import { HotspotLink } from '../../../providers/appLinkTypes'
 
@@ -80,6 +81,7 @@ export type HotspotSetupStackParamList = {
     hotspotType: HotspotType
     addGatewayTxn: string
     hotspotAddress: string
+    hotspotNetworkTypes?: HotspotNetworkType[]
   }
   AntennaSetupScreen: {
     hotspotType: HotspotType
@@ -87,6 +89,7 @@ export type HotspotSetupStackParamList = {
     hotspotAddress: string
     coords?: number[]
     locationName?: string
+    hotspotNetworkTypes?: HotspotNetworkType[]
   }
   HotspotSetupConfirmLocationScreen: {
     addGatewayTxn: string
@@ -95,13 +98,16 @@ export type HotspotSetupStackParamList = {
     gain?: number
     coords?: number[]
     locationName?: string
+    hotspotNetworkTypes?: HotspotNetworkType[]
   }
   HotspotSetupSkipLocationScreen: {
     addGatewayTxn: string
     hotspotAddress: string
     elevation?: number
     gain?: number
+    hotspotNetworkTypes?: HotspotNetworkType[]
   }
+
   HotspotTxnsProgressScreen: {
     addGatewayTxn: string
     assertLocationTxn?: string
@@ -110,6 +116,7 @@ export type HotspotSetupStackParamList = {
     elevation?: number
     gain?: number
     coords?: number[]
+    hotspotNetworkTypes?: HotspotNetworkType[]
   }
   NotHotspotOwnerErrorScreen: undefined
   OwnedHotspotErrorScreen: undefined

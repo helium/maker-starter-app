@@ -107,6 +107,7 @@ export default {
     clear: 'Clear',
     connect: 'Connect',
     continue: 'Continue',
+    copied: 'Copied {{target}}',
     error: 'Error',
     forget: 'Forget',
     go_to_settings: 'Go to Settings',
@@ -438,24 +439,29 @@ export default {
   hotspots: {
     copiedToClipboard: 'Copied {{address}} to clipboard',
     copyAddress: 'Copy Address',
+    onboardIot: 'Onboard Iot Network',
+    onboardMobile: 'Onboard Mobile Network',
     diagnostics: 'Run Diagnostics',
     empty: {
-      body: 'Your add hotspot\ninstructions',
       hotspots: {
         add: 'Add Hotspot',
         assertLocation: 'Assert Location',
         transfer: 'Transfer Hotspot',
       },
-      title: 'Add a\n[Placeholder] Miner',
+      title: 'Add a Miner',
     },
-    explorer: 'Helium Explorer',
+    noLocation: 'No Location',
     notOnboarded: 'This hotspot has not been onboarded',
     title: 'Your Hotspots',
-    view_activity: 'After adding a Hotspot, you can view your account on the ',
     wifi: 'Update Wifi',
   },
   more: {
     sections: {
+      account: {
+        copyHeliumAddress: 'Copy Helium Address - {{heliumAddress}}',
+        copySolanaAddress: 'Copy Solana Address - {{solanaAddress}}',
+        title: 'Account',
+      },
       app: {
         language: 'Language',
         signOut: 'Sign Out',
@@ -483,6 +489,13 @@ export default {
         revealPrivateKey: 'Export Private Key',
         revealWords: 'Reveal Words',
         title: 'Security',
+      },
+      developer: {
+        cluster: 'Solana Cluster',
+        enable: 'Enable Developer Options',
+        forceSolana: 'Force Solana Blockchain',
+        title: 'Developer',
+        transitionStatus: 'Sentinel Status - {{status}}',
       },
     },
     title: 'Settings',

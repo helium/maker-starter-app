@@ -62,6 +62,7 @@ const HotspotTxnsProgressScreen = () => {
       assertLocationTxn,
     }: SignHotspotRequest) => {
       const keypair = await getKeypair()
+
       const keypairRaw = await getKeypairRaw()
       if (!keypairRaw || !keypair) {
         throw new Error('keypair not found!')
@@ -150,12 +151,15 @@ const HotspotTxnsProgressScreen = () => {
     await createHotspot(params.addGatewayTxn)
 
     const onboardingRecord = await getOnboardingRecord(params.hotspotAddress)
-    const types = getHotspotTypes(onboardingRecord?.maker.name)
+    let networkTypes = params.hotspotNetworkTypes
+    if (!networkTypes) {
+      networkTypes = getHotspotTypes(onboardingRecord?.maker.name)
+    }
 
     const { solanaTransactions } = await getOnboardTransactions({
       txn: params.addGatewayTxn,
       hotspotAddress: params.hotspotAddress,
-      hotspotTypes: types,
+      hotspotTypes: networkTypes,
       lat: last(params.coords),
       lng: first(params.coords),
       elevation: params.elevation,

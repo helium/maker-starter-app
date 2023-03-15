@@ -6,13 +6,12 @@ import AddIcon from '@assets/images/add.svg'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import Text from '../../../components/Text'
 import TouchableOpacityBox from '../../../components/TouchableOpacityBox'
-import { HotspotNavigationProp } from './hotspotTypes'
+import { Hotspot, HotspotNavigationProp } from './hotspotTypes'
 import Box from '../../../components/Box'
 import { useColors } from '../../../theme/themeHooks'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
 import HotspotListItem from './HotspotListItem'
 
-type Hotspot = { address: string; lng?: number; lat?: number }
 type Props = { hotspots: Hotspot[]; loading: boolean }
 const Hotspots = ({ hotspots, loading }: Props) => {
   const { t } = useTranslation()

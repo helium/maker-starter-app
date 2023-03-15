@@ -22,7 +22,6 @@ import {
   OnboardingProvider,
   SolanaProvider,
 } from '@helium/react-native-sdk'
-import { Cluster } from '@solana/web3.js'
 import { theme, darkThemeColors } from './theme/theme'
 import NavigationRoot from './navigation/NavigationRoot'
 import { useAppDispatch } from './store/store'
@@ -34,6 +33,7 @@ import { navigationRef } from './navigation/navigator'
 import useMount from './utils/useMount'
 import { getAddress } from './utils/secureAccount'
 import globalStyles from './theme/globalStyles'
+import useDeveloperOptions from './utils/useDeveloperOptions'
 
 SplashScreen.preventAutoHideAsync().catch(() => {
   /* reloading the app might trigger some race conditions, ignore them */
@@ -63,6 +63,9 @@ const App = () => {
 
   const { appState } = useAppState()
   const dispatch = useAppDispatch()
+
+  const { status, cluster, onboardingEndpoint, solanaRpcEndpoint } =
+    useDeveloperOptions()
 
   const {
     lastIdle,
@@ -132,23 +135,12 @@ const App = () => {
   return (
     <GestureHandlerRootView style={globalStyles.container}>
       <SolanaProvider
-        cluster={(Config.SOLANA_CLUSTER || 'devnet') as Cluster}
-        rpcEndpoint={Config.SOLANA_RPC_ENDPOINT || ''}
+        cluster={cluster}
+        solanaStatusOverride={status}
+        rpcEndpoint={solanaRpcEndpoint}
         heliumWallet={heliumWallet}
-        solanaStatusOverride={
-          Config.SOLANA_STATUS_OVERRIDE as
-            | 'not_started'
-            | 'in_progress'
-            | 'complete'
-            | undefined
-        }
       >
-        <OnboardingProvider
-          baseUrl={
-            Config.ONBOARDING_BASE_URL ||
-            'https://onboarding.web.test-helium.com/api'
-          }
-        >
+        <OnboardingProvider baseUrl={onboardingEndpoint}>
           <HotspotBleProvider>
             <ThemeProvider theme={colorAdaptedTheme}>
               <BottomSheetModalProvider>

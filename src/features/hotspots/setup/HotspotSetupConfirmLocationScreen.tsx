@@ -56,7 +56,10 @@ const HotspotSetupConfirmLocationScreen = () => {
 
     try {
       const onboardingRecord = await getOnboardingRecord(params.hotspotAddress)
-      const types = getHotspotTypes(onboardingRecord?.maker.name)
+      let networkTypes = params.hotspotNetworkTypes
+      if (!networkTypes) {
+        networkTypes = getHotspotTypes(onboardingRecord?.maker.name)
+      }
 
       const locationParams = {
         decimalGain: gain,
@@ -69,7 +72,7 @@ const HotspotSetupConfirmLocationScreen = () => {
       } else {
         const hotspotDetails = await getHotspotDetails({
           address: params.hotspotAddress,
-          type: types[0],
+          type: networkTypes[0],
         })
         const hotspotExists = !!hotspotDetails
         if (hotspotExists) {
@@ -78,7 +81,7 @@ const HotspotSetupConfirmLocationScreen = () => {
             gateway: params.hotspotAddress,
             owner: userAddress,
             onboardingRecord,
-            hotspotTypes: types,
+            hotspotTypes: networkTypes,
           })
 
           setAssertData(assert)
@@ -86,11 +89,11 @@ const HotspotSetupConfirmLocationScreen = () => {
           setSolanaTransactions(assert.solanaTransactions)
           setIsFree(assert.isFree)
         } else {
-          // Edge  case - hotspot hasn't been onboarded yet
+          // Edge case - hotspot hasn't been onboarded yet
           const onboard = await getOnboardTransactions({
             txn: '',
             hotspotAddress: params.hotspotAddress,
-            hotspotTypes: types,
+            hotspotTypes: networkTypes,
             ...locationParams,
           })
           setSolanaTransactions(onboard.solanaTransactions)

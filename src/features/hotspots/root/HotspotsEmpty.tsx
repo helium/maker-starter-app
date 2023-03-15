@@ -1,34 +1,22 @@
-import React, { memo, useCallback, useEffect, useState } from 'react'
+import React, { memo, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigation } from '@react-navigation/native'
 import AddIcon from '@assets/images/add.svg'
-import { Linking } from 'react-native'
 import Box from '../../../components/Box'
 import Text from '../../../components/Text'
 import Button from '../../../components/Button'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
-import { EXPLORER_BASE_URL } from '../../../utils/config'
-import { getAddress } from '../../../utils/secureAccount'
 import Fade from '../../../components/Fade'
 
 const HotspotsEmpty = () => {
   const { t } = useTranslation()
   const navigation = useNavigation<RootNavigationProp>()
-  const [accountAddress, setAccountAddress] = useState<string>()
-
-  useEffect(() => {
-    getAddress().then(setAccountAddress)
-  }, [])
 
   const addHotspot = useCallback(
     () => navigation.push('HotspotSetup'),
     [navigation],
   )
 
-  const openExplorer = useCallback(
-    () => Linking.openURL(`${EXPLORER_BASE_URL}/accounts/${accountAddress}`),
-    [accountAddress],
-  )
   return (
     <Fade>
       <Box
@@ -38,9 +26,6 @@ const HotspotsEmpty = () => {
         backgroundColor="primaryBackground"
       >
         <Text variant="h2">{t('hotspots.empty.title')}</Text>
-        <Text variant="body1" marginTop="ms">
-          {t('hotspots.empty.body')}
-        </Text>
         <Button
           onPress={addHotspot}
           height={48}
@@ -49,13 +34,6 @@ const HotspotsEmpty = () => {
           title={t('hotspots.empty.hotspots.add')}
           Icon={AddIcon}
         />
-        <Text variant="body1" marginTop="l">
-          {t('hotspots.view_activity')}
-          <Text variant="body1" color="primary" onPress={openExplorer}>
-            {t('hotspots.explorer')}
-          </Text>
-          {t('generic.period')}
-        </Text>
       </Box>
     </Fade>
   )

@@ -1,6 +1,7 @@
-import React, { useEffect, memo, useMemo } from 'react'
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React, { useEffect, memo, useMemo, useCallback } from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { useNavigation } from '@react-navigation/native'
+import { RouteProp, useNavigation } from '@react-navigation/native'
 import { useSelector } from 'react-redux'
 import Hotspots from '../../features/hotspots/root/HotspotsNavigator'
 import { TabBarIconType, MainTabType, RootNavigationProp } from './tabTypes'
@@ -41,29 +42,44 @@ const MainTabs = () => {
     [isLocked],
   )
 
+  const tabBarOptions = useMemo(
+    () => ({
+      showLabel: false,
+      style: {
+        backgroundColor: surfaceContrast,
+        paddingHorizontal: wp(12),
+      },
+    }),
+    [surfaceContrast],
+  )
+
+  type Options = {
+    route: RouteProp<Record<string, any>, string>
+    navigation: any
+  }
+
+  const screenOptions = useCallback(
+    ({ route }: Options) => ({
+      tabBarIcon: ({ focused, color, size }: TabBarIconType) => {
+        return (
+          <TabBarIcon
+            name={route.name as MainTabType}
+            focused={focused}
+            color={color}
+            size={Math.min(size, 22)}
+          />
+        )
+      },
+    }),
+    [],
+  )
+
   return (
     <MainTab.Navigator
       sceneContainerStyle={sceneContainerStyle}
       initialRouteName="Hotspots"
-      tabBarOptions={{
-        showLabel: false,
-        style: {
-          backgroundColor: surfaceContrast,
-          paddingHorizontal: wp(12),
-        },
-      }}
-      screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, color, size }: TabBarIconType) => {
-          return (
-            <TabBarIcon
-              name={route.name as MainTabType}
-              focused={focused}
-              color={color}
-              size={Math.min(size, 22)}
-            />
-          )
-        },
-      })}
+      tabBarOptions={tabBarOptions}
+      screenOptions={screenOptions}
     >
       <MainTab.Screen name="Hotspots" component={Hotspots} />
       <MainTab.Screen name="More" component={More} />

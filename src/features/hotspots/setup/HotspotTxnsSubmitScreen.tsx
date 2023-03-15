@@ -67,6 +67,8 @@ const HotspotTxnsSubmitScreen = () => {
         solanaTxnIds,
       })
 
+      // TODO: Show txns on solana explorer?
+
       setPendingTxn(
         pendingAssertTxn?.hash ||
           pendingGatewayTxn?.hash ||
