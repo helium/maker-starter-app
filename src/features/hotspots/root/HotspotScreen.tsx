@@ -7,7 +7,6 @@ import React, {
   useState,
 } from 'react'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
-import animalName from 'angry-purple-tiger'
 import { useTranslation } from 'react-i18next'
 import { useOnboarding } from '@helium/react-native-sdk'
 import {
@@ -22,10 +21,7 @@ import Toast from 'react-native-simple-toast'
 import { useSelector } from 'react-redux'
 import { useAsync } from 'react-async-hook'
 import { FadeIn } from 'react-native-reanimated'
-import {
-  HotspotType as HotspotNetworkType,
-  OnboardingRecord,
-} from '@helium/onboarding'
+import { OnboardingRecord } from '@helium/onboarding'
 import { HotspotStackParamList } from './hotspotTypes'
 import Text from '../../../components/Text'
 import SafeAreaBox from '../../../components/SafeAreaBox'
@@ -50,15 +46,11 @@ import { useAppDispatch } from '../../../store/store'
 import { getGeocodedAddress } from '../../../store/location/locationSlice'
 import { RootState } from '../../../store/rootReducer'
 import useDeveloperOptions from '../../../store/developer/useDeveloperOptions'
+import useHotspot from '../../../store/hotspot/useHotspot'
+import formatLocationName from '../../../utils/formatLocationName'
 
 type Route = RouteProp<HotspotStackParamList, 'HotspotScreen'>
-type HotspotDetails = {
-  lat?: number
-  lng?: number
-  location?: string
-  elevation?: number
-  gain?: number
-}
+
 const LIST_ITEM_HEIGHT = 80
 const SETTINGS_DATA = ['diagnostics', 'wifi'] as const
 export type Setting = (typeof SETTINGS_DATA)[number]
@@ -68,15 +60,14 @@ export type KabobItem = (typeof KABOB_DATA)[number]
 
 const HotspotScreen = () => {
   const {
-    params: { hotspot },
+    params: {
+      hotspot: { address, animalName },
+    },
   } = useRoute<Route>()
   const { t } = useTranslation()
   const nav = useNavigation<RootNavigationProp>()
-  const [iotDetails, setIotDetails] = useState<HotspotDetails>()
-  const [mobileDetails, setMobileDetails] = useState<HotspotDetails>()
   const [menuType, setMenuType] = useState<'kabob' | 'settings'>('settings')
-  const [loadingDetails, setLoadingDetails] = useState(true)
-  const { getHotspotDetails, getOnboardingRecord } = useOnboarding()
+  const { getOnboardingRecord } = useOnboarding()
   const colors = useColors()
   const bottomSheetModalRef = useRef<BottomSheetModal>(null)
   const { bottom } = useSafeAreaInsets()
@@ -87,55 +78,61 @@ const HotspotScreen = () => {
   const locations = useSelector((state: RootState) => state.location.locations)
   const { status } = useDeveloperOptions()
   const [onboardingRecord, setOnboardingRecord] = useState<OnboardingRecord>()
+  const { hotspotDetails, loading, getHotspotDetails } = useHotspot(address)
 
   useAsync(async () => {
-    const nextRecord = await getOnboardingRecord(hotspot.address)
+    const nextRecord = await getOnboardingRecord(address)
     if (nextRecord) {
       setOnboardingRecord(nextRecord)
     }
-  }, [hotspot.address])
+  }, [address])
 
   const centerCoordinate = useMemo(() => {
-    const lat = iotDetails?.lat || hotspot.lat
-    const lng = iotDetails?.lng || hotspot.lng
+    if (!hotspotDetails?.lat || !hotspotDetails?.lng) return
 
-    if (!lat || !lng) return
+    const { lat, lng } = hotspotDetails
 
     return [lng, lat]
-  }, [iotDetails, hotspot])
-
-  const location = useMemo(
-    () => iotDetails?.location || hotspot.location,
-    [iotDetails?.location, hotspot.location],
-  )
+  }, [hotspotDetails])
 
   const locationName = useMemo(() => {
-    if (iotDetails && !centerCoordinate) {
+    if (loading === false && !centerCoordinate) {
       return t('hotspots.noLocation')
     }
 
-    if (location && locations[location]) {
-      const loc = locations[location]
-      return loc.city || loc.region || loc.subregion || loc.country
+    if (hotspotDetails?.location && locations[hotspotDetails?.location]) {
+      const loc = locations[hotspotDetails?.location]
+      return formatLocationName(loc)
     }
-  }, [centerCoordinate, iotDetails, location, locations, t])
+    return ' '
+  }, [centerCoordinate, hotspotDetails?.location, loading, locations, t])
 
   useEffect(() => {
-    if (!location || !centerCoordinate) {
+    if (!hotspotDetails?.location || !centerCoordinate) {
       return
     }
     dispatch(
       getGeocodedAddress({
         lat: centerCoordinate[1],
         lng: centerCoordinate[0],
-        location,
+        location: hotspotDetails?.location,
       }),
     )
-  }, [centerCoordinate, dispatch, location])
+  }, [centerCoordinate, dispatch, hotspotDetails?.location])
 
   const needsOnboarding = useMemo(
-    () => !loadingDetails && !iotDetails,
-    [iotDetails, loadingDetails],
+    () => !loading && !hotspotDetails,
+    [hotspotDetails, loading],
+  )
+
+  const isIot = useMemo(
+    () => hotspotDetails?.networkTypes?.find((n) => n === 'IOT'),
+    [hotspotDetails?.networkTypes],
+  )
+
+  const isMobile = useMemo(
+    () => hotspotDetails?.networkTypes?.find((n) => n === 'MOBILE'),
+    [hotspotDetails?.networkTypes],
   )
 
   const handleSettingPress = useCallback(
@@ -161,18 +158,16 @@ const HotspotScreen = () => {
 
       switch (item) {
         case 'copyAddress': {
-          Clipboard.setString(hotspot.address)
+          Clipboard.setString(address)
           triggerNotification('success')
-          Toast.show(
-            t('hotspots.copiedToClipboard', { address: hotspot.address }),
-          )
+          Toast.show(t('hotspots.copiedToClipboard', { address }))
           break
         }
         case 'onboardMobile': {
           nav.navigate('HotspotAssert', {
             screen: 'HotspotSetupPickLocationScreen',
             params: {
-              hotspotAddress: hotspot.address,
+              hotspotAddress: address,
               hotspotType: 'Helium',
               hotspotNetworkTypes: ['MOBILE'],
             },
@@ -183,7 +178,7 @@ const HotspotScreen = () => {
           nav.navigate('HotspotAssert', {
             screen: 'HotspotSetupPickLocationScreen',
             params: {
-              hotspotAddress: hotspot.address,
+              hotspotAddress: address,
               hotspotType: 'Helium',
               hotspotNetworkTypes: ['IOT'],
             },
@@ -192,70 +187,34 @@ const HotspotScreen = () => {
         }
       }
     },
-    [hotspot.address, nav, t, triggerNotification],
+    [address, nav, t, triggerNotification],
   )
-
-  const updateHotspotDetails = useCallback(async () => {
-    try {
-      const hotspotMeta = await getHotspotDetails({
-        address: hotspot.address,
-        type: 'IOT', // Both freedomfi and helium support iot
-      })
-      setIotDetails(hotspotMeta)
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      console.error(e)
-    }
-
-    // See if it has been onboarded to the mobile network as well
-    try {
-      const hotspotMeta = await getHotspotDetails({
-        address: hotspot.address,
-        type: 'MOBILE',
-      })
-      setMobileDetails(hotspotMeta)
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      console.error(e)
-    }
-
-    setLoadingDetails(false)
-  }, [getHotspotDetails, hotspot])
 
   useEffect(() => {
     return nav.addListener('focus', () => {
-      updateHotspotDetails()
+      getHotspotDetails()
     })
-  }, [nav, updateHotspotDetails])
+  }, [getHotspotDetails, nav])
 
   const formattedHotspotName = useMemo(() => {
-    if (!hotspot || !hotspot.address) return ''
+    if (!animalName) return ''
 
-    const name = animalName(hotspot.address)
-    const pieces = name.split(' ')
-    if (pieces.length < 3) return name
+    const pieces = animalName.split(' ')
+    if (pieces.length < 3) return animalName
 
     return [`${pieces[0]} ${pieces[1]}`, pieces[2]]
-  }, [hotspot])
+  }, [animalName])
 
   const assertHotspot = useCallback(() => {
-    const networkTypes: HotspotNetworkType[] = []
-    if (iotDetails) {
-      networkTypes.push('IOT')
-    }
-    if (mobileDetails) {
-      networkTypes.push('MOBILE')
-    }
-
     nav.navigate('HotspotAssert', {
       screen: 'HotspotSetupPickLocationScreen',
       params: {
-        hotspotAddress: hotspot.address,
+        hotspotAddress: address,
         hotspotType: 'Helium',
-        hotspotNetworkTypes: networkTypes,
+        hotspotNetworkTypes: hotspotDetails?.networkTypes,
       },
     })
-  }, [hotspot.address, iotDetails, mobileDetails, nav])
+  }, [address, hotspotDetails?.networkTypes, nav])
 
   const transferHotspot = useCallback(
     () =>
@@ -263,28 +222,28 @@ const HotspotScreen = () => {
       // @ts-ignore
       nav.navigate('TransferHotspot', {
         screen: 'TransferHotspotScreen',
-        params: { hotspotAddress: hotspot.address },
+        params: { hotspotAddress: address },
       }),
-    [hotspot.address, nav],
+    [address, nav],
   )
 
   const moreData = useMemo((): KabobItem[] => {
     if (
       status !== 'complete' ||
       onboardingRecord?.maker.name.toLowerCase().includes('helium') ||
-      (iotDetails && mobileDetails)
+      (isIot && isMobile)
     ) {
       return ['copyAddress']
     }
 
-    if (iotDetails) {
+    if (isIot) {
       return ['copyAddress', 'onboardMobile']
     }
-    if (mobileDetails) {
+    if (isMobile) {
       return ['copyAddress', 'onboardIot']
     }
-    return ['copyAddress']
-  }, [iotDetails, mobileDetails, onboardingRecord, status])
+    return ['copyAddress', 'onboardMobile', 'onboardIot']
+  }, [isIot, isMobile, onboardingRecord?.maker.name, status])
 
   const snapPoints = useMemo(() => {
     const handleHeight = 72
@@ -367,9 +326,24 @@ const HotspotScreen = () => {
   }, [])
 
   const showNetworks = useMemo(
-    () => status === 'complete' && !loadingDetails,
-    [loadingDetails, status],
+    () => status === 'complete' && !loading,
+    [loading, status],
   )
+
+  const footerText = useMemo(() => {
+    if (!showNetworks && !onboardingRecord) {
+      return ''
+    }
+
+    if (!showNetworks) {
+      return onboardingRecord?.maker?.name
+    }
+    if (showNetworks && onboardingRecord) {
+      return `${onboardingRecord?.maker?.name || ''} - ${isIot ? 'IOT ' : ''}${
+        isMobile ? 'MOBILE' : ''
+      }`
+    }
+  }, [isIot, isMobile, onboardingRecord, showNetworks])
 
   return (
     <SafeAreaBox
@@ -380,31 +354,6 @@ const HotspotScreen = () => {
       <Box flex={1} justifyContent="center">
         <Box flexDirection="row" marginStart="s" alignItems="center">
           <Box>
-            {/* {!onboardingRecord?.maker?.name && (
-            <Text
-              variant="body1"
-              color="primaryText"
-              numberOfLines={1}
-              adjustsFontSizeToFit
-              marginBottom="xs"
-            >
-              {' '}
-            </Text>
-          )}
-          {onboardingRecord?.maker?.name && (
-            <ReAnimatedBox entering={FadeIn}>
-              <Text
-                variant="body1"
-                color="primaryText"
-                numberOfLines={1}
-                marginBottom="xs"
-                adjustsFontSizeToFit
-                fontWeight="100"
-              >
-                {onboardingRecord.maker.name}
-              </Text>
-            </ReAnimatedBox>
-          )} */}
             <Text
               fontSize={29}
               lineHeight={31}
@@ -468,7 +417,7 @@ const HotspotScreen = () => {
           entering={DelayedFadeIn}
         >
           <HotspotLocationPreview
-            loading={(!hotspot.lat || !hotspot.lng) && loadingDetails}
+            loading={(!hotspotDetails?.lat || !hotspotDetails?.lng) && loading}
             movable
             zoomLevel={14}
             mapCenter={centerCoordinate}
@@ -492,7 +441,7 @@ const HotspotScreen = () => {
         />
       </Box>
 
-      {loadingDetails && (
+      {loading && (
         <Text
           variant="body1"
           color="primaryText"
@@ -503,7 +452,7 @@ const HotspotScreen = () => {
           {' '}
         </Text>
       )}
-      {!loadingDetails && (
+      {!loading && (
         <ReAnimatedBox entering={FadeIn}>
           <Text
             variant="body1"
@@ -514,9 +463,7 @@ const HotspotScreen = () => {
             textAlign="center"
             fontWeight="100"
           >
-            {`${onboardingRecord?.maker?.name || ''} - ${
-              showNetworks && iotDetails ? 'IOT ' : ''
-            }${showNetworks && mobileDetails ? 'MOBILE' : ''}`}
+            {footerText}
           </Text>
         </ReAnimatedBox>
       )}

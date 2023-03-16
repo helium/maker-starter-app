@@ -10,19 +10,15 @@ import useHotspots from '../../../store/hotspot/useHotspots'
 const HotspotsScreen = () => {
   const nav = useNavigation<RootNavigationProp>()
   const { status, cluster } = useDeveloperOptions()
-  const {
-    hotspots,
-    loadingHotspots,
-    getHotspots: fetchTheHotspots,
-  } = useHotspots()
+  const { hotspots, loadingHotspots, getHotspots } = useHotspots()
 
   useEffect(() => {
     const unsubscribe = nav.addListener('focus', () => {
-      fetchTheHotspots()
+      getHotspots()
     })
 
     return unsubscribe
-  }, [fetchTheHotspots, nav, status, cluster])
+  }, [getHotspots, nav, status, cluster])
 
   return (
     <Box backgroundColor="primaryBackground" flex={1}>

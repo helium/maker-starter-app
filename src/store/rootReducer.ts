@@ -20,7 +20,7 @@ const devPersistConfig = {
 const hotspotsPersistConfig = {
   key: hotspotSlice.name,
   storage: AsyncStorage,
-  whitelist: ['hotspots'],
+  whitelist: ['hotspots', 'hotspotDetails'],
 }
 
 const rootReducer = combineReducers({

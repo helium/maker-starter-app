@@ -6,12 +6,13 @@ import { RootState } from '../rootReducer'
 import { useAppDispatch } from '../store'
 import useMount from '../../utils/useMount'
 
-const useDeveloperOptions = () => {
+const useDeveloperOptions = (refresh = true) => {
   const devOptions = useSelector((state: RootState) => state.developer)
 
   const dispatch = useAppDispatch()
 
   useMount(() => {
+    if (!refresh) return
     dispatch(getStatus())
   })
 

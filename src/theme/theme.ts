@@ -85,7 +85,7 @@ export const darkThemeColors = {
   primaryText: palette.black,
   secondaryBackground: palette.offWhite,
   secondary: palette.graySteel,
-  secondaryText: palette.black,
+  secondaryText: palette.graySteel,
   error: palette.redMain,
   surface: palette.white,
   surfaceText: palette.black,

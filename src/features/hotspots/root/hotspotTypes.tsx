@@ -4,9 +4,16 @@ import { StackNavigationProp } from '@react-navigation/stack'
 
 export type Hotspot = {
   address: string
+  animalName: string
+}
+
+export type HotspotDetail = {
   lat?: number
   lng?: number
   location?: string
+  elevation?: number
+  gain?: number
+  networkTypes?: HotspotType[]
 }
 
 export type HotspotStackParamList = {
