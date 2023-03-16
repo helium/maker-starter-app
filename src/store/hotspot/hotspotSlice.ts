@@ -1,5 +1,5 @@
 import { Hotspot as HeliumHotspot } from '@helium/http'
-import { HotspotType } from '@helium/onboarding'
+import { HotspotType, OnboardingRecord } from '@helium/onboarding'
 import { HotspotMeta } from '@helium/react-native-sdk'
 import { Asset } from '@helium/spl-utils'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
@@ -13,8 +13,13 @@ export type State = {
   loadingHotspots: boolean
   hotspots?: Hotspot[]
   hotspotDetails: Record<string, HotspotDetail>
+  onboardingRecords: Record<string, OnboardingRecord>
 }
-const initialState: State = { loadingHotspots: true, hotspotDetails: {} }
+const initialState: State = {
+  loadingHotspots: true,
+  hotspotDetails: {},
+  onboardingRecords: {},
+}
 
 const getHotspotAddress = (item: Asset | HeliumHotspot): string => {
   const asset = item as Asset
@@ -61,6 +66,24 @@ export const fetchHotspots = createAsyncThunk<
   })
 })
 
+export const fetchOnboarding = createAsyncThunk<
+  OnboardingRecord | null,
+  {
+    fetcher: (hotspotAddress: string) => Promise<OnboardingRecord | null>
+    hotspotAddress: string
+  }
+>(
+  'hotspot/fetchOnboarding',
+  async ({ fetcher, hotspotAddress }, { getState }) => {
+    const { hotspot } = (await getState()) as { hotspot: State }
+
+    const prevRecord = hotspot.onboardingRecords[hotspotAddress]
+    if (prevRecord) return prevRecord
+
+    return fetcher(hotspotAddress)
+  },
+)
+
 const hotspotSlice = createSlice({
   name: 'hotspot',
   initialState,
@@ -93,6 +116,10 @@ const hotspotSlice = createSlice({
         })
       }
       state.loadingHotspots = false
+    })
+    builder.addCase(fetchOnboarding.fulfilled, (state, { payload, meta }) => {
+      if (!payload) return
+      state.onboardingRecords[meta.arg.hotspotAddress] = payload
     })
   },
 })

@@ -8,7 +8,6 @@ import React, {
 } from 'react'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
-import { useOnboarding } from '@helium/react-native-sdk'
 import {
   BottomSheetBackdrop,
   BottomSheetBackdropProps,
@@ -19,9 +18,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import Clipboard from '@react-native-community/clipboard'
 import Toast from 'react-native-simple-toast'
 import { useSelector } from 'react-redux'
-import { useAsync } from 'react-async-hook'
 import { FadeIn } from 'react-native-reanimated'
-import { OnboardingRecord } from '@helium/onboarding'
 import { HotspotStackParamList } from './hotspotTypes'
 import Text from '../../../components/Text'
 import SafeAreaBox from '../../../components/SafeAreaBox'
@@ -67,7 +64,6 @@ const HotspotScreen = () => {
   const { t } = useTranslation()
   const nav = useNavigation<RootNavigationProp>()
   const [menuType, setMenuType] = useState<'kabob' | 'settings'>('settings')
-  const { getOnboardingRecord } = useOnboarding()
   const colors = useColors()
   const bottomSheetModalRef = useRef<BottomSheetModal>(null)
   const { bottom } = useSafeAreaInsets()
@@ -77,15 +73,8 @@ const HotspotScreen = () => {
   const dispatch = useAppDispatch()
   const locations = useSelector((state: RootState) => state.location.locations)
   const { status } = useDeveloperOptions()
-  const [onboardingRecord, setOnboardingRecord] = useState<OnboardingRecord>()
-  const { hotspotDetails, loading, getHotspotDetails } = useHotspot(address)
-
-  useAsync(async () => {
-    const nextRecord = await getOnboardingRecord(address)
-    if (nextRecord) {
-      setOnboardingRecord(nextRecord)
-    }
-  }, [address])
+  const { hotspotDetails, loading, getHotspotDetails, onboardingRecord } =
+    useHotspot(address)
 
   const centerCoordinate = useMemo(() => {
     if (!hotspotDetails?.lat || !hotspotDetails?.lng) return

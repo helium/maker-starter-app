@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { HotspotMeta, useOnboarding } from '@helium/react-native-sdk'
 import { HotspotType } from '@helium/onboarding'
-import hotspotSlice from './hotspotSlice'
+import hotspotSlice, { fetchOnboarding } from './hotspotSlice'
 import { RootState } from '../rootReducer'
 import { useAppDispatch } from '../store'
 import useDeveloperOptions from '../developer/useDeveloperOptions'
@@ -13,7 +13,7 @@ const useHotspot = (address: string, opts?: Opts) => {
   const hotspot = useSelector((state: RootState) => state.hotspot)
   const dispatch = useAppDispatch()
   const { status } = useDeveloperOptions(false)
-  const { getHotspotDetails: fetcher } = useOnboarding()
+  const { getHotspotDetails: fetcher, getOnboardingRecord } = useOnboarding()
   const [loading, setLoading] = useState<boolean>()
 
   const getHotspotDetails = useCallback(async () => {
@@ -64,6 +64,12 @@ const useHotspot = (address: string, opts?: Opts) => {
   }, [address, dispatch, fetcher, loading, status])
 
   useMount(() => {
+    dispatch(
+      fetchOnboarding({
+        fetcher: getOnboardingRecord,
+        hotspotAddress: address,
+      }),
+    )
     if (!opts?.fetchOnMount) {
       return
     }
@@ -74,6 +80,7 @@ const useHotspot = (address: string, opts?: Opts) => {
     loading,
     getHotspotDetails,
     hotspotDetails: hotspot.hotspotDetails[address],
+    onboardingRecord: hotspot.onboardingRecords[address],
   }
 }
 
