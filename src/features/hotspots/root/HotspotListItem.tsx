@@ -1,5 +1,4 @@
 import React, { memo, useEffect, useMemo } from 'react'
-import animalName from 'angry-purple-tiger'
 import { useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 import Text from '../../../components/Text'
@@ -14,8 +13,8 @@ import { getGeocodedAddress } from '../../../store/location/locationSlice'
 import { RootState } from '../../../store/rootReducer'
 import formatLocationName from '../../../utils/formatLocationName'
 
-type Props = { onPress: () => void; address: string }
-const HotspotListItem = ({ onPress, address }: Props) => {
+type Props = { onPress: () => void; address: string; animalName: string }
+const HotspotListItem = ({ onPress, address, animalName }: Props) => {
   const { t } = useTranslation()
   const dispatch = useAppDispatch()
   const colors = useColors()
@@ -60,7 +59,7 @@ const HotspotListItem = ({ onPress, address }: Props) => {
       >
         <Box flex={1}>
           <Text variant="body1" color="primaryText">
-            {animalName(address)}
+            {animalName}
           </Text>
           <Text variant="body3" color="secondaryText">
             {locationName}

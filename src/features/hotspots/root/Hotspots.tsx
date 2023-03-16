@@ -33,7 +33,11 @@ const Hotspots = ({ hotspots, loading }: Props) => {
     // eslint-disable-next-line react/no-unused-prop-types
     ({ item }: { item: Hotspot }) => {
       return (
-        <HotspotListItem address={item.address} onPress={handleNav(item)} />
+        <HotspotListItem
+          address={item.address}
+          animalName={item.animalName}
+          onPress={handleNav(item)}
+        />
       )
     },
     [handleNav],
