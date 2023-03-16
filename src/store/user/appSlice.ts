@@ -94,6 +94,7 @@ const appSlice = createSlice({
       { payload: token }: PayloadAction<string>,
     ) => {
       state.walletLinkToken = token
+      state.isLoggedIn = true
       setSecureItem('walletLinkToken', token)
     },
     lock: (state, action: PayloadAction<boolean>) => {
