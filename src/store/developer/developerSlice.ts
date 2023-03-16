@@ -17,24 +17,21 @@ const initialState: State = {
   cluster: 'mainnet-beta',
 }
 
-export const getStatus = createAsyncThunk(
-  'developer/getGetStatus',
-  async () => {
-    let migrationStatus: SolanaStatus = 'complete'
+export const getStatus = createAsyncThunk('developer/getStatus', async () => {
+  let migrationStatus: SolanaStatus = 'complete'
 
-    try {
-      const response = (await (await fetch(SENTINEL_BASE_URL)).json()) as {
-        migrationStatus: SolanaStatus
-      }
+  try {
+    const response = (await (await fetch(SENTINEL_BASE_URL)).json()) as {
+      migrationStatus: SolanaStatus
+    }
 
-      if (response?.migrationStatus) {
-        migrationStatus = response.migrationStatus
-      }
-    } catch {}
+    if (response?.migrationStatus) {
+      migrationStatus = response.migrationStatus
+    }
+  } catch {}
 
-    return migrationStatus
-  },
-)
+  return migrationStatus
+})
 
 const developerSlice = createSlice({
   name: 'developer',

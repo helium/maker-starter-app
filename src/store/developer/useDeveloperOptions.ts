@@ -1,21 +1,20 @@
 import { useMemo } from 'react'
 import Config from 'react-native-config'
 import { useSelector } from 'react-redux'
-import { getStatus, SolanaStatus } from '../store/developer/developerSlice'
-import { RootState } from '../store/rootReducer'
-import { useAppDispatch } from '../store/store'
-import useMount from './useMount'
+import { getStatus, SolanaStatus } from './developerSlice'
+import { RootState } from '../rootReducer'
+import { useAppDispatch } from '../store'
+import useMount from '../../utils/useMount'
 
-const useDeveloperOptions = () => {
+const useDeveloperOptions = (refresh = true) => {
   const devOptions = useSelector((state: RootState) => state.developer)
 
   const dispatch = useAppDispatch()
 
   useMount(() => {
+    if (!refresh) return
     dispatch(getStatus())
   })
-
-  // TODO: UPDATE APP CENTER SCRIPT FOR CONIG VARS
 
   const solanaRpcEndpoint = useMemo(() => {
     let endpoint: string | undefined

@@ -67,7 +67,7 @@ const HotspotTxnsSubmitScreen = () => {
         solanaTxnIds,
       })
 
-      // TODO: Show txns on solana explorer?
+      // TODO: Show txns on solana explorer? Not sure what to do if multiple? Just view their account?
 
       setPendingTxn(
         pendingAssertTxn?.hash ||

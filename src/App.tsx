@@ -33,7 +33,7 @@ import { navigationRef } from './navigation/navigator'
 import useMount from './utils/useMount'
 import { getAddress } from './utils/secureAccount'
 import globalStyles from './theme/globalStyles'
-import useDeveloperOptions from './utils/useDeveloperOptions'
+import useDeveloperOptions from './store/developer/useDeveloperOptions'
 
 SplashScreen.preventAutoHideAsync().catch(() => {
   /* reloading the app might trigger some race conditions, ignore them */
