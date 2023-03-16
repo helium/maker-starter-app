@@ -4,6 +4,7 @@ import AsyncStorage from '@react-native-community/async-storage'
 import appSlice from './user/appSlice'
 import locationSlice from './location/locationSlice'
 import developerSlice from './developer/developerSlice'
+import hotspotSlice from './hotspot/hotspotSlice'
 
 const locationPersistConfig = {
   key: locationSlice.name,
@@ -16,6 +17,12 @@ const devPersistConfig = {
   storage: AsyncStorage,
 }
 
+const hotspotsPersistConfig = {
+  key: hotspotSlice.name,
+  storage: AsyncStorage,
+  whitelist: ['hotspots'],
+}
+
 const rootReducer = combineReducers({
   app: appSlice.reducer,
   [locationSlice.name]: persistReducer(
@@ -25,6 +32,10 @@ const rootReducer = combineReducers({
   [developerSlice.name]: persistReducer(
     devPersistConfig,
     developerSlice.reducer,
+  ),
+  [hotspotSlice.name]: persistReducer(
+    hotspotsPersistConfig,
+    hotspotSlice.reducer,
   ),
 })
 

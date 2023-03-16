@@ -49,7 +49,7 @@ import { DelayedFadeIn } from '../../../utils/animations'
 import { useAppDispatch } from '../../../store/store'
 import { getGeocodedAddress } from '../../../store/location/locationSlice'
 import { RootState } from '../../../store/rootReducer'
-import useDeveloperOptions from '../../../utils/useDeveloperOptions'
+import useDeveloperOptions from '../../../store/developer/useDeveloperOptions'
 
 type Route = RouteProp<HotspotStackParamList, 'HotspotScreen'>
 type HotspotDetails = {
