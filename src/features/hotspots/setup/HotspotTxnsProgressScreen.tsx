@@ -27,12 +27,16 @@ const HotspotTxnsProgressScreen = () => {
     useOnboarding()
 
   const navToHeliumAppForSigning = useCallback(
-    async (onboardTransactions?: string[]) => {
+    async (opts?: {
+      onboardTransactions?: string[]
+      addGatewayTxn?: string
+      assertLocationTxn?: string
+    }) => {
       const token = await getSecureItem('walletLinkToken')
       if (!token) throw new Error('Token Not found')
 
       const solanaTransactions = [
-        ...(onboardTransactions || []),
+        ...(opts?.onboardTransactions || []),
         ...(params.solanaTransactions || []),
       ].join(',')
 
@@ -44,8 +48,9 @@ const HotspotTxnsProgressScreen = () => {
       if (solanaTransactions.length) {
         updateParams.solanaTransactions = solanaTransactions
       } else {
-        updateParams.addGatewayTxn = params.addGatewayTxn
-        updateParams.assertLocationTxn = params.assertLocationTxn
+        updateParams.addGatewayTxn = opts?.addGatewayTxn || params.addGatewayTxn
+        updateParams.assertLocationTxn =
+          opts?.assertLocationTxn || params.assertLocationTxn
       }
 
       const url = createUpdateHotspotUrl(updateParams)
@@ -76,18 +81,22 @@ const HotspotTxnsProgressScreen = () => {
       hotspotMakerAddress: onboardingRecord?.maker.address || '',
     })
 
-    const { solanaTransactions } = await getOnboardTransactions({
-      txn: params.addGatewayTxn,
-      hotspotAddress: params.hotspotAddress,
-      hotspotTypes,
-      lat: last(params.coords),
-      lng: first(params.coords),
-      elevation: params.elevation,
-      decimalGain: params.gain,
-    })
-    if (!solanaTransactions) return
+    const { solanaTransactions, addGatewayTxn, assertLocationTxn } =
+      await getOnboardTransactions({
+        txn: params.addGatewayTxn,
+        hotspotAddress: params.hotspotAddress,
+        hotspotTypes,
+        lat: last(params.coords),
+        lng: first(params.coords),
+        elevation: params.elevation,
+        decimalGain: params.gain,
+      })
 
-    navToHeliumAppForSigning(solanaTransactions)
+    navToHeliumAppForSigning({
+      onboardTransactions: solanaTransactions,
+      addGatewayTxn,
+      assertLocationTxn,
+    })
   }, [
     createHotspot,
     getOnboardTransactions,
