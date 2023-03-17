@@ -12,6 +12,7 @@ import { RootNavigationProp } from '../../../navigation/main/tabTypes'
 import SafeAreaBox from '../../../components/SafeAreaBox'
 import { HotspotSetupStackParamList } from './hotspotSetupTypes'
 import TouchableOpacityBox from '../../../components/TouchableOpacityBox'
+import ActivityIndicator from '../../../components/ActivityIndicator'
 
 type Route = RouteProp<HotspotSetupStackParamList, 'HotspotTxnsSubmitScreen'>
 
@@ -25,7 +26,9 @@ const HotspotTxnsSubmitScreen = () => {
     'init',
   )
   const [error, setError] = useState('')
-  const [pendingTxn, setPendingTxn] = useState<string>()
+  const [pendingGatewayTxn, setPendingGatewayTxn] = useState<string>()
+  const [pendingTransferTxn, setPendingTransferTxn] = useState<string>()
+  const [pendingAssertTxn, setPendingAssertTxn] = useState<string>()
 
   useAsync(async () => {
     if (submitted.current) return
@@ -41,15 +44,20 @@ const HotspotTxnsSubmitScreen = () => {
       solanaTransactions = params.solanaTransactions?.split(',') || []
     }
 
+    setState('loading')
+
+    console.log('.........submit transactions.................')
+
+    console.log({
+      addGatewayTxn: params.gatewayTxn,
+      assertLocationTxn: params.assertTxn,
+      hotspotAddress: params.gatewayAddress,
+      solanaTransactions,
+      transferHotspotTxn: params.transferTxn,
+    })
+
     try {
-      setState('loading')
-      console.log('.........submit transactions.................')
-      const {
-        pendingAssertTxn,
-        pendingGatewayTxn,
-        pendingTransferTxn,
-        solanaTxnIds,
-      } = await submitTransactions({
+      const txnIds = await submitTransactions({
         addGatewayTxn: params.gatewayTxn,
         assertLocationTxn: params.assertTxn,
         hotspotAddress: params.gatewayAddress,
@@ -59,34 +67,27 @@ const HotspotTxnsSubmitScreen = () => {
       setState('success')
 
       console.log('.........submit transactions finished.................')
-
-      console.log({
-        pendingAssertTxn,
-        pendingGatewayTxn,
-        pendingTransferTxn,
-        solanaTxnIds,
-      })
+      console.log(txnIds)
 
       // TODO: Show txns on solana explorer? Not sure what to do if multiple? Just view their account?
 
-      setPendingTxn(
-        pendingAssertTxn?.hash ||
-          pendingGatewayTxn?.hash ||
-          pendingTransferTxn?.hash,
-      )
+      setPendingGatewayTxn(txnIds.pendingGatewayTxn?.hash)
+      setPendingAssertTxn(txnIds.pendingAssertTxn?.hash)
+      setPendingTransferTxn(txnIds.pendingTransferTxn?.hash)
     } catch (e) {
       setState('error')
-      setError(JSON.stringify(e))
+      setError(String(e))
       console.log('.........submit transactions error.................')
       console.log({ e })
     }
   }, [])
 
-  const viewPending = useCallback(() => {
-    Linking.openURL(
-      `https://api.helium.io/v1/pending_transactions/${pendingTxn}`,
-    )
-  }, [pendingTxn])
+  const viewPending = useCallback(
+    (hash: string) => () => {
+      Linking.openURL(`https://api.helium.io/v1/pending_transactions/${hash}`)
+    },
+    [],
+  )
 
   return (
     <SafeAreaBox
@@ -95,6 +96,11 @@ const HotspotTxnsSubmitScreen = () => {
       padding="lx"
       paddingTop="xxl"
     >
+      {state === 'loading' && (
+        <Box flex={1} alignItems="center" justifyContent="center">
+          <ActivityIndicator />
+        </Box>
+      )}
       {state === 'success' && (
         <>
           <Box flex={1} alignItems="center" paddingTop="xxl">
@@ -107,26 +113,42 @@ const HotspotTxnsSubmitScreen = () => {
               </Text>
             </Box>
           </Box>
-          {pendingTxn && (
+          {pendingGatewayTxn && (
             <TouchableOpacityBox
-              onPress={viewPending}
-              padding="lx"
+              onPress={viewPending(pendingGatewayTxn)}
+              paddingVertical="lx"
               alignSelf="center"
             >
               <Text variant="body1">
-                {t('hotspot_setup.progress.view_pending')}
+                {t('hotspot_setup.progress.view_pending_add')}
               </Text>
             </TouchableOpacityBox>
           )}
-          <DebouncedButton
-            onPress={() => navigation.navigate('MainTabs')}
-            variant="primary"
-            width="100%"
-            mode="contained"
-            title={t('hotspot_setup.progress.next')}
-          />
+          {pendingAssertTxn && (
+            <TouchableOpacityBox
+              onPress={viewPending(pendingAssertTxn)}
+              paddingVertical="lx"
+              alignSelf="center"
+            >
+              <Text variant="body1">
+                {t('hotspot_setup.progress.view_pending_assert')}
+              </Text>
+            </TouchableOpacityBox>
+          )}
         </>
       )}
+      {pendingTransferTxn && (
+        <TouchableOpacityBox
+          onPress={viewPending(pendingTransferTxn)}
+          paddingVertical="lx"
+          alignSelf="center"
+        >
+          <Text variant="body1">
+            {t('hotspot_setup.progress.view_pending_transfer')}
+          </Text>
+        </TouchableOpacityBox>
+      )}
+
       {state === 'error' && (
         <>
           <Box flex={1} alignItems="center" paddingTop="xxl">
@@ -139,15 +161,16 @@ const HotspotTxnsSubmitScreen = () => {
               </Text>
             </Box>
           </Box>
-          <DebouncedButton
-            onPress={() => navigation.navigate('MainTabs')}
-            variant="primary"
-            width="100%"
-            mode="contained"
-            title={t('hotspot_setup.progress.next')}
-          />
         </>
       )}
+      <DebouncedButton
+        onPress={() => navigation.navigate('MainTabs')}
+        marginTop="lx"
+        variant="primary"
+        width="100%"
+        mode="contained"
+        title={t('hotspot_setup.progress.next')}
+      />
     </SafeAreaBox>
   )
 }

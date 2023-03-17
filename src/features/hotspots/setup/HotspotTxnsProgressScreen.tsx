@@ -117,7 +117,15 @@ const HotspotTxnsProgressScreen = () => {
   )
 
   const handleTxns = useCallback(
-    (onboardTransactions?: string[]) => {
+    ({
+      onboardTransactions,
+      addGatewayTxn,
+      assertLocationTxn,
+    }: {
+      onboardTransactions?: string[]
+      addGatewayTxn?: string
+      assertLocationTxn?: string
+    }) => {
       const solanaTransactions = [
         ...(onboardTransactions || []),
         ...(params.solanaTransactions || []),
@@ -131,8 +139,9 @@ const HotspotTxnsProgressScreen = () => {
       if (solanaTransactions.length) {
         updateParams.solanaTransactions = solanaTransactions
       } else {
-        updateParams.addGatewayTxn = params.addGatewayTxn
-        updateParams.assertLocationTxn = params.assertLocationTxn
+        updateParams.addGatewayTxn = addGatewayTxn || params.addGatewayTxn
+        updateParams.assertLocationTxn =
+          assertLocationTxn || params.assertLocationTxn
       }
 
       if (token) {
@@ -156,18 +165,22 @@ const HotspotTxnsProgressScreen = () => {
       networkTypes = getHotspotTypes(onboardingRecord?.maker.name)
     }
 
-    const { solanaTransactions } = await getOnboardTransactions({
-      txn: params.addGatewayTxn,
-      hotspotAddress: params.hotspotAddress,
-      hotspotTypes: networkTypes,
-      lat: last(params.coords),
-      lng: first(params.coords),
-      elevation: params.elevation,
-      decimalGain: params.gain,
-    })
-    if (!solanaTransactions) return
+    const { solanaTransactions, addGatewayTxn, assertLocationTxn } =
+      await getOnboardTransactions({
+        txn: params.addGatewayTxn,
+        hotspotAddress: params.hotspotAddress,
+        hotspotTypes: networkTypes,
+        lat: last(params.coords),
+        lng: first(params.coords),
+        elevation: params.elevation,
+        decimalGain: params.gain,
+      })
 
-    handleTxns(solanaTransactions)
+    handleTxns({
+      onboardTransactions: solanaTransactions,
+      addGatewayTxn,
+      assertLocationTxn,
+    })
   }, [
     createHotspot,
     getOnboardTransactions,
@@ -180,7 +193,7 @@ const HotspotTxnsProgressScreen = () => {
     if (params.addGatewayTxn) {
       handleAddGateway()
     } else {
-      handleTxns()
+      handleTxns({})
     }
   })
 

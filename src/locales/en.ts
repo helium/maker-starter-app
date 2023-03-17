@@ -393,7 +393,9 @@ export default {
       title: 'Power Up',
     },
     progress: {
-      view_pending: 'View Pending Transaction',
+      view_pending_add: 'View Pending Add Gateway',
+      view_pending_assert: 'View Pending Assert Location',
+      view_pending_transfer: 'View Pending Transfer',
       next: 'Go to Wallet',
       subtitle:
         'This can take a few minutes so feel free to close this screen.',
