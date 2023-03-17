@@ -43,7 +43,13 @@ const HotspotLocationPreview = ({
   zoomLevel = 17,
 }: Props) => {
   const map = useRef<MapboxGL.MapView>(null)
+  const cameraRef = useRef<MapboxGL.Camera>(null)
   const [coords, setCoords] = useState(mapCenter)
+
+  useEffect(() => {
+    if (!mapCenter) return
+    cameraRef.current?.moveTo(mapCenter)
+  }, [mapCenter])
 
   useEffect(() => {
     if (mapCenter === coords) return
@@ -97,6 +103,7 @@ const HotspotLocationPreview = ({
       >
         {mapCenter && (
           <MapboxGL.Camera
+            ref={cameraRef}
             defaultSettings={{
               centerCoordinate: mapCenter,
               zoomLevel,
