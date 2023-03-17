@@ -59,7 +59,7 @@ const Button = ({
 
     if (mode === 'contained') {
       if (variant === 'secondary') {
-        return 'secondaryText'
+        return 'surfaceContrastText'
       }
       return 'surfaceContrastText'
     }
