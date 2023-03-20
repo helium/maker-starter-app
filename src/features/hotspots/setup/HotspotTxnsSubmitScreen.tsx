@@ -28,7 +28,10 @@ const HotspotTxnsSubmitScreen = () => {
 
     submitted.current = true
 
-    const solanaTransactions = params.solanaTransactions?.split(',') || []
+    let solanaTransactions: string[] = []
+    if (params.solanaTransactions) {
+      solanaTransactions = params.solanaTransactions?.split(',') || []
+    }
     try {
       const {
         pendingAssertTxn,
