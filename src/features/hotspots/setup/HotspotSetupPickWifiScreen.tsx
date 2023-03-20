@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { uniq } from 'lodash'
 import { useAnalytics } from '@segment/analytics-react-native'
 import {
+  Account,
   HotspotMeta,
   useHotspotBle,
   useOnboarding,
@@ -101,8 +102,8 @@ const HotspotSetupPickWifiScreen = () => {
 
   const navSkip = useCallback(async () => {
     const token = await getSecureItem('walletLinkToken')
-    if (!token) return
     const address = await getAddress()
+    if (!token || !address) return
 
     const onboardingRecord = await getOnboardingRecord(hotspotAddress)
 
@@ -122,7 +123,11 @@ const HotspotSetupPickWifiScreen = () => {
       })
     }
 
-    if (hotspot && hotspot.owner === address) {
+    if (
+      hotspot &&
+      (hotspot.owner === address ||
+        hotspot.owner === Account.heliumAddressToSolAddress(address))
+    ) {
       navigation.replace('OwnedHotspotErrorScreen')
     } else if (hotspot && hotspot.owner !== address) {
       navigation.replace('NotHotspotOwnerErrorScreen')

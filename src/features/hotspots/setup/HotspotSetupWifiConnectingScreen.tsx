@@ -5,6 +5,7 @@ import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
 import { useAnalytics } from '@segment/analytics-react-native'
 import {
+  Account,
   BleError,
   HotspotMeta,
   useHotspotBle,
@@ -64,6 +65,7 @@ const HotspotSetupWifiConnectingScreen = () => {
 
   const goToNextStep = useCallback(async () => {
     const address = await getAddress()
+    if (!address) return
 
     const onboardingRecord = await getOnboardingRecord(hotspotAddress)
 
@@ -82,7 +84,11 @@ const HotspotSetupWifiConnectingScreen = () => {
       })
     }
 
-    if (hotspot && hotspot.owner === address) {
+    if (
+      hotspot &&
+      (hotspot.owner === address ||
+        hotspot.owner === Account.heliumAddressToSolAddress(address))
+    ) {
       navigation.replace('OwnedHotspotErrorScreen')
     } else if (hotspot && hotspot.owner !== address) {
       navigation.replace('NotHotspotOwnerErrorScreen')
