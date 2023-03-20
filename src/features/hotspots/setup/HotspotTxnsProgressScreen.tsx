@@ -36,8 +36,12 @@ const HotspotTxnsProgressScreen = () => {
   const rootNav = useNavigation<RootNavigationProp>()
   const nav = useNavigation<HotspotAssertNavigationProp>()
   const { primaryText } = useColors()
-  const { createHotspot, getOnboardTransactions, getOnboardingRecord } =
-    useOnboarding()
+  const {
+    createHotspot,
+    getOnboardTransactions,
+    getOnboardingRecord,
+    getHotspotDetails,
+  } = useOnboarding()
   const { result: token } = useAsync(getSecureItem, ['walletLinkToken'])
 
   const navToHeliumAppForSigning = useCallback(
@@ -154,35 +158,52 @@ const HotspotTxnsProgressScreen = () => {
   )
 
   const handleAddGateway = useCallback(async () => {
-    if (!params.addGatewayTxn || !params.hotspotAddress) return
+    const { addGatewayTxn, hotspotAddress } = params
+    if (!addGatewayTxn || !hotspotAddress) return
 
     // This creates the hotspot, signing not required
     await createHotspot(params.addGatewayTxn)
 
-    const onboardingRecord = await getOnboardingRecord(params.hotspotAddress)
     let networkTypes = params.hotspotNetworkTypes
+    const onboardingRecord = await getOnboardingRecord(hotspotAddress)
     if (!networkTypes) {
       networkTypes = getHotspotTypes(onboardingRecord?.maker.name)
     }
 
-    const { solanaTransactions, addGatewayTxn, assertLocationTxn } =
-      await getOnboardTransactions({
-        txn: params.addGatewayTxn,
-        hotspotAddress: params.hotspotAddress,
-        hotspotTypes: networkTypes,
-        lat: last(params.coords),
-        lng: first(params.coords),
-        elevation: params.elevation,
-        decimalGain: params.gain,
-      })
+    const infos = await Promise.all(
+      networkTypes.map((nt) =>
+        getHotspotDetails({ address: hotspotAddress, type: nt }),
+      ),
+    )
+    // Filter out the networks that have already been onboarded
+    networkTypes = networkTypes.filter((_nt, index) => !infos[index])
+
+    if (networkTypes.length === 0) {
+      throw new Error('Hotspot already added')
+    }
+
+    const {
+      solanaTransactions,
+      addGatewayTxn: updatedAddGateway,
+      assertLocationTxn,
+    } = await getOnboardTransactions({
+      txn: params.addGatewayTxn,
+      hotspotAddress,
+      hotspotTypes: networkTypes,
+      lat: last(params.coords),
+      lng: first(params.coords),
+      elevation: params.elevation,
+      decimalGain: params.gain,
+    })
 
     handleTxns({
       onboardTransactions: solanaTransactions,
-      addGatewayTxn,
+      addGatewayTxn: updatedAddGateway,
       assertLocationTxn,
     })
   }, [
     createHotspot,
+    getHotspotDetails,
     getOnboardTransactions,
     getOnboardingRecord,
     handleTxns,
