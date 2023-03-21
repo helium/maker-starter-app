@@ -50,7 +50,7 @@ export const GLOBAL_OPTS = ['explore', 'search', 'home'] as const
 export type GlobalOpt = (typeof GLOBAL_OPTS)[number]
 
 export const getHotspotTypes = (makerName?: string): HotspotType[] => {
-  if (makerName?.toLowerCase().includes('freedom')) {
+  if (makerName?.toLowerCase().includes('freedomfi')) {
     return ['IOT', 'MOBILE']
   }
   return ['IOT']

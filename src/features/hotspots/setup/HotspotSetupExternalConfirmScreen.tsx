@@ -3,7 +3,13 @@ import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
 import Fingerprint from '@assets/images/fingerprint.svg'
 import { ActivityIndicator } from 'react-native'
-import { AddGateway, useOnboarding } from '@helium/react-native-sdk'
+import {
+  AddGateway,
+  AddGatewayV1,
+  useOnboarding,
+} from '@helium/react-native-sdk'
+import { useAsync } from 'react-async-hook'
+import Address from '@helium/address'
 import BackScreen from '../../../components/BackScreen'
 import Box from '../../../components/Box'
 import Text from '../../../components/Text'
@@ -34,6 +40,16 @@ const HotspotSetupExternalConfirmScreen = () => {
   const [ownerAddress, setOwnerAddress] = useState('')
   const rootNav = useNavigation<RootNavigationProp>()
   const { getOnboardingRecord } = useOnboarding()
+  const [txn, setTxn] = useState<AddGatewayV1>()
+  const { result: onboardingRec, loading } = useAsync(async () => {
+    if (!publicKey) return null
+
+    const nextRecord = await getOnboardingRecord(publicKey)
+
+    animateTransition('HotspotSetupExternalConfirmScreen.GetMac')
+    setMacAddress(nextRecord?.macEth0 || t('generic.unknown'))
+    return nextRecord
+  }, [publicKey, getOnboardingRecord, t])
 
   const handleClose = useCallback(() => rootNav.navigate('MainTabs'), [rootNav])
 
@@ -42,33 +58,28 @@ const HotspotSetupExternalConfirmScreen = () => {
   }, [])
 
   useEffect(() => {
-    if (!publicKey) return
-
-    const getRecord = async () => {
-      const onboardingRecord = await getOnboardingRecord(publicKey)
-      if (!onboardingRecord) return
-      animateTransition('HotspotSetupExternalConfirmScreen.GetMac')
-      setMacAddress(onboardingRecord.macEth0 || t('generic.unknown'))
-    }
-    getRecord()
-  }, [getOnboardingRecord, publicKey, t])
-
-  useEffect(() => {
     if (!params.addGatewayTxn) return
 
     const addGatewayTxn = AddGateway.txnFromString(params.addGatewayTxn)
+    setTxn(addGatewayTxn)
 
     setPublicKey(addGatewayTxn.gateway?.b58 || '')
     setOwnerAddress(addGatewayTxn.owner?.b58 || '')
   }, [params])
 
+  useEffect(() => {
+    if (!onboardingRec || !txn) return
+
+    txn.payer = Address.fromB58(onboardingRec.maker.address)
+  }, [onboardingRec, txn])
+
   const navNext = useCallback(async () => {
     navigation.push('HotspotSetupLocationInfoScreen', {
-      addGatewayTxn: params.addGatewayTxn,
+      addGatewayTxn: txn?.toString() || params.addGatewayTxn,
       hotspotAddress: publicKey,
       hotspotType: params.hotspotType,
     })
-  }, [navigation, params.addGatewayTxn, params.hotspotType, publicKey])
+  }, [navigation, params, publicKey, txn])
 
   return (
     <BackScreen
@@ -165,7 +176,7 @@ const HotspotSetupExternalConfirmScreen = () => {
         mode="contained"
         variant="primary"
         onPress={navNext}
-        disabled={ownerAddress !== address}
+        disabled={ownerAddress !== address || loading}
       />
     </BackScreen>
   )
