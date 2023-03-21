@@ -2,6 +2,7 @@ import { HotspotType as HotspotNetworkType } from '@helium/onboarding'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { HotspotType as HotspotMakerType } from '../../../makers'
 import { HotspotLink } from '../../../providers/appLinkTypes'
+import { HotspotConnectStatus } from './hotspotSetupTypes'
 
 export type HotspotAssertStackParamList = {
   HotspotAssertAddressScreen: undefined | { hotspotTypes?: HotspotMakerType[] }
@@ -45,6 +46,11 @@ export type HotspotAssertStackParamList = {
   OwnedHotspotErrorScreen: undefined
 
   HotspotTxnsSubmitScreen: HotspotLink
+
+  OnboardingErrorScreen: {
+    connectStatus?: HotspotConnectStatus
+    errorLogs?: string[]
+  }
 }
 
 export type HotspotAssertNavigationProp =
