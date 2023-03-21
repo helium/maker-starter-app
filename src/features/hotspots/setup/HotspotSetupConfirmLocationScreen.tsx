@@ -288,7 +288,7 @@ const HotspotSetupConfirmLocationScreen = () => {
               : t('hotspot_setup.location_fee.fee_next')
           }
           mode="contained"
-          variant="secondary"
+          variant="primary"
           onPress={navNext}
           disabled={disabled}
         />
