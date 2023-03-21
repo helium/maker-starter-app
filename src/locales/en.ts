@@ -365,10 +365,23 @@ export default {
       title: 'This Hotspot already has an owner.',
     },
     onboarding_error: {
+      title: 'Onboarding Error',
+      subtitle: {
+        something_went_wrong:
+          'Something went wrong. Please contact the Hotspot manufacturer for next steps.',
+        invalid_onboarding_address:
+          'Your onboarding address is invalid. Please contact the Hotspot manufacturer for next steps.',
+        no_onboarding_key:
+          'Unable to find Hotspot in the Onboarding Server. Please contact the Hotspot manufacturer for next steps.',
+        service_unavailable:
+          "The Onboarding Server is temporarily unavailable and users won't be able to add Hotspots at this time.  Check for updates on status.helium.com and try again later.",
+      },
+      next: 'Exit Setup',
       disconnected:
         'There was an error connecting to the Hotspot. Please try again.',
-      next: 'Exit Setup',
-      title: 'Onboarding Error',
+      title_connect_failed: 'Hotspot Pairing Failed',
+      body_connect_failed:
+        'Hotspot Miner is unable to respond to requests. Please reboot the Hotspot and try again later.',
     },
     owned_hotspot: {
       subtitle_1: 'Looks like this Hotspot is already onboarded.',

@@ -42,7 +42,10 @@ export type HotspotSetupStackParamList = {
     hotspotType: HotspotType
     gatewayAction: GatewayAction
   }
-  OnboardingErrorScreen: { connectStatus: HotspotConnectStatus }
+  OnboardingErrorScreen: {
+    connectStatus?: HotspotConnectStatus
+    errorLogs?: string[]
+  }
   HotspotSetupDiagnostics: undefined
   HotspotSetupPickWifiScreen: {
     gatewayAction: GatewayAction

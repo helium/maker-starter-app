@@ -9,6 +9,7 @@ import OwnedHotspotError from './OwnedHotspotError'
 import AntennaSetupScreen from './AntennaSetupScreen'
 import HotspotTxnsSubmitScreen from './HotspotTxnsSubmitScreen'
 import HotspotAssertAddressScreen from './HotspotAssertAddressScreen'
+import OnboardingErrorScreen from './OnboardingErrorScreen'
 
 const HotspotAssertStack = createStackNavigator()
 
@@ -50,6 +51,10 @@ const HotspotAssert = () => {
       <HotspotAssertStack.Screen
         name="HotspotTxnsSubmitScreen"
         component={HotspotTxnsSubmitScreen}
+      />
+      <HotspotAssertStack.Screen
+        name="OnboardingErrorScreen"
+        component={OnboardingErrorScreen}
       />
     </HotspotAssertStack.Navigator>
   )
