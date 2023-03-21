@@ -5,5 +5,5 @@ export default {
   antennas,
   hotspots,
   id: 1,
-  supportEmail: 'support@helium.com',
+  supportEmail: 'support@nova-labs.com',
 }
