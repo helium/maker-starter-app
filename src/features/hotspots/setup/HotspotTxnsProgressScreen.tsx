@@ -9,6 +9,7 @@ import {
   CreateHotspotExistsError,
   TransferHotspotV2,
   useOnboarding,
+  useSolana,
 } from '@helium/react-native-sdk'
 import { first, last } from 'lodash'
 import { useAsync } from 'react-async-hook'
@@ -45,6 +46,7 @@ const HotspotTxnsProgressScreen = () => {
     getOnboardingRecord,
     getHotspotDetails,
   } = useOnboarding()
+  const { getStatus } = useSolana()
   const { result: token } = useAsync(getSecureItem, ['walletLinkToken'])
 
   const navToHeliumAppForSigning = useCallback(
@@ -193,8 +195,16 @@ const HotspotTxnsProgressScreen = () => {
 
     // This creates the hotspot, signing not required
     try {
-      handleLog({ message: `create hotspot ${hotspotAddress}` })
-      await createHotspot(params.addGatewayTxn)
+      handleLog({
+        message: `create hotspot ${hotspotAddress} - isSolana: ${
+          (await getStatus()).isSolana
+        }\ntxn - \n${params.addGatewayTxn}`,
+      })
+
+      const txId = await createHotspot(params.addGatewayTxn)
+      handleLog({
+        message: `created hotspot? - txId is ${txId}`,
+      })
     } catch (e) {
       handleLog({
         message: `create hotspot failed - ${String(e)}`,
@@ -272,6 +282,7 @@ const HotspotTxnsProgressScreen = () => {
     getHotspotDetails,
     getOnboardTransactions,
     getOnboardingRecord,
+    getStatus,
     handleLog,
     handleTxns,
     params,
