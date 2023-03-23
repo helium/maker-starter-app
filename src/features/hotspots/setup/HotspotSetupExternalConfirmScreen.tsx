@@ -3,13 +3,8 @@ import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
 import Fingerprint from '@assets/images/fingerprint.svg'
 import { ActivityIndicator } from 'react-native'
-import {
-  AddGateway,
-  AddGatewayV1,
-  useOnboarding,
-} from '@helium/react-native-sdk'
+import { AddGateway, useOnboarding } from '@helium/react-native-sdk'
 import { useAsync } from 'react-async-hook'
-import Address from '@helium/address'
 import BackScreen from '../../../components/BackScreen'
 import Box from '../../../components/Box'
 import Text from '../../../components/Text'
@@ -40,8 +35,7 @@ const HotspotSetupExternalConfirmScreen = () => {
   const [ownerAddress, setOwnerAddress] = useState('')
   const rootNav = useNavigation<RootNavigationProp>()
   const { getOnboardingRecord } = useOnboarding()
-  const [txn, setTxn] = useState<AddGatewayV1>()
-  const { result: onboardingRec, loading } = useAsync(async () => {
+  const { loading } = useAsync(async () => {
     if (!publicKey) return null
 
     const nextRecord = await getOnboardingRecord(publicKey)
@@ -61,25 +55,18 @@ const HotspotSetupExternalConfirmScreen = () => {
     if (!params.addGatewayTxn) return
 
     const addGatewayTxn = AddGateway.txnFromString(params.addGatewayTxn)
-    setTxn(addGatewayTxn)
 
     setPublicKey(addGatewayTxn.gateway?.b58 || '')
     setOwnerAddress(addGatewayTxn.owner?.b58 || '')
   }, [params])
 
-  useEffect(() => {
-    if (!onboardingRec || !txn) return
-
-    txn.payer = Address.fromB58(onboardingRec.maker.address)
-  }, [onboardingRec, txn])
-
   const navNext = useCallback(async () => {
     navigation.push('HotspotSetupLocationInfoScreen', {
-      addGatewayTxn: txn?.toString() || params.addGatewayTxn,
+      addGatewayTxn: params.addGatewayTxn,
       hotspotAddress: publicKey,
       hotspotType: params.hotspotType,
     })
-  }, [navigation, params, publicKey, txn])
+  }, [navigation, params, publicKey])
 
   return (
     <BackScreen
