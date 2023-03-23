@@ -26,7 +26,6 @@ import {
 } from '../../../utils/secureAccount'
 import { useColors } from '../../../theme/themeHooks'
 import { DebouncedButton } from '../../../components/Button'
-import useMount from '../../../utils/useMount'
 import { HotspotAssertNavigationProp } from './HotspotAssertTypes'
 import { getHotspotTypes } from '../root/hotspotTypes'
 
@@ -47,7 +46,6 @@ const HotspotTxnsProgressScreen = () => {
     getHotspotDetails,
   } = useOnboarding()
   const { getStatus } = useSolana()
-  const { result: token } = useAsync(getSecureItem, ['walletLinkToken'])
 
   const navToHeliumAppForSigning = useCallback(
     async (updateParams: SignHotspotRequest) => {
@@ -130,10 +128,12 @@ const HotspotTxnsProgressScreen = () => {
       onboardTransactions,
       addGatewayTxn,
       assertLocationTxn,
+      token,
     }: {
       onboardTransactions?: string[]
       addGatewayTxn?: string
       assertLocationTxn?: string
+      token: string
     }) => {
       const solanaTransactions = [
         ...(onboardTransactions || []),
@@ -159,7 +159,7 @@ const HotspotTxnsProgressScreen = () => {
         signTxn(updateParams)
       }
     },
-    [params, token, navToHeliumAppForSigning, signTxn],
+    [params, navToHeliumAppForSigning, signTxn],
   )
 
   const handleLog = useCallback(
@@ -189,112 +189,121 @@ const HotspotTxnsProgressScreen = () => {
     nav.navigate('OnboardingErrorScreen', { errorLogs: logs })
   }, [failed, logs, nav])
 
-  const handleAddGateway = useCallback(async () => {
-    const { addGatewayTxn, hotspotAddress } = params
-    if (!addGatewayTxn || !hotspotAddress) return
+  const handleAddGateway = useCallback(
+    async (token: string) => {
+      const { addGatewayTxn, hotspotAddress } = params
+      if (!addGatewayTxn || !hotspotAddress) return
 
-    // This creates the hotspot, signing not required
-    try {
-      handleLog({
-        message: `create hotspot ${hotspotAddress} - isSolana: ${
-          (await getStatus()).isSolana
-        }\ntxn - \n${params.addGatewayTxn}`,
-      })
-
-      const txId = await createHotspot(params.addGatewayTxn)
-      handleLog({
-        message: `created hotspot? - txId is ${txId}`,
-      })
-    } catch (e) {
-      handleLog({
-        message: `create hotspot failed - ${String(e)}`,
-        catastrophic: e !== CreateHotspotExistsError,
-      })
-    }
-
-    handleLog({ message: 'Getting onboard record' })
-    const onboardingRecord = await getOnboardingRecord(hotspotAddress)
-    if (!onboardingRecord) {
-      handleLog({ message: 'Onboarding Record not Found', catastrophic: true })
-    } else {
-      handleLog({ message: 'Got onboard record' })
-    }
-
-    let networkTypes = params.hotspotNetworkTypes
-    if (!networkTypes) {
-      networkTypes = getHotspotTypes(onboardingRecord?.maker.name)
-      handleLog({ message: `Networks to onboard - ${networkTypes?.join(',')}` })
-    } else {
-      handleLog({
-        message: `Networks to onboard from params - ${networkTypes?.join(',')}`,
-      })
-    }
-
-    const infos = await Promise.all(
-      networkTypes?.map((nt) =>
-        getHotspotDetails({ address: hotspotAddress, type: nt }),
-      ),
-    )
-
-    infos.forEach((info, index) => {
-      if (info) {
+      // This creates the hotspot, signing not required
+      try {
         handleLog({
-          message: `Found existing info for network - ${
-            networkTypes?.[index] || ''
-          }`,
+          message: `create hotspot ${hotspotAddress} - isSolana: ${
+            (await getStatus()).isSolana
+          }\ntxn - \n${params.addGatewayTxn}`,
+        })
+
+        const txId = await createHotspot(params.addGatewayTxn)
+        handleLog({
+          message: `created hotspot? - txId is ${txId}`,
+        })
+      } catch (e) {
+        handleLog({
+          message: `create hotspot failed - ${String(e)}`,
+          catastrophic: e !== CreateHotspotExistsError,
         })
       }
-    })
 
-    // Filter out the networks that have already been onboarded
-    networkTypes = networkTypes?.filter((_nt, index) => !infos[index])
+      handleLog({ message: 'Getting onboard record' })
+      const onboardingRecord = await getOnboardingRecord(hotspotAddress)
+      if (onboardingRecord) {
+        handleLog({ message: 'Got onboard record' })
+      } else {
+        handleLog({ message: 'Could not get onboard record' })
+      }
 
-    if (networkTypes.length === 0) {
-      handleLog({ message: 'Hotspot already added', catastrophic: true })
-    }
+      let networkTypes = params.hotspotNetworkTypes
+      if (!networkTypes) {
+        networkTypes = getHotspotTypes(onboardingRecord?.maker.name)
+        handleLog({
+          message: `Networks to onboard - ${networkTypes?.join(',')}`,
+        })
+      } else {
+        handleLog({
+          message: `Networks to onboard from params - ${networkTypes?.join(
+            ',',
+          )}`,
+        })
+      }
 
-    handleLog({ message: 'Getting onboard transactions' })
-    try {
-      const {
-        solanaTransactions,
-        addGatewayTxn: updatedAddGateway,
-        assertLocationTxn,
-      } = await getOnboardTransactions({
-        txn: params.addGatewayTxn,
-        hotspotAddress,
-        hotspotTypes: networkTypes,
-        lat: last(params.coords),
-        lng: first(params.coords),
-        elevation: params.elevation,
-        decimalGain: params.gain,
+      const infos = await Promise.all(
+        networkTypes?.map((nt) =>
+          getHotspotDetails({ address: hotspotAddress, type: nt }),
+        ),
+      )
+
+      infos.forEach((info, index) => {
+        if (info) {
+          handleLog({
+            message: `Found existing info for network - ${
+              networkTypes?.[index] || ''
+            }`,
+          })
+        }
       })
 
-      handleTxns({
-        onboardTransactions: solanaTransactions,
-        addGatewayTxn: updatedAddGateway,
-        assertLocationTxn,
-      })
-    } catch (e) {
-      handleLog({ message: String(e), catastrophic: true })
-    }
-  }, [
-    createHotspot,
-    getHotspotDetails,
-    getOnboardTransactions,
-    getOnboardingRecord,
-    getStatus,
-    handleLog,
-    handleTxns,
-    params,
-  ])
+      // Filter out the networks that have already been onboarded
+      networkTypes = networkTypes?.filter((_nt, index) => !infos[index])
 
-  useMount(() => {
+      if (networkTypes.length === 0) {
+        handleLog({ message: 'Hotspot already added', catastrophic: true })
+      }
+
+      handleLog({ message: 'Getting onboard transactions' })
+      try {
+        const {
+          solanaTransactions,
+          addGatewayTxn: updatedAddGateway,
+          assertLocationTxn,
+        } = await getOnboardTransactions({
+          txn: params.addGatewayTxn,
+          hotspotAddress,
+          hotspotTypes: networkTypes,
+          lat: last(params.coords),
+          lng: first(params.coords),
+          elevation: params.elevation,
+          decimalGain: params.gain,
+        })
+
+        handleTxns({
+          onboardTransactions: solanaTransactions,
+          addGatewayTxn: updatedAddGateway,
+          assertLocationTxn,
+          token,
+        })
+      } catch (e) {
+        handleLog({ message: String(e), catastrophic: true })
+      }
+    },
+    [
+      createHotspot,
+      getHotspotDetails,
+      getOnboardTransactions,
+      getOnboardingRecord,
+      getStatus,
+      handleLog,
+      handleTxns,
+      params,
+    ],
+  )
+
+  useAsync(async () => {
+    const token = (await getSecureItem('walletLinkToken')) || ''
     if (params.addGatewayTxn) {
-      handleAddGateway()
+      handleAddGateway(token)
     } else {
-      handleTxns({})
+      handleTxns({ token })
     }
-  })
+  }, [])
 
   return (
     <SafeAreaBox
