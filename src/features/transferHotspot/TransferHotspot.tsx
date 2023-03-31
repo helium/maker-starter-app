@@ -28,6 +28,7 @@ import Box from '../../components/Box'
 import ActivityIndicator from '../../components/ActivityIndicator'
 import useAlert from '../../utils/useAlert'
 import { TransferHotspotNavigationProp } from './transferHotspotTypes'
+import ImageBox from '../../components/ImageBox'
 
 type Route = RouteProp<RootStackParamList, 'TransferHotspot'>
 const TransferHotspot = () => {
@@ -175,14 +176,21 @@ const TransferHotspot = () => {
       flex={1}
       paddingHorizontal="m"
     >
-      <Box justifyContent="center" flex={1}>
-        <Text variant="h1" marginBottom="l">
+      <Box justifyContent="center" flex={1} alignItems="center">
+        <ImageBox source={require('assets/images/hotspot.png')} />
+        <Text variant="h1" marginBottom="l" textAlign="center">
           {t('transferHotspot.title')}
         </Text>
-        <Text variant="subtitle1" marginBottom="l" textAlign="center">
+        <Text
+          variant="subtitle1"
+          marginBottom="l"
+          textAlign="center"
+          color="primary"
+        >
           {hotspotName}
         </Text>
         <TextInput
+          width="100%"
           borderRadius="s"
           padding="s"
           backgroundColor="white"

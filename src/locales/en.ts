@@ -75,7 +75,7 @@ export default {
       login_with_helium:
         'Already have the Helium Wallet App?\nTap to get started.',
       subtitle:
-        'Host a Hotspot and earn <b><purple>$HNT</purple></b>,\na new cryptocurrency,\nfor building The People’s Network.',
+        'Host a Hotspot and earn <b><purple>$HNT</purple></b>, a new cryptocurrency, for building The People’s Network.',
       title: 'Welcome\nto Helium',
     },
   },
@@ -501,7 +501,7 @@ export default {
         enablePin: 'Enable PIN',
         requirePin: 'Require PIN',
         resetPin: 'Reset PIN',
-        revealPrivateKey: 'Export Private Key',
+        revealPrivateKey: 'Export Private Key (Migrate Wallet)',
         revealWords: 'Reveal Words',
         title: 'Security',
       },
@@ -551,5 +551,21 @@ export default {
       title: 'Update required',
     },
     copiedToClipboard: 'Copied {{address}} to clipboard',
+  },
+  migrate: {
+    action: 'Migrate your Wallet',
+    skip: 'Skip for now',
+    helium: {
+      title: 'The Helium Hotspot app is changing.',
+      subtitle1: 'Important Notice',
+      subtitle2:
+        'The Hotspot app is now <b>a Helium and FreedomFi Hotspot maintenance only app.</b> Migrate to the Helium Wallet app to view and manage your tokens and rewards.',
+    },
+    solana: {
+      title: 'The Solana Migration is approaching.',
+      subtitle1: 'Your tokens are safe.',
+      subtitle2:
+        'Migrate your wallet to the Helium Wallet app to continue to view and manage your tokens and rewards.',
+    },
   },
 }

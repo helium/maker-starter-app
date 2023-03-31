@@ -42,6 +42,7 @@ export type RootStackParamList = {
 
   ScanStack: undefined
   TransferHotspot: Partial<HotspotLink & { hotspotAddress: string }> | undefined
+  MigrationOnboard: undefined
 }
 
 export type RootNavigationProp = StackNavigationProp<RootStackParamList>

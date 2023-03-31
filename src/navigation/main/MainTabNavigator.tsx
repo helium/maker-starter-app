@@ -19,7 +19,7 @@ const MainTabs = () => {
   const { surfaceContrast } = useColors()
   const navigation = useNavigation<RootNavigationProp>()
   const {
-    app: { isLocked, isSettingUpHotspot },
+    app: { isLocked, isSettingUpHotspot, isOnboarded },
   } = useSelector((state: RootState) => state)
   const dispatch = useAppDispatch()
 
@@ -27,6 +27,12 @@ const MainTabs = () => {
     if (!isLocked) return
     navigation.navigate('LockScreen', { requestType: 'unlock', lock: true })
   }, [isLocked, navigation])
+
+  useEffect(() => {
+    if (!isOnboarded && !isLocked) {
+      navigation.navigate('MigrationOnboard')
+    }
+  }, [isLocked, isOnboarded, navigation])
 
   useEffect(() => {
     if (!isSettingUpHotspot) return

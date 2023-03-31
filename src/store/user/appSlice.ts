@@ -17,6 +17,7 @@ export type AppState = {
   isLoggedIn: boolean
   isRequestingPermission: boolean
   walletLinkToken?: string
+  isOnboarded: boolean
 }
 const initialState: AppState = {
   isSettingUpHotspot: false,
@@ -27,6 +28,7 @@ const initialState: AppState = {
   lastIdle: null,
   isLocked: false,
   isRequestingPermission: false,
+  isOnboarded: false,
 }
 
 type Restore = {
@@ -36,18 +38,25 @@ type Restore = {
   isLocked: boolean
   walletLinkToken?: string
   isLoggedIn: boolean
+  isOnboarded: boolean
 }
 
 export const restoreAppSettings = createAsyncThunk<Restore>(
   'app/restoreAppSettings',
   async () => {
-    const [isPinRequired, authInterval, walletLinkToken, mnemonic] =
-      await Promise.all([
-        getSecureItem('requirePin'),
-        getSecureItem('authInterval'),
-        getSecureItem('walletLinkToken'),
-        getSecureItem('mnemonic'),
-      ])
+    const [
+      isPinRequired,
+      authInterval,
+      walletLinkToken,
+      mnemonic,
+      isOnboarded,
+    ] = await Promise.all([
+      getSecureItem('requirePin'),
+      getSecureItem('authInterval'),
+      getSecureItem('walletLinkToken'),
+      getSecureItem('mnemonic'),
+      getSecureItem('isOnboarded'),
+    ])
     return {
       isPinRequired,
       authInterval: authInterval
@@ -56,6 +65,7 @@ export const restoreAppSettings = createAsyncThunk<Restore>(
       isLocked: isPinRequired,
       walletLinkToken,
       isLoggedIn: !!mnemonic || !!walletLinkToken,
+      isOnboarded,
     } as Restore
   },
 )
@@ -80,6 +90,10 @@ const appSlice = createSlice({
     updateAuthInterval: (state, action: PayloadAction<number>) => {
       state.authInterval = action.payload
       setSecureItem('authInterval', action.payload.toString())
+    },
+    setOnboarded: (state, action: PayloadAction<boolean>) => {
+      state.isOnboarded = action.payload
+      setSecureItem('isOnboarded', action.payload)
     },
     disablePin: (state) => {
       deleteSecureItem('requirePin')

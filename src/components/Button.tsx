@@ -27,7 +27,7 @@ type Props = BoxProps<Theme> & {
 type ButtonVariant = 'primary' | 'secondary' | 'destructive'
 
 const containedBackground = {
-  primary: 'surfaceContrast',
+  primary: 'primary',
   secondary: 'secondary',
   destructive: 'error',
 } as Record<string, Colors>

@@ -16,7 +16,7 @@ const stringKeys = [
 ] as const
 type StringKey = (typeof stringKeys)[number]
 
-const boolKeys = ['requirePin'] as const
+const boolKeys = ['requirePin', 'isOnboarded'] as const
 type BooleanKey = (typeof boolKeys)[number]
 
 export const setSecureItem = async (

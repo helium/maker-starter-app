@@ -7,6 +7,7 @@ import HotspotSetup from '../../features/hotspots/setup/HotspotSetupNavigator'
 import MainTabs from './MainTabNavigator'
 import HotspotAssert from '../../features/hotspots/setup/HotspotAssertNavigator'
 import TransferHotspotNavigator from '../../features/transferHotspot/TransferHotspotNavigator'
+import MigrationOnboard from '../../features/onboarding/migrationOnboard/MigrationOnboard'
 
 const HomeStack = createStackNavigator()
 
@@ -45,6 +46,11 @@ const HomeStackScreen = () => {
       <HomeStack.Screen
         name="LockScreen"
         component={LockScreen}
+        options={{ headerShown: false }}
+      />
+      <HomeStack.Screen
+        name="MigrationOnboard"
+        component={MigrationOnboard}
         options={{ headerShown: false }}
       />
     </HomeStack.Navigator>
