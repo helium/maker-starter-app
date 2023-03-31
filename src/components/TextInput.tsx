@@ -25,6 +25,7 @@ type Props = React.ComponentProps<typeof TextInput> & {
   placeholderTextColor?: Colors
 }
 
+// eslint-disable-next-line react/prop-types
 const TI = ({ variant, placeholderTextColor, ...rest }: Props) => {
   const colors = useColors()
 

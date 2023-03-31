@@ -3,8 +3,12 @@ import { FlatList } from 'react-native'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
 import { uniq } from 'lodash'
-import { useHotspotBle } from '@helium/react-native-sdk'
 import { useAnalytics } from '@segment/analytics-react-native'
+import {
+  HotspotMeta,
+  useHotspotBle,
+  useOnboarding,
+} from '@helium/react-native-sdk'
 import BackScreen from '../../../components/BackScreen'
 import Text from '../../../components/Text'
 import {
@@ -19,13 +23,13 @@ import TouchableOpacityBox from '../../../components/TouchableOpacityBox'
 import Checkmark from '../../../assets/images/check.svg'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
 import { getAddress, getSecureItem } from '../../../utils/secureAccount'
-import { getHotspotDetails } from '../../../utils/appDataClient'
 import {
   getEvent,
   Scope,
   SubScope,
   Action,
 } from '../../../utils/analytics/utils'
+import { getHotpotTypes } from '../root/hotspotTypes'
 
 const WifiItem = ({
   name,
@@ -54,7 +58,7 @@ const WifiItem = ({
       borderBottomLeftRadius={isLast ? 'm' : 'none'}
       borderBottomRightRadius={isLast ? 'm' : 'none'}
     >
-      <Text variant="body2" color="black">
+      <Text variant="body2" color="primaryText">
         {name}
       </Text>
       {icon === 'carot' && <CarotRight color={colors.secondaryBackground} />}
@@ -81,6 +85,7 @@ const HotspotSetupPickWifiScreen = () => {
     },
   } = useRoute<Route>()
   const { readWifiNetworks } = useHotspotBle()
+  const { getHotspotDetails, getOnboardingRecord } = useOnboarding()
 
   const [wifiNetworks, setWifiNetworks] = useState(networks)
   const [connectedWifiNetworks, setConnectedWifiNetworks] =
@@ -99,17 +104,22 @@ const HotspotSetupPickWifiScreen = () => {
     if (!token) return
     const address = await getAddress()
 
-    // Handle "404 not found" exception when onboarding new device
-    let hotspot
-    try {
-      hotspot = await getHotspotDetails(hotspotAddress)
-    } catch (error) {
-      if (error?.status === 404) {
-        // Silencing the 404 error since it means the hotspot is not on chain and
-        // it is needed to move forward to onboarding.
-      } else {
-        throw error
-      }
+    const onboardingRecord = await getOnboardingRecord(hotspotAddress)
+
+    /*
+         TODO: Determine which network types this hotspot supports
+         Could possibly use the maker address
+      */
+    const hotspotTypes = getHotpotTypes({
+      hotspotMakerAddress: onboardingRecord?.maker.address || '',
+    })
+
+    let hotspot: HotspotMeta | undefined
+    if (hotspotTypes.length) {
+      hotspot = await getHotspotDetails({
+        address: hotspotAddress,
+        type: hotspotTypes[0],
+      })
     }
 
     if (hotspot && hotspot.owner === address) {
@@ -123,7 +133,14 @@ const HotspotSetupPickWifiScreen = () => {
         hotspotType,
       })
     }
-  }, [addGatewayTxn, hotspotAddress, navigation, hotspotType])
+  }, [
+    getOnboardingRecord,
+    hotspotAddress,
+    getHotspotDetails,
+    navigation,
+    addGatewayTxn,
+    hotspotType,
+  ])
 
   const navNext = (network: string) => {
     navigation.navigate('HotspotSetupWifiScreen', {

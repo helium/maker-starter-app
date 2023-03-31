@@ -1,4 +1,4 @@
-import React, { useEffect, memo, useMemo, useCallback } from 'react'
+import React, { useEffect, memo, useMemo } from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { useNavigation } from '@react-navigation/native'
 import { useSelector } from 'react-redux'
@@ -7,13 +7,13 @@ import { TabBarIconType, MainTabType, RootNavigationProp } from './tabTypes'
 import TabBarIcon from './TabBarIcon'
 import More from '../../features/moreTab/MoreNavigator'
 import Support from '../../features/support/SupportNavigator'
-import HmDashboard from '../../features/hmDashboard/hmDashboardNavigator'
+// import HmDashboard from '../../features/hmDashboard/hmDashboardNavigator'
 import { RootState } from '../../store/rootReducer'
 import { useColors } from '../../theme/themeHooks'
 import { useAppDispatch } from '../../store/store'
 import { wp } from '../../utils/layout'
 import appSlice from '../../store/user/appSlice'
-import { fetchHotspotsData } from '../../store/hotspots/hotspotsSlice'
+// import { fetchHotspotsData } from '../../store/hotspots/hotspotsSlice'
 import { openDashboardBrowser } from '../../utils/analytics/utils'
 
 const MainTab = createBottomTabNavigator()
@@ -45,44 +45,29 @@ const MainTabs = () => {
     [isLocked],
   )
 
-  const tabBarOptions = useMemo(
-    () => ({
-      showLabel: false,
-      style: {
-        backgroundColor: surfaceContrast,
-        paddingHorizontal: wp(12),
-      },
-    }),
-    [surfaceContrast],
-  )
-
-  const screenOptions = useCallback(
-    ({ route }) => ({
-      tabBarIcon: ({ focused, color, size }: TabBarIconType) => {
-        return (
-          <TabBarIcon
-            name={route.name as MainTabType}
-            focused={focused}
-            color={color}
-            size={Math.min(size, 22)}
-          />
-        )
-      },
-    }),
-    [],
-  )
-
-  const fetchHotspotData = useCallback(
-    () => dispatch(fetchHotspotsData()),
-    [dispatch],
-  )
-
   return (
     <MainTab.Navigator
       sceneContainerStyle={sceneContainerStyle}
       initialRouteName="Hotspots"
-      tabBarOptions={tabBarOptions}
-      screenOptions={screenOptions}
+      tabBarOptions={{
+        showLabel: false,
+        style: {
+          backgroundColor: surfaceContrast,
+          paddingHorizontal: wp(12),
+        },
+      }}
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color, size }: TabBarIconType) => {
+          return (
+            <TabBarIcon
+              name={route.name as MainTabType}
+              focused={focused}
+              color={color}
+              size={Math.min(size, 22)}
+            />
+          )
+        },
+      })}
     >
       <MainTab.Screen
         name="Hotspots"

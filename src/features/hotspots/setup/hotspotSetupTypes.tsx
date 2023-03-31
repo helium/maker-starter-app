@@ -1,5 +1,6 @@
 import { StackNavigationProp } from '@react-navigation/stack'
 import { HotspotType } from '../../../makers'
+import { HotspotLink } from '../../../providers/appLinkTypes'
 
 export type HotspotConnectStatus =
   | 'success'
@@ -44,7 +45,7 @@ export type HotspotSetupStackParamList = {
   HotspotSetupPickWifiScreen: {
     networks: string[]
     connectedNetworks: string[]
-    addGatewayTxn?: string
+    addGatewayTxn: string
     hotspotAddress: string
     hotspotType: HotspotType
   }
@@ -55,37 +56,36 @@ export type HotspotSetupStackParamList = {
   }
   HotspotSetupWifiScreen: {
     network: string
-    addGatewayTxn?: string
+    addGatewayTxn: string
     hotspotAddress: string
     hotspotType: HotspotType
   }
   HotspotSetupWifiConnectingScreen: {
     network: string
     password: string
-    addGatewayTxn?: string
+    addGatewayTxn: string
     hotspotAddress: string
     hotspotType: HotspotType
   }
   HotspotSetupLocationInfoScreen: {
     hotspotType: HotspotType
-    addGatewayTxn?: string
+    addGatewayTxn: string
     hotspotAddress: string
   }
   HotspotSetupPickLocationScreen: {
     hotspotType: HotspotType
-    addGatewayTxn?: string
+    addGatewayTxn: string
     hotspotAddress: string
   }
   AntennaSetupScreen: {
     hotspotType: HotspotType
-    addGatewayTxn?: string
+    addGatewayTxn: string
     hotspotAddress: string
     coords?: number[]
     locationName?: string
   }
   HotspotSetupConfirmLocationScreen: {
-    hotspotType: HotspotType
-    addGatewayTxn?: string
+    addGatewayTxn: string
     hotspotAddress: string
     elevation?: number
     gain?: number
@@ -94,28 +94,23 @@ export type HotspotSetupStackParamList = {
     updateAntennaOnly?: boolean
   }
   HotspotSetupSkipLocationScreen: {
-    addGatewayTxn?: string
+    addGatewayTxn: string
     hotspotAddress: string
     elevation?: number
     gain?: number
   }
   HotspotTxnsProgressScreen: {
-    addGatewayTxn?: string
-    hotspotAddress: string
+    addGatewayTxn: string
+    assertLocationTxn?: string
+    solanaTransactions?: string[]
+    hotspotAddress?: string
     elevation?: number
     gain?: number
     coords?: number[]
-    locationName?: string
-    isAssertion?: boolean
-    updateAntennaOnly?: boolean
   }
   NotHotspotOwnerErrorScreen: undefined
   OwnedHotspotErrorScreen: undefined
-  HotspotTxnsSubmitScreen: {
-    assertTxn?: string
-    gatewayTxn?: string
-    gatewayAddress?: string
-  }
+  HotspotTxnsSubmitScreen: HotspotLink
 }
 
 export type HotspotSetupNavigationProp =

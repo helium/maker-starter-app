@@ -35,7 +35,7 @@ export type RootStackParamList = {
   HotspotSetup: undefined
   HotspotAssert: NavigatorScreenParams<HotspotAssertNavParam>
   ScanStack: undefined
-  TransferHotspot: HotspotLink | HotspotAddressParam | undefined
+  TransferHotspot: Partial<HotspotLink & { hotspotAddress: string }> | undefined
 }
 
 export type RootNavigationProp = StackNavigationProp<RootStackParamList>

@@ -1,46 +1,63 @@
-import React, { memo, useCallback, useEffect, useMemo, useState } from 'react'
-import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
+import React, { memo, useCallback, useEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
-import AddIcon from '@assets/images/add.svg'
-import { useSelector } from 'react-redux'
 import { useAnalytics } from '@segment/analytics-react-native'
 import { Hotspot } from '@helium/http'
+import { Asset, useOnboarding } from '@helium/react-native-sdk'
 import Box from '../../../components/Box'
-import { RootNavigationProp } from '../../../navigation/main/tabTypes'
-import CircularButton from '../../../components/CircularButton'
-import HotspotsList from './HotspotsList'
-import { RootState } from '../../../store/rootReducer'
-import { isHotspot } from '../../../utils/hotspotUtils'
 import useMount from '../../../utils/useMount'
 import { fetchHotspotsData } from '../../../store/hotspots/hotspotsSlice'
 import { useAppDispatch } from '../../../store/store'
+import HotspotsEmpty from './HotspotsEmpty'
+import Hotspots from './Hotspots'
 import { getAddress } from '../../../utils/secureAccount'
+import { RootNavigationProp } from '../../../navigation/main/tabTypes'
+
+const getHotspotAddress = (item: Asset | Hotspot): string => {
+  const asset = item as Asset
+  if (asset?.content?.json_uri) {
+    return asset.content.json_uri.split('/').slice(-1)[0]
+  }
+
+  const hotspot = item as Hotspot
+  return hotspot.address
+}
 
 const HotspotsScreen = () => {
-  const navigation = useNavigation<RootNavigationProp>()
+  const [hotspots, setHotspots] = useState<{ address: string }[]>([])
+  const nav = useNavigation<RootNavigationProp>()
+
+  const { getHotspots } = useOnboarding()
 
   const dispatch = useAppDispatch()
-
-  const hotspots = useSelector((state: RootState) => state.hotspots.hotspots)
 
   useMount(() => {
     dispatch(fetchHotspotsData())
   })
 
-  const addHotspot = useCallback(
-    () => navigation.push('HotspotSetup'),
-    [navigation],
-  )
-
-  const hasHotspots = useMemo(
-    () => !!hotspots.data?.length,
-    [hotspots.data?.length],
-  )
-
-  const handlePresentHotspot = useCallback(async (gateway: Hotspot) => {
-    if (!isHotspot(gateway)) {
+  const fetch = useCallback(async () => {
+    const heliumAddress = await getAddress()
+    if (!heliumAddress) {
+      // TODO: Handle Error
+      return
     }
-  }, [])
+
+    const nextHotspots = await getHotspots({
+      heliumAddress,
+      // makerName: Config.MAKER_NAME,
+    })
+
+    if (!nextHotspots) return
+
+    setHotspots(nextHotspots?.map((h) => ({ address: getHotspotAddress(h) })))
+  }, [getHotspots])
+
+  useEffect(() => {
+    const unsubscribe = nav.addListener('focus', () => {
+      fetch()
+    })
+
+    return unsubscribe
+  }, [fetch, nav])
 
   // Set segment identity
   const { identify } = useAnalytics()
@@ -62,35 +79,11 @@ const HotspotsScreen = () => {
 
   return (
     <Box backgroundColor="primaryBackground" flex={1}>
-      <BottomSheetModalProvider>
-        <Box
-          padding="l"
-          flex={1}
-          justifyContent="center"
-          backgroundColor="primaryBackground"
-          style={{
-            flexDirection: 'column',
-          }}
-        >
-          <Box style={{ flex: 1.8 }} justifyContent="center">
-            <CircularButton
-              onPress={addHotspot}
-              height={90}
-              margin="l"
-              mode="contained"
-              Icon={AddIcon}
-              marginBottom="l"
-            />
-          </Box>
-
-          <Box style={{ flex: 3 }}>
-            <HotspotsList
-              onSelectHotspot={handlePresentHotspot}
-              visible={hasHotspots}
-            />
-          </Box>
-        </Box>
-      </BottomSheetModalProvider>
+      {hotspots.length === 0 ? (
+        <HotspotsEmpty />
+      ) : (
+        <Hotspots hotspots={hotspots} />
+      )}
     </Box>
   )
 }

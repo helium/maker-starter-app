@@ -51,6 +51,11 @@ export default {
       title: 'Set PIN Code',
     },
     generating: 'GENERATING YOUR 12 WORDS...',
+    linkAccount: {
+      stepOne: '1. Download the Wallet App',
+      stepThree: '3. Come back to this app and sign in.',
+      stepTwo: '2. Create account',
+    },
     passphrase: {
       next: 'I have written these down',
       subtitle:
@@ -65,18 +70,11 @@ export default {
     },
     welcome: {
       create_account: 'Create an account on the Helium Network',
-      login_with_helium: 'Already have a Helium Wallet?\nTap to get started.',
+      login_with_helium:
+        'Already have the Helium Wallet App?\nTap to get started.',
       subtitle:
         'Nebra Hotspot currently supports hotspot onboarding, location assertion, and device transfers.\n\n<b>You must also have the official Helium Wallet App installed in order to continue.</b>',
       title: 'Welcome\nto Nebra',
-    },
-    linkAccount: {
-      stepOne: '1. Download a supported Wallet App',
-      stepTwo: '2. Create account',
-      stepThree: '3. Come back to this app and sign in.',
-    },
-    createAccount: {
-      signInWith: 'Sign in with:',
     },
   },
   antennas: {
@@ -113,6 +111,7 @@ export default {
     invalid_password: 'You password is incorrect',
     next: 'Next',
     ok: 'OK',
+    period: '.',
     scan_again: 'Scan Again',
     search_location: 'Search for an address or place',
     skip: 'Skip',
@@ -250,9 +249,9 @@ export default {
       fee_assert: 'Pay Fee & Assert Location',
       gain: '{{gain}} dBi',
       gain_label: 'TX / RX Gain:',
-      register: 'Register Hotspot',
+      next: 'Register Hotspot',
       assert: 'Assert Location',
-      no_funds: 'There is insufficient HNT in your account balance',
+      no_funds: 'There is insufficient funds in your account balance',
       subtitle_fee:
         'You need to pay a $10 Location Fee (in DC) to confirm this location.',
       subtitle_free: 'Your Location Fee ($10) has been prepaid.',
@@ -297,7 +296,7 @@ export default {
       next: 'Go to Wallet',
       subtitle:
         'This can take a few minutes so feel free to close this screen.',
-      title: 'UPDATING HOTSPOT',
+      title: 'REGISTERING TRANSACTION',
     },
     onboard: {
       next: 'Show My Hotspots',
@@ -344,6 +343,10 @@ export default {
       title: 'Wi-Fi',
     },
   },
+  hotspotAssertAddress: {
+    enterHotspot: 'Enter Hotspot Address',
+    title: 'Assert Location',
+  },
   hotspots: {
     view_activity: 'After adding a hotspot, you can view your account on the ',
     explorer: 'Helium Explorer or Helium Wallet',
@@ -360,6 +363,7 @@ export default {
       no_results: 'No Results',
       devices: 'HOTSPOTS',
     },
+    notOnboarded: 'This hotspot has not been onboarded',
     empty: {
       body: 'Follow these instructions to setup your hotspot.',
       hotspots: {
@@ -370,6 +374,9 @@ export default {
 
       title: 'Nebra Hotspot Setup',
     },
+    explorer: 'Helium Explorer',
+    view_activity: 'After adding a Hotspot, you can view your account on the ',
+    title: 'Your Hotspots',
   },
   learn: {
     next: 'Next',
@@ -379,20 +386,20 @@ export default {
       app: {
         language: 'Language',
         signOut: 'Sign Out',
-        signOutWithLink: 'Sign Out - Linked as: {{address}}',
         signOutAlert: {
           body: 'You are signing out of your account.',
           title: 'Warning!',
         },
+        signOutWithLink: 'Sign Out - Linked as: {{address}}',
         title: 'App',
       },
       security: {
         authIntervals: {
-          after_15_min: 'After 15 minutes',
           after_1_hr: 'After 1 hour',
           after_1_min: 'After 1 minute',
           after_4_hr: 'After 4 hours',
           after_5_min: 'After 5 minutes',
+          after_15_min: 'After 15 minutes',
           immediately: 'Immediately',
         },
         enablePin: 'Enable PIN',
@@ -424,14 +431,20 @@ export default {
       title: 'Location Permission',
     },
   },
+  transferHotspot: {
+    enterHotspot: 'Enter Hotspot Address',
+    enterOwner: 'Enter New Owner Address',
+    submit: 'Sign with Helium App',
+    submitComplete: 'Transfer Successfully Submitted!\n Pending Txn Hash:',
+    title: 'Transfer Hotspot',
+  },
   wallet: {
     copiedToClipboard: 'Copied {{address}} to clipboard',
-  },
-  transferHotspot: {
-    title: 'Transfer Hotspot',
-    hotspotAddress: 'Hotspot Address',
-    newOwnerAddress: 'New Owner Address',
-    submit: 'Submit Transaction',
-    submitComplete: 'Transfer Successfully Submitted!\n Pending Txn Hash:',
+    checkLink: {
+      title: 'Update required',
+      message:
+        "You're currently linked to the Helium Hotspot app. You must download the Helium Wallet App and update your link",
+      link: 'Link to Helium Wallet App',
+    },
   },
 }
