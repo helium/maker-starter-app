@@ -69,17 +69,14 @@ const MainTabs = () => {
         },
       })}
     >
-      <MainTab.Screen
-        name="Hotspots"
-        component={Hotspots}
-        listeners={{
-          tabPress: fetchHotspotData,
-        }}
-      />
+      <MainTab.Screen name="Hotspots" component={Hotspots} />
       <MainTab.Screen name="More" component={More} />
       <MainTab.Screen
         name="HmDashboard"
-        // using home screen instead of HmDashboard and open browser
+        // using hotspots screen instead of HmDashboard screen with a dedicated tab
+        // getting google auth functional in an embedded browser is almost
+        // impossible due to google policies unless we get google to trust our app
+        // as a browser.
         component={Hotspots}
         listeners={{
           tabPress: openDashboardBrowser,

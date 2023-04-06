@@ -29,8 +29,8 @@ const WelcomeScreen = () => {
       const url = createWalletLinkUrl({
         universalLink: walletApp?.universalLink,
         requestAppId: getBundleId(),
-        callbackUrl: 'makerappscheme://',
-        appName: 'Maker App',
+        callbackUrl: 'nebrahotspot://',
+        appName: 'Nebra Hotspot',
       })
 
       Linking.openURL(url)
