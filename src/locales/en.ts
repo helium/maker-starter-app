@@ -269,6 +269,11 @@ export default {
         'There was an error connecting to the Hotspot. Please try again.',
       next: 'Exit Setup',
       title: 'Onboarding Error',
+      something_went_wrong: 'something went wrong',
+      unknown_error: {
+        title: 'Transaction Error',
+        subtitle: 'Try later. blockchain or server might be down',
+      },
     },
     owned_hotspot: {
       subtitle_1: 'Looks like this Hotspot is already onboarded.',

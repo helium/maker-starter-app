@@ -73,7 +73,11 @@ const HotspotSetupPickLocationScreen = () => {
 
       const [longitude, latitude] = newCoords
       const [{ street, city }] = await reverseGeocode(latitude, longitude)
-      const name = street && city ? [street, city].join(', ') : 'Loading...'
+      // for some locations street is null when good reverse geocode is not available
+      // shouldn't effect much as cords are still part of transaction
+      const name = city
+        ? [street || 'unknown street', city].join(', ')
+        : 'Loading...'
       setLocationName(name)
     }
   }, [])

@@ -7,13 +7,11 @@ import { TabBarIconType, MainTabType, RootNavigationProp } from './tabTypes'
 import TabBarIcon from './TabBarIcon'
 import More from '../../features/moreTab/MoreNavigator'
 import Support from '../../features/support/SupportNavigator'
-// import HmDashboard from '../../features/hmDashboard/hmDashboardNavigator'
 import { RootState } from '../../store/rootReducer'
 import { useColors } from '../../theme/themeHooks'
 import { useAppDispatch } from '../../store/store'
 import { wp } from '../../utils/layout'
 import appSlice from '../../store/user/appSlice'
-// import { fetchHotspotsData } from '../../store/hotspots/hotspotsSlice'
 import { openDashboardBrowser } from '../../utils/analytics/utils'
 
 const MainTab = createBottomTabNavigator()

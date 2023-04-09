@@ -68,9 +68,19 @@ const HotspotTxnsProgressScreen = () => {
 
   const handleAddGateway = useCallback(async () => {
     if (!params.addGatewayTxn || !params.hotspotAddress) return
-
-    // This creates the hotspot, signing not required
-    await createHotspot(params.addGatewayTxn)
+    try {
+      // This creates the hotspot, signing not required
+      await createHotspot(params.addGatewayTxn)
+    } catch (err) {
+      console.log(err) // this could still happen
+      const screenParams = {
+        title: t('hotspot_setup.onboarding_error.unknown_error.title'),
+        subTitle: t('hotspot_setup.onboarding_error.unknown_error.subtitle'),
+        errorMsg: err.message,
+      }
+      navigation.replace('HotspotUnknownErrorScreen', screenParams)
+      return
+    }
 
     const onboardingRecord = await getOnboardingRecord(params.hotspotAddress)
 
@@ -82,28 +92,41 @@ const HotspotTxnsProgressScreen = () => {
       hotspotMakerAddress: onboardingRecord?.maker.address || '',
     })
 
-    const { solanaTransactions, addGatewayTxn, assertLocationTxn } =
-      await getOnboardTransactions({
-        txn: params.addGatewayTxn,
-        hotspotAddress: params.hotspotAddress,
-        hotspotTypes,
-        lat: last(params.coords),
-        lng: first(params.coords),
-        elevation: params.elevation,
-        decimalGain: params.gain,
-      })
+    try {
+      console.log('before trying to get trasaction')
+      const { solanaTransactions, addGatewayTxn, assertLocationTxn } =
+        await getOnboardTransactions({
+          txn: params.addGatewayTxn,
+          hotspotAddress: params.hotspotAddress,
+          hotspotTypes,
+          lat: last(params.coords),
+          lng: first(params.coords),
+          elevation: params.elevation,
+          decimalGain: params.gain,
+        })
 
-    navToHeliumAppForSigning({
-      onboardTransactions: solanaTransactions,
-      addGatewayTxn,
-      assertLocationTxn,
-    })
+      navToHeliumAppForSigning({
+        onboardTransactions: solanaTransactions,
+        addGatewayTxn,
+        assertLocationTxn,
+      })
+    } catch (err) {
+      console.log(err)
+      const screenParams = {
+        title: t('hotspot_setup.onboarding_error.unknown_error.title'),
+        subTitle: t('hotspot_setup.onboarding_error.unknown_error.subtitle'),
+        errorMsg: err.message,
+      }
+      navigation.replace('HotspotUnknownErrorScreen', screenParams)
+    }
   }, [
     createHotspot,
     getOnboardTransactions,
     getOnboardingRecord,
     navToHeliumAppForSigning,
     params,
+    t,
+    navigation,
   ])
 
   useMount(() => {

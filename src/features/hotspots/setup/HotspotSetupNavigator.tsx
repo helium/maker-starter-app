@@ -14,6 +14,7 @@ import HotspotSetupWifiConnectingScreen from './HotspotSetupWifiConnectingScreen
 import HotspotSetupConfirmLocationScreen from './HotspotSetupConfirmLocationScreen'
 import HotspotSetupPickWifiScreen from './HotspotSetupPickWifiScreen'
 import OnboardingErrorScreen from './OnboardingErrorScreen'
+import HotspotUnknownErrorScreen from './HotspotUnknownErrorScreen'
 import HotspotSetupSkipLocationScreen from './HotspotSetupSkipLocationScreen'
 import NotHotspotOwnerError from './NotHotspotOwnerError'
 import OwnedHotspotError from './OwnedHotspotError'
@@ -114,6 +115,10 @@ const HotspotSetup = () => {
       <HotspotSetupStack.Screen
         name="OwnedHotspotErrorScreen"
         component={OwnedHotspotError}
+      />
+      <HotspotSetupStack.Screen
+        name="HotspotUnknownErrorScreen"
+        component={HotspotUnknownErrorScreen}
       />
       <HotspotSetupStack.Screen
         name="HotspotTxnsSubmitScreen"

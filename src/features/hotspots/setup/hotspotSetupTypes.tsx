@@ -110,6 +110,11 @@ export type HotspotSetupStackParamList = {
   }
   NotHotspotOwnerErrorScreen: undefined
   OwnedHotspotErrorScreen: undefined
+  HotspotUnknownErrorScreen: {
+    title: string
+    subTitle: string
+    errorMsg: string
+  }
   HotspotTxnsSubmitScreen: HotspotLink
 }
 

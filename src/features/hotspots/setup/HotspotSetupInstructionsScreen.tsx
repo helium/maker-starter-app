@@ -32,7 +32,7 @@ const HotspotSetupDiagnosticsScreen = () => {
   const { t, i18n } = useTranslation()
   const navigation = useNavigation<HotspotSetupNavigationProp>()
   const rootNav = useNavigation<RootNavigationProp>()
-  const { enable, getState } = useHotspotBle()
+  const { getState } = useHotspotBle()
   const { showOKCancelAlert } = useAlert()
   const dispatch = useAppDispatch()
   const { requestLocationPermission } = usePermissionManager()
@@ -67,10 +67,18 @@ const HotspotSetupDiagnosticsScreen = () => {
       }
     }
     if (Platform.OS === 'android') {
-      await enable()
+      if (state === 'PoweredOff') {
+        const decision = await showOKCancelAlert({
+          titleKey: 'hotspot_setup.pair.alert_ble_off.title',
+          messageKey: 'hotspot_setup.pair.alert_ble_off.body',
+          okKey: 'generic.go_to_settings',
+        })
+        if (decision) Linking.sendIntent('android.settings.BLUETOOTH_SETTINGS')
+        return false
+      }
       return true
     }
-  }, [enable, getState, showOKCancelAlert])
+  }, [getState, showOKCancelAlert])
 
   useEffect(() => {
     getState()
@@ -117,12 +125,14 @@ const HotspotSetupDiagnosticsScreen = () => {
         gatewayAction,
       })
     } else {
-      await checkBluetooth()
-      await checkLocation()
-      navigation.push('HotspotSetupScanningScreen', {
-        hotspotType,
-        gatewayAction,
-      })
+      const bleChecked = await checkBluetooth()
+      const locationChecked = await checkLocation()
+      if (bleChecked && locationChecked) {
+        navigation.push('HotspotSetupScanningScreen', {
+          hotspotType,
+          gatewayAction,
+        })
+      }
     }
   }, [
     checkBluetooth,

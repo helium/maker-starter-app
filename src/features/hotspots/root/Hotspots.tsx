@@ -42,7 +42,7 @@ const Hotspots = ({ hotspots }: Props) => {
           borderBottomWidth={2}
           onPress={handleNav(item)}
         >
-          <Text variant="body1" flex={1}>
+          <Text variant="body1secondary" flex={1}>
             {animalName(item.address)}
           </Text>
           <Chevron color="#C1CFEE" />
