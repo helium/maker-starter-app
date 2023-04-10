@@ -36,6 +36,7 @@ import { getAddress, getMnemonic } from '../../../utils/secureAccount'
 import useCopyText from '../../../utils/useCopyText'
 import developerSlice from '../../../store/developer/developerSlice'
 import ellipsizeAddress from '../../../utils/ellipsizeAddress'
+import hotspotSlice from '../../../store/hotspot/hotspotSlice'
 
 type Route = RouteProp<RootStackParamList & MoreStackParamList, 'MoreScreen'>
 const MoreScreen = () => {
@@ -43,7 +44,7 @@ const MoreScreen = () => {
   const { params } = useRoute<Route>()
   const dispatch = useAppDispatch()
   const app = useSelector((state: RootState) => state.app, isEqual)
-  const devOptions = useSelector((state: RootState) => state.developer)
+  const devOptions = useSelector((state: RootState) => state.developer, isEqual)
   const authIntervals = useAuthIntervals()
   const navigation = useNavigation<MoreNavigationProp & RootNavigationProp>()
   const spacing = useSpacing()
@@ -56,6 +57,11 @@ const MoreScreen = () => {
 
   const { result: mnemonic } = useAsync(getMnemonic, [])
   const copyText = useCopyText()
+
+  useEffect(() => {
+    // if devOptions change, clear the hotspot caches
+    dispatch(hotspotSlice.actions.reset())
+  }, [devOptions])
 
   useEffect(() => {
     if (!params?.pinVerifiedFor) return
