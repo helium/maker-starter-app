@@ -19,6 +19,7 @@ import Box from '../../../components/Box'
 import SafeAreaBox from '../../../components/SafeAreaBox'
 import { getAddress } from '../../../utils/secureAccount'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
+import ActivityIndicator from '../../../components/ActivityIndicator'
 
 type Route = RouteProp<
   HotspotSetupStackParamList,
@@ -137,9 +138,10 @@ const HotspotSetupWifiConnectingScreen = () => {
     <SafeAreaBox flex={1} backgroundColor="primaryBackground">
       <Box flex={1} justifyContent="center" paddingBottom="xxl">
         <Box marginTop="xl">
-          <Text variant="body1" textAlign="center">
+          <Text variant="body1" textAlign="center" marginBottom="l">
             {t('hotspot_setup.wifi_password.connecting').toUpperCase()}
           </Text>
+          <ActivityIndicator />
         </Box>
       </Box>
     </SafeAreaBox>
