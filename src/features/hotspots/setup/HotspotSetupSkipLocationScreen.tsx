@@ -66,7 +66,7 @@ const HotspotSetupSkipLocationScreen = () => {
           loading={loading}
           title={t('hotspot_setup.location_fee.next')}
           mode="contained"
-          variant="secondary"
+          variant="primary"
           disabled={loading}
           onPress={navNext}
         />
