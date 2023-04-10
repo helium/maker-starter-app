@@ -147,7 +147,11 @@ const HotspotSetupBluetoothSuccess = () => {
         const minFirmware = await getMinFirmware()
         if (!minFirmware) return
         const firmwareDetails = await checkFirmwareCurrent(minFirmware)
-        if (!firmwareDetails.current) {
+        // also check v1.0.0 as min version for solana transition
+        const firmwareDetailsNew = await checkFirmwareCurrent('v1.0.0')
+        const isCurrent = firmwareDetails.current || firmwareDetailsNew.current
+
+        if (!isCurrent) {
           navigation.navigate('FirmwareUpdateNeededScreen', firmwareDetails)
           return
         }

@@ -93,7 +93,6 @@ const HotspotTxnsProgressScreen = () => {
     })
 
     try {
-      console.log('before trying to get trasaction')
       const { solanaTransactions, addGatewayTxn, assertLocationTxn } =
         await getOnboardTransactions({
           txn: params.addGatewayTxn,

@@ -261,15 +261,19 @@ const App = () => {
   return (
     <AnalyticsProvider client={segmentClient}>
       <SolanaProvider
-        cluster="devnet"
         rpcEndpoint={Config.SOLANA_RPC_ENDPOINT || ''}
         heliumWallet={heliumWallet}
-        solanaStatusOverride="complete"
+        // --- devnet provider ---
+        // cluster="devnet"
+        // solanaStatusOverride="complete"
+        // --- mainnet provider ---
+        cluster="mainnet-beta"
       >
         <OnboardingProvider
           baseUrl={
             Config.ONBOARDING_BASE_URL ||
-            'https://onboarding.web.test-helium.com/api'
+            'https://helium-onboarding.nebra.com/api'
+            // 'https://onboarding.dewi.org/api'
           }
         >
           <HotspotBleProvider>

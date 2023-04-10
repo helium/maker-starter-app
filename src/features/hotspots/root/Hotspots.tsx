@@ -35,7 +35,7 @@ const Hotspots = ({ hotspots }: Props) => {
       return (
         <TouchableOpacityBox
           padding="l"
-          backgroundColor="secondaryBackground"
+          backgroundColor="surface"
           flexDirection="row"
           alignItems="center"
           borderBottomColor="white"

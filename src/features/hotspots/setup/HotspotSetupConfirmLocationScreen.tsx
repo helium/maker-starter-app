@@ -211,37 +211,6 @@ const HotspotSetupConfirmLocationScreen = () => {
               </Box>
             </Box>
           )}
-          <Text
-            variant="subtitle1"
-            marginBottom={{ phone: 'xl', smallPhone: 'ms' }}
-            numberOfLines={2}
-            adjustsFontSizeToFit
-            maxFontSizeMultiplier={1.3}
-          >
-            {t('hotspot_setup.location_fee.confirm_location')}
-          </Text>
-
-          <Text
-            variant="body1"
-            marginBottom={{ phone: 'xl', smallPhone: 'ms' }}
-            numberOfLines={1}
-            adjustsFontSizeToFit
-            maxFontSizeMultiplier={1.3}
-            textAlign="center"
-          >
-            {animalName(params.hotspotAddress)}
-          </Text>
-          <Box
-            height={200}
-            borderRadius="l"
-            overflow="hidden"
-            marginBottom={{ phone: 'm', smallPhone: 'ms' }}
-          >
-            <HotspotLocationPreview
-              mapCenter={params.coords}
-              locationName={params.locationName}
-            />
-          </Box>
           <Box
             flexDirection="row"
             justifyContent="space-between"

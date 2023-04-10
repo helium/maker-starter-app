@@ -16,7 +16,6 @@ import SafeAreaBox from '../../components/SafeAreaBox'
 import TextInput from '../../components/TextInput'
 import Button from '../../components/Button'
 import { RootStackParamList } from '../../navigation/main/tabTypes'
-import hotspotTransferSlice from '../../store/hotspots/hotspotTransferSlice'
 import { getAddress, getSecureItem } from '../../utils/secureAccount'
 
 type Route = RouteProp<RootStackParamList, 'TransferHotspot'>
@@ -34,8 +33,6 @@ const TransferHotspot = () => {
   const [hotspotName, setHotspotName] = useState('')
 
   const onSubmit = useCallback(async () => {
-    dispatch(hotspotTransferSlice.actions.reset())
-
     setLoading(true)
 
     // get linked wallet token
