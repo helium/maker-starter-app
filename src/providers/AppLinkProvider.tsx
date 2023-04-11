@@ -28,7 +28,9 @@ import {
 import { useAppDispatch } from '../store/store'
 import appSlice from '../store/user/appSlice'
 
-export const APP_LINK_PROTOCOL = 'helium://'
+const APP_LINK_PROTOCOL = 'helium://'
+const UNIVERSAL_LINK_BASE = 'https://helium.com/'
+const UNIVERSAL_LINK_WWW_BASE = 'https://www.helium.com/'
 
 export const createAppLink = (
   resource: AppLinkCategoryType,
@@ -137,15 +139,23 @@ const useAppLink = () => {
     if (!url) return
 
     const parsed = queryString.parseUrl(url)
-    if (!parsed.url.includes(APP_LINK_PROTOCOL)) return
-
+    if (
+      !parsed.url.includes(APP_LINK_PROTOCOL) &&
+      !parsed.url.includes(UNIVERSAL_LINK_BASE) &&
+      !parsed.url.includes(UNIVERSAL_LINK_WWW_BASE)
+    ) {
+      return
+    }
     const params = queryString.parse(queryString.extract(url))
     const record = AppLinkFields.reduce(
       (obj, k) => ({ ...obj, [k]: parsed.query[k] }),
       params,
     ) as AppLink
 
-    const path = parsed.url.replace(APP_LINK_PROTOCOL, '')
+    const path = parsed.url
+      .replace(APP_LINK_PROTOCOL, '')
+      .replace(UNIVERSAL_LINK_BASE, '')
+      .replace(UNIVERSAL_LINK_WWW_BASE, '')
     const [resourceType, ...rest] = path.split('/')
     if (resourceType && AppLinkCategories.find((k) => k === resourceType)) {
       record.type = resourceType as AppLinkCategoryType
