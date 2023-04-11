@@ -88,6 +88,12 @@ const hotspotSlice = createSlice({
   name: 'hotspot',
   initialState,
   reducers: {
+    reset: (state) => {
+      state.loadingHotspots = false
+      state.hotspots = []
+      state.hotspotDetails = {}
+      state.onboardingRecords = {}
+    },
     updateHotspotDetails: (
       state,
       {
