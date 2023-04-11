@@ -1713,10 +1713,10 @@
   dependencies:
     protobufjs "^6.11.3"
 
-"@helium/react-native-sdk@^2.0.17":
-  version "2.0.17"
-  resolved "https://registry.yarnpkg.com/@helium/react-native-sdk/-/react-native-sdk-2.0.17.tgz#09dad7f3108ce9149adc36664c0ecf3cf2205e7f"
-  integrity sha512-RmB0r6R6ibX79r6kp0LlFwegAQLhrdSM4vjBcY98bogIbRvFIAFayE1/+2590X7yfDpXrJNOzSlTwH6/wwAeFA==
+"@helium/react-native-sdk@^2.0.19":
+  version "2.0.19"
+  resolved "https://registry.yarnpkg.com/@helium/react-native-sdk/-/react-native-sdk-2.0.19.tgz#6b949274229cf7b23b76c4a96b19e01bfe00c062"
+  integrity sha512-3HGmpZRmnmaKpyZdoddPQY6Zf0qL00MkiA6/89WY3xrfc0rXbOg4k3HrEIN8bxtHnwiM8VEi08IJ71dGZf/5cQ==
   dependencies:
     "@azure/core-asynciterator-polyfill" "^1.0.2"
     "@coral-xyz/anchor" "^0.26.0"
