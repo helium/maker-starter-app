@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { useHotspotBle } from '@helium/react-native-sdk'
@@ -44,6 +44,7 @@ const REQUIRED_PERMISSIONS = [
 const isAndroid = Platform.OS === 'android'
 const SCAN_DURATION = 6000
 const HotspotSetupScanningScreen = () => {
+  const canceled = useRef(false)
   const { t } = useTranslation()
   const { primaryText } = useColors()
   const { startScan, stopScan } = useHotspotBle()
@@ -87,11 +88,18 @@ const HotspotSetupScanningScreen = () => {
       })
       await sleep(SCAN_DURATION)
       stopScan()
-      navigation.replace('HotspotSetupPickHotspotScreen', params)
+      if (!canceled.current) {
+        navigation.replace('HotspotSetupPickHotspotScreen', params)
+      }
     }
     scan()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ready])
+
+  const handleCancel = useCallback(() => {
+    canceled.current = true
+    navigation.goBack()
+  }, [navigation])
 
   return (
     <SafeAreaBox
@@ -116,7 +124,7 @@ const HotspotSetupScanningScreen = () => {
       <DebouncedButton
         marginBottom="m"
         justifyContent="flex-end"
-        onPress={navigation.goBack}
+        onPress={handleCancel}
         variant="primary"
         mode="text"
         title={t('hotspot_setup.ble_scan.cancel')}
