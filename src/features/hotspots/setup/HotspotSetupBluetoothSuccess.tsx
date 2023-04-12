@@ -93,8 +93,11 @@ const HotspotSetupBluetoothSuccess = () => {
     const configureHotspot = async () => {
       if (connectStatus !== true) return
 
-      if (gatewayAction === 'diagnostics') {
-        navigation.navigate('HotspotSetupDiagnostics')
+      if (
+        gatewayAction === 'diagnostics' ||
+        gatewayAction === 'diagnostics_wallet_not_linked'
+      ) {
+        navigation.navigate('HotspotSetupDiagnostics', { gatewayAction })
         return
       }
 

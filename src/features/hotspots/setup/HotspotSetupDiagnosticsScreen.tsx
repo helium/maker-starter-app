@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { ScrollView } from 'react-native'
-import { useNavigation } from '@react-navigation/native'
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
 import { useHotspotBle, useOnboarding } from '@helium/react-native-sdk'
 import { useAsync } from 'react-async-hook'
@@ -19,6 +19,7 @@ import { hp } from '../../../utils/layout'
 import Button from '../../../components/Button'
 import sendReport from './sendReport'
 import ActivityIndicator from '../../../components/ActivityIndicator'
+import { HotspotSetupStackParamList } from './hotspotSetupTypes'
 
 const formatMac = (mac: string) =>
   times(6)
@@ -30,7 +31,11 @@ const formatMac = (mac: string) =>
     )
     .join(':')
 
+type Route = RouteProp<HotspotSetupStackParamList, 'HotspotSetupDiagnostics'>
 const HotspotSetupDiagnosticsScreen = () => {
+  const {
+    params: { gatewayAction },
+  } = useRoute<Route>()
   const { t } = useTranslation()
   const { version } = useDevice()
   const rootNav = useNavigation<RootNavigationProp>()
@@ -60,7 +65,13 @@ const HotspotSetupDiagnosticsScreen = () => {
     return getOnboardingRecord(address)
   }, [address])
 
-  const handleClose = useCallback(() => rootNav.navigate('MainTabs'), [rootNav])
+  const handleClose = useCallback(() => {
+    if (gatewayAction === 'diagnostics_wallet_not_linked') {
+      rootNav.popToTop()
+    } else {
+      rootNav.navigate('MainTabs')
+    }
+  }, [gatewayAction, rootNav])
 
   const diskIsReadOnly = useMemo(
     () => (diagnostics?.disk || '') === 'read-only',

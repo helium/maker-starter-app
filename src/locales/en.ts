@@ -71,7 +71,8 @@ export default {
     },
     welcome: {
       create_account: 'Create an account',
-      import_account: 'Import Existing Account',
+      run_diagnostics: 'Skip and run Diagnostics',
+      import_account: 'Link Helium Wallet',
       login_with_helium:
         'Already have the Helium Wallet App?\nTap to get started.',
       subtitle:
