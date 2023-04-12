@@ -46,16 +46,6 @@ const HotspotTxnsSubmitScreen = () => {
 
     setState('loading')
 
-    console.log('.........submit transactions.................')
-
-    console.log({
-      addGatewayTxn: params.gatewayTxn,
-      assertLocationTxn: params.assertTxn,
-      hotspotAddress: params.gatewayAddress,
-      solanaTransactions,
-      transferHotspotTxn: params.transferTxn,
-    })
-
     try {
       const txnIds = await submitTransactions({
         addGatewayTxn: params.gatewayTxn,
@@ -66,19 +56,13 @@ const HotspotTxnsSubmitScreen = () => {
       })
       setState('success')
 
-      console.log('.........submit transactions finished.................')
-      console.log(txnIds)
-
-      // TODO: Show txns on solana explorer? Not sure what to do if multiple? Just view their account?
-
       setPendingGatewayTxn(txnIds.pendingGatewayTxn?.hash)
       setPendingAssertTxn(txnIds.pendingAssertTxn?.hash)
       setPendingTransferTxn(txnIds.pendingTransferTxn?.hash)
     } catch (e) {
       setState('error')
       setError(String(e))
-      console.log('.........submit transactions error.................')
-      console.log({ e })
+      console.error(e)
     }
   }, [])
 

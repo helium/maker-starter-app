@@ -18,10 +18,12 @@ const WelcomeScreen = () => {
   const { walletApp } = useDelegateApps()
   const navigation = useNavigation<OnboardingNavigationProp>()
 
-  const createAccount = useCallback(
-    () => navigation.push('CreateAccount'),
-    [navigation],
-  )
+  const runDiagnostics = useCallback(() => {
+    navigation.push('HotspotSetupScanningScreen', {
+      gatewayAction: 'diagnostics_wallet_not_linked',
+      hotspotType: 'Helium',
+    })
+  }, [navigation])
 
   const importAccount = useCallback(() => {
     try {
@@ -73,14 +75,14 @@ const WelcomeScreen = () => {
         variant="primary"
         width="100%"
         marginBottom="s"
-        onPress={createAccount}
-        title={t('account_setup.welcome.create_account')}
+        onPress={importAccount}
+        title={t('account_setup.welcome.import_account')}
       />
       <Button
-        onPress={importAccount}
         mode="text"
         variant="primary"
-        title={t('account_setup.welcome.import_account')}
+        onPress={runDiagnostics}
+        title={t('account_setup.welcome.run_diagnostics')}
       />
     </SafeAreaBox>
   )
