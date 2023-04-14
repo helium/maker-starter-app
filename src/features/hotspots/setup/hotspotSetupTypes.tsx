@@ -11,7 +11,7 @@ export type HotspotConnectStatus =
   | 'service_unavailable'
   | 'details_fetch_failure'
 
-type GatewayAction = 'addGateway' | 'assertLocation'
+type GatewayAction = 'addGateway' | 'assertLocation' | 'setupWifi'
 
 export type HotspotSetupStackParamList = {
   HotspotSetupSelectionScreen: { gatewayAction: GatewayAction }

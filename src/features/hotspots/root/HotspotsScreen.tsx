@@ -84,13 +84,15 @@ const HotspotsScreen = () => {
 
   return (
     <Box backgroundColor="primaryBackground" flex={1} justifyContent="center">
-      { hotstpotFetched ? 
-      ((hotspots.length === 0) ? (
-        <HotspotsEmpty />
+      {hotstpotFetched ? (
+        hotspots.length === 0 ? (
+          <HotspotsEmpty />
+        ) : (
+          <Hotspots hotspots={hotspots} />
+        )
       ) : (
-        <Hotspots hotspots={hotspots} />
-      )) : 
-      <ActivityIndicator size="small" color={primaryText} />}
+        <ActivityIndicator size="small" color={primaryText} />
+      )}
     </Box>
   )
 }

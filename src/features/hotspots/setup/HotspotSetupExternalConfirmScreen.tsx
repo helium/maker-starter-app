@@ -154,7 +154,7 @@ const HotspotSetupExternalConfirmScreen = () => {
           </Text>
         ) : (
           <Box marginTop="s">
-            <ActivityIndicator color="white" />
+            <ActivityIndicator color={colors.primaryText} />
           </Box>
         )}
       </Box>

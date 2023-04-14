@@ -118,7 +118,6 @@ export default {
     something_went_wrong: 'Something went wrong',
     understand: 'I understand',
     unknown: 'Unknown',
-    period: '.',
     copy: 'Copy',
     address: 'Address',
     hotspot: 'Hotspot',
@@ -354,8 +353,8 @@ export default {
     title: 'Assert Location',
   },
   hotspots: {
-    view_activity: 'After adding a hotspot, you can view your account on the ',
-    explorer: 'Helium Explorer or Helium Wallet',
+    view_activity: 'After adding a Hotspot, you can view your account on the ',
+    explorer: 'Helium Explorer',
     owned: {
       title: 'My Hotspots',
       title_no_hotspots: 'Hotspots',
@@ -376,12 +375,11 @@ export default {
         add: 'Add Hotspot',
         assertLocation: 'Assert Location',
         transfer: 'Transfer Hotspot',
+        updateWifi: 'Update WiFi',
       },
 
       title: 'Nebra Hotspot Setup',
     },
-    explorer: 'Helium Explorer',
-    view_activity: 'After adding a Hotspot, you can view your account on the ',
     title: 'Your Hotspots',
   },
   learn: {

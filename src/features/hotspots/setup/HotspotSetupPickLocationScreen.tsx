@@ -77,7 +77,7 @@ const HotspotSetupPickLocationScreen = () => {
       // shouldn't effect much as cords are still part of transaction
       const name = city
         ? [street || 'unknown street', city].join(', ')
-        : 'Loading...'
+        : 'Address Loading...'
       setLocationName(name)
     }
   }, [])

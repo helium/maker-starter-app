@@ -73,7 +73,7 @@ const HotspotsEmpty = () => {
       />
       <Text variant="body1" marginTop="l">
         {t('hotspots.view_activity')}
-        <Text variant="body1" color="primary" onPress={openExplorer}>
+        <Text variant="body1" color="linkText" onPress={openExplorer}>
           {t('hotspots.explorer')}
         </Text>
         {t('generic.period')}

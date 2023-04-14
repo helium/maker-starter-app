@@ -271,9 +271,8 @@ const App = () => {
       >
         <OnboardingProvider
           baseUrl={
-            Config.ONBOARDING_BASE_URL ||
-            'https://helium-onboarding.nebra.com/api'
-            // 'https://onboarding.dewi.org/api'
+            Config.ONBOARDING_BASE_URL || 'https://onboarding.dewi.org/api'
+            // 'https://helium-onboarding.nebra.com/api'
           }
         >
           <HotspotBleProvider>

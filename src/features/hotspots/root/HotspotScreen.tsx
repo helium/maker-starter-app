@@ -13,6 +13,7 @@ import Button from '../../../components/Button'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
 import Box from '../../../components/Box'
 import { EXPLORER_BASE_URL } from '../../../utils/config'
+import { useColors } from '../../../theme/themeHooks'
 
 type Route = RouteProp<HotspotStackParamList, 'HotspotScreen'>
 type HotspotDetails = {
@@ -27,6 +28,7 @@ const HotspotScreen = () => {
     params: { hotspot },
   } = useRoute<Route>()
   const { t } = useTranslation()
+  const { primaryText } = useColors()
   const navigation = useNavigation<RootNavigationProp>()
   const [details, setDetails] = useState<HotspotDetails>()
   const [loadingDetails, setLoadingDetails] = useState(true)
@@ -74,6 +76,15 @@ const HotspotScreen = () => {
 
     return [`${pieces[0]} ${pieces[1]}`, pieces[2]]
   }, [hotspot])
+
+  const updateWifi = useCallback(() => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    navigation.navigate('HotspotSetup', {
+      screen: 'HotspotSetupScanningScreen',
+      params: { hotspotType: 'IOT', gatewayAction: 'setupWifi' },
+    })
+  }, [navigation])
 
   const assertHotspot = useCallback(() => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -177,9 +188,8 @@ const HotspotScreen = () => {
             </Box>
           </Box>
         )}
-        {!details && <ActivityIndicator size="small" color="white" />}
+        {!details && <ActivityIndicator size="small" color={primaryText} />}
       </Box>
-
       <Button
         onPress={assertHotspot}
         height={48}
@@ -193,6 +203,13 @@ const HotspotScreen = () => {
         marginTop="l"
         mode="contained"
         title={t('hotspots.empty.hotspots.transfer')}
+      />
+      <Button
+        onPress={updateWifi}
+        height={48}
+        marginTop="l"
+        mode="contained"
+        title={t('hotspots.empty.hotspots.updateWifi')}
       />
       <Button
         onPress={viewExplorer}

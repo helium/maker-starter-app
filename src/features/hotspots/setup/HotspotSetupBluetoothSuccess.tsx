@@ -12,6 +12,7 @@ import {
 import { isString, uniq } from 'lodash'
 import { parseWalletLinkToken } from '@helium/wallet-link'
 import Config from 'react-native-config'
+import { compare as versionCompare } from 'compare-versions'
 import Box from '../../../components/Box'
 import HotspotPairingList from '../../../components/HotspotPairingList'
 import Text from '../../../components/Text'
@@ -148,10 +149,14 @@ const HotspotSetupBluetoothSuccess = () => {
         if (!minFirmware) return
         const firmwareDetails = await checkFirmwareCurrent(minFirmware)
         // also check v1.0.0 as min version for solana transition
-        const firmwareDetailsNew = await checkFirmwareCurrent('v1.0.0')
-        const isCurrent = firmwareDetails.current || firmwareDetailsNew.current
-
+        const lightCurrent = versionCompare(
+          firmwareDetails.deviceFirmwareVersion,
+          'v0.9.9',
+          '>=',
+        )
+        const isCurrent = firmwareDetails.current || lightCurrent
         if (!isCurrent) {
+          console.log(isCurrent)
           navigation.navigate('FirmwareUpdateNeededScreen', firmwareDetails)
           return
         }
@@ -190,6 +195,17 @@ const HotspotSetupBluetoothSuccess = () => {
             hotspotAddress,
             hotspotType,
             addGatewayTxn,
+          })
+        } else if (gatewayAction === 'setupWifi') {
+          // TODO:: we are currently differentiating wifi setup
+          // and addgateway action based on wether addGateway is empty
+          // or not. We should have a separate parameter for it.
+          navigation.replace('HotspotSetupPickWifiScreen', {
+            networks,
+            connectedNetworks,
+            hotspotAddress,
+            hotspotType,
+            addGatewayTxn: '',
           })
         } else {
           navigation.replace('HotspotSetupPickLocationScreen', {

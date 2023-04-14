@@ -17,11 +17,13 @@ import TextInput from '../../components/TextInput'
 import Button from '../../components/Button'
 import { RootStackParamList } from '../../navigation/main/tabTypes'
 import { getAddress, getSecureItem } from '../../utils/secureAccount'
+import { useColors } from '../../theme/themeHooks'
 
 type Route = RouteProp<RootStackParamList, 'TransferHotspot'>
 const TransferHotspot = () => {
   const navigation = useNavigation()
   const { t } = useTranslation()
+  const { primaryText } = useColors()
   const { params } = useRoute<Route>()
   const { createTransferTransaction } = useOnboarding()
 
@@ -137,7 +139,7 @@ const TransferHotspot = () => {
         disabled={!hotspotAddress || !newOwnerAddress || loading}
         onPress={onSubmit}
       />
-      {loading && <ActivityIndicator size="small" color="white" />}
+      {loading && <ActivityIndicator size="small" color={primaryText} />}
     </SafeAreaBox>
   )
 }
