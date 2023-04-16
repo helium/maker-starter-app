@@ -186,10 +186,6 @@ const MoreScreen = () => {
           title: t('more.sections.security.revealWords'),
           onPress: handleRevealWords,
         },
-        {
-          title: t('more.sections.security.revealPrivateKey'),
-          onPress: handleRevealPrivateKey,
-        },
       ]
     }
 
@@ -207,6 +203,32 @@ const MoreScreen = () => {
         {
           title: t('more.sections.security.resetPin'),
           onPress: handleResetPin,
+        },
+      ]
+    }
+
+    let account: MoreListItemType = [
+      {
+        title: t('more.sections.account.copyHeliumAddress', {
+          heliumAddress: heliumAddress && ellipsizeAddress(heliumAddress),
+        }),
+        onPress: handleCopyAddress('helium'),
+      },
+      {
+        title: t('more.sections.account.copySolanaAddress', {
+          solanaAddress: solanaAddress && ellipsizeAddress(solanaAddress),
+        }),
+        onPress: handleCopyAddress('solana'),
+      },
+    ]
+
+    if (mnemonic) {
+      account = [
+        ...account,
+        {
+          title: t('more.sections.security.revealPrivateKey'),
+          fontWeight: 'bold',
+          onPress: handleRevealPrivateKey,
         },
       ]
     }
@@ -253,20 +275,7 @@ const MoreScreen = () => {
     return [
       {
         title: t('more.sections.account.title'),
-        data: [
-          {
-            title: t('more.sections.account.copyHeliumAddress', {
-              heliumAddress: heliumAddress && ellipsizeAddress(heliumAddress),
-            }),
-            onPress: handleCopyAddress('helium'),
-          },
-          {
-            title: t('more.sections.account.copySolanaAddress', {
-              solanaAddress: solanaAddress && ellipsizeAddress(solanaAddress),
-            }),
-            onPress: handleCopyAddress('solana'),
-          },
-        ],
+        data: account,
       },
       {
         title: t('more.sections.security.title'),

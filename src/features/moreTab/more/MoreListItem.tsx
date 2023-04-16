@@ -22,10 +22,20 @@ export type MoreListItemType = {
   value?: boolean | string | number
   select?: SelectProps
   openUrl?: string
+  fontWeight?: 'bold' | 'normal'
 }
 
 const MoreListItem = ({
-  item: { title, value, destructive, onToggle, onPress, select, openUrl },
+  item: {
+    title,
+    value,
+    destructive,
+    onToggle,
+    onPress,
+    select,
+    openUrl,
+    fontWeight,
+  },
   isTop = false,
   isBottom = false,
 }: {
@@ -48,7 +58,7 @@ const MoreListItem = ({
   const trackColor = useMemo(
     () => ({
       false: colors.secondaryBackground,
-      true: colors.primaryBackground,
+      true: colors.greenMain,
     }),
     [colors],
   )
@@ -79,7 +89,8 @@ const MoreListItem = ({
     >
       <Text
         variant="body2"
-        color={destructive ? 'secondaryText' : 'primaryText'}
+        color={destructive ? 'redMain' : 'primaryText'}
+        fontWeight={fontWeight || 'normal'}
       >
         {title}
       </Text>
