@@ -166,14 +166,14 @@ export const theme = createTheme({
   textVariants,
   inputVariants: {
     regular: {
-      backgroundColor: 'secondaryBackground',
+      backgroundColor: 'whitePurple',
       fontSize: 18,
       color: 'primaryText',
       borderRadius: 'm',
       padding: 'm',
     },
     secondary: {
-      backgroundColor: 'secondaryBackground',
+      backgroundColor: 'whitePurple',
       height: 52,
       padding: 'm',
       fontSize: 18,

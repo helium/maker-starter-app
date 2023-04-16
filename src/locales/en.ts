@@ -502,7 +502,7 @@ export default {
         enablePin: 'Enable PIN',
         requirePin: 'Require PIN',
         resetPin: 'Reset PIN',
-        revealPrivateKey: 'Export Private Key (Migrate Wallet)',
+        revealPrivateKey: 'Export Private Key to Wallet App',
         revealWords: 'Reveal Words',
         title: 'Security',
       },
@@ -554,19 +554,15 @@ export default {
     copiedToClipboard: 'Copied {{address}} to clipboard',
   },
   migrate: {
-    action: 'Migrate your Wallet',
+    action: 'Download the Helium Wallet App',
     skip: 'Skip for now',
     helium: {
       title: 'The Helium Hotspot app is changing.',
-      subtitle1: 'Important Notice',
-      subtitle2:
-        'The Hotspot app is now <b>a Helium and FreedomFi Hotspot maintenance only app.</b> Migrate to the Helium Wallet app to view and manage your tokens and rewards.',
-    },
-    solana: {
-      title: 'The Solana Migration is approaching.',
       subtitle1: 'Your tokens are safe.',
       subtitle2:
-        'Migrate your wallet to the Helium Wallet app to continue to view and manage your tokens and rewards.',
+        'The Hotspot app is now <b>a Helium and FreedomFi Hotspot maintenance only app.</b>',
+      subtitle3:
+        '<b>Export your wallet private key to the Helium Wallet app in "Settings".</b> You can continue to view and manage your tokens and rewards in the Helium Wallet app.',
     },
   },
 }
