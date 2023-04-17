@@ -222,7 +222,7 @@ const HotspotTxnsProgressScreen = () => {
       }
 
       let networkTypes = params.hotspotNetworkTypes
-      if (!networkTypes) {
+      if (!networkTypes?.length) {
         networkTypes = getHotspotTypes(onboardingRecord?.maker.name)
         handleLog({
           message: `Networks to onboard - ${networkTypes?.join(',')}`,

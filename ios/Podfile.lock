@@ -26,13 +26,13 @@ PODS:
     - ExpoModulesCore
   - EXPermissions (14.1.1):
     - ExpoModulesCore
-  - Expo (47.0.13):
+  - Expo (47.0.14):
     - ExpoModulesCore
   - ExpoHaptics (12.2.1):
     - ExpoModulesCore
   - ExpoKeepAwake (11.0.1):
     - ExpoModulesCore
-  - ExpoLocalAuthentication (13.2.1):
+  - ExpoLocalAuthentication (13.3.0):
     - ExpoModulesCore
   - ExpoModulesCore (1.1.1):
     - React-Core
@@ -462,9 +462,9 @@ PODS:
     - React-Core
   - RNLocalize (1.4.3):
     - React-Core
-  - RNPermissions (3.7.3):
+  - RNPermissions (3.8.0):
     - React-Core
-  - RNReanimated (2.14.4):
+  - RNReanimated (2.15.0):
     - DoubleConversion
     - FBLazyVector
     - FBReactNativeSpec
@@ -783,10 +783,10 @@ SPEC CHECKSUMS:
   EXImageLoader: fd053169a8ee932dd83bf1fe5487a50c26d27c2b
   EXLocation: 74a0ba446f54fd585ea6cfcd19a25644bf22c30d
   EXPermissions: 2291c6736a823b4c680d5bf8e12d3c1c5d11da35
-  Expo: b9fa98bf260992312ee3c424400819fb9beadafe
+  Expo: 5f4240506a147162542178989696e56e3dd72924
   ExpoHaptics: 5156bc5160d8e04c170dd6e645a71154951a2ad9
   ExpoKeepAwake: 69b59d0a8d2b24de9f82759c39b3821fec030318
-  ExpoLocalAuthentication: b870b7a8df5e15b8b0be042185a2bb7764093096
+  ExpoLocalAuthentication: 32919307c66fb3661caefa07e7811a95a7539d7b
   ExpoModulesCore: 485dff3a59b036a33b6050c0a5aea3cf1037fdd1
   EXSecureStore: e8923258361cc406d0401af380f12bd05b2b720f
   EXSplashScreen: 3e989924f61a8dd07ee4ea584c6ba14be9b51949
@@ -802,15 +802,15 @@ SPEC CHECKSUMS:
   Flipper-RSocket: d9d9ade67cbecf6ac10730304bf5607266dd2541
   FlipperKit: cbdee19bdd4e7f05472a66ce290f1b729ba3cb86
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
-  glog: 791fe035093b84822da7f0870421a25839ca7870
+  glog: 04b94705f318337d7ead9e6d17c019bd9b1f6b1b
   helium-react-native-sdk: c3eb8e1f2640f9312c133dbbb80bb9d6db7c8c7b
-  hermes-engine: e86cc2a4cd10ed276799de42ea326bc551115bc7
+  hermes-engine: 2af7b7a59128f250adfd86f15aa1d5a2ecd39995
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   Mapbox-iOS-SDK: a5915700ec84bc1a7f8b3e746d474789e35b7956
   MapboxMobileEvents: 2bc0ca2eedb627b73cf403258dce2b2fa98074a6
   MultiplatformBleAdapter: 5a6a897b006764392f9cef785e4360f54fb9477d
   OpenSSL-Universal: ebc357f1e6bc71fa463ccb2fe676756aff50e88c
-  RCT-Folly: 766adb69dc1d6294bcc94a950a818a87adb3a766
+  RCT-Folly: 0080d0a6ebf2577475bda044aa59e2ca1f909cda
   RCTRequired: e1866f61af7049eb3d8e08e8b133abd38bc1ca7a
   RCTTypeSafety: 27c2ac1b00609a432ced1ae701247593f07f901e
   React: bb3e06418d2cc48a84f9666a576c7b38e89cd7db
@@ -851,8 +851,8 @@ SPEC CHECKSUMS:
   RNDeviceInfo: aad3c663b25752a52bf8fce93f2354001dd185aa
   RNGestureHandler: bad495418bcbd3ab47017a38d93d290ebd406f50
   RNLocalize: 7c7aeda16c01db7a0918981c14875c0a53be9b79
-  RNPermissions: f63bf8e9e2e2697e70d825abb9ba28def8f5c4ea
-  RNReanimated: 6668b0587bebd4b15dd849b99e5a9c70fc12ed95
+  RNPermissions: 3bad5f7035a7b72bc529441a820474bd0b42bc5f
+  RNReanimated: 716842722e1c5b0b7c56cf718e586b7f6a712879
   RNScreens: 4a1af06327774490d97342c00aee0c2bafb497b7
   RNSVG: 302bfc9905bd8122f08966dc2ce2d07b7b52b9f8
   SocketRocket: fccef3f9c5cedea1353a9ef6ada904fde10d6608
@@ -863,4 +863,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 45297ba5bd0c21da30de207070bf006703c5e539
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.12.0

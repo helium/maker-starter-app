@@ -52,7 +52,13 @@ const LIST_ITEM_HEIGHT = 80
 const SETTINGS_DATA = ['diagnostics', 'wifi'] as const
 export type Setting = (typeof SETTINGS_DATA)[number]
 
-const KABOB_DATA = ['copyAddress', 'onboardIot', 'onboardMobile'] as const
+const KABOB_DATA = [
+  'copyAddress',
+  'assertLocation',
+  'transfer',
+  'onboardIot',
+  'onboardMobile',
+] as const
 export type KabobItem = (typeof KABOB_DATA)[number]
 
 const HotspotScreen = () => {
@@ -141,11 +147,39 @@ const HotspotScreen = () => {
     [nav],
   )
 
+  const assertHotspotLocation = useCallback(() => {
+    nav.navigate('HotspotAssert', {
+      screen: 'HotspotSetupPickLocationScreen',
+      params: {
+        hotspotAddress: address,
+        hotspotType: 'Helium',
+        hotspotNetworkTypes: hotspotDetails?.networkTypes,
+      },
+    })
+  }, [address, hotspotDetails?.networkTypes, nav])
+
+  const transferHotspot = useCallback(
+    () =>
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      nav.navigate('TransferHotspot', {
+        screen: 'TransferHotspotScreen',
+        params: { hotspotAddress: address },
+      }),
+    [address, nav],
+  )
+
   const handleKabobPress = useCallback(
     (item: KabobItem) => () => {
       bottomSheetModalRef.current?.dismiss()
 
       switch (item) {
+        case 'assertLocation':
+          assertHotspotLocation()
+          break
+        case 'transfer':
+          transferHotspot()
+          break
         case 'copyAddress': {
           Clipboard.setString(address)
           triggerNotification('success')
@@ -176,7 +210,14 @@ const HotspotScreen = () => {
         }
       }
     },
-    [address, nav, t, triggerNotification],
+    [
+      address,
+      assertHotspotLocation,
+      nav,
+      t,
+      transferHotspot,
+      triggerNotification,
+    ],
   )
 
   useEffect(() => {
@@ -194,44 +235,23 @@ const HotspotScreen = () => {
     return [`${pieces[0]} ${pieces[1]}`, pieces[2]]
   }, [animalName])
 
-  const assertHotspot = useCallback(() => {
-    nav.navigate('HotspotAssert', {
-      screen: 'HotspotSetupPickLocationScreen',
-      params: {
-        hotspotAddress: address,
-        hotspotType: 'Helium',
-        hotspotNetworkTypes: hotspotDetails?.networkTypes,
-      },
-    })
-  }, [address, hotspotDetails?.networkTypes, nav])
-
-  const transferHotspot = useCallback(
-    () =>
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      nav.navigate('TransferHotspot', {
-        screen: 'TransferHotspotScreen',
-        params: { hotspotAddress: address },
-      }),
-    [address, nav],
-  )
-
   const moreData = useMemo((): KabobItem[] => {
+    const baseItems: KabobItem[] = ['copyAddress', 'assertLocation', 'transfer']
     if (
       status !== 'complete' ||
       onboardingRecord?.maker.name.toLowerCase().includes('helium') ||
       (isIot && isMobile)
     ) {
-      return ['copyAddress']
+      return baseItems
     }
 
     if (isIot) {
-      return ['copyAddress', 'onboardMobile']
+      return [...baseItems, 'onboardMobile']
     }
     if (isMobile) {
-      return ['copyAddress', 'onboardIot']
+      return [...baseItems, 'onboardIot']
     }
-    return ['copyAddress', 'onboardMobile', 'onboardIot']
+    return [...baseItems, 'onboardMobile', 'onboardIot']
   }, [isIot, isMobile, onboardingRecord?.maker.name, status])
 
   const snapPoints = useMemo(() => {
@@ -414,20 +434,15 @@ const HotspotScreen = () => {
           />
         </ReAnimatedBox>
 
-        <Button
-          onPress={assertHotspot}
-          height={48}
-          marginTop="l"
-          mode="contained"
-          title={t('hotspots.empty.hotspots.assertLocation')}
-        />
-        <Button
-          onPress={transferHotspot}
-          height={48}
-          marginTop="l"
-          mode="contained"
-          title={t('hotspots.empty.hotspots.transfer')}
-        />
+        {needsOnboarding && (
+          <Button
+            onPress={assertHotspotLocation}
+            height={48}
+            marginTop="l"
+            mode="contained"
+            title={t('hotspots.onboardHotspot')}
+          />
+        )}
       </Box>
 
       {loading && (

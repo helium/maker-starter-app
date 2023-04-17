@@ -152,7 +152,13 @@ const TransferHotspot = () => {
   }, [newOwnerAddress])
 
   const disabled = useMemo(() => {
-    if (!params?.hotspotAddress || !newOwnerAddress || loading || !address) {
+    if (
+      !params?.hotspotAddress ||
+      !address ||
+      !newOwnerAddress ||
+      params.hotspotAddress === newOwnerAddress || // Some people have tried transferring their hotspot to itself
+      loading
+    ) {
       return true
     }
 

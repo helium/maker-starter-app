@@ -22,6 +22,7 @@ import {
   OnboardingProvider,
   SolanaProvider,
 } from '@helium/react-native-sdk'
+import * as Location from 'expo-location'
 import { theme, darkThemeColors } from './theme/theme'
 import NavigationRoot from './navigation/NavigationRoot'
 import { useAppDispatch } from './store/store'
@@ -120,6 +121,16 @@ const App = () => {
     const timeout = setTimeout(() => {
       SplashScreen.hideAsync()
     }, 5000)
+    return () => clearInterval(timeout)
+  }, [dispatch])
+
+  useEffect(() => {
+    // On Android, you must request a location permission (Permissions.LOCATION) from the user before geocoding can be used.
+    const timeout = setTimeout(() => {
+      if (Platform.OS !== 'android') return
+
+      Location.requestForegroundPermissionsAsync()
+    }, 3000)
     return () => clearInterval(timeout)
   }, [dispatch])
 

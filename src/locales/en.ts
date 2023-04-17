@@ -71,10 +71,10 @@ export default {
     },
     welcome: {
       create_account: 'Create an account',
-      run_diagnostics: 'Skip and run Diagnostics',
       import_account: 'Link Helium Wallet',
       login_with_helium:
         'Already have the Helium Wallet App?\nTap to get started.',
+      run_diagnostics: 'Skip and run Diagnostics',
       subtitle:
         'Host a Hotspot and earn <b><purple>$HNT</purple></b>, a new cryptocurrency, for building The People’s Network.',
       title: 'Welcome\nto Helium',
@@ -366,23 +366,23 @@ export default {
       title: 'This Hotspot already has an owner.',
     },
     onboarding_error: {
-      title: 'Onboarding Error',
+      body_connect_failed:
+        'Hotspot Miner is unable to respond to requests. Please reboot the Hotspot and try again later.',
+      disconnected:
+        'There was an error connecting to the Hotspot. Please try again.',
+      next: 'Exit Setup',
       subtitle: {
-        something_went_wrong:
-          'Something went wrong. Please contact the Hotspot manufacturer for next steps.',
         invalid_onboarding_address:
           'Your onboarding address is invalid. Please contact the Hotspot manufacturer for next steps.',
         no_onboarding_key:
           'Unable to find Hotspot in the Onboarding Server. Please contact the Hotspot manufacturer for next steps.',
         service_unavailable:
           "The Onboarding Server is temporarily unavailable and users won't be able to add Hotspots at this time.  Check for updates on status.helium.com and try again later.",
+        something_went_wrong:
+          'Something went wrong. Please contact the Hotspot manufacturer for next steps.',
       },
-      next: 'Exit Setup',
-      disconnected:
-        'There was an error connecting to the Hotspot. Please try again.',
+      title: 'Onboarding Error',
       title_connect_failed: 'Hotspot Pairing Failed',
-      body_connect_failed:
-        'Hotspot Miner is unable to respond to requests. Please reboot the Hotspot and try again later.',
     },
     owned_hotspot: {
       subtitle_1: 'Looks like this Hotspot is already onboarded.',
@@ -407,13 +407,13 @@ export default {
       title: 'Power Up',
     },
     progress: {
-      view_pending_add: 'View Pending Add Gateway',
-      view_pending_assert: 'View Pending Assert Location',
-      view_pending_transfer: 'View Pending Transfer',
       next: 'Go to Wallet',
       subtitle:
         'This can take a few minutes so feel free to close this screen.',
       title: 'REGISTERING TRANSACTION',
+      view_pending_add: 'View Pending Add Gateway',
+      view_pending_assert: 'View Pending Assert Location',
+      view_pending_transfer: 'View Pending Transfer',
     },
     selection: {
       subtitle: 'Choose Your Maker',
@@ -453,10 +453,9 @@ export default {
     title: 'Assert Location',
   },
   hotspots: {
+    assertLocation: 'Assert Location',
     copiedToClipboard: 'Copied {{address}} to clipboard',
     copyAddress: 'Copy Address',
-    onboardIot: 'Onboard Iot Network',
-    onboardMobile: 'Onboard Mobile Network',
     diagnostics: 'Run Diagnostics',
     empty: {
       hotspots: {
@@ -468,8 +467,24 @@ export default {
     },
     noLocation: 'No Location',
     notOnboarded: 'This hotspot has not been onboarded',
+    onboardHotspot: 'Onboard Hotspot',
+    onboardIot: 'Onboard Iot Network',
+    onboardMobile: 'Onboard Mobile Network',
     title: 'Your Hotspots',
+    transfer: 'Transfer Hotspot',
     wifi: 'Update Wifi',
+  },
+  migrate: {
+    action: 'Download the Helium Wallet App',
+    helium: {
+      subtitle1: 'Your tokens are safe.',
+      subtitle2:
+        'The Hotspot app is now <b>a Helium and FreedomFi Hotspot maintenance only app.</b>',
+      subtitle3:
+        '<b>Export your wallet private key to the Helium Wallet app in "Settings".</b> You can continue to view and manage your tokens and rewards in the Helium Wallet app.',
+      title: 'The Helium Hotspot app is changing.',
+    },
+    skip: 'Skip for now',
   },
   more: {
     sections: {
@@ -490,6 +505,13 @@ export default {
         signOutWithLink: 'Sign Out - Linked as: {{address}}',
         title: 'App',
       },
+      developer: {
+        cluster: 'Solana Cluster',
+        enable: 'Enable Developer Options',
+        forceSolana: 'Force Solana Blockchain',
+        title: 'Developer',
+        transitionStatus: 'Sentinel Status - {{status}}',
+      },
       security: {
         authIntervals: {
           after_1_hr: 'After 1 hour',
@@ -505,13 +527,6 @@ export default {
         revealPrivateKey: 'Export Private Key to Wallet App',
         revealWords: 'Reveal Words',
         title: 'Security',
-      },
-      developer: {
-        cluster: 'Solana Cluster',
-        enable: 'Enable Developer Options',
-        forceSolana: 'Force Solana Blockchain',
-        title: 'Developer',
-        transitionStatus: 'Sentinel Status - {{status}}',
       },
     },
     title: 'Settings',
@@ -552,17 +567,5 @@ export default {
       title: 'Update required',
     },
     copiedToClipboard: 'Copied {{address}} to clipboard',
-  },
-  migrate: {
-    action: 'Download the Helium Wallet App',
-    skip: 'Skip for now',
-    helium: {
-      title: 'The Helium Hotspot app is changing.',
-      subtitle1: 'Your tokens are safe.',
-      subtitle2:
-        'The Hotspot app is now <b>a Helium and FreedomFi Hotspot maintenance only app.</b>',
-      subtitle3:
-        '<b>Export your wallet private key to the Helium Wallet app in "Settings".</b> You can continue to view and manage your tokens and rewards in the Helium Wallet app.',
-    },
   },
 }

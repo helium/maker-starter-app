@@ -121,6 +121,7 @@ const HotspotSetupConfirmLocationScreen = () => {
       coords: params.coords,
       elevation: params.elevation,
       gain: params.gain,
+      hotspotNetworkTypes: params.hotspotNetworkTypes,
     })
   }, [assertLocationTxn, navigation, params, solanaTransactions])
 
