@@ -115,7 +115,7 @@ PODS:
     - FlipperKit/FlipperKitNetworkPlugin
   - fmt (6.2.1)
   - glog (0.3.5)
-  - helium-react-native-sdk (2.0.19):
+  - helium-react-native-sdk (2.0.21):
     - React-Core
   - hermes-engine (0.70.6)
   - libevent (2.1.12)
@@ -837,9 +837,9 @@ SPEC CHECKSUMS:
   Flipper-RSocket: d9d9ade67cbecf6ac10730304bf5607266dd2541
   FlipperKit: cbdee19bdd4e7f05472a66ce290f1b729ba3cb86
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
-  glog: 04b94705f318337d7ead9e6d17c019bd9b1f6b1b
-  helium-react-native-sdk: c3eb8e1f2640f9312c133dbbb80bb9d6db7c8c7b
-  hermes-engine: 2af7b7a59128f250adfd86f15aa1d5a2ecd39995
+  glog: 791fe035093b84822da7f0870421a25839ca7870
+  helium-react-native-sdk: 1c94c8a59024d38a7badcca7ff39b697b9b3a17b
+  hermes-engine: e86cc2a4cd10ed276799de42ea326bc551115bc7
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   Mapbox-iOS-SDK: a5915700ec84bc1a7f8b3e746d474789e35b7956
   MapboxMobileEvents: 2bc0ca2eedb627b73cf403258dce2b2fa98074a6
@@ -904,4 +904,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 0d3d06084cb4eca5198d5f27cd8cd44f88c31fa9
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.12.0
