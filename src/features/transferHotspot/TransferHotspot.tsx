@@ -148,6 +148,9 @@ const TransferHotspot = () => {
   }, [params?.hotspotAddress])
 
   useEffect(() => {
+    if (!newOwnerAddress.includes('\n')) return
+
+    Keyboard.dismiss()
     setNewOwnerAddress(newOwnerAddress.replace('\n', '').trim())
   }, [newOwnerAddress])
 
