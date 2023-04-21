@@ -17,7 +17,7 @@ import {
   BottomSheetModalProvider,
 } from '@gorhom/bottom-sheet'
 import Box from '../../../components/Box'
-import { DebouncedButton } from '../../../components/Button'
+import Button, { DebouncedButton } from '../../../components/Button'
 import Map from '../../../components/Map'
 import Text from '../../../components/Text'
 import { reverseGeocode } from '../../../utils/location'
@@ -26,7 +26,6 @@ import {
   HotspotSetupNavigationProp,
   HotspotSetupStackParamList,
 } from './hotspotSetupTypes'
-import SafeAreaBox from '../../../components/SafeAreaBox'
 import TouchableOpacityBox from '../../../components/TouchableOpacityBox'
 import { useColors, useSpacing } from '../../../theme/themeHooks'
 import BSHandle from '../../../components/BSHandle'
@@ -60,7 +59,7 @@ const HotspotSetupPickLocationScreen = () => {
     }
 
     const sleepThenEnable = async () => {
-      await sleep(3000)
+      await sleep(2000)
       setDisabled(false)
     }
 
@@ -74,7 +73,11 @@ const HotspotSetupPickLocationScreen = () => {
 
       const [longitude, latitude] = newCoords
       const [{ street, city }] = await reverseGeocode(latitude, longitude)
-      const name = street && city ? [street, city].join(', ') : 'Loading...'
+      // for some locations street is null when good reverse geocode is not available
+      // shouldn't effect much as cords are still part of transaction
+      const name = city
+        ? [street || 'unknown street', city].join(', ')
+        : 'Address Loading...'
       setLocationName(name)
     }
   }, [])
@@ -123,11 +126,7 @@ const HotspotSetupPickLocationScreen = () => {
   const searchSnapPoints = useMemo(() => ['85%'], [])
 
   return (
-    <SafeAreaBox
-      flex={1}
-      edges={['bottom']}
-      backgroundColor="primaryBackground"
-    >
+    <Box flex={1} backgroundColor="primaryBackground">
       <TouchableOpacityBox
         onPress={handleSearchPress}
         position="absolute"
@@ -169,6 +168,7 @@ const HotspotSetupPickLocationScreen = () => {
           disabled={disabled || !hasGPSLocation}
           title={t('hotspot_setup.location.next')}
         />
+        <Button title={t('generic.cancel')} onPress={navigation.goBack} />
       </Box>
       <BottomSheetModalProvider>
         <BottomSheetModal
@@ -181,7 +181,7 @@ const HotspotSetupPickLocationScreen = () => {
           <AddressSearchModal onSelectPlace={handleSelectPlace} />
         </BottomSheetModal>
       </BottomSheetModalProvider>
-    </SafeAreaBox>
+    </Box>
   )
 }
 

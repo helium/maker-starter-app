@@ -1,4 +1,4 @@
-import { LOCATION, askAsync, PermissionType } from 'expo-permissions'
+import * as Location from 'expo-location'
 import { useCallback } from 'react'
 import locationSlice from '../store/location/locationSlice'
 import { useAppDispatch } from '../store/store'
@@ -9,16 +9,6 @@ const usePermissionManager = () => {
   const { showOKCancelAlert } = useAlert()
   const dispatch = useAppDispatch()
 
-  const requestPermission = useCallback(
-    async (type: PermissionType) => {
-      dispatch(appSlice.actions.requestingPermission(true))
-      const response = await askAsync(type)
-      dispatch(appSlice.actions.requestingPermission(false))
-      return response
-    },
-    [dispatch],
-  )
-
   const requestLocationPermission = useCallback(
     async (showAlert = true) => {
       if (showAlert) {
@@ -28,14 +18,16 @@ const usePermissionManager = () => {
         })
         if (!decision) return false
       }
+      dispatch(appSlice.actions.requestingPermission(true))
+      const response = await Location.requestForegroundPermissionsAsync()
+      dispatch(appSlice.actions.requestingPermission(false))
 
-      const response = await requestPermission(LOCATION)
       dispatch(locationSlice.actions.updateLocationPermission(response))
       return response
     },
-    [dispatch, requestPermission, showOKCancelAlert],
+    [dispatch, showOKCancelAlert],
   )
 
-  return { requestLocationPermission, requestPermission }
+  return { requestLocationPermission }
 }
 export default usePermissionManager

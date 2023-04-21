@@ -2,16 +2,20 @@ import React, { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigation } from '@react-navigation/native'
 import LogoSVG from '@assets/images/logo_white.svg'
-import { View, ImageBackground } from 'react-native'
+import { View, ImageBackground, Linking } from 'react-native'
+import { createWalletLinkUrl } from '@helium/wallet-link'
+import { getBundleId } from 'react-native-device-info'
 import { useColors } from '../../../theme/themeHooks'
 import Text from '../../../components/Text'
 import { OnboardingNavigationProp } from '../onboardingTypes'
 import TextTransform from '../../../components/TextTransform'
 import SafeAreaBox from '../../../components/SafeAreaBox'
 import TouchableOpacityBox from '../../../components/TouchableOpacityBox'
+import useDelegateApps from '../../../utils/useDelegateApps'
 
 const WelcomeScreen = () => {
   const { t } = useTranslation()
+  const { walletApp } = useDelegateApps()
   const navigation = useNavigation<OnboardingNavigationProp>()
 
   const createAccount = useCallback(
@@ -19,12 +23,22 @@ const WelcomeScreen = () => {
     [navigation],
   )
 
-  const importAccount = useCallback(
-    () => navigation.push('LinkAccount'),
-    [navigation],
-  )
-
   const colors = useColors()
+  const importAccount = useCallback(() => {
+    try {
+      const url = createWalletLinkUrl({
+        universalLink: walletApp?.universalLink,
+        requestAppId: getBundleId(),
+        callbackUrl: 'nebrahotspot://',
+        appName: 'Nebra Hotspot',
+      })
+
+      Linking.openURL(url)
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error(error)
+    }
+  }, [walletApp?.universalLink])
 
   return (
     <SafeAreaBox backgroundColor="primary" flex={1}>

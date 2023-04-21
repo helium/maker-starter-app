@@ -1,10 +1,11 @@
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
 import QrIcon from '@assets/images/qr.svg'
 import LinkIcon from '@assets/images/webLink.svg'
-import { BarCodeScanner } from 'expo-barcode-scanner'
-import { BarCodeScanningResult, Camera } from 'expo-camera'
+// import Icon from '@assets/images/placeholder.svg'
+import { BarCodeScanner, BarCodeScannerResult } from 'expo-barcode-scanner'
+import { Camera } from 'expo-camera'
 import { useDebouncedCallback } from 'use-debounce/lib'
 import Toast from 'react-native-simple-toast'
 import { StyleSheet, Linking, ScrollView } from 'react-native'
@@ -33,6 +34,13 @@ const HotspotSetupExternalScreen = () => {
   const { handleBarCode } = useAppLinkContext()
   const { triggerNotification } = useHaptic()
   const navigation = useNavigation<RootNavigationProp>()
+  const [hasPermission, setHasPermission] = useState<boolean>()
+
+  useEffect(() => {
+    BarCodeScanner.requestPermissionsAsync().then(({ status }) =>
+      setHasPermission(status === 'granted'),
+    )
+  }, [])
 
   useMount(() => {
     getAddress().then(setAddress)
@@ -49,7 +57,7 @@ const HotspotSetupExternalScreen = () => {
   )
 
   const handleBarCodeScanned = useDebouncedCallback(
-    (result: BarCodeScanningResult) => {
+    (result: BarCodeScannerResult) => {
       try {
         handleBarCode(result, 'add_gateway', {
           hotspotType: params.hotspotType,
@@ -142,6 +150,13 @@ const HotspotSetupExternalScreen = () => {
 
   const scrollViewStyle = useMemo(() => ({ borderRadius: xl }), [xl])
 
+  if (hasPermission === undefined) {
+    return <Text>Requesting for camera permission</Text>
+  }
+  if (hasPermission === false) {
+    return <Text>No access to camera</Text>
+  }
+
   return (
     <BackScreen
       backgroundColor="primaryBackground"
@@ -200,7 +215,7 @@ const HotspotSetupExternalScreen = () => {
           </Text>
         </TouchableOpacity>
 
-        {isQr && (
+        {isQr && hasPermission && (
           <>
             <Box flex={1} />
             <Box
@@ -209,7 +224,7 @@ const HotspotSetupExternalScreen = () => {
               overflow="hidden"
               width="100%"
               aspectRatio={1}
-              backgroundColor="black"
+              backgroundColor="primaryText"
             >
               <Camera
                 barCodeScannerSettings={{

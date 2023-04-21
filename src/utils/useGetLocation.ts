@@ -1,4 +1,4 @@
-import { PermissionResponse } from 'expo-permissions'
+import * as Location from 'expo-location'
 import { useCallback, useEffect } from 'react'
 import useAppState from 'react-native-appstate-hook'
 import { useSelector } from 'react-redux'
@@ -40,7 +40,7 @@ const useGetLocation = () => {
       let permResponse = permissionResponse
       if (!permResponse) {
         const { payload } = await dispatch(getLocationPermission())
-        permResponse = payload as PermissionResponse
+        permResponse = payload as Location.LocationPermissionResponse
       }
       if (!permResponse) return null // this shouldn't happen unless shit hits the fan
 

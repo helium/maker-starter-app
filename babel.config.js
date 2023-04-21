@@ -15,7 +15,9 @@ const baseConfig = {
     [
       'module-resolver',
       {
-        alias: getAliasesFromTsConfig(),
+        alias: {
+          ...getAliasesFromTsConfig(),
+        },
         extensions: ['.ios.js', '.android.js', '.js', '.ts', '.tsx', '.json'],
         root: ['./src'],
       },

@@ -2,11 +2,17 @@ import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { BleError, Device } from 'react-native-ble-plx'
-import { useHotspotBle, useOnboarding } from '@helium/react-native-sdk'
-import { uniq } from 'lodash'
 import { useAnalytics } from '@segment/analytics-react-native'
-import animalName from 'angry-purple-tiger'
 import { useSelector } from 'react-redux'
+import {
+  HotspotErrorCode,
+  useHotspotBle,
+  useOnboarding,
+} from '@helium/react-native-sdk'
+import { isString, uniq } from 'lodash'
+import { parseWalletLinkToken } from '@helium/wallet-link'
+import Config from 'react-native-config'
+import { compare as versionCompare } from 'compare-versions'
 import Box from '../../../components/Box'
 import HotspotPairingList from '../../../components/HotspotPairingList'
 import Text from '../../../components/Text'
@@ -21,9 +27,8 @@ import {
   SubScope,
   Action,
 } from '../../../utils/analytics/utils'
-import { useAppDispatch } from '../../../store/store'
-import hotspotOnboardingSlice from '../../../store/hotspots/hotspotOnboardingSlice'
 import { RootState } from '../../../store/rootReducer'
+import { getSecureItem } from '../../../utils/secureAccount'
 
 type Route = RouteProp<
   HotspotSetupStackParamList,
@@ -38,6 +43,7 @@ const HotspotSetupBluetoothSuccess = () => {
   const navigation = useNavigation<HotspotSetupNavigationProp>()
   const {
     scannedDevices,
+    createGatewayTxn,
     connect,
     isConnected,
     checkFirmwareCurrent,
@@ -46,22 +52,35 @@ const HotspotSetupBluetoothSuccess = () => {
   } = useHotspotBle()
   const { getMinFirmware, getOnboardingRecord } = useOnboarding()
   const { showOKAlert } = useAlert()
-  const dispatch = useAppDispatch()
   const makers = useSelector((state: RootState) => state.heliumData.makers)
 
   const { track } = useAnalytics()
 
   const handleError = useCallback(
-    async (e: unknown) => {
-      const titleKey = 'generic.error'
-      if ((e as BleError).toString !== undefined) {
-        await showOKAlert({
-          titleKey,
-          messageKey: (e as BleError).toString(),
-        })
+    async (error: unknown) => {
+      // eslint-disable-next-line no-console
+      console.error(error)
+      let titleKey = 'generic.error'
+      let messageKey = 'generic.something_went_wrong'
+
+      if (isString(error)) {
+        if (error === HotspotErrorCode.WAIT) {
+          messageKey = t('hotspot_setup.add_hotspot.wait_error_body')
+          titleKey = t('hotspot_setup.add_hotspot.wait_error_title')
+        } else {
+          messageKey = `Got error code ${error}`
+        }
+      } else if ((error as BleError).toString !== undefined) {
+        messageKey = (error as BleError).toString()
       }
+
+      await showOKAlert({
+        titleKey,
+        messageKey,
+      })
+      // TODO: Handle Error
     },
-    [showOKAlert],
+    [showOKAlert, t],
   )
 
   const handleConnect = useCallback(
@@ -129,7 +148,15 @@ const HotspotSetupBluetoothSuccess = () => {
         const minFirmware = await getMinFirmware()
         if (!minFirmware) return
         const firmwareDetails = await checkFirmwareCurrent(minFirmware)
-        if (!firmwareDetails.current) {
+        // also check v1.0.0 as min version for solana transition
+        const lightCurrent = versionCompare(
+          firmwareDetails.deviceFirmwareVersion,
+          'v0.9.9',
+          '>=',
+        )
+        const isCurrent = firmwareDetails.current || lightCurrent
+        if (!isCurrent) {
+          console.log(isCurrent)
           navigation.navigate('FirmwareUpdateNeededScreen', firmwareDetails)
           return
         }
@@ -139,33 +166,52 @@ const HotspotSetupBluetoothSuccess = () => {
         const connectedNetworks = uniq((await readWifiNetworks(true)) || [])
         const hotspotAddress = await getOnboardingAddress()
         const onboardingRecord = await getOnboardingRecord(hotspotAddress)
-        if (!onboardingRecord) return
+        if (!onboardingRecord) {
+          console.log('onboarding record not found')
+        }
 
-        // Save the hotspot details for later use
-        dispatch(
-          hotspotOnboardingSlice.actions.setHotspotAddress(hotspotAddress),
-        )
-        dispatch(
-          hotspotOnboardingSlice.actions.setHotspotName(
-            animalName(hotspotAddress),
-          ),
-        )
-        dispatch(
-          hotspotOnboardingSlice.actions.setMaker(onboardingRecord.maker),
-        )
+        const payerAddress = onboardingRecord?.maker.address || Config.MAKER_ID
+
+        if (!payerAddress) {
+          console.log('Payer address not found')
+          return
+        }
 
         // navigate to next screen
         if (gatewayAction === 'addGateway') {
+          const token = await getSecureItem('walletLinkToken')
+          if (!token) throw new Error('Token Not found')
+          const parsed = parseWalletLinkToken(token)
+          if (!parsed?.address) throw new Error('Invalid Token')
+
+          const { address: ownerAddress } = parsed
+          const addGatewayTxn = await createGatewayTxn({
+            ownerAddress,
+            payerAddress,
+          })
           navigation.replace('HotspotSetupPickWifiScreen', {
             networks,
             connectedNetworks,
             hotspotAddress,
             hotspotType,
+            addGatewayTxn,
+          })
+        } else if (gatewayAction === 'setupWifi') {
+          // TODO:: we are currently differentiating wifi setup
+          // and addgateway action based on wether addGateway is empty
+          // or not. We should have a separate parameter for it.
+          navigation.replace('HotspotSetupPickWifiScreen', {
+            networks,
+            connectedNetworks,
+            hotspotAddress,
+            hotspotType,
+            addGatewayTxn: '',
           })
         } else {
           navigation.replace('HotspotSetupPickLocationScreen', {
             hotspotAddress,
             hotspotType,
+            addGatewayTxn: '',
           })
         }
       } catch (e) {
@@ -176,7 +222,7 @@ const HotspotSetupBluetoothSuccess = () => {
   }, [
     checkFirmwareCurrent,
     connectStatus,
-    dispatch,
+    createGatewayTxn,
     gatewayAction,
     getMinFirmware,
     getOnboardingAddress,

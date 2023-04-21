@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import {
@@ -20,13 +20,22 @@ const HotspotSetupSkipLocationScreen = () => {
   const { t } = useTranslation()
   const navigation = useNavigation<HotspotSetupNavigationProp>()
   const rootNav = useNavigation<RootNavigationProp>()
+  const [loading, setLoading] = useState(false)
 
   const { params } = useRoute<Route>()
 
   const handleClose = useCallback(() => rootNav.navigate('MainTabs'), [rootNav])
 
   const navNext = useCallback(async () => {
-    navigation.replace('HotspotTxnsProgressScreen', params)
+    setLoading(true)
+    try {
+      navigation.replace('HotspotTxnsProgressScreen', {
+        addGatewayTxn: params.addGatewayTxn,
+        hotspotAddress: params.hotspotAddress,
+      })
+    } catch (e) {
+      setLoading(false)
+    }
   }, [navigation, params])
 
   return (
@@ -54,9 +63,11 @@ const HotspotSetupSkipLocationScreen = () => {
       </Box>
       <Box>
         <DebouncedButton
-          title={t('hotspot_setup.location_fee.register')}
+          loading={loading}
+          title={t('hotspot_setup.location_fee.next')}
           mode="contained"
           variant="secondary"
+          disabled={loading}
           onPress={navNext}
         />
       </Box>

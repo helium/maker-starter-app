@@ -25,6 +25,7 @@ import {
 import {
   HotspotBleProvider,
   OnboardingProvider,
+  SolanaProvider,
 } from '@helium/react-native-sdk'
 import {
   createClient,
@@ -45,6 +46,8 @@ import { fetchHotspotsData } from './store/hotspots/hotspotsSlice'
 import { fetchInitialData } from './store/helium/heliumDataSlice'
 import { getMakerName } from './utils/stakingClient'
 import { getEvent, Scope, Action } from './utils/analytics/utils'
+import { getAddress } from './utils/secureAccount'
+import useCheckWalletLink from './utils/useCheckWalletLink'
 
 interface RouteInfo {
   name: string
@@ -89,6 +92,8 @@ const getActiveRoute = (
 
 const App = () => {
   const colorScheme = useColorScheme()
+
+  useCheckWalletLink()
 
   if (Platform.OS === 'android') {
     if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -157,6 +162,20 @@ const App = () => {
     isLocked,
   } = useSelector((state: RootState) => state.app)
 
+  const { walletLinkToken } = useSelector((state: RootState) => state.app)
+  const [heliumWallet, setHeliumWallet] = useState<string>()
+
+  useEffect(() => {
+    if (!walletLinkToken) {
+      if (heliumWallet) {
+        setHeliumWallet('')
+      }
+      return
+    }
+
+    getAddress().then(setHeliumWallet)
+  }, [heliumWallet, walletLinkToken])
+
   useMount(() => {
     dispatch(restoreAppSettings())
   })
@@ -166,7 +185,7 @@ const App = () => {
   }, [dispatch])
 
   useEffect(() => {
-    MapboxGL.setAccessToken(Config.MAPBOX_ACCESS_TOKEN)
+    MapboxGL.setAccessToken(Config.MAPBOX_ACCESS_TOKEN || '')
   }, [dispatch])
 
   // handle app state changes
@@ -241,42 +260,58 @@ const App = () => {
 
   return (
     <AnalyticsProvider client={segmentClient}>
-      <OnboardingProvider baseUrl="https://helium-onboarding.nebra.com/api/v2">
-        <HotspotBleProvider>
-          <ThemeProvider theme={colorAdaptedTheme}>
-            <BottomSheetModalProvider>
-              <SafeAreaProvider>
-                {/* TODO: Will need to adapt status bar for light/dark modes */}
-                {Platform.OS === 'ios' && (
-                  <StatusBar barStyle="light-content" />
-                )}
-                {Platform.OS === 'android' && (
-                  <StatusBar translucent backgroundColor="transparent" />
-                )}
-                <NavigationContainer
-                  ref={navigationRef}
-                  onStateChange={(state) => {
-                    const newRoute = getActiveRoute(state)
+      <SolanaProvider
+        rpcEndpoint={Config.SOLANA_RPC_ENDPOINT || ''}
+        heliumWallet={heliumWallet}
+        // --- devnet provider ---
+        // cluster="devnet"
+        // solanaStatusOverride="complete"
+        // --- mainnet provider ---
+        cluster="mainnet-beta"
+      >
+        <OnboardingProvider
+          baseUrl={
+            Config.ONBOARDING_BASE_URL || 'https://onboarding.dewi.org/api'
+            // 'https://helium-onboarding.nebra.com/api'
+          }
+        >
+          <HotspotBleProvider>
+            <ThemeProvider theme={colorAdaptedTheme}>
+              <BottomSheetModalProvider>
+                <SafeAreaProvider>
+                  {/* TODO: Will need to adapt status bar for light/dark modes */}
+                  {Platform.OS === 'ios' && (
+                    <StatusBar barStyle="light-content" />
+                  )}
+                  {Platform.OS === 'android' && (
+                    <StatusBar translucent backgroundColor="transparent" />
+                  )}
 
-                    if (routeName !== newRoute.name) {
-                      segmentClient.screen(newRoute.name, newRoute.params)
+                  <NavigationContainer
+                    ref={navigationRef}
+                    onStateChange={(state) => {
+                      const newRoute = getActiveRoute(state)
 
-                      setRouteName(newRoute.name)
-                    }
-                  }}
-                >
-                  <AppLinkProvider>
-                    <NavigationRoot />
-                  </AppLinkProvider>
-                </NavigationContainer>
-              </SafeAreaProvider>
-              <SecurityScreen
-                visible={appState !== 'active' && appState !== 'unknown'}
-              />
-            </BottomSheetModalProvider>
-          </ThemeProvider>
-        </HotspotBleProvider>
-      </OnboardingProvider>
+                      if (routeName !== newRoute.name) {
+                        segmentClient.screen(newRoute.name, newRoute.params)
+
+                        setRouteName(newRoute.name)
+                      }
+                    }}
+                  >
+                    <AppLinkProvider>
+                      <NavigationRoot />
+                    </AppLinkProvider>
+                  </NavigationContainer>
+                </SafeAreaProvider>
+                <SecurityScreen
+                  visible={appState !== 'active' && appState !== 'unknown'}
+                />
+              </BottomSheetModalProvider>
+            </ThemeProvider>
+          </HotspotBleProvider>
+        </OnboardingProvider>
+      </SolanaProvider>
     </AnalyticsProvider>
   )
 }

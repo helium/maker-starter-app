@@ -1,42 +1,20 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
-import { isString } from 'lodash'
-import {
-  useHotspotBle,
-  HotspotErrorCode,
-  Location,
-  useOnboarding,
-} from '@helium/react-native-sdk'
-import { ActivityIndicator, Linking, Alert, Platform } from 'react-native'
-import { useAnalytics } from '@segment/analytics-react-native'
-import { useSelector } from 'react-redux'
-import {
-  createUpdateHotspotUrl,
-  parseWalletLinkToken,
-  SignHotspotRequest,
-} from '@helium/wallet-link'
+import { first, last } from 'lodash'
+import { useOnboarding } from '@helium/react-native-sdk'
+import { createUpdateHotspotUrl, SignHotspotRequest } from '@helium/wallet-link'
+import { ActivityIndicator, Linking, Platform } from 'react-native'
 import Box from '../../../components/Box'
 import Text from '../../../components/Text'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
 import SafeAreaBox from '../../../components/SafeAreaBox'
-import { getHotspotDetails, hotspotOnChain } from '../../../utils/appDataClient'
-import useAlert from '../../../utils/useAlert'
 import { HotspotSetupStackParamList } from './hotspotSetupTypes'
 import { getSecureItem } from '../../../utils/secureAccount'
 import { useColors } from '../../../theme/themeHooks'
 import { DebouncedButton } from '../../../components/Button'
 import useMount from '../../../utils/useMount'
-import { getH3Location } from '../../../utils/h3Utils'
-import {
-  getEvent,
-  Scope,
-  SubScope,
-  Action,
-} from '../../../utils/analytics/utils'
-import { RootState } from '../../../store/rootReducer'
-import { useAppDispatch } from '../../../store/store'
-import hotspotOnboardingSlice from '../../../store/hotspots/hotspotOnboardingSlice'
+import { getHotpotTypes } from '../root/hotspotTypes'
 
 type Route = RouteProp<HotspotSetupStackParamList, 'HotspotTxnsProgressScreen'>
 
@@ -44,214 +22,117 @@ const HotspotTxnsProgressScreen = () => {
   const { t } = useTranslation()
   const { params } = useRoute<Route>()
   const navigation = useNavigation<RootNavigationProp>()
-  const { showOKAlert } = useAlert()
-  const { createGatewayTxn } = useHotspotBle()
-  const { getOnboardingRecord } = useOnboarding()
   const { primaryText } = useColors()
-  const dispatch = useAppDispatch()
 
-  const hotspotType = useSelector(
-    (state: RootState) => state.hotspotOnboarding.hotspotType,
-  )
-  const hotspotName = useSelector(
-    (state: RootState) => state.hotspotOnboarding.hotspotName,
-  )
-  const maker = useSelector((state: RootState) => state.hotspotOnboarding.maker)
+  const { createHotspot, getOnboardTransactions, getOnboardingRecord } =
+    useOnboarding()
 
-  const { track } = useAnalytics()
+  const navToHeliumAppForSigning = useCallback(
+    async (opts?: {
+      onboardTransactions?: string[]
+      addGatewayTxn?: string
+      assertLocationTxn?: string
+    }) => {
+      const token = await getSecureItem('walletLinkToken')
+      if (!token) throw new Error('Token Not found')
 
-  const handleError = async (error: unknown) => {
-    // eslint-disable-next-line no-console
-    console.error(error)
-    let titleKey = 'generic.error'
-    let messageKey = 'generice.something_went_wrong'
+      const solanaTransactions = [
+        ...(opts?.onboardTransactions || []),
+        ...(params.solanaTransactions || []),
+      ].join(',')
 
-    if (isString(error)) {
-      if (error === HotspotErrorCode.WAIT) {
-        messageKey = t('hotspot_setup.add_hotspot.wait_error_body')
-        titleKey = t('hotspot_setup.add_hotspot.wait_error_title')
+      const updateParams = {
+        token,
+        platform: Platform.OS,
+      } as SignHotspotRequest
+
+      if (solanaTransactions.length) {
+        updateParams.solanaTransactions = solanaTransactions
       } else {
-        messageKey = `Got error code ${error}`
+        updateParams.addGatewayTxn = opts?.addGatewayTxn || params.addGatewayTxn
+        updateParams.assertLocationTxn =
+          opts?.assertLocationTxn || params.assertLocationTxn
       }
-    }
 
-    await showOKAlert({ titleKey, messageKey })
-    navigation.navigate('MainTabs')
-  }
-
-  const submitOnboardingTxns = async () => {
-    const token = await getSecureItem('walletLinkToken')
-    if (!token) throw new Error('Token Not found')
-
-    const parsed = parseWalletLinkToken(token)
-    if (!parsed?.address) throw new Error('Invalid Token')
-
-    const { address: ownerAddress } = parsed
-
-    const { hotspotAddress, addGatewayTxn: qrAddGatewayTxn } = params
-
-    if (!hotspotAddress) {
-      if (qrAddGatewayTxn) {
-        throw new Error('Hotspot not found')
-      } else {
-        throw new Error('Hotspot disconnected')
-      }
-    }
-
-    const updateParams = {
-      token,
-      platform: Platform.OS,
-    } as SignHotspotRequest
-
-    // check if add gateway needed
-    const isOnChain = await hotspotOnChain(hotspotAddress)
-
-    // handle exception when onboarding record is not found (Non Nebra hotspots)
-    let onboardingRecord
-    try {
-      onboardingRecord = await getOnboardingRecord(hotspotAddress)
-    } catch (error) {}
-
-    if (!isOnChain) {
-      // if so, construct and publish add gateway
-      if (qrAddGatewayTxn) {
-        // Gateway QR scanned
-        updateParams.addGatewayTxn = qrAddGatewayTxn
-      } else {
-        // Gateway BLE scanned
-        if (!onboardingRecord) return
-        const addGatewayTxn = await createGatewayTxn({
-          ownerAddress,
-          payerAddress: onboardingRecord.maker.address,
-        })
-        updateParams.addGatewayTxn = addGatewayTxn
-      }
-    }
-
-    // construct and publish assert location
-
-    if (params.coords) {
-      const [lng, lat] = params.coords
-
-      const assertLocationTxn = await Location.createLocationTxn({
-        gateway: hotspotAddress,
-        lat,
-        lng,
-        decimalGain: params.gain,
-        elevation: params.elevation,
-        dataOnly: false,
-        owner: ownerAddress,
-        // currentLocation: '', // If reasserting location, put previous location here
-        makerAddress: onboardingRecord?.maker?.address || '',
-        locationNonceLimit: onboardingRecord?.maker?.locationNonceLimit || 0,
-      })
-      updateParams.assertLocationTxn = assertLocationTxn.toString()
-    } else if (params.updateAntennaOnly) {
-      const hotspot = await getHotspotDetails(params.hotspotAddress)
-
-      if (!hotspot.lat || !hotspot.lng) {
-        // Show an alert if the hotspot location has never been asserted
-        Alert.alert(
-          t('hotspot_setup.antenna_only_fee.no_location_asserted.title'),
-          t('hotspot_setup.antenna_only_fee.no_location_asserted.message'),
-          [
-            {
-              text: t('hotspot_setup.antenna_only_fee.no_location_asserted.ok'),
-              onPress: () => navigation.navigate('MainTabs'),
-            },
-          ],
-        )
-
+      const url = createUpdateHotspotUrl(updateParams)
+      if (!url) {
+        // eslint-disable-next-line no-console
+        console.error('Link could not be created')
         return
       }
-      /*
-        when param currentLocation equal to Hex Location of lat and lng, fee will be equal to transaction fee only
-      */
-      const currentLocation = getH3Location(hotspot.lat, hotspot.lng)
-      const assertLocationTxn = await Location.createLocationTxn({
-        gateway: hotspotAddress,
-        lat: hotspot.lat,
-        lng: hotspot.lng,
-        decimalGain: params.gain,
-        elevation: params.elevation,
-        dataOnly: false,
-        owner: ownerAddress,
-        currentLocation,
-        makerAddress: onboardingRecord?.maker?.address || '',
-        locationNonceLimit: onboardingRecord?.maker?.locationNonceLimit || 0,
-      })
-      updateParams.assertLocationTxn = assertLocationTxn.toString()
-    }
 
-    const url = createUpdateHotspotUrl(updateParams)
-    if (!url) {
-      // eslint-disable-next-line no-console
-      console.error('Link could not be created')
+      Linking.openURL(url)
+    },
+    [params],
+  )
+
+  const handleAddGateway = useCallback(async () => {
+    if (!params.addGatewayTxn || !params.hotspotAddress) return
+    try {
+      // This creates the hotspot, signing not required
+      await createHotspot(params.addGatewayTxn)
+    } catch (err) {
+      console.log(err) // this could still happen
+      const screenParams = {
+        title: t('hotspot_setup.onboarding_error.unknown_error.title'),
+        subTitle: t('hotspot_setup.onboarding_error.unknown_error.subtitle'),
+        errorMsg: err.message,
+      }
+      navigation.replace('HotspotUnknownErrorScreen', screenParams)
       return
     }
 
-    // Segment track for add gateway
-    if (updateParams.addGatewayTxn) {
-      track(
-        getEvent({
-          scope: Scope.HOTSPOT,
-          action: Action.NEW,
-        }),
-        {
-          hotspot_type: hotspotType,
-          hotspot_address: hotspotAddress,
-          hotspot_name: hotspotName,
-          owner_address: ownerAddress,
-          maker,
-        },
-      )
-    }
+    const onboardingRecord = await getOnboardingRecord(params.hotspotAddress)
 
-    // Segment track for assert location
-    if (updateParams.assertLocationTxn && params.coords) {
-      const [lng, lat] = params.coords
+    /*
+         TODO: Determine which network types this hotspot supports
+         Could possibly use the maker address
+      */
+    const hotspotTypes = getHotpotTypes({
+      hotspotMakerAddress: onboardingRecord?.maker.address || '',
+    })
 
-      track(
-        params.updateAntennaOnly
-          ? getEvent({
-              scope: Scope.HOTSPOT,
-              sub_scope: SubScope.ANTENNA,
-              action: Action.NEW,
-            })
-          : getEvent({
-              scope: Scope.HOTSPOT,
-              sub_scope: SubScope.LOCATION,
-              action: Action.NEW,
-            }),
-        {
-          hotspot_type: hotspotType,
-          hotspot_address: hotspotAddress,
-          hotspot_name: hotspotName,
-          owner_address: ownerAddress,
-          maker,
-          lat,
-          lng,
-          decimal_gain: params.gain,
+    try {
+      const { solanaTransactions, addGatewayTxn, assertLocationTxn } =
+        await getOnboardTransactions({
+          txn: params.addGatewayTxn,
+          hotspotAddress: params.hotspotAddress,
+          hotspotTypes,
+          lat: last(params.coords),
+          lng: first(params.coords),
           elevation: params.elevation,
-          location_nonce_limit: onboardingRecord?.maker.locationNonceLimit || 0,
-        },
-      )
+          decimalGain: params.gain,
+        })
 
-      dispatch(
-        hotspotOnboardingSlice.actions.setUpdateAntennaOnly(
-          params.updateAntennaOnly || false,
-        ),
-      )
+      navToHeliumAppForSigning({
+        onboardTransactions: solanaTransactions,
+        addGatewayTxn,
+        assertLocationTxn,
+      })
+    } catch (err) {
+      console.log(err)
+      const screenParams = {
+        title: t('hotspot_setup.onboarding_error.unknown_error.title'),
+        subTitle: t('hotspot_setup.onboarding_error.unknown_error.subtitle'),
+        errorMsg: err.message,
+      }
+      navigation.replace('HotspotUnknownErrorScreen', screenParams)
     }
-
-    Linking.openURL(url)
-  }
+  }, [
+    createHotspot,
+    getOnboardTransactions,
+    getOnboardingRecord,
+    navToHeliumAppForSigning,
+    params,
+    t,
+    navigation,
+  ])
 
   useMount(() => {
-    try {
-      submitOnboardingTxns()
-    } catch (e) {
-      handleError(e)
+    if (params.addGatewayTxn) {
+      handleAddGateway()
+    } else {
+      navToHeliumAppForSigning()
     }
   })
 

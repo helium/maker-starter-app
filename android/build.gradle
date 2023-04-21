@@ -3,7 +3,7 @@
 buildscript {
     ext {
         buildToolsVersion = "31.0.0"
-        minSdkVersion = 21
+        minSdkVersion = 26
         compileSdkVersion = 31
         targetSdkVersion = 31
         kotlinVersion = "1.6.0"
@@ -58,6 +58,17 @@ allprojects {
          maven {
             // expo-camera bundles a custom com.google.android:cameraview
             url "$rootDir/../node_modules/expo-camera/android/maven"
+        }
+
+        maven {
+            url 'https://api.mapbox.com/downloads/v2/releases/maven'
+            authentication {
+                basic(BasicAuthentication)
+            }
+            credentials {
+                username = 'mapbox'
+                password = System.getenv("MAPBOX_DOWNLOAD_TOKEN")
+            }
         }
     }
 }

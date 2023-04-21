@@ -3,8 +3,14 @@ import { uniq } from 'lodash'
 import { useAsync } from 'react-async-hook'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
-import { BleError, useHotspotBle } from '@helium/react-native-sdk'
 import { useAnalytics } from '@segment/analytics-react-native'
+import {
+  Account,
+  BleError,
+  HotspotMeta,
+  useHotspotBle,
+  useOnboarding,
+} from '@helium/react-native-sdk'
 import useAlert from '../../../utils/useAlert'
 import {
   HotspotSetupNavigationProp,
@@ -13,7 +19,6 @@ import {
 import Text from '../../../components/Text'
 import Box from '../../../components/Box'
 import SafeAreaBox from '../../../components/SafeAreaBox'
-import { getHotspotDetails } from '../../../utils/appDataClient'
 import { getAddress } from '../../../utils/secureAccount'
 import {
   getEvent,
@@ -21,6 +26,7 @@ import {
   SubScope,
   Action,
 } from '../../../utils/analytics/utils'
+import { getHotpotTypes } from '../root/hotspotTypes'
 
 type Route = RouteProp<
   HotspotSetupStackParamList,
@@ -36,6 +42,7 @@ const HotspotSetupWifiConnectingScreen = () => {
   } = useRoute<Route>()
 
   const { readWifiNetworks, setWifi, removeConfiguredWifi } = useHotspotBle()
+  const { getHotspotDetails, getOnboardingRecord } = useOnboarding()
 
   const { showOKAlert } = useAlert()
 
@@ -58,21 +65,30 @@ const HotspotSetupWifiConnectingScreen = () => {
 
   const goToNextStep = useCallback(async () => {
     const address = await getAddress()
+    if (!address) return
 
-    // Check if hotspot is onboarded
-    let hotspot
-    try {
-      hotspot = await getHotspotDetails(hotspotAddress)
-    } catch (error) {
-      if (error?.status === 404) {
-        // Silencing the 404 error since it means the hotspot is not on chain and
-        // it is needed to move forward to onboarding.
-      } else {
-        throw error
-      }
+    const onboardingRecord = await getOnboardingRecord(hotspotAddress)
+
+    /*
+         TODO: Determine which network types this hotspot supports
+         Could possibly use the maker address
+      */
+    const hotspotTypes = getHotpotTypes({
+      hotspotMakerAddress: onboardingRecord?.maker.address || '',
+    })
+    let hotspot: HotspotMeta | undefined
+    if (hotspotTypes.length) {
+      hotspot = await getHotspotDetails({
+        address: hotspotAddress,
+        type: hotspotTypes[0],
+      })
     }
 
-    if (hotspot && hotspot.owner === address) {
+    if (
+      hotspot &&
+      (hotspot.owner === address ||
+        hotspot.owner === Account.heliumAddressToSolAddress(address))
+    ) {
       navigation.replace('OwnedHotspotErrorScreen')
     } else if (hotspot && hotspot.owner !== address) {
       navigation.replace('NotHotspotOwnerErrorScreen')
@@ -83,7 +99,14 @@ const HotspotSetupWifiConnectingScreen = () => {
         hotspotType,
       })
     }
-  }, [addGatewayTxn, hotspotAddress, hotspotType, navigation])
+  }, [
+    addGatewayTxn,
+    getHotspotDetails,
+    getOnboardingRecord,
+    hotspotAddress,
+    hotspotType,
+    navigation,
+  ])
 
   const connectToWifi = useCallback(async () => {
     // Segment track for wifi connection
