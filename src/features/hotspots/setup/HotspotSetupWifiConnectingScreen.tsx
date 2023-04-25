@@ -9,6 +9,7 @@ import {
   HotspotMeta,
   useHotspotBle,
   useOnboarding,
+  useSolana,
 } from '@helium/react-native-sdk'
 import useAlert from '../../../utils/useAlert'
 import {
@@ -35,7 +36,8 @@ const HotspotSetupWifiConnectingScreen = () => {
   } = useRoute<Route>()
 
   const { readWifiNetworks, setWifi, removeConfiguredWifi } = useHotspotBle()
-  const { getHotspotDetails, getOnboardingRecord } = useOnboarding()
+  const { getOnboardingRecord } = useOnboarding()
+  const { getHotspotDetails } = useSolana()
 
   const { showOKAlert } = useAlert()
 

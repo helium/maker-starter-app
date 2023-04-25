@@ -8,6 +8,7 @@ import {
   HotspotMeta,
   useHotspotBle,
   useOnboarding,
+  useSolana,
 } from '@helium/react-native-sdk'
 import BackScreen from '../../../components/BackScreen'
 import Text from '../../../components/Text'
@@ -77,7 +78,8 @@ const HotspotSetupPickWifiScreen = () => {
     },
   } = useRoute<Route>()
   const { readWifiNetworks } = useHotspotBle()
-  const { getHotspotDetails, getOnboardingRecord } = useOnboarding()
+  const { getOnboardingRecord } = useOnboarding()
+  const { getHotspotDetails } = useSolana()
 
   const [wifiNetworks, setWifiNetworks] = useState(networks)
   const [connectedWifiNetworks, setConnectedWifiNetworks] =

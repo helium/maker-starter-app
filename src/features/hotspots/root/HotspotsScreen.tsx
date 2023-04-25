@@ -1,5 +1,5 @@
 import React, { memo, useCallback, useEffect, useState } from 'react'
-import { Asset, useOnboarding } from '@helium/react-native-sdk'
+import { Asset, useSolana } from '@helium/react-native-sdk'
 import { Hotspot } from '@helium/http'
 import { useNavigation } from '@react-navigation/native'
 import Box from '../../../components/Box'
@@ -22,7 +22,7 @@ const HotspotsScreen = () => {
   const [hotspots, setHotspots] = useState<{ address: string }[]>([])
   const nav = useNavigation<RootNavigationProp>()
 
-  const { getHotspots } = useOnboarding()
+  const { getHotspots } = useSolana()
 
   const fetch = useCallback(async () => {
     const heliumAddress = await getAddress()

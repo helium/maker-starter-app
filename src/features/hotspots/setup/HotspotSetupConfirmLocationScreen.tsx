@@ -2,7 +2,7 @@ import React, { useCallback, useMemo, useState } from 'react'
 import { ActivityIndicator, ScrollView } from 'react-native'
 import { useTranslation } from 'react-i18next'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
-import { useOnboarding, AssertData } from '@helium/react-native-sdk'
+import { useOnboarding, AssertData, useSolana } from '@helium/react-native-sdk'
 import { useAsync } from 'react-async-hook'
 import { first, last } from 'lodash'
 import animalName from 'angry-purple-tiger'
@@ -33,12 +33,9 @@ const HotspotSetupConfirmLocationScreen = () => {
   const [assertLocationTxn, setAssertLocationTxn] = useState<string>()
   const [solanaTransactions, setSolanaTransactions] = useState<string[]>()
   const { params } = useRoute<Route>()
-  const {
-    getAssertData,
-    getOnboardingRecord,
-    getOnboardTransactions,
-    getHotspotDetails,
-  } = useOnboarding()
+  const { getAssertData, getOnboardingRecord, getOnboardTransactions } =
+    useOnboarding()
+  const { getHotspotDetails } = useSolana()
 
   useAsync(async () => {
     const { elevation, gain, coords } = params

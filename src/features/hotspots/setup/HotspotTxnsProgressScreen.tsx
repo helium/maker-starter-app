@@ -81,21 +81,17 @@ const HotspotTxnsProgressScreen = () => {
       hotspotMakerAddress: onboardingRecord?.maker.address || '',
     })
 
-    const { solanaTransactions, addGatewayTxn, assertLocationTxn } =
-      await getOnboardTransactions({
-        txn: params.addGatewayTxn,
-        hotspotAddress: params.hotspotAddress,
-        hotspotTypes,
-        lat: last(params.coords),
-        lng: first(params.coords),
-        elevation: params.elevation,
-        decimalGain: params.gain,
-      })
+    const { solanaTransactions } = await getOnboardTransactions({
+      hotspotAddress: params.hotspotAddress,
+      hotspotTypes,
+      lat: last(params.coords),
+      lng: first(params.coords),
+      elevation: params.elevation,
+      decimalGain: params.gain,
+    })
 
     navToHeliumAppForSigning({
       onboardTransactions: solanaTransactions,
-      addGatewayTxn,
-      assertLocationTxn,
     })
   }, [
     createHotspot,
