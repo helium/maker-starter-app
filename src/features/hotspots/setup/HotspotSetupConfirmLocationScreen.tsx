@@ -30,19 +30,13 @@ const HotspotSetupConfirmLocationScreen = () => {
   const navigation = useNavigation<HotspotSetupNavigationProp>()
   const rootNav = useNavigation<RootNavigationProp>()
   const [assertData, setAssertData] = useState<AssertData>()
-  const { getStatus } = useSolana()
   const [isFree, setIsFree] = useState<boolean>()
-  const [assertLocationTxn, setAssertLocationTxn] = useState<string>()
   const [solanaTransactions, setSolanaTransactions] = useState<string[]>()
-  const { result: status } = useAsync(getStatus, [])
   const { params } = useRoute<Route>()
   const spacing = useSpacing()
-  const {
-    getAssertData,
-    getOnboardingRecord,
-    getOnboardTransactions,
-    getHotspotDetails,
-  } = useOnboarding()
+  const { getAssertData, getOnboardingRecord, getOnboardTransactions } =
+    useOnboarding()
+  const { getHotspotDetails } = useSolana()
 
   useAsync(async () => {
     const { elevation, gain, coords } = params
@@ -85,13 +79,11 @@ const HotspotSetupConfirmLocationScreen = () => {
           })
 
           setAssertData(assert)
-          setAssertLocationTxn(assert.assertLocationTxn)
           setSolanaTransactions(assert.solanaTransactions)
           setIsFree(assert.isFree)
         } else {
           // Edge case - hotspot hasn't been onboarded yet
           const onboard = await getOnboardTransactions({
-            txn: '',
             hotspotAddress: params.hotspotAddress,
             hotspotTypes: networkTypes,
             ...locationParams,
@@ -115,7 +107,6 @@ const HotspotSetupConfirmLocationScreen = () => {
   const navNext = useCallback(async () => {
     navigation.replace('HotspotTxnsProgressScreen', {
       addGatewayTxn: params.addGatewayTxn,
-      assertLocationTxn: assertLocationTxn || '',
       solanaTransactions: solanaTransactions || [],
       hotspotAddress: params.hotspotAddress,
       coords: params.coords,
@@ -123,7 +114,7 @@ const HotspotSetupConfirmLocationScreen = () => {
       gain: params.gain,
       hotspotNetworkTypes: params.hotspotNetworkTypes,
     })
-  }, [assertLocationTxn, navigation, params, solanaTransactions])
+  }, [navigation, params, solanaTransactions])
 
   const handleClose = useCallback(() => rootNav.navigate('MainTabs'), [rootNav])
 
@@ -237,16 +228,14 @@ const HotspotSetupConfirmLocationScreen = () => {
                   >
                     {assertData?.balances?.dc?.toString(4)}
                   </Text>
-                  {status?.isSolana && (
-                    <Text
-                      variant="body1"
-                      color={
-                        assertData?.hasSufficientSol ? 'primaryText' : 'error'
-                      }
-                    >
-                      {assertData?.balances?.sol?.toString(4)}
-                    </Text>
-                  )}
+                  <Text
+                    variant="body1"
+                    color={
+                      assertData?.hasSufficientSol ? 'primaryText' : 'error'
+                    }
+                  >
+                    {assertData?.balances?.sol?.toString(4)}
+                  </Text>
                 </Box>
               </Box>
 
@@ -263,11 +252,9 @@ const HotspotSetupConfirmLocationScreen = () => {
                     ?.toUsd(assertData.oraclePrice)
                     .toString(2)}
                 </Text>
-                {status?.isSolana && (
-                  <Text variant="body1" color="primaryText">
-                    {assertData?.ownerFees?.sol?.toString(2)}
-                  </Text>
-                )}
+                <Text variant="body1" color="primaryText">
+                  {assertData?.ownerFees?.sol?.toString(2)}
+                </Text>
               </Box>
 
               {disabled && (

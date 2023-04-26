@@ -99,13 +99,10 @@ const TransferHotspot = () => {
 
       setLoading(true)
 
-      const userAddress = await getAddress()
-      const { solanaTransactions, transferHotspotTxn } =
-        await createTransferTransaction({
-          hotspotAddress: params?.hotspotAddress,
-          userAddress,
-          newOwnerAddress,
-        })
+      const { solanaTransactions } = await createTransferTransaction({
+        hotspotAddress: params?.hotspotAddress,
+        newOwnerAddress,
+      })
 
       const token = await getSecureItem('walletLinkToken')
       const updateParams = {
@@ -113,11 +110,7 @@ const TransferHotspot = () => {
         platform: Platform.OS,
       } as SignHotspotRequest
 
-      if (solanaTransactions?.length) {
-        updateParams.solanaTransactions = solanaTransactions.join(',')
-      } else {
-        updateParams.transferHotspotTxn = transferHotspotTxn
-      }
+      updateParams.solanaTransactions = solanaTransactions?.join(',')
 
       if (token) {
         navToHeliumAppForSigning(updateParams)

@@ -1,17 +1,15 @@
 /* eslint-disable no-console */
-import React, { useCallback, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
 import { useAsync } from 'react-async-hook'
 import { useOnboarding } from '@helium/react-native-sdk'
-import { Linking } from 'react-native'
 import Box from '../../../components/Box'
 import { DebouncedButton } from '../../../components/Button'
 import Text from '../../../components/Text'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
 import SafeAreaBox from '../../../components/SafeAreaBox'
 import { HotspotSetupStackParamList } from './hotspotSetupTypes'
-import TouchableOpacityBox from '../../../components/TouchableOpacityBox'
 import ActivityIndicator from '../../../components/ActivityIndicator'
 
 type Route = RouteProp<HotspotSetupStackParamList, 'HotspotTxnsSubmitScreen'>
@@ -26,9 +24,6 @@ const HotspotTxnsSubmitScreen = () => {
     'init',
   )
   const [error, setError] = useState('')
-  const [pendingGatewayTxn, setPendingGatewayTxn] = useState<string>()
-  const [pendingTransferTxn, setPendingTransferTxn] = useState<string>()
-  const [pendingAssertTxn, setPendingAssertTxn] = useState<string>()
 
   useAsync(async () => {
     if (submitted.current) return
@@ -47,31 +42,16 @@ const HotspotTxnsSubmitScreen = () => {
     setState('loading')
 
     try {
-      const txnIds = await submitTransactions({
-        addGatewayTxn: params.gatewayTxn,
-        assertLocationTxn: params.assertTxn,
-        hotspotAddress: params.gatewayAddress,
+      await submitTransactions({
         solanaTransactions,
-        transferHotspotTxn: params.transferTxn,
       })
       setState('success')
-
-      setPendingGatewayTxn(txnIds.pendingGatewayTxn?.hash)
-      setPendingAssertTxn(txnIds.pendingAssertTxn?.hash)
-      setPendingTransferTxn(txnIds.pendingTransferTxn?.hash)
     } catch (e) {
       setState('error')
       setError(String(e))
       console.error(e)
     }
   }, [])
-
-  const viewPending = useCallback(
-    (hash: string) => () => {
-      Linking.openURL(`https://api.helium.io/v1/pending_transactions/${hash}`)
-    },
-    [],
-  )
 
   return (
     <SafeAreaBox
@@ -97,42 +77,8 @@ const HotspotTxnsSubmitScreen = () => {
               </Text>
             </Box>
           </Box>
-          {pendingGatewayTxn && (
-            <TouchableOpacityBox
-              onPress={viewPending(pendingGatewayTxn)}
-              paddingVertical="lx"
-              alignSelf="center"
-            >
-              <Text variant="body1">
-                {t('hotspot_setup.progress.view_pending_add')}
-              </Text>
-            </TouchableOpacityBox>
-          )}
-          {pendingAssertTxn && (
-            <TouchableOpacityBox
-              onPress={viewPending(pendingAssertTxn)}
-              paddingVertical="lx"
-              alignSelf="center"
-            >
-              <Text variant="body1">
-                {t('hotspot_setup.progress.view_pending_assert')}
-              </Text>
-            </TouchableOpacityBox>
-          )}
         </>
       )}
-      {pendingTransferTxn && (
-        <TouchableOpacityBox
-          onPress={viewPending(pendingTransferTxn)}
-          paddingVertical="lx"
-          alignSelf="center"
-        >
-          <Text variant="body1">
-            {t('hotspot_setup.progress.view_pending_transfer')}
-          </Text>
-        </TouchableOpacityBox>
-      )}
-
       {state === 'error' && (
         <>
           <Box flex={1} alignItems="center" paddingTop="xxl">

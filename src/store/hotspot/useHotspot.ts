@@ -1,28 +1,26 @@
 import { useCallback, useState } from 'react'
 import { useSelector } from 'react-redux'
-import { HotspotMeta, useOnboarding } from '@helium/react-native-sdk'
+import { HotspotMeta, useOnboarding, useSolana } from '@helium/react-native-sdk'
 import { HotspotType } from '@helium/onboarding'
 import hotspotSlice, { fetchOnboarding } from './hotspotSlice'
 import { RootState } from '../rootReducer'
 import { useAppDispatch } from '../store'
-import useDeveloperOptions from '../developer/useDeveloperOptions'
 import useMount from '../../utils/useMount'
+import useDeveloperOptions from '../developer/useDeveloperOptions'
 
 type Opts = { fetchOnMount: boolean }
 const useHotspot = (address: string, opts?: Opts) => {
-  const hotspot = useSelector((state: RootState) => state.hotspot)
   const dispatch = useAppDispatch()
-  const { status } = useDeveloperOptions(false)
-  const { getHotspotDetails: fetcher, getOnboardingRecord } = useOnboarding()
+  const { getOnboardingRecord } = useOnboarding()
+  const { cluster } = useDeveloperOptions()
+  const hotspots = useSelector(
+    (state: RootState) => state.hotspot.hotspotsByCluster[cluster],
+  )
+  const { getHotspotDetails: fetcher } = useSolana()
   const [loading, setLoading] = useState<boolean>()
 
   const getHotspotDetails = useCallback(async () => {
     if (loading) return
-
-    if (status !== 'complete') {
-      setLoading(false)
-      return
-    }
 
     let iotMeta: HotspotMeta | undefined
     let mobileMeta: HotspotMeta | undefined
@@ -57,17 +55,19 @@ const useHotspot = (address: string, opts?: Opts) => {
       hotspotSlice.actions.updateHotspotDetails({
         ...updated,
         address,
+        cluster,
         networkTypes,
       }),
     )
     setLoading(false)
-  }, [address, dispatch, fetcher, loading, status])
+  }, [address, cluster, dispatch, fetcher, loading])
 
   useMount(() => {
     dispatch(
       fetchOnboarding({
         fetcher: getOnboardingRecord,
         hotspotAddress: address,
+        cluster,
       }),
     )
     if (!opts?.fetchOnMount) {
@@ -79,8 +79,8 @@ const useHotspot = (address: string, opts?: Opts) => {
   return {
     loading,
     getHotspotDetails,
-    hotspotDetails: hotspot.hotspotDetails[address],
-    onboardingRecord: hotspot.onboardingRecords[address],
+    hotspotDetails: hotspots.hotspotDetails[address],
+    onboardingRecord: hotspots.onboardingRecords[address],
   }
 }
 

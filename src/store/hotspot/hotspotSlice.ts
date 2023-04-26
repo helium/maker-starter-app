@@ -4,21 +4,41 @@ import { HotspotMeta } from '@helium/react-native-sdk'
 import { Asset } from '@helium/spl-utils'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import animalName from 'angry-purple-tiger'
+import { Cluster } from '@solana/web3.js'
 import {
   Hotspot,
   HotspotDetail,
 } from '../../features/hotspots/root/hotspotTypes'
 
-export type State = {
-  loadingHotspots: boolean
+type HotspotsForCluster = {
   hotspots?: Hotspot[]
   hotspotDetails: Record<string, HotspotDetail>
   onboardingRecords: Record<string, OnboardingRecord>
 }
+type HotspotsByCluster = Record<Cluster, HotspotsForCluster>
+
+export type State = {
+  loadingHotspots: boolean
+  hotspotsByCluster: HotspotsByCluster
+}
+
+const initialHotspotState = {
+  onboardingRecords: {} as Record<string, OnboardingRecord>,
+  hotspotDetails: {} as Record<string, HotspotDetail>,
+  hotspots: [] as Hotspot[],
+}
+
+const initialHotspotsState = {
+  devnet: { ...initialHotspotState },
+  testnet: { ...initialHotspotState },
+  'mainnet-beta': {
+    ...initialHotspotState,
+  },
+}
+
 const initialState: State = {
   loadingHotspots: true,
-  hotspotDetails: {},
-  onboardingRecords: {},
+  hotspotsByCluster: initialHotspotsState,
 }
 
 const getHotspotAddress = (item: Asset | HeliumHotspot): string => {
@@ -38,9 +58,9 @@ export const fetchHotspots = createAsyncThunk<
       heliumAddress: string
     }) => Promise<Asset[] | HeliumHotspot[] | undefined>
     heliumAddress: string
-    isSolana: boolean
+    cluster: Cluster
   }
->('hotspot/fetchHotspots', async ({ fetcher, heliumAddress, isSolana }) => {
+>('hotspot/fetchHotspots', async ({ fetcher, heliumAddress }) => {
   const results: HeliumHotspot[] | Asset[] | undefined = await fetcher({
     heliumAddress,
   })
@@ -49,20 +69,8 @@ export const fetchHotspots = createAsyncThunk<
   if (!results) return hotspots
 
   return results.map((h) => {
-    if (isSolana) {
-      const address: string = getHotspotAddress(h)
-      return { address, animalName: animalName(address) }
-    }
-    const hotspot = h as HeliumHotspot
-    return {
-      address: hotspot.address,
-      animalName: animalName(hotspot.address),
-      lat: hotspot.lat,
-      lng: hotspot.lng,
-      location: hotspot.location,
-      elevation: hotspot.elevation,
-      gain: hotspot.gain,
-    }
+    const address: string = getHotspotAddress(h)
+    return { address, animalName: animalName(address) }
   })
 })
 
@@ -71,13 +79,15 @@ export const fetchOnboarding = createAsyncThunk<
   {
     fetcher: (hotspotAddress: string) => Promise<OnboardingRecord | null>
     hotspotAddress: string
+    cluster: Cluster
   }
 >(
   'hotspot/fetchOnboarding',
-  async ({ fetcher, hotspotAddress }, { getState }) => {
+  async ({ fetcher, hotspotAddress, cluster }, { getState }) => {
     const { hotspot } = (await getState()) as { hotspot: State }
 
-    const prevRecord = hotspot.onboardingRecords[hotspotAddress]
+    const prevRecord =
+      hotspot.hotspotsByCluster[cluster].onboardingRecords[hotspotAddress]
     if (prevRecord) return prevRecord
 
     return fetcher(hotspotAddress)
@@ -90,20 +100,22 @@ const hotspotSlice = createSlice({
   reducers: {
     reset: (state) => {
       state.loadingHotspots = false
-      state.hotspots = []
-      state.hotspotDetails = {}
-      state.onboardingRecords = {}
+      state.hotspotsByCluster = initialHotspotsState
     },
     updateHotspotDetails: (
       state,
       {
         payload,
       }: {
-        payload: HotspotMeta & { networkTypes: HotspotType[]; address: string }
+        payload: HotspotMeta & {
+          networkTypes: HotspotType[]
+          address: string
+          cluster: Cluster
+        }
       },
     ) => {
-      const { address, ...rest } = payload
-      state.hotspotDetails[address] = rest
+      const { address, cluster, ...rest } = payload
+      state.hotspotsByCluster[cluster].hotspotDetails[address] = rest
     },
   },
   extraReducers: (builder) => {
@@ -114,18 +126,14 @@ const hotspotSlice = createSlice({
       state.loadingHotspots = false
     })
     builder.addCase(fetchHotspots.fulfilled, (state, { payload, meta }) => {
-      state.hotspots = payload
-
-      if (!meta.arg.isSolana) {
-        payload.forEach((details) => {
-          state.hotspotDetails[details.address] = details
-        })
-      }
+      state.hotspotsByCluster[meta.arg.cluster].hotspots = payload
       state.loadingHotspots = false
     })
     builder.addCase(fetchOnboarding.fulfilled, (state, { payload, meta }) => {
       if (!payload) return
-      state.onboardingRecords[meta.arg.hotspotAddress] = payload
+      state.hotspotsByCluster[meta.arg.cluster].onboardingRecords[
+        meta.arg.hotspotAddress
+      ] = payload
     })
   },
 })

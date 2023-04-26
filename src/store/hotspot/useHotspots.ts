@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 import { useSelector } from 'react-redux'
-import { useOnboarding } from '@helium/react-native-sdk'
+import { useSolana } from '@helium/react-native-sdk'
 import { fetchHotspots } from './hotspotSlice'
 import { RootState } from '../rootReducer'
 import { useAppDispatch } from '../store'
@@ -8,10 +8,15 @@ import { getAddress } from '../../utils/secureAccount'
 import useDeveloperOptions from '../developer/useDeveloperOptions'
 
 const useHotspots = () => {
-  const hotspot = useSelector((state: RootState) => state.hotspot)
   const dispatch = useAppDispatch()
-  const { status } = useDeveloperOptions()
-  const { getHotspots: fetcher } = useOnboarding()
+  const { getHotspots: fetcher } = useSolana()
+  const { cluster } = useDeveloperOptions()
+  const hotspot = useSelector(
+    (state: RootState) => state.hotspot.hotspotsByCluster[cluster],
+  )
+  const loadingHotspots = useSelector(
+    (state: RootState) => state.hotspot.loadingHotspots,
+  )
 
   const getHotspots = useCallback(async () => {
     const heliumAddress = await getAddress()
@@ -19,16 +24,17 @@ const useHotspots = () => {
       // TODO: Handle Error
       return
     }
+
     dispatch(
       fetchHotspots({
         fetcher,
         heliumAddress,
-        isSolana: status === 'complete',
+        cluster,
       }),
     )
-  }, [dispatch, fetcher, status])
+  }, [dispatch, fetcher, cluster])
 
-  return { ...hotspot, getHotspots }
+  return { ...hotspot, getHotspots, loadingHotspots }
 }
 
 export default useHotspots
