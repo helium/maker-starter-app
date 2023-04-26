@@ -114,6 +114,8 @@ const appSlice = createSlice({
       setSecureItem('walletLinkToken', token)
       const { address } = parseWalletLinkToken(token)
       state.heliumAddress = address
+      state.isOnboarded = true
+      setSecureItem('isOnboarded', true)
     },
     lock: (state, action: PayloadAction<boolean>) => {
       state.isLocked = action.payload
