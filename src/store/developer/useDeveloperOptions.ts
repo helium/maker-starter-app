@@ -1,20 +1,10 @@
 import { useMemo } from 'react'
 import Config from 'react-native-config'
 import { useSelector } from 'react-redux'
-import { getStatus, SolanaStatus } from './developerSlice'
 import { RootState } from '../rootReducer'
-import { useAppDispatch } from '../store'
-import useMount from '../../utils/useMount'
 
-const useDeveloperOptions = (refresh = true) => {
+const useDeveloperOptions = () => {
   const devOptions = useSelector((state: RootState) => state.developer)
-
-  const dispatch = useAppDispatch()
-
-  useMount(() => {
-    if (!refresh) return
-    dispatch(getStatus())
-  })
 
   const solanaRpcEndpoint = useMemo(() => {
     let endpoint: string | undefined
@@ -40,14 +30,7 @@ const useDeveloperOptions = (refresh = true) => {
     return endpoint
   }, [devOptions.cluster])
 
-  const status = useMemo((): SolanaStatus => {
-    if (devOptions.forceSolana) {
-      return 'complete'
-    }
-    return devOptions.status
-  }, [devOptions.forceSolana, devOptions.status])
-
-  return { ...devOptions, onboardingEndpoint, solanaRpcEndpoint, status }
+  return { ...devOptions, onboardingEndpoint, solanaRpcEndpoint }
 }
 
 export default useDeveloperOptions

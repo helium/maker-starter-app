@@ -39,13 +39,9 @@ const HotspotTxnsProgressScreen = () => {
   const [logs, setLogs] = useState<string[]>()
   const { primaryText } = useColors()
   const [failed, setFailed] = useState(false)
-  const {
-    createHotspot,
-    getOnboardTransactions,
-    getOnboardingRecord,
-    getHotspotDetails,
-  } = useOnboarding()
-  const { getStatus } = useSolana()
+  const { createHotspot, getOnboardTransactions, getOnboardingRecord } =
+    useOnboarding()
+  const { getHotspotDetails } = useSolana()
 
   const navToHeliumAppForSigning = useCallback(
     async (updateParams: SignHotspotRequest) => {
@@ -197,9 +193,7 @@ const HotspotTxnsProgressScreen = () => {
       // This creates the hotspot, signing not required
       try {
         handleLog({
-          message: `create hotspot ${hotspotAddress} - isSolana: ${
-            (await getStatus()).isSolana
-          }\ntxn - \n${params.addGatewayTxn}`,
+          message: `create hotspot ${hotspotAddress}\ntxn - \n${params.addGatewayTxn}`,
         })
 
         const txId = await createHotspot(params.addGatewayTxn)
@@ -260,12 +254,7 @@ const HotspotTxnsProgressScreen = () => {
 
       handleLog({ message: 'Getting onboard transactions' })
       try {
-        const {
-          solanaTransactions,
-          addGatewayTxn: updatedAddGateway,
-          assertLocationTxn,
-        } = await getOnboardTransactions({
-          txn: params.addGatewayTxn,
+        const { solanaTransactions } = await getOnboardTransactions({
           hotspotAddress,
           hotspotTypes: networkTypes,
           lat: last(params.coords),
@@ -276,8 +265,6 @@ const HotspotTxnsProgressScreen = () => {
 
         handleTxns({
           onboardTransactions: solanaTransactions,
-          addGatewayTxn: updatedAddGateway,
-          assertLocationTxn,
           token,
         })
       } catch (e) {
@@ -289,7 +276,6 @@ const HotspotTxnsProgressScreen = () => {
       getHotspotDetails,
       getOnboardTransactions,
       getOnboardingRecord,
-      getStatus,
       handleLog,
       handleTxns,
       params,

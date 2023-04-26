@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { parseWalletLinkToken } from '@helium/wallet-link'
 import {
   deleteSecureItem,
   getSecureItem,
@@ -18,6 +19,7 @@ export type AppState = {
   isRequestingPermission: boolean
   walletLinkToken?: string
   isOnboarded: boolean
+  heliumAddress?: string
 }
 const initialState: AppState = {
   isSettingUpHotspot: false,
@@ -110,6 +112,8 @@ const appSlice = createSlice({
       state.walletLinkToken = token
       state.isLoggedIn = true
       setSecureItem('walletLinkToken', token)
+      const { address } = parseWalletLinkToken(token)
+      state.heliumAddress = address
     },
     lock: (state, action: PayloadAction<boolean>) => {
       state.isLocked = action.payload

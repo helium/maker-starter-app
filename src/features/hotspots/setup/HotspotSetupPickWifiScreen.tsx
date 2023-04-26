@@ -3,7 +3,7 @@ import { FlatList } from 'react-native'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
 import { uniq } from 'lodash'
-import { useHotspotBle, useOnboarding, Account } from '@helium/react-native-sdk'
+import { useHotspotBle, Account, useSolana } from '@helium/react-native-sdk'
 import BackScreen from '../../../components/BackScreen'
 import Text from '../../../components/Text'
 import {
@@ -72,7 +72,7 @@ const HotspotSetupPickWifiScreen = () => {
     },
   } = useRoute<Route>()
   const { readWifiNetworks } = useHotspotBle()
-  const { getHotspotDetails } = useOnboarding()
+  const { getHotspotDetails } = useSolana()
 
   const [wifiNetworks, setWifiNetworks] = useState(networks)
   const [connectedWifiNetworks, setConnectedWifiNetworks] =

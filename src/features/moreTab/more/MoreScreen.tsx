@@ -37,6 +37,7 @@ import useCopyText from '../../../utils/useCopyText'
 import developerSlice from '../../../store/developer/developerSlice'
 import ellipsizeAddress from '../../../utils/ellipsizeAddress'
 import hotspotSlice from '../../../store/hotspot/hotspotSlice'
+import usePrevious from '../../../utils/usePrevious'
 
 type Route = RouteProp<RootStackParamList & MoreStackParamList, 'MoreScreen'>
 const MoreScreen = () => {
@@ -44,7 +45,11 @@ const MoreScreen = () => {
   const { params } = useRoute<Route>()
   const dispatch = useAppDispatch()
   const app = useSelector((state: RootState) => state.app, isEqual)
-  const devOptions = useSelector((state: RootState) => state.developer, isEqual)
+  const { cluster } = useSelector(
+    (state: RootState) => state.developer,
+    isEqual,
+  )
+  const prevCluster = usePrevious(cluster)
   const authIntervals = useAuthIntervals()
   const navigation = useNavigation<MoreNavigationProp & RootNavigationProp>()
   const spacing = useSpacing()
@@ -57,11 +62,6 @@ const MoreScreen = () => {
 
   const { result: mnemonic } = useAsync(getMnemonic, [])
   const copyText = useCopyText()
-
-  useEffect(() => {
-    // if devOptions change, clear the hotspot caches
-    dispatch(hotspotSlice.actions.reset())
-  }, [devOptions])
 
   useEffect(() => {
     if (!params?.pinVerifiedFor) return
@@ -140,6 +140,7 @@ const MoreScreen = () => {
         style: 'destructive',
         onPress: () => {
           dispatch(appSlice.actions.signOut())
+          dispatch(hotspotSlice.actions.reset())
         },
       },
     ])
@@ -235,42 +236,19 @@ const MoreScreen = () => {
 
     const developer: MoreListItemType[] = [
       {
-        title: t('more.sections.developer.enable'),
-        onToggle: () =>
-          dispatch(developerSlice.actions.toggleDeveloperPermission()),
-        value: devOptions.enabled,
+        title: t('more.sections.developer.cluster'),
+        value: cluster,
+        select: {
+          items: [
+            { label: 'mainnet-beta', value: 'mainnet-beta' },
+            { label: 'devnet', value: 'devnet' },
+          ],
+          onValueSelect: (cluster: ReactText) => {
+            dispatch(developerSlice.actions.changeCluster(cluster))
+          },
+        },
       },
     ]
-
-    if (devOptions.enabled) {
-      developer.push({
-        title: t('more.sections.developer.forceSolana'),
-        onToggle: () => dispatch(developerSlice.actions.toggleForceSolana()),
-        value: devOptions.forceSolana,
-      })
-
-      if (devOptions.forceSolana || devOptions.status === 'complete') {
-        developer.push({
-          title: t('more.sections.developer.cluster'),
-          value: devOptions.cluster,
-          select: {
-            items: [
-              { label: 'mainnet-beta', value: 'mainnet-beta' },
-              { label: 'devnet', value: 'devnet' },
-            ],
-            onValueSelect: (cluster: ReactText) => {
-              dispatch(developerSlice.actions.changeCluster(cluster))
-            },
-          },
-        })
-      }
-
-      developer.push({
-        title: t('more.sections.developer.transitionStatus', {
-          status: devOptions.status,
-        }),
-      })
-    }
 
     return [
       {
@@ -310,10 +288,7 @@ const MoreScreen = () => {
     app.isPinRequired,
     app.authInterval,
     mnemonic,
-    devOptions.enabled,
-    devOptions.forceSolana,
-    devOptions.status,
-    devOptions.cluster,
+    cluster,
     handleCopyAddress,
     language,
     handleLanguageChange,

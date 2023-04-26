@@ -65,7 +65,7 @@ const App = () => {
   const { appState } = useAppState()
   const dispatch = useAppDispatch()
 
-  const { status, cluster, onboardingEndpoint, solanaRpcEndpoint } =
+  const { cluster, onboardingEndpoint, solanaRpcEndpoint } =
     useDeveloperOptions()
 
   const {
@@ -75,6 +75,7 @@ const App = () => {
     isRestored,
     isRequestingPermission,
     isLocked,
+    heliumAddress,
   } = useSelector((state: RootState) => state.app)
 
   const { result: heliumWallet } = useAsync(getAddress, [])
@@ -147,9 +148,8 @@ const App = () => {
     <GestureHandlerRootView style={globalStyles.container}>
       <SolanaProvider
         cluster={cluster}
-        solanaStatusOverride={status}
         rpcEndpoint={solanaRpcEndpoint}
-        heliumWallet={heliumWallet}
+        heliumWallet={heliumAddress || heliumWallet}
       >
         <OnboardingProvider baseUrl={onboardingEndpoint}>
           <HotspotBleProvider>
