@@ -196,9 +196,15 @@ const HotspotTxnsProgressScreen = () => {
           message: `create hotspot ${hotspotAddress}\ntxn - \n${params.addGatewayTxn}`,
         })
 
-        const txId = await createHotspot(params.addGatewayTxn)
+        const txIds = await createHotspot(params.addGatewayTxn)
+        if (!txIds?.length) {
+          handleLog({
+            message: 'create hotspot failed to create transactions',
+            catastrophic: true,
+          })
+        }
         handleLog({
-          message: `created hotspot? - txId is ${txId}`,
+          message: `created hotspot? - txId is ${txIds.join(',')}`,
         })
       } catch (e) {
         handleLog({
