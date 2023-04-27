@@ -23,8 +23,7 @@ const HotspotTxnsProgressScreen = () => {
   const { params } = useRoute<Route>()
   const navigation = useNavigation<RootNavigationProp>()
   const { primaryText } = useColors()
-  const { createHotspot, getOnboardTransactions, getOnboardingRecord } =
-    useOnboarding()
+  const { createHotspot, getOnboardTransactions } = useOnboarding()
 
   const navToHeliumAppForSigning = useCallback(
     async (opts?: {
@@ -71,15 +70,11 @@ const HotspotTxnsProgressScreen = () => {
     // This creates the hotspot, signing not required
     await createHotspot(params.addGatewayTxn)
 
-    const onboardingRecord = await getOnboardingRecord(params.hotspotAddress)
-
     /*
          TODO: Determine which network types this hotspot supports
          Could possibly use the maker address
       */
-    const hotspotTypes = getHotspotTypes({
-      hotspotMakerAddress: onboardingRecord?.maker.address || '',
-    })
+    const hotspotTypes = getHotspotTypes()
 
     const { solanaTransactions } = await getOnboardTransactions({
       hotspotAddress: params.hotspotAddress,
@@ -93,13 +88,7 @@ const HotspotTxnsProgressScreen = () => {
     navToHeliumAppForSigning({
       onboardTransactions: solanaTransactions,
     })
-  }, [
-    createHotspot,
-    getOnboardTransactions,
-    getOnboardingRecord,
-    navToHeliumAppForSigning,
-    params,
-  ])
+  }, [createHotspot, getOnboardTransactions, navToHeliumAppForSigning, params])
 
   useMount(() => {
     if (params.addGatewayTxn) {
