@@ -9,7 +9,6 @@ import {
   BleError,
   HotspotMeta,
   useHotspotBle,
-  useOnboarding,
   useSolana,
 } from '@helium/react-native-sdk'
 import useAlert from '../../../utils/useAlert'
@@ -43,7 +42,6 @@ const HotspotSetupWifiConnectingScreen = () => {
   } = useRoute<Route>()
 
   const { readWifiNetworks, setWifi, removeConfiguredWifi } = useHotspotBle()
-  const { getOnboardingRecord } = useOnboarding()
   const { getHotspotDetails } = useSolana()
 
   const { showOKAlert } = useAlert()
@@ -69,15 +67,11 @@ const HotspotSetupWifiConnectingScreen = () => {
     const address = await getAddress()
     if (!address) return
 
-    const onboardingRecord = await getOnboardingRecord(hotspotAddress)
-
     /*
          TODO: Determine which network types this hotspot supports
          Could possibly use the maker address
       */
-    const hotspotTypes = getHotspotTypes({
-      hotspotMakerAddress: onboardingRecord?.maker.address || '',
-    })
+    const hotspotTypes = getHotspotTypes()
     let hotspot: HotspotMeta | undefined
     if (hotspotTypes.length) {
       hotspot = await getHotspotDetails({
@@ -104,7 +98,6 @@ const HotspotSetupWifiConnectingScreen = () => {
   }, [
     addGatewayTxn,
     getHotspotDetails,
-    getOnboardingRecord,
     hotspotAddress,
     hotspotType,
     navigation,

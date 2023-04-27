@@ -749,7 +749,7 @@
                                 "EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
                                 INFOPLIST_FILE = Nebra/Info.plist;
                                 LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-                                MARKETING_VERSION = 2.0.0;
+                                MARKETING_VERSION = 2.0.1;
                                 OTHER_LDFLAGS = (
                                         "$(inherited)",
                                         "-ObjC",
@@ -780,7 +780,7 @@
                                 "EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
                                 INFOPLIST_FILE = Nebra/Info.plist;
                                 LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-                                MARKETING_VERSION = 2.0.0;
+                                MARKETING_VERSION = 2.0.1;
                                 OTHER_LDFLAGS = (
                                         "$(inherited)",
                                         "-ObjC",

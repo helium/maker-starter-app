@@ -2,7 +2,7 @@ import React, { memo, useCallback, useEffect, useMemo, useState } from 'react'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import animalName from 'angry-purple-tiger'
 import { useTranslation } from 'react-i18next'
-import { HotspotMeta, useOnboarding, useSolana } from '@helium/react-native-sdk'
+import { HotspotMeta, useSolana } from '@helium/react-native-sdk'
 import MapboxGL from '@react-native-mapbox-gl/maps'
 import Config from 'react-native-config'
 import { ActivityIndicator, Linking } from 'react-native'
@@ -32,7 +32,6 @@ const HotspotScreen = () => {
   const navigation = useNavigation<RootNavigationProp>()
   const [details, setDetails] = useState<HotspotDetails>()
   const [loadingDetails, setLoadingDetails] = useState(true)
-  const { getOnboardingRecord } = useOnboarding()
   const { getHotspotDetails } = useSolana()
 
   const needsOnboarding = useMemo(
@@ -41,15 +40,11 @@ const HotspotScreen = () => {
   )
 
   const updateHotspotDetails = useCallback(async () => {
-    const onboardingRecord = await getOnboardingRecord(hotspot.address)
-
     /*
          TODO: Determine which network types this hotspot supports
          Could possibly use the maker address
       */
-    const hotspotTypes = getHotspotTypes({
-      hotspotMakerAddress: onboardingRecord?.maker.address || '',
-    })
+    const hotspotTypes = getHotspotTypes()
 
     let hotspotMeta: HotspotMeta | undefined
     if (hotspotTypes.length) {
@@ -60,7 +55,7 @@ const HotspotScreen = () => {
     }
     setDetails(hotspotMeta)
     setLoadingDetails(false)
-  }, [getHotspotDetails, getOnboardingRecord, hotspot])
+  }, [getHotspotDetails, hotspot])
 
   useEffect(() => {
     return navigation.addListener('focus', () => {

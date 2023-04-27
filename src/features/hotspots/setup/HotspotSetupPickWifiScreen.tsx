@@ -8,7 +8,6 @@ import {
   Account,
   HotspotMeta,
   useHotspotBle,
-  useOnboarding,
   useSolana,
 } from '@helium/react-native-sdk'
 import BackScreen from '../../../components/BackScreen'
@@ -87,7 +86,6 @@ const HotspotSetupPickWifiScreen = () => {
     },
   } = useRoute<Route>()
   const { readWifiNetworks } = useHotspotBle()
-  const { getOnboardingRecord } = useOnboarding()
   const { getHotspotDetails } = useSolana()
 
   const [wifiNetworks, setWifiNetworks] = useState(networks)
@@ -107,15 +105,11 @@ const HotspotSetupPickWifiScreen = () => {
     const address = await getAddress()
     if (!token || !address) return
 
-    const onboardingRecord = await getOnboardingRecord(hotspotAddress)
-
     /*
          TODO: Determine which network types this hotspot supports
          Could possibly use the maker address
       */
-    const hotspotTypes = getHotspotTypes({
-      hotspotMakerAddress: onboardingRecord?.maker.address || '',
-    })
+    const hotspotTypes = getHotspotTypes()
 
     let hotspot: HotspotMeta | undefined
     if (hotspotTypes.length) {
@@ -146,7 +140,6 @@ const HotspotSetupPickWifiScreen = () => {
       })
     }
   }, [
-    getOnboardingRecord,
     hotspotAddress,
     getHotspotDetails,
     navigation,

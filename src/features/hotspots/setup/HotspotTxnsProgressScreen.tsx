@@ -23,9 +23,7 @@ const HotspotTxnsProgressScreen = () => {
   const { params } = useRoute<Route>()
   const navigation = useNavigation<RootNavigationProp>()
   const { primaryText } = useColors()
-
-  const { createHotspot, getOnboardTransactions, getOnboardingRecord } =
-    useOnboarding()
+  const { createHotspot, getOnboardTransactions } = useOnboarding()
 
   const navToHeliumAppForSigning = useCallback(
     async (opts?: {
@@ -82,15 +80,11 @@ const HotspotTxnsProgressScreen = () => {
       return
     }
 
-    const onboardingRecord = await getOnboardingRecord(params.hotspotAddress)
-
     /*
          TODO: Determine which network types this hotspot supports
          Could possibly use the maker address
       */
-    const hotspotTypes = getHotspotTypes({
-      hotspotMakerAddress: onboardingRecord?.maker.address || '',
-    })
+    const hotspotTypes = getHotspotTypes()
 
     try {
       const { solanaTransactions } = await getOnboardTransactions({
@@ -117,7 +111,6 @@ const HotspotTxnsProgressScreen = () => {
   }, [
     createHotspot,
     getOnboardTransactions,
-    getOnboardingRecord,
     navToHeliumAppForSigning,
     params,
     t,
