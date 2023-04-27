@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { HotspotMeta, useOnboarding, useSolana } from '@helium/react-native-sdk'
 import MapboxGL from '@react-native-mapbox-gl/maps'
 import Config from 'react-native-config'
-import { getHotpotTypes, HotspotStackParamList } from './hotspotTypes'
+import { getHotspotTypes, HotspotStackParamList } from './hotspotTypes'
 import Text from '../../../components/Text'
 import SafeAreaBox from '../../../components/SafeAreaBox'
 import Button from '../../../components/Button'
@@ -43,7 +43,7 @@ const HotspotScreen = () => {
          TODO: Determine which network types this hotspot supports
          Could possibly use the maker address
       */
-    const hotspotTypes = getHotpotTypes({
+    const hotspotTypes = getHotspotTypes({
       hotspotMakerAddress: onboardingRecord?.maker.address || '',
     })
 

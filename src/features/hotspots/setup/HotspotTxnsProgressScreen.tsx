@@ -14,7 +14,7 @@ import { getSecureItem } from '../../../utils/secureAccount'
 import { useColors } from '../../../theme/themeHooks'
 import { DebouncedButton } from '../../../components/Button'
 import useMount from '../../../utils/useMount'
-import { getHotpotTypes } from '../root/hotspotTypes'
+import { getHotspotTypes } from '../root/hotspotTypes'
 
 type Route = RouteProp<HotspotSetupStackParamList, 'HotspotTxnsProgressScreen'>
 
@@ -77,7 +77,7 @@ const HotspotTxnsProgressScreen = () => {
          TODO: Determine which network types this hotspot supports
          Could possibly use the maker address
       */
-    const hotspotTypes = getHotpotTypes({
+    const hotspotTypes = getHotspotTypes({
       hotspotMakerAddress: onboardingRecord?.maker.address || '',
     })
 

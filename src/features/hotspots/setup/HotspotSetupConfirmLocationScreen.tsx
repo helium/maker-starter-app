@@ -17,7 +17,7 @@ import Text from '../../../components/Text'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
 import { getAddress } from '../../../utils/secureAccount'
 import HotspotLocationPreview from './HotspotLocationPreview'
-import { getHotpotTypes } from '../root/hotspotTypes'
+import { getHotspotTypes } from '../root/hotspotTypes'
 
 type Route = RouteProp<
   HotspotSetupStackParamList,
@@ -30,7 +30,6 @@ const HotspotSetupConfirmLocationScreen = () => {
   const rootNav = useNavigation<RootNavigationProp>()
   const [assertData, setAssertData] = useState<AssertData>()
   const [isFree, setIsFree] = useState<boolean>()
-  const [assertLocationTxn, setAssertLocationTxn] = useState<string>()
   const [solanaTransactions, setSolanaTransactions] = useState<string[]>()
   const { params } = useRoute<Route>()
   const { getAssertData, getOnboardingRecord, getOnboardTransactions } =
@@ -54,7 +53,7 @@ const HotspotSetupConfirmLocationScreen = () => {
          TODO: Determine which network types this hotspot supports
          Could possibly use the maker address
       */
-      const hotspotTypes = getHotpotTypes({
+      const hotspotTypes = getHotspotTypes({
         hotspotMakerAddress: onboardingRecord?.maker.address || '',
       })
 
@@ -82,13 +81,11 @@ const HotspotSetupConfirmLocationScreen = () => {
           })
 
           setAssertData(assert)
-          setAssertLocationTxn(assert.assertLocationTxn)
           setSolanaTransactions(assert.solanaTransactions)
           setIsFree(assert.isFree)
         } else {
           // Edge  case - hotspot hasn't been onboarded yet
           const onboard = await getOnboardTransactions({
-            txn: '',
             hotspotAddress: params.hotspotAddress,
             hotspotTypes,
             ...locationParams,
@@ -112,14 +109,13 @@ const HotspotSetupConfirmLocationScreen = () => {
   const navNext = useCallback(async () => {
     navigation.replace('HotspotTxnsProgressScreen', {
       addGatewayTxn: params.addGatewayTxn,
-      assertLocationTxn: assertLocationTxn || '',
       solanaTransactions: solanaTransactions || [],
       hotspotAddress: params.hotspotAddress,
       coords: params.coords,
       elevation: params.elevation,
       gain: params.gain,
     })
-  }, [assertLocationTxn, navigation, params, solanaTransactions])
+  }, [navigation, params, solanaTransactions])
 
   const handleClose = useCallback(() => rootNav.navigate('MainTabs'), [rootNav])
 

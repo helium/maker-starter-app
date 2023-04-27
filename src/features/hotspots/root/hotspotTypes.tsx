@@ -37,7 +37,7 @@ export type HotspotSyncStatus = 'full' | 'partial'
 export const GLOBAL_OPTS = ['explore', 'search', 'home'] as const
 export type GlobalOpt = (typeof GLOBAL_OPTS)[number]
 
-export const getHotpotTypes = ({
+export const getHotspotTypes = ({
   hotspotMakerAddress,
 }: {
   hotspotMakerAddress: string
