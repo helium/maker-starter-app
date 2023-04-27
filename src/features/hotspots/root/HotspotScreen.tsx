@@ -2,10 +2,10 @@ import React, { memo, useCallback, useEffect, useMemo, useState } from 'react'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import animalName from 'angry-purple-tiger'
 import { useTranslation } from 'react-i18next'
-import { HotspotMeta, useOnboarding } from '@helium/react-native-sdk'
+import { HotspotMeta, useOnboarding, useSolana } from '@helium/react-native-sdk'
 import MapboxGL from '@react-native-mapbox-gl/maps'
 import Config from 'react-native-config'
-import { getHotpotTypes, HotspotStackParamList } from './hotspotTypes'
+import { getHotspotTypes, HotspotStackParamList } from './hotspotTypes'
 import Text from '../../../components/Text'
 import SafeAreaBox from '../../../components/SafeAreaBox'
 import Button from '../../../components/Button'
@@ -28,7 +28,8 @@ const HotspotScreen = () => {
   const navigation = useNavigation<RootNavigationProp>()
   const [details, setDetails] = useState<HotspotDetails>()
   const [loadingDetails, setLoadingDetails] = useState(true)
-  const { getOnboardingRecord, getHotspotDetails } = useOnboarding()
+  const { getOnboardingRecord } = useOnboarding()
+  const { getHotspotDetails } = useSolana()
 
   const needsOnboarding = useMemo(
     () => !loadingDetails && !details,
@@ -42,7 +43,7 @@ const HotspotScreen = () => {
          TODO: Determine which network types this hotspot supports
          Could possibly use the maker address
       */
-    const hotspotTypes = getHotpotTypes({
+    const hotspotTypes = getHotspotTypes({
       hotspotMakerAddress: onboardingRecord?.maker.address || '',
     })
 

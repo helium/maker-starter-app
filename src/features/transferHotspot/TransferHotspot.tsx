@@ -14,7 +14,7 @@ import BackButton from '../../components/BackButton'
 import SafeAreaBox from '../../components/SafeAreaBox'
 import TextInput from '../../components/TextInput'
 import Button from '../../components/Button'
-import { getAddress, getSecureItem } from '../../utils/secureAccount'
+import { getSecureItem } from '../../utils/secureAccount'
 import { RootStackParamList } from '../../navigation/main/tabTypes'
 
 type Route = RouteProp<RootStackParamList, 'TransferHotspot'>
@@ -42,18 +42,14 @@ const TransferHotspot = () => {
     if (!parsed?.address) throw new Error('Invalid Token')
 
     try {
-      const userAddress = (await getAddress()) || ''
-      const { solanaTransactions, transferHotspotTxn } =
-        await createTransferTransaction({
-          hotspotAddress,
-          userAddress,
-          newOwnerAddress,
-        })
+      const { solanaTransactions } = await createTransferTransaction({
+        hotspotAddress,
+        newOwnerAddress,
+      })
 
       const url = createUpdateHotspotUrl({
         platform: Platform.OS,
         token,
-        transferHotspotTxn,
         solanaTransactions: solanaTransactions?.join(','),
       })
       if (!url) throw new Error('Link could not be created')
