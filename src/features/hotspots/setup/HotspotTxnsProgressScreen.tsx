@@ -14,7 +14,7 @@ import { getSecureItem } from '../../../utils/secureAccount'
 import { useColors } from '../../../theme/themeHooks'
 import { DebouncedButton } from '../../../components/Button'
 import useMount from '../../../utils/useMount'
-import { getHotpotTypes } from '../root/hotspotTypes'
+import { getHotspotTypes } from '../root/hotspotTypes'
 
 type Route = RouteProp<HotspotSetupStackParamList, 'HotspotTxnsProgressScreen'>
 
@@ -88,26 +88,22 @@ const HotspotTxnsProgressScreen = () => {
          TODO: Determine which network types this hotspot supports
          Could possibly use the maker address
       */
-    const hotspotTypes = getHotpotTypes({
+    const hotspotTypes = getHotspotTypes({
       hotspotMakerAddress: onboardingRecord?.maker.address || '',
     })
 
     try {
-      const { solanaTransactions, addGatewayTxn, assertLocationTxn } =
-        await getOnboardTransactions({
-          txn: params.addGatewayTxn,
-          hotspotAddress: params.hotspotAddress,
-          hotspotTypes,
-          lat: last(params.coords),
-          lng: first(params.coords),
-          elevation: params.elevation,
-          decimalGain: params.gain,
-        })
+      const { solanaTransactions } = await getOnboardTransactions({
+        hotspotAddress: params.hotspotAddress,
+        hotspotTypes,
+        lat: last(params.coords),
+        lng: first(params.coords),
+        elevation: params.elevation,
+        decimalGain: params.gain,
+      })
 
       navToHeliumAppForSigning({
         onboardTransactions: solanaTransactions,
-        addGatewayTxn,
-        assertLocationTxn,
       })
     } catch (err) {
       console.log(err)

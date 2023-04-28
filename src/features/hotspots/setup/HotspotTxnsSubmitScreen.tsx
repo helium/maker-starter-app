@@ -33,24 +33,12 @@ const HotspotTxnsSubmitScreen = () => {
       solanaTransactions = params.solanaTransactions?.split(',') || []
     }
     try {
-      const {
-        pendingAssertTxn,
-        pendingGatewayTxn,
-        pendingTransferTxn,
-        solanaTxnIds,
-      } = await submitTransactions({
-        addGatewayTxn: params.gatewayTxn,
-        assertLocationTxn: params.assertTxn,
-        hotspotAddress: params.gatewayAddress,
+      const { solanaTxnIds } = await submitTransactions({
         solanaTransactions,
-        transferHotspotTxn: params.transferTxn,
       })
 
       // eslint-disable-next-line no-console
       console.log({
-        pendingAssertTxn,
-        pendingGatewayTxn,
-        pendingTransferTxn,
         solanaTxnIds,
       })
     } catch (e) {

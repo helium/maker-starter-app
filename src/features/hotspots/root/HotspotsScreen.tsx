@@ -1,12 +1,12 @@
 import React, { memo, useCallback, useEffect, useState } from 'react'
+import { Asset, useSolana } from '@helium/react-native-sdk'
+import { Hotspot } from '@helium/http'
 import { useNavigation } from '@react-navigation/native'
 import { useAnalytics } from '@segment/analytics-react-native'
-import { Hotspot } from '@helium/http'
-import { Asset, useOnboarding } from '@helium/react-native-sdk'
 import Box from '../../../components/Box'
 import useMount from '../../../utils/useMount'
-import { fetchHotspotsData } from '../../../store/hotspots/hotspotsSlice'
-import { useAppDispatch } from '../../../store/store'
+// import { fetchHotspotsData } from '../../../store/hotspots/hotspotsSlice'
+// import { useAppDispatch } from '../../../store/store'
 import HotspotsEmpty from './HotspotsEmpty'
 import Hotspots from './Hotspots'
 import { getAddress } from '../../../utils/secureAccount'
@@ -30,13 +30,13 @@ const HotspotsScreen = () => {
   const nav = useNavigation<RootNavigationProp>()
   const { primaryText } = useColors()
 
-  const { getHotspots } = useOnboarding()
+  const { getHotspots } = useSolana()
 
-  const dispatch = useAppDispatch()
+  // const dispatch = useAppDispatch()
 
-  useMount(() => {
-    dispatch(fetchHotspotsData())
-  })
+  // useMount(() => {
+  //   dispatch(fetchHotspotsData())
+  // })
 
   const fetch = useCallback(async () => {
     const heliumAddress = await getAddress()

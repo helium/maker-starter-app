@@ -34,7 +34,7 @@ PODS:
     - ExpoModulesCore
   - ExpoKeepAwake (11.0.1):
     - ExpoModulesCore
-  - ExpoLocalAuthentication (13.2.1):
+  - ExpoLocalAuthentication (13.3.0):
     - ExpoModulesCore
   - ExpoModulesCore (1.1.1):
     - React-Core
@@ -115,7 +115,7 @@ PODS:
     - FlipperKit/FlipperKitNetworkPlugin
   - fmt (6.2.1)
   - glog (0.3.5)
-  - helium-react-native-sdk (2.0.21):
+  - helium-react-native-sdk (2.1.0):
     - React-Core
   - hermes-engine (0.70.6)
   - libevent (2.1.12)
@@ -470,7 +470,7 @@ PODS:
     - React-Core
   - RNPermissions (3.8.0):
     - React-Core
-  - RNReanimated (2.15.0):
+  - RNReanimated (2.17.0):
     - DoubleConversion
     - FBLazyVector
     - FBReactNativeSpec
@@ -821,7 +821,7 @@ SPEC CHECKSUMS:
   Expo: 5f4240506a147162542178989696e56e3dd72924
   ExpoHaptics: 5156bc5160d8e04c170dd6e645a71154951a2ad9
   ExpoKeepAwake: 69b59d0a8d2b24de9f82759c39b3821fec030318
-  ExpoLocalAuthentication: b870b7a8df5e15b8b0be042185a2bb7764093096
+  ExpoLocalAuthentication: 32919307c66fb3661caefa07e7811a95a7539d7b
   ExpoModulesCore: 485dff3a59b036a33b6050c0a5aea3cf1037fdd1
   EXSecureStore: e8923258361cc406d0401af380f12bd05b2b720f
   EXSplashScreen: 3e989924f61a8dd07ee4ea584c6ba14be9b51949
@@ -838,7 +838,7 @@ SPEC CHECKSUMS:
   FlipperKit: cbdee19bdd4e7f05472a66ce290f1b729ba3cb86
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
   glog: 791fe035093b84822da7f0870421a25839ca7870
-  helium-react-native-sdk: 1c94c8a59024d38a7badcca7ff39b697b9b3a17b
+  helium-react-native-sdk: 7592e52c600a454a5a76a359270cd1bba17b99f2
   hermes-engine: e86cc2a4cd10ed276799de42ea326bc551115bc7
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   Mapbox-iOS-SDK: a5915700ec84bc1a7f8b3e746d474789e35b7956
@@ -889,7 +889,7 @@ SPEC CHECKSUMS:
   RNGestureHandler: 62232ba8f562f7dea5ba1b3383494eb5bf97a4d3
   RNLocalize: 7c7aeda16c01db7a0918981c14875c0a53be9b79
   RNPermissions: 3bad5f7035a7b72bc529441a820474bd0b42bc5f
-  RNReanimated: 716842722e1c5b0b7c56cf718e586b7f6a712879
+  RNReanimated: bec7736122a268883bdede07f1bf9cf4b40158db
   RNScreens: 4a1af06327774490d97342c00aee0c2bafb497b7
   RNSentry: 6503a8ec616947dbe98be828307c8f49e7686674
   RNSVG: 07dbd870b0dcdecc99b3a202fa37c8ca163caec2
@@ -904,4 +904,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 0d3d06084cb4eca5198d5f27cd8cd44f88c31fa9
 
-COCOAPODS: 1.12.0
+COCOAPODS: 1.11.3
