@@ -3,7 +3,7 @@ import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
 import Fingerprint from '@assets/images/fingerprint.svg'
 import { ActivityIndicator } from 'react-native'
-import { AddGateway, useOnboarding } from '@helium/react-native-sdk'
+import { AddGateway, Account, useSolana } from '@helium/react-native-sdk'
 import { useAsync } from 'react-async-hook'
 import BackScreen from '../../../components/BackScreen'
 import Box from '../../../components/Box'
@@ -17,6 +17,7 @@ import animateTransition from '../../../utils/animateTransition'
 import { DebouncedButton } from '../../../components/Button'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
 import { getAddress } from '../../../utils/secureAccount'
+import useGetOnboardingRecord from '../../../store/hotspot/useGetOnboardingRecord'
 
 type Route = RouteProp<
   HotspotSetupStackParamList,
@@ -34,15 +35,15 @@ const HotspotSetupExternalConfirmScreen = () => {
   const [macAddress, setMacAddress] = useState('')
   const [ownerAddress, setOwnerAddress] = useState('')
   const rootNav = useNavigation<RootNavigationProp>()
-  const { getOnboardingRecord } = useOnboarding()
-  const { loading } = useAsync(async () => {
+  const getOnboardingRecord = useGetOnboardingRecord()
+  const { getHotspotDetails } = useSolana()
+
+  useAsync(async () => {
     if (!publicKey) return null
 
     const nextRecord = await getOnboardingRecord(publicKey)
-
     animateTransition('HotspotSetupExternalConfirmScreen.GetMac')
     setMacAddress(nextRecord?.macEth0 || t('generic.unknown'))
-    return nextRecord
   }, [publicKey, getOnboardingRecord, t])
 
   const handleClose = useCallback(() => rootNav.navigate('MainTabs'), [rootNav])
@@ -61,12 +62,34 @@ const HotspotSetupExternalConfirmScreen = () => {
   }, [params])
 
   const navNext = useCallback(async () => {
-    navigation.push('HotspotSetupLocationInfoScreen', {
-      addGatewayTxn: params.addGatewayTxn,
-      hotspotAddress: publicKey,
-      hotspotType: params.hotspotType,
+    const solAddress = Account.heliumAddressToSolAddress(address || '')
+    const hotspot = await getHotspotDetails({
+      address: publicKey,
+      type: 'IOT', // both helium and freedomfi hotspots support iot
     })
-  }, [navigation, params, publicKey])
+
+    if (
+      hotspot &&
+      (hotspot.owner === address || hotspot.owner === solAddress)
+    ) {
+      navigation.replace('OwnedHotspotErrorScreen')
+    } else if (hotspot && hotspot.owner !== address) {
+      navigation.replace('NotHotspotOwnerErrorScreen')
+    } else {
+      navigation.push('HotspotSetupLocationInfoScreen', {
+        addGatewayTxn: params.addGatewayTxn,
+        hotspotAddress: publicKey,
+        hotspotType: params.hotspotType,
+      })
+    }
+  }, [
+    address,
+    getHotspotDetails,
+    navigation,
+    params.addGatewayTxn,
+    params.hotspotType,
+    publicKey,
+  ])
 
   return (
     <BackScreen
@@ -163,7 +186,7 @@ const HotspotSetupExternalConfirmScreen = () => {
         mode="contained"
         variant="primary"
         onPress={navNext}
-        disabled={ownerAddress !== address || loading}
+        disabled={ownerAddress !== address}
       />
     </BackScreen>
   )

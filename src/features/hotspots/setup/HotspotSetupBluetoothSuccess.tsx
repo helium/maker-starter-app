@@ -19,6 +19,7 @@ import {
 } from './hotspotSetupTypes'
 import useAlert from '../../../utils/useAlert'
 import { getAddress } from '../../../utils/secureAccount'
+import useDeveloperOptions from '../../../store/developer/useDeveloperOptions'
 
 type Route = RouteProp<
   HotspotSetupStackParamList,
@@ -27,6 +28,7 @@ type Route = RouteProp<
 const HotspotSetupBluetoothSuccess = () => {
   const { t } = useTranslation()
   const [connectStatus, setConnectStatus] = useState<string | boolean>(false)
+  const { cluster } = useDeveloperOptions()
   const {
     params: { hotspotType, gatewayAction },
   } = useRoute<Route>()
@@ -40,7 +42,7 @@ const HotspotSetupBluetoothSuccess = () => {
     readWifiNetworks,
     getOnboardingAddress,
   } = useHotspotBle()
-  const { getMinFirmware, getOnboardingRecord } = useOnboarding()
+  const { getMinFirmware } = useOnboarding()
   const { showOKAlert } = useAlert()
 
   const handleError = useCallback(
@@ -115,15 +117,13 @@ const HotspotSetupBluetoothSuccess = () => {
         const networks = uniq((await readWifiNetworks(false)) || [])
         const connectedNetworks = uniq((await readWifiNetworks(true)) || [])
         const hotspotAddress = await getOnboardingAddress()
-        const onboardingRecord = await getOnboardingRecord(hotspotAddress)
-        if (!onboardingRecord) {
-          console.log('onboarding record not found')
-        }
         const payerAddress =
-          onboardingRecord?.maker.address || Config.MAKER_ADDRESS
+          cluster === 'mainnet-beta'
+            ? Config.MAKER_ADDRESS
+            : Config.DEVNET_MAKER_ADDRESS
 
         if (!payerAddress) {
-          console.log('Payer address not found')
+          console.error('Payer address not found')
           return
         }
 
@@ -156,12 +156,12 @@ const HotspotSetupBluetoothSuccess = () => {
     configureHotspot()
   }, [
     checkFirmwareCurrent,
+    cluster,
     connectStatus,
     createGatewayTxn,
     gatewayAction,
     getMinFirmware,
     getOnboardingAddress,
-    getOnboardingRecord,
     handleError,
     hotspotType,
     navigation,

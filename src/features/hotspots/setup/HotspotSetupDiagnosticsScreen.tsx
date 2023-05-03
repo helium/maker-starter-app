@@ -20,6 +20,7 @@ import Button from '../../../components/Button'
 import sendReport from './sendReport'
 import ActivityIndicator from '../../../components/ActivityIndicator'
 import { HotspotSetupStackParamList } from './hotspotSetupTypes'
+import useGetOnboardingRecord from '../../../store/hotspot/useGetOnboardingRecord'
 
 const formatMac = (mac: string) =>
   times(6)
@@ -39,7 +40,7 @@ const HotspotSetupDiagnosticsScreen = () => {
   const { t } = useTranslation()
   const { version } = useDevice()
   const rootNav = useNavigation<RootNavigationProp>()
-  const { getMinFirmware, getOnboardingRecord } = useOnboarding()
+  const { getMinFirmware } = useOnboarding()
   const [lineItems, setLineItems] = useState<
     {
       attribute: string
@@ -59,6 +60,8 @@ const HotspotSetupDiagnosticsScreen = () => {
   }, [])
 
   const { result: address } = useAsync(getOnboardingAddress, [])
+
+  const getOnboardingRecord = useGetOnboardingRecord()
 
   const { result: onboardingRecord } = useAsync(async () => {
     if (!address) return

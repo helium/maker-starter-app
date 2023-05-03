@@ -213,17 +213,25 @@ const HotspotTxnsProgressScreen = () => {
         })
       }
 
-      handleLog({ message: 'Getting onboard record' })
-      const onboardingRecord = await getOnboardingRecord(hotspotAddress)
-      if (onboardingRecord) {
-        handleLog({ message: 'Got onboard record' })
-      } else {
-        handleLog({ message: 'Could not get onboard record' })
-      }
-
       let networkTypes = params.hotspotNetworkTypes
       if (!networkTypes?.length) {
-        networkTypes = getHotspotTypes(onboardingRecord?.maker.name)
+        if (params.addGatewayTxn) {
+          const gatewayTxn = AddGatewayV1.fromString(params.addGatewayTxn)
+          networkTypes = getHotspotTypes(gatewayTxn.payer?.b58)
+        } else {
+          handleLog({ message: 'Getting onboard record' })
+          // onboarding record lookup agressively rate limits, only lookup if absolutely necessary
+          const onboardingRecord = await getOnboardingRecord(
+            params.hotspotAddress || '',
+          )
+          if (onboardingRecord) {
+            handleLog({ message: 'Got onboard record' })
+          } else {
+            handleLog({ message: 'Could not get onboard record' })
+          }
+          networkTypes = getHotspotTypes(onboardingRecord?.maker.name)
+        }
+
         handleLog({
           message: `Networks to onboard - ${networkTypes?.join(',')}`,
         })
