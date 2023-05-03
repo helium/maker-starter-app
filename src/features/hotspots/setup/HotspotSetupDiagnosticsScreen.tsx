@@ -37,6 +37,7 @@ const HotspotSetupDiagnosticsScreen = () => {
   const {
     params: { gatewayAction },
   } = useRoute<Route>()
+  const [diagnosticsError, setDiagnosticsError] = useState('')
   const { t } = useTranslation()
   const { version } = useDevice()
   const rootNav = useNavigation<RootNavigationProp>()
@@ -52,7 +53,7 @@ const HotspotSetupDiagnosticsScreen = () => {
 
   const { getDiagnosticInfo, checkFirmwareCurrent, getOnboardingAddress } =
     useHotspotBle()
-  const { result: diagnostics } = useAsync(getDiagnosticInfo, [])
+
   const { result: firmware } = useAsync(async () => {
     const min = await getMinFirmware()
     if (!min) return
@@ -60,6 +61,17 @@ const HotspotSetupDiagnosticsScreen = () => {
   }, [])
 
   const { result: address } = useAsync(getOnboardingAddress, [])
+
+  const { result: diagnostics } = useAsync(async () => {
+    if (!address || !firmware) return
+    try {
+      const result = await getDiagnosticInfo()
+      return result
+    } catch (e) {
+      console.error(e)
+      setDiagnosticsError(String(e))
+    }
+  }, [address, firmware])
 
   const getOnboardingRecord = useGetOnboardingRecord()
 
@@ -108,9 +120,18 @@ const HotspotSetupDiagnosticsScreen = () => {
       appVersion: version,
       supportEmail,
       descriptionInfo,
+      diagnosticsError,
     }
     sendReport(report)
-  }, [onboardingRecord, t, diagnostics, firmware, address, version])
+  }, [
+    onboardingRecord,
+    t,
+    diagnostics,
+    firmware?.deviceFirmwareVersion,
+    address,
+    version,
+    diagnosticsError,
+  ])
 
   useEffect(() => {
     setLineItems([
@@ -169,7 +190,7 @@ const HotspotSetupDiagnosticsScreen = () => {
     diskStatus,
   ])
 
-  if (!firmware || !diagnostics) {
+  if (!diagnostics && !diagnosticsError) {
     return (
       <BackScreen
         padding="none"
@@ -197,7 +218,7 @@ const HotspotSetupDiagnosticsScreen = () => {
             numberOfLines={1}
             adjustsFontSizeToFit
           >
-            {animalName(address || '')}
+            {address ? animalName(address) : ''}
           </Text>
 
           <Text
@@ -270,6 +291,18 @@ const HotspotSetupDiagnosticsScreen = () => {
             mode="contained"
             title={t('hotspot_settings.diagnostics.send_to_support')}
           />
+
+          {diagnosticsError && (
+            <Text
+              variant="subtitle1"
+              fontSize={15}
+              color="error"
+              marginBottom="s"
+              marginTop="l"
+            >
+              {diagnosticsError}
+            </Text>
+          )}
         </Box>
       </ScrollView>
     </BackScreen>
