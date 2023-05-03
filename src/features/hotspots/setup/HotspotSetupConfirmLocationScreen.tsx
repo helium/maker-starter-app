@@ -2,7 +2,12 @@ import React, { useCallback, useMemo, useState } from 'react'
 import { ActivityIndicator, ScrollView } from 'react-native'
 import { useTranslation } from 'react-i18next'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
-import { useOnboarding, AssertData, useSolana } from '@helium/react-native-sdk'
+import {
+  useOnboarding,
+  AssertData,
+  useSolana,
+  AddGatewayV1,
+} from '@helium/react-native-sdk'
 import { useAsync } from 'react-async-hook'
 import { first, last } from 'lodash'
 import animalName from 'angry-purple-tiger'
@@ -19,6 +24,7 @@ import { getAddress } from '../../../utils/secureAccount'
 import HotspotLocationPreview from './HotspotLocationPreview'
 import { useSpacing } from '../../../theme/themeHooks'
 import { getHotspotTypes } from '../root/hotspotTypes'
+import useGetOnboardingRecord from '../../../store/hotspot/useGetOnboardingRecord'
 
 type Route = RouteProp<
   HotspotSetupStackParamList,
@@ -34,9 +40,9 @@ const HotspotSetupConfirmLocationScreen = () => {
   const [solanaTransactions, setSolanaTransactions] = useState<string[]>()
   const { params } = useRoute<Route>()
   const spacing = useSpacing()
-  const { getAssertData, getOnboardingRecord, getOnboardTransactions } =
-    useOnboarding()
+  const { getAssertData, getOnboardTransactions } = useOnboarding()
   const { getHotspotDetails } = useSolana()
+  const getOnboardingRecord = useGetOnboardingRecord()
 
   useAsync(async () => {
     const { elevation, gain, coords } = params
@@ -49,10 +55,18 @@ const HotspotSetupConfirmLocationScreen = () => {
     if (!lat || !lng || !userAddress) return
 
     try {
-      const onboardingRecord = await getOnboardingRecord(params.hotspotAddress)
       let networkTypes = params.hotspotNetworkTypes
-      if (!networkTypes) {
-        networkTypes = getHotspotTypes(onboardingRecord?.maker.name)
+      if (!networkTypes?.length) {
+        if (params.addGatewayTxn) {
+          const gatewayTxn = AddGatewayV1.fromString(params.addGatewayTxn)
+          networkTypes = getHotspotTypes(gatewayTxn.payer?.b58)
+        } else {
+          // onboarding record lookup agressively rate limits, only lookup if absolutely necessary
+          const onboardingRecord = await getOnboardingRecord(
+            params.hotspotAddress,
+          )
+          networkTypes = getHotspotTypes(onboardingRecord?.maker.name)
+        }
       }
 
       const locationParams = {
@@ -70,6 +84,9 @@ const HotspotSetupConfirmLocationScreen = () => {
         })
         const hotspotExists = !!hotspotDetails
         if (hotspotExists) {
+          const onboardingRecord = await getOnboardingRecord(
+            params.hotspotAddress,
+          )
           const assert = await getAssertData({
             ...locationParams,
             gateway: params.hotspotAddress,

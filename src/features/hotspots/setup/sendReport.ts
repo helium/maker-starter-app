@@ -17,6 +17,7 @@ export default ({
   appVersion,
   supportEmail,
   descriptionInfo,
+  diagnosticsError,
 }: {
   eth: string
   wifi: string
@@ -30,6 +31,7 @@ export default ({
   appVersion: string
   supportEmail: string
   descriptionInfo: string
+  diagnosticsError: string
 }) => {
   const deviceNameAndOS = () => {
     const deviceName = getDeviceId()
@@ -38,7 +40,7 @@ export default ({
     return `${deviceName} | ${osName} ${osVersion}`
   }
 
-  const body = [
+  const items = [
     `**${descriptionInfo}**\n\n`,
     `Hotspot: ${kebabCase(animalHash(gateway))}`,
     `Hotspot Maker: ${hotspotMaker}`,
@@ -52,7 +54,13 @@ export default ({
     `IP Address: ${ip}`,
     `Disk status: ${disk}`,
     `Device Info: ${deviceNameAndOS()}`,
-  ].join('\n')
+  ]
+
+  if (diagnosticsError) {
+    items.push(`Diagnostic Error: ${diagnosticsError}`)
+  }
+
+  const body = items.join('\n')
 
   sendMail({
     subject: 'Diagnostic Report',

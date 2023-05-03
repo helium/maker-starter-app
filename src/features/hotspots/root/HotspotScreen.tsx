@@ -42,7 +42,6 @@ import { DelayedFadeIn } from '../../../utils/animations'
 import { useAppDispatch } from '../../../store/store'
 import { getGeocodedAddress } from '../../../store/location/locationSlice'
 import { RootState } from '../../../store/rootReducer'
-import useDeveloperOptions from '../../../store/developer/useDeveloperOptions'
 import useHotspot from '../../../store/hotspot/useHotspot'
 import formatLocationName from '../../../utils/formatLocationName'
 
@@ -78,7 +77,6 @@ const HotspotScreen = () => {
   const { triggerNotification } = useHaptic()
   const dispatch = useAppDispatch()
   const locations = useSelector((state: RootState) => state.location.locations)
-  const { status } = useDeveloperOptions()
   const { hotspotDetails, loading, getHotspotDetails, onboardingRecord } =
     useHotspot(address)
 
@@ -237,13 +235,6 @@ const HotspotScreen = () => {
 
   const moreData = useMemo((): KabobItem[] => {
     const baseItems: KabobItem[] = ['copyAddress', 'assertLocation', 'transfer']
-    if (
-      status !== 'complete' ||
-      onboardingRecord?.maker.name.toLowerCase().includes('helium') ||
-      (isIot && isMobile)
-    ) {
-      return baseItems
-    }
 
     if (isIot) {
       return [...baseItems, 'onboardMobile']
@@ -252,7 +243,7 @@ const HotspotScreen = () => {
       return [...baseItems, 'onboardIot']
     }
     return [...baseItems, 'onboardMobile', 'onboardIot']
-  }, [isIot, isMobile, onboardingRecord?.maker.name, status])
+  }, [isIot, isMobile])
 
   const snapPoints = useMemo(() => {
     const handleHeight = 72
@@ -334,10 +325,7 @@ const HotspotScreen = () => {
     setMenuType('kabob')
   }, [])
 
-  const showNetworks = useMemo(
-    () => status === 'complete' && !loading,
-    [loading, status],
-  )
+  const showNetworks = useMemo(() => !loading, [loading])
 
   const footerText = useMemo(() => {
     if (!showNetworks && !onboardingRecord) {
