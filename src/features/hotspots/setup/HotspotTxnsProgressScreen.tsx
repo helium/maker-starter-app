@@ -1,9 +1,12 @@
 import React, { useCallback } from 'react'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
-import { ActivityIndicator, Linking, Platform } from 'react-native'
+import { ActivityIndicator, Linking } from 'react-native'
 import { createUpdateHotspotUrl, SignHotspotRequest } from '@helium/wallet-link'
-import { useOnboarding } from '@helium/react-native-sdk'
+import {
+  CreateHotspotExistsError,
+  useOnboarding,
+} from '@helium/react-native-sdk'
 import { first, last } from 'lodash'
 import Box from '../../../components/Box'
 import Text from '../../../components/Text'
@@ -41,7 +44,6 @@ const HotspotTxnsProgressScreen = () => {
 
       const updateParams = {
         token,
-        platform: Platform.OS,
       } as SignHotspotRequest
 
       if (solanaTransactions.length) {
@@ -68,7 +70,19 @@ const HotspotTxnsProgressScreen = () => {
     if (!params.addGatewayTxn || !params.hotspotAddress) return
 
     // This creates the hotspot, signing not required
-    await createHotspot(params.addGatewayTxn)
+    try {
+      const txnIds = await createHotspot(params.addGatewayTxn)
+      if (!txnIds.length) {
+        throw new Error('Failed to create hotspot!')
+      }
+    } catch (e) {
+      if (e !== CreateHotspotExistsError) {
+        // eslint-disable-next-line no-console
+        console.error(e)
+        throw e
+      }
+      // if the hotspot has already been created, carry on and try to onboard
+    }
 
     /*
          TODO: Determine which network types this hotspot supports
@@ -76,6 +90,8 @@ const HotspotTxnsProgressScreen = () => {
       */
     const hotspotTypes = getHotspotTypes()
 
+    // getOnboardTransactions will throw an error if the hotspot has already
+    // been onboarded to all of the provided network types
     const { solanaTransactions } = await getOnboardTransactions({
       hotspotAddress: params.hotspotAddress,
       hotspotTypes,

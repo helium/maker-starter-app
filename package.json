@@ -54,7 +54,7 @@
     "@helium/proto-ble": "^4.0.0",
     "@helium/react-native-sdk": "^2.1.0",
     "@helium/transactions": "^4.7.5",
-    "@helium/wallet-link": "^4.8.3",
+    "@helium/wallet-link": "^4.10.1",
     "@metaplex-foundation/mpl-bubblegum": "^0.6.2",
     "@pythnetwork/client": "^2.11.0",
     "@react-native-community/blur": "^3.6.0",

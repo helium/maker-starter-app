@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect } from 'react'
 import { useOnboarding } from '@helium/react-native-sdk'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
-import { ActivityIndicator, Linking, Platform } from 'react-native'
+import { ActivityIndicator, Linking } from 'react-native'
 import { useTranslation } from 'react-i18next'
 import {
   createUpdateHotspotUrl,
@@ -48,7 +48,6 @@ const TransferHotspot = () => {
       })
 
       const url = createUpdateHotspotUrl({
-        platform: Platform.OS,
         token,
         solanaTransactions: solanaTransactions?.join(','),
       })
