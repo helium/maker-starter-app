@@ -1,9 +1,11 @@
+/* eslint-disable no-console */
 import React, { useCallback } from 'react'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
 import { ActivityIndicator, Linking } from 'react-native'
 import { createUpdateHotspotUrl, SignHotspotRequest } from '@helium/wallet-link'
 import {
+  AlreadyOnboardedError,
   CreateHotspotExistsError,
   useOnboarding,
 } from '@helium/react-native-sdk'
@@ -56,7 +58,6 @@ const HotspotTxnsProgressScreen = () => {
 
       const url = createUpdateHotspotUrl(updateParams)
       if (!url) {
-        // eslint-disable-next-line no-console
         console.error('Link could not be created')
         return
       }
@@ -77,7 +78,6 @@ const HotspotTxnsProgressScreen = () => {
       }
     } catch (e) {
       if (e !== CreateHotspotExistsError) {
-        // eslint-disable-next-line no-console
         console.error(e)
         throw e
       }
@@ -92,18 +92,30 @@ const HotspotTxnsProgressScreen = () => {
 
     // getOnboardTransactions will throw an error if the hotspot has already
     // been onboarded to all of the provided network types
-    const { solanaTransactions } = await getOnboardTransactions({
-      hotspotAddress: params.hotspotAddress,
-      hotspotTypes,
-      lat: last(params.coords),
-      lng: first(params.coords),
-      elevation: params.elevation,
-      decimalGain: params.gain,
-    })
+    try {
+      const { solanaTransactions } = await getOnboardTransactions({
+        hotspotAddress: params.hotspotAddress,
+        hotspotTypes,
+        lat: last(params.coords),
+        lng: first(params.coords),
+        elevation: params.elevation,
+        decimalGain: params.gain,
+      })
 
-    navToHeliumAppForSigning({
-      onboardTransactions: solanaTransactions,
-    })
+      navToHeliumAppForSigning({
+        onboardTransactions: solanaTransactions,
+      })
+    } catch (e) {
+      console.error(e)
+
+      if (e === AlreadyOnboardedError) {
+        // TODO: handle already onboarded error
+        console.log('TODO: handle already onboarded error')
+      } else {
+        // TODO: handle generic error
+        console.log('TODO: handle generic onboarding error')
+      }
+    }
   }, [createHotspot, getOnboardTransactions, navToHeliumAppForSigning, params])
 
   useMount(() => {

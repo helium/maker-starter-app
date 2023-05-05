@@ -1,12 +1,11 @@
 import React, { useCallback } from 'react'
-import { uniq } from 'lodash'
+import { first, uniq } from 'lodash'
 import { useAsync } from 'react-async-hook'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
 import {
   Account,
   BleError,
-  HotspotMeta,
   useHotspotBle,
   useSolana,
 } from '@helium/react-native-sdk'
@@ -58,24 +57,12 @@ const HotspotSetupWifiConnectingScreen = () => {
     const address = await getAddress()
     if (!address) return
 
-    /*
-         TODO: Determine which network types this hotspot supports
-         Could possibly use the maker address
-      */
-    const hotspotTypes = getHotspotTypes()
-    let hotspot: HotspotMeta | undefined
-    if (hotspotTypes.length) {
-      hotspot = await getHotspotDetails({
-        address: hotspotAddress,
-        type: hotspotTypes[0],
-      })
-    }
-
-    if (
-      hotspot &&
-      (hotspot.owner === address ||
-        hotspot.owner === Account.heliumAddressToSolAddress(address))
-    ) {
+    const solAddress = Account.heliumAddressToSolAddress(address || '')
+    const hotspot = await getHotspotDetails({
+      address: hotspotAddress,
+      type: first(getHotspotTypes()) || 'IOT',
+    })
+    if (hotspot?.owner === solAddress) {
       navigation.replace('OwnedHotspotErrorScreen')
     } else if (hotspot && hotspot.owner !== address) {
       navigation.replace('NotHotspotOwnerErrorScreen')

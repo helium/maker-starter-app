@@ -37,8 +37,6 @@ export const GLOBAL_OPTS = ['explore', 'search', 'home'] as const
 export type GlobalOpt = (typeof GLOBAL_OPTS)[number]
 
 export const getHotspotTypes = (): HotspotType[] => {
-  return ['IOT']
-
   /*
       TODO: Determine which network types this hotspot supports
       Could possibly use your maker address
@@ -47,4 +45,11 @@ export const getHotspotTypes = (): HotspotType[] => {
 
       return ['IOT', 'MOBILE']
    */
+  const types = ['IOT'] as HotspotType[]
+
+  console.warn(
+    'You need to determine which hotspot types you support. Current setting is ',
+    types,
+  )
+  return types
 }
