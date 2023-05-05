@@ -48,11 +48,6 @@ const HotspotSetupConfirmLocationScreen = () => {
 
     try {
       const onboardingRecord = await getOnboardingRecord(params.hotspotAddress)
-
-      /*
-         TODO: Determine which network types this hotspot supports
-         Could possibly use the maker address
-      */
       const hotspotTypes = getHotspotTypes()
 
       const locationParams = {

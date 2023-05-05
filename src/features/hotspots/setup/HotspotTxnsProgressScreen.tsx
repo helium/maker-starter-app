@@ -84,10 +84,6 @@ const HotspotTxnsProgressScreen = () => {
       // if the hotspot has already been created, carry on and try to onboard
     }
 
-    /*
-         TODO: Determine which network types this hotspot supports
-         Could possibly use the maker address
-      */
     const hotspotTypes = getHotspotTypes()
 
     // getOnboardTransactions will throw an error if the hotspot has already
@@ -110,10 +106,10 @@ const HotspotTxnsProgressScreen = () => {
 
       if (e === AlreadyOnboardedError) {
         // TODO: handle already onboarded error
-        console.log('TODO: handle already onboarded error')
+        console.warn('TODO: handle already onboarded error')
       } else {
         // TODO: handle generic error
-        console.log('TODO: handle generic onboarding error')
+        console.warn('TODO: handle generic onboarding error')
       }
     }
   }, [createHotspot, getOnboardTransactions, navToHeliumAppForSigning, params])
