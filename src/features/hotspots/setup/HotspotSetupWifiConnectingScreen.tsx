@@ -7,7 +7,7 @@ import {
   Account,
   BleError,
   useHotspotBle,
-  useOnboarding,
+  useSolana,
 } from '@helium/react-native-sdk'
 import useAlert from '../../../utils/useAlert'
 import {
@@ -43,7 +43,7 @@ const HotspotSetupWifiConnectingScreen = () => {
   } = useRoute<Route>()
 
   const { readWifiNetworks, setWifi, removeConfiguredWifi } = useHotspotBle()
-  const { getHotspotDetails } = useOnboarding()
+  const { getHotspotDetails } = useSolana()
 
   const { showOKAlert } = useAlert()
 
@@ -74,13 +74,12 @@ const HotspotSetupWifiConnectingScreen = () => {
         type: 'IOT', // both freedomfi and helium hotspots support iot
       })
 
-      if (
-        hotspot &&
-        (hotspot.owner === address || hotspot.owner === solAddress)
-      ) {
-        navigation.replace('OwnedHotspotErrorScreen')
-      } else if (hotspot && hotspot.owner !== address) {
-        navigation.replace('NotHotspotOwnerErrorScreen')
+      if (hotspot?.owner) {
+        if (hotspot.owner === solAddress) {
+          navigation.replace('OwnedHotspotErrorScreen')
+        } else {
+          navigation.replace('NotHotspotOwnerErrorScreen')
+        }
       } else {
         navigation.replace('HotspotSetupLocationInfoScreen', {
           hotspotAddress,

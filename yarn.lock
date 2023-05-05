@@ -1722,10 +1722,10 @@
   dependencies:
     protobufjs "^6.11.3"
 
-"@helium/react-native-sdk@^2.1.0":
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/@helium/react-native-sdk/-/react-native-sdk-2.1.0.tgz#4f7fc5390a87c3d674f1bc62e2557183f93f4a19"
-  integrity sha512-UP1q2Z7cs4MXZmqoYCrrAIwEXEIyP5gWzz/y20jv9O4MwZ3QIulxR6wSKw5paGpHZ+s8TR7mAeNEwAQ8HVos7w==
+"@helium/react-native-sdk@^2.1.1":
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/@helium/react-native-sdk/-/react-native-sdk-2.1.1.tgz#38f12d10280748f85a53f5c882b35a7341f2c11b"
+  integrity sha512-Sv/segGRSQOS+LeBc97odPSNHmdfQ+2CZz2b6cIx1MAlqfGDJxe0rb7K4eB1vP3XN1F1twJNawoAU5SqzuZKCg==
   dependencies:
     "@azure/core-asynciterator-polyfill" "^1.0.2"
     "@coral-xyz/anchor" "^0.26.0"
@@ -1782,12 +1782,23 @@
     borsh "^0.7.0"
     bs58 "^5.0.0"
 
-"@helium/transactions@^4.11.1", "@helium/transactions@^4.7.5":
-  version "4.11.1"
-  resolved "https://registry.yarnpkg.com/@helium/transactions/-/transactions-4.11.1.tgz#38c48d0c2c395ce1e0a78fd57510c09d958c24e8"
-  integrity sha512-uL6OKo5o8AKn7oOuuW6/T7MSwPikbYU2HsSDu2O7ZhnGiyzKcKXQMkIHSBuFKz9KT+DKVpVSwjeLXr4a6/D/eQ==
+"@helium/transactions@^4.10.1":
+  version "4.10.1"
+  resolved "https://registry.yarnpkg.com/@helium/transactions/-/transactions-4.10.1.tgz#fb0c6379f797da2470120e7c0558ff893647c1bd"
+  integrity sha512-L0Mo/zG3HF7iTtvdAxTDtnQHZRtrnNPdq7GJq2spyB9HmOtdqbbOGip5KhnkSWzCVBTwCpYFkUlUvblGYqNVzg==
   dependencies:
-    "@helium/address" "^4.11.1"
+    "@helium/address" "^4.8.1"
+    "@helium/proto" "^1.6.0"
+    "@types/libsodium-wrappers" "^0.7.8"
+    long "^4.0.0"
+    path "^0.12.7"
+
+"@helium/transactions@^4.7.5":
+  version "4.8.1"
+  resolved "https://registry.yarnpkg.com/@helium/transactions/-/transactions-4.8.1.tgz#ef87cb82e1deffc1cb703bddf75d94e603c50a8d"
+  integrity sha512-7soAzxJkfBWUhTyMWM9SP3PhzU2qd2x0vP4iDHushsLq2VQLM5Gu86Ks2OgcGUNCopkNFXaTZkfl6YKl23NzfA==
+  dependencies:
+    "@helium/address" "^4.8.1"
     "@helium/proto" "^1.6.0"
     "@types/libsodium-wrappers" "^0.7.8"
     long "^4.0.0"
@@ -1832,13 +1843,13 @@
     bn.js "^5.2.0"
     bs58 "^4.0.1"
 
-"@helium/wallet-link@^4.8.3":
-  version "4.11.1"
-  resolved "https://registry.yarnpkg.com/@helium/wallet-link/-/wallet-link-4.11.1.tgz#9e0b22cfe83080f8ca5544eb52f8854549af4e35"
-  integrity sha512-bumli6m4Me2a/0XioJiR8yrcRrVll1KujNuaR2qkeuAdfV1hx51k/rR+clIKUrHkdn+OFyMvd1odytXkMVnO9g==
+"@helium/wallet-link@^4.10.1":
+  version "4.10.1"
+  resolved "https://registry.yarnpkg.com/@helium/wallet-link/-/wallet-link-4.10.1.tgz#711340da93686186975aaa75a922023390bd5e93"
+  integrity sha512-L2KhPipJi7/TUG+dcCqYwUDVWZM4XxScqYgF7dqeHMgEYiX653SkOx5tpk3AvF8pFPnV58W5oEMDfn6LKg0AiA==
   dependencies:
-    "@helium/address" "^4.11.1"
-    "@helium/transactions" "^4.11.1"
+    "@helium/address" "^4.8.1"
+    "@helium/transactions" "^4.10.1"
     date-fns "^2.28.0"
     query-string "^7.1.1"
 
