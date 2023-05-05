@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler'
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import {
   LogBox,
@@ -72,21 +72,10 @@ const App = () => {
     isRestored,
     isRequestingPermission,
     isLocked,
+    heliumAddress,
   } = useSelector((state: RootState) => state.app)
 
-  const { walletLinkToken } = useSelector((state: RootState) => state.app)
-  const [heliumWallet, setHeliumWallet] = useState<string>()
-
-  useEffect(() => {
-    if (!walletLinkToken) {
-      if (heliumWallet) {
-        setHeliumWallet('')
-      }
-      return
-    }
-
-    getAddress().then(setHeliumWallet)
-  }, [heliumWallet, walletLinkToken])
+  const { result: heliumWallet } = useAsync(getAddress, [])
 
   useMount(() => {
     dispatch(restoreAppSettings())
@@ -145,7 +134,7 @@ const App = () => {
     <SolanaProvider
       cluster="devnet"
       rpcEndpoint={Config.SOLANA_RPC_ENDPOINT || ''}
-      heliumWallet={heliumWallet}
+      heliumWallet={heliumAddress || heliumWallet}
     >
       <OnboardingProvider
         baseUrl={
