@@ -3,7 +3,13 @@ import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
 import Fingerprint from '@assets/images/fingerprint.svg'
 import { ActivityIndicator } from 'react-native'
-import { AddGateway, useOnboarding } from '@helium/react-native-sdk'
+import {
+  AddGateway,
+  useOnboarding,
+  useSolana,
+  Account,
+} from '@helium/react-native-sdk'
+import { first } from 'lodash'
 import BackScreen from '../../../components/BackScreen'
 import Box from '../../../components/Box'
 import Text from '../../../components/Text'
@@ -16,6 +22,7 @@ import animateTransition from '../../../utils/animateTransition'
 import { DebouncedButton } from '../../../components/Button'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
 import { getAddress } from '../../../utils/secureAccount'
+import { getHotspotTypes } from '../root/hotspotTypes'
 
 type Route = RouteProp<
   HotspotSetupStackParamList,
@@ -34,6 +41,7 @@ const HotspotSetupExternalConfirmScreen = () => {
   const [ownerAddress, setOwnerAddress] = useState('')
   const rootNav = useNavigation<RootNavigationProp>()
   const { getOnboardingRecord } = useOnboarding()
+  const { getHotspotDetails } = useSolana()
 
   const handleClose = useCallback(() => rootNav.navigate('MainTabs'), [rootNav])
 
@@ -63,12 +71,33 @@ const HotspotSetupExternalConfirmScreen = () => {
   }, [params])
 
   const navNext = useCallback(async () => {
-    navigation.push('HotspotSetupLocationInfoScreen', {
-      addGatewayTxn: params.addGatewayTxn,
-      hotspotAddress: publicKey,
-      hotspotType: params.hotspotType,
+    const solAddress = Account.heliumAddressToSolAddress(address || '')
+    const hotspot = await getHotspotDetails({
+      address: publicKey,
+      type: first(getHotspotTypes()) || 'IOT',
     })
-  }, [navigation, params.addGatewayTxn, params.hotspotType, publicKey])
+
+    if (hotspot?.owner) {
+      if (hotspot.owner === solAddress) {
+        navigation.replace('OwnedHotspotErrorScreen')
+      } else {
+        navigation.replace('NotHotspotOwnerErrorScreen')
+      }
+    } else {
+      navigation.push('HotspotSetupLocationInfoScreen', {
+        addGatewayTxn: params.addGatewayTxn,
+        hotspotAddress: publicKey,
+        hotspotType: params.hotspotType,
+      })
+    }
+  }, [
+    address,
+    getHotspotDetails,
+    navigation,
+    params.addGatewayTxn,
+    params.hotspotType,
+    publicKey,
+  ])
 
   return (
     <BackScreen
