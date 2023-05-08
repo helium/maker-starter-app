@@ -5,7 +5,7 @@ import {
   TransferHotspotV2,
 } from '@helium/react-native-sdk'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
-import { Keyboard, Linking, Platform } from 'react-native'
+import { Keyboard, Linking } from 'react-native'
 import { useTranslation } from 'react-i18next'
 import { createUpdateHotspotUrl, SignHotspotRequest } from '@helium/wallet-link'
 import animalName from 'angry-purple-tiger'
@@ -107,7 +107,6 @@ const TransferHotspot = () => {
       const token = await getSecureItem('walletLinkToken')
       const updateParams = {
         token,
-        platform: Platform.OS,
       } as SignHotspotRequest
 
       updateParams.solanaTransactions = solanaTransactions?.join(',')

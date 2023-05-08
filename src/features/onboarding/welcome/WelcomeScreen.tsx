@@ -8,14 +8,12 @@ import Text from '../../../components/Text'
 import { OnboardingNavigationProp } from '../onboardingTypes'
 import Box from '../../../components/Box'
 import TextTransform from '../../../components/TextTransform'
-import useDelegateApps from '../../../utils/useDelegateApps'
 import Button from '../../../components/Button'
 import SafeAreaBox from '../../../components/SafeAreaBox'
 import ImageBox from '../../../components/ImageBox'
 
 const WelcomeScreen = () => {
   const { t } = useTranslation()
-  const { walletApp } = useDelegateApps()
   const navigation = useNavigation<OnboardingNavigationProp>()
 
   const runDiagnostics = useCallback(() => {
@@ -28,7 +26,6 @@ const WelcomeScreen = () => {
   const importAccount = useCallback(() => {
     try {
       const url = createWalletLinkUrl({
-        universalLink: walletApp?.universalLink,
         requestAppId: getBundleId(),
         callbackUrl: 'helium://',
         appName: 'Helium',
@@ -39,7 +36,7 @@ const WelcomeScreen = () => {
       // eslint-disable-next-line no-console
       console.error(error)
     }
-  }, [walletApp?.universalLink])
+  }, [])
 
   return (
     <SafeAreaBox

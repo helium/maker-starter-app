@@ -99,7 +99,11 @@ const HotspotTxnsSubmitScreen = () => {
         variant="primary"
         width="100%"
         mode="contained"
-        title={t('hotspot_setup.progress.next')}
+        title={
+          params.gatewayTxn
+            ? t('hotspot_setup.progress.create')
+            : t('hotspot_setup.progress.next')
+        }
       />
     </SafeAreaBox>
   )

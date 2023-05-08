@@ -407,6 +407,7 @@ export default {
       title: 'Power Up',
     },
     progress: {
+      create: 'Create Hotspot',
       next: 'Go to Wallet',
       subtitle:
         'This can take a few minutes so feel free to close this screen.',

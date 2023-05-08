@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
-import { ActivityIndicator, Linking, Platform } from 'react-native'
+import { ActivityIndicator, Linking } from 'react-native'
 import { createUpdateHotspotUrl, SignHotspotRequest } from '@helium/wallet-link'
 import {
   AddGatewayV1,
@@ -138,7 +138,6 @@ const HotspotTxnsProgressScreen = () => {
 
       const updateParams = {
         token,
-        platform: Platform.OS,
       } as SignHotspotRequest
 
       if (solanaTransactions.length) {

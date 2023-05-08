@@ -67,14 +67,12 @@ const HotspotSetupExternalConfirmScreen = () => {
       address: publicKey,
       type: 'IOT', // both helium and freedomfi hotspots support iot
     })
-
-    if (
-      hotspot &&
-      (hotspot.owner === address || hotspot.owner === solAddress)
-    ) {
-      navigation.replace('OwnedHotspotErrorScreen')
-    } else if (hotspot && hotspot.owner !== address) {
-      navigation.replace('NotHotspotOwnerErrorScreen')
+    if (hotspot?.owner) {
+      if (hotspot.owner === solAddress) {
+        navigation.replace('OwnedHotspotErrorScreen')
+      } else {
+        navigation.replace('NotHotspotOwnerErrorScreen')
+      }
     } else {
       navigation.push('HotspotSetupLocationInfoScreen', {
         addGatewayTxn: params.addGatewayTxn,
