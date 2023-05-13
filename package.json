@@ -1,6 +1,6 @@
 {
   "name": "helium",
-  "version": "5.0.3",
+  "version": "5.0.4",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
@@ -52,7 +52,7 @@
     "@helium/http": "^4.7.5",
     "@helium/onboarding": "^4.10.0",
     "@helium/proto-ble": "^4.0.0",
-    "@helium/react-native-sdk": "^2.1.1",
+    "@helium/react-native-sdk": "^2.1.2",
     "@helium/spl-utils": "^0.1.1",
     "@helium/transactions": "^4.7.5",
     "@helium/wallet-link": "^4.10.1",
