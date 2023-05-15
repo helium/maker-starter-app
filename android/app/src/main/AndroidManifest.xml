@@ -6,11 +6,20 @@
   <uses-permission android:name="android.permission.INTERNET"/>
   <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
   <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-  <!-- <uses-permission android:name="android.permission.CAMERA" /> -->
+  <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" tools:node="remove" />
+  <uses-permission android:name="android.permission.CAMERA" />
   
   <!-- Request legacy Bluetooth permissions on older devices. -->
-  <uses-permission android:name="android.permission.BLUETOOTH" android:maxSdkVersion="30"/>
-  <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" android:maxSdkVersion="30"/>
+  <!-- <uses-permission android:name="android.permission.BLUETOOTH"
+                     android:maxSdkVersion="30" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"
+                     android:maxSdkVersion="30" /> -->
+  
+  <!-- the above commented code is the recommendation from google docs. 
+  we are removing max sdk in case vendors have some shady implimentation.
+  Hoping that it might fix bluetoth on some devicess -->
+  <uses-permission android:name="android.permission.BLUETOOTH" />
+  <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
   <uses-permission android:name="android.permission.BLUETOOTH_SCAN"/>
   <uses-permission android:name="android.permission.BLUETOOTH_CONNECT"/>
@@ -29,13 +38,8 @@
       <data android:scheme="https" android:host="helium.com"/>
     </intent>
   </queries>
-  <!-- Add this line if your application always requires BLE. More info can be found on:
-    <uses-permission android:name="android.permission.BLUETOOTH" />
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT"/>
-    <uses-permission android:name="android.permission.BLUETOOTH_SCAN"/>
-      https://developer.android.com/guide/topics/connectivity/bluetooth-le.html#permissions -->
-  <!-- <uses-feature android:name="android.hardware.bluetooth" android:required="true"/> -->
+  <!-- added classic as well, in case this helps on some devices unlikely though -->
+  <uses-feature android:name="android.hardware.bluetooth" android:required="true"/>
   <uses-feature android:name="android.hardware.bluetooth_le" android:required="true"/>
   <application
     android:name=".MainApplication"
