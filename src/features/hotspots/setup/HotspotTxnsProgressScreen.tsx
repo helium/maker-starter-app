@@ -1,10 +1,13 @@
 import React, { useCallback } from 'react'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
-import { first, last } from 'lodash'
-import { useOnboarding } from '@helium/react-native-sdk'
 import { createUpdateHotspotUrl, SignHotspotRequest } from '@helium/wallet-link'
-import { ActivityIndicator, Linking, Platform } from 'react-native'
+import {
+  CreateHotspotExistsError,
+  useOnboarding,
+} from '@helium/react-native-sdk'
+import { first, last } from 'lodash'
+import { ActivityIndicator, Linking } from 'react-native'
 import Box from '../../../components/Box'
 import Text from '../../../components/Text'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
@@ -41,7 +44,6 @@ const HotspotTxnsProgressScreen = () => {
 
       const updateParams = {
         token,
-        platform: Platform.OS,
       } as SignHotspotRequest
 
       if (solanaTransactions.length) {
@@ -66,27 +68,31 @@ const HotspotTxnsProgressScreen = () => {
 
   const handleAddGateway = useCallback(async () => {
     if (!params.addGatewayTxn || !params.hotspotAddress) return
+
     try {
       // This creates the hotspot, signing not required
-      await createHotspot(params.addGatewayTxn)
-    } catch (err) {
-      console.log(err) // this could still happen
-      const screenParams = {
-        title: t('hotspot_setup.onboarding_error.unknown_error.title'),
-        subTitle: t('hotspot_setup.onboarding_error.unknown_error.subtitle'),
-        errorMsg: err.message,
+      try {
+        const txnIds = await createHotspot(params.addGatewayTxn)
+        if (!txnIds.length) {
+          throw new Error('Failed to create hotspot!')
+        }
+      } catch (e) {
+        if (e !== CreateHotspotExistsError) {
+          // eslint-disable-next-line no-console
+          console.error(e)
+          throw e
+        }
+        // if the hotspot has already been created, carry on and try to onboard
       }
-      navigation.replace('HotspotUnknownErrorScreen', screenParams)
-      return
-    }
 
-    /*
-         TODO: Determine which network types this hotspot supports
-         Could possibly use the maker address
+      /*
+        TODO: Determine which network types this hotspot supports
+        Could possibly use the maker address
       */
-    const hotspotTypes = getHotspotTypes()
+      const hotspotTypes = getHotspotTypes()
 
-    try {
+      // getOnboardTransactions will throw an error if the hotspot has already
+      // been onboarded to all of the provided network types
       const { solanaTransactions } = await getOnboardTransactions({
         hotspotAddress: params.hotspotAddress,
         hotspotTypes,

@@ -1,32 +1,20 @@
-import { DELEGATE_APPS } from '@helium/wallet-link'
-import { useCallback, useMemo } from 'react'
+import { HELIUM_WALLET_APP } from '@helium/wallet-link'
+import { useCallback } from 'react'
 import { Linking, Platform } from 'react-native'
 import { locale } from './i18n'
 
 const useDelegateApps = () => {
-  const hotspotApp = useMemo(
-    () => DELEGATE_APPS.find((app) => app.name === 'helium-hotspot'),
-
-    [],
-  )
-
-  const walletApp = useMemo(
-    () => DELEGATE_APPS.find((app) => app.name === 'helium-hnt-wallet'),
-    [],
-  )
-
   const downloadWalletApp = useCallback(() => {
-    if (!walletApp) return
     if (Platform.OS === 'android') {
-      Linking.openURL(`market://details?id=${walletApp.androidPackage}`)
+      Linking.openURL(`market://details?id=${HELIUM_WALLET_APP.androidPackage}`)
     } else if (Platform.OS === 'ios') {
       Linking.openURL(
-        `https://apps.apple.com/${locale}/app/${walletApp.name}/id${walletApp.appStoreId}`,
+        `https://apps.apple.com/${locale}/app/${HELIUM_WALLET_APP.name}/id${HELIUM_WALLET_APP.appStoreId}`,
       )
     }
-  }, [walletApp])
+  }, [])
 
-  return { walletApp, hotspotApp, downloadWalletApp }
+  return { walletApp: HELIUM_WALLET_APP, downloadWalletApp }
 }
 
 export default useDelegateApps

@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect } from 'react'
 import { useOnboarding } from '@helium/react-native-sdk'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
-import { ActivityIndicator, Linking, StyleSheet, Platform } from 'react-native'
+import { ActivityIndicator, Linking, StyleSheet } from 'react-native'
 import Toast from 'react-native-simple-toast'
 import animalName from 'angry-purple-tiger'
 import { useTranslation } from 'react-i18next'
@@ -51,7 +51,6 @@ const TransferHotspot = () => {
       })
 
       const url = createUpdateHotspotUrl({
-        platform: Platform.OS,
         token,
         solanaTransactions: solanaTransactions?.join(','),
       })
