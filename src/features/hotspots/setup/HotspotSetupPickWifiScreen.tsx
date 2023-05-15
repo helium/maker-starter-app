@@ -59,7 +59,7 @@ const WifiItem = ({
       borderBottomLeftRadius={isLast ? 'm' : 'none'}
       borderBottomRightRadius={isLast ? 'm' : 'none'}
     >
-      <Text variant="body2" color="primaryText">
+      <Text variant="body2" color="primaryText2">
         {name}
       </Text>
       {icon === 'carot' && <CarotRight color={colors.secondaryBackground} />}
@@ -228,7 +228,11 @@ const HotspotSetupPickWifiScreen = () => {
           mode="contained"
         />
       </Box>
-      <Box paddingHorizontal="l" flex={1} backgroundColor="secondaryBackground">
+      <Box
+        paddingHorizontal="l"
+        flex={1}
+        backgroundColor="secondaryBackground1"
+      >
         <FlatList
           data={wifiNetworks}
           keyExtractor={(item) => item}
