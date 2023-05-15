@@ -40,10 +40,6 @@ const HotspotScreen = () => {
   )
 
   const updateHotspotDetails = useCallback(async () => {
-    /*
-         TODO: Determine which network types this hotspot supports
-         Could possibly use the maker address
-      */
     const hotspotTypes = getHotspotTypes()
 
     let hotspotMeta: HotspotMeta | undefined

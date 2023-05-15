@@ -1,8 +1,10 @@
+/* eslint-disable no-console */
 import React, { useCallback } from 'react'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
 import { createUpdateHotspotUrl, SignHotspotRequest } from '@helium/wallet-link'
 import {
+  AlreadyOnboardedError,
   CreateHotspotExistsError,
   useOnboarding,
 } from '@helium/react-native-sdk'
@@ -56,7 +58,6 @@ const HotspotTxnsProgressScreen = () => {
 
       const url = createUpdateHotspotUrl(updateParams)
       if (!url) {
-        // eslint-disable-next-line no-console
         console.error('Link could not be created')
         return
       }
@@ -85,10 +86,6 @@ const HotspotTxnsProgressScreen = () => {
         // if the hotspot has already been created, carry on and try to onboard
       }
 
-      /*
-        TODO: Determine which network types this hotspot supports
-        Could possibly use the maker address
-      */
       const hotspotTypes = getHotspotTypes()
 
       // getOnboardTransactions will throw an error if the hotspot has already
@@ -107,12 +104,21 @@ const HotspotTxnsProgressScreen = () => {
       })
     } catch (err) {
       console.log(err)
-      const screenParams = {
-        title: t('hotspot_setup.onboarding_error.unknown_error.title'),
-        subTitle: t('hotspot_setup.onboarding_error.unknown_error.subtitle'),
-        errorMsg: err.message,
+      if (err === AlreadyOnboardedError) {
+        const screenParams = {
+          title: t('hotspot_setup.owned_hotspot.title'),
+          subTitle: t('hotspot_setup.owned_hotspot.subtitle_2'),
+          errorMsg: err.message,
+        }
+        navigation.replace('HotspotUnknownErrorScreen', screenParams)
+      } else {
+        const screenParams = {
+          title: t('hotspot_setup.onboarding_error.unknown_error.title'),
+          subTitle: t('hotspot_setup.onboarding_error.unknown_error.subtitle'),
+          errorMsg: err.message,
+        }
+        navigation.replace('HotspotUnknownErrorScreen', screenParams)
       }
-      navigation.replace('HotspotUnknownErrorScreen', screenParams)
     }
   }, [
     createHotspot,

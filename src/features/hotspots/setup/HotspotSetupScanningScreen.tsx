@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
@@ -104,8 +105,8 @@ const HotspotSetupScanningScreen = () => {
       await startScan((error) => {
         if (error) {
           // TODO: handle error
-          // eslint-disable-next-line no-console
-          console.log(error)
+          console.warn('TODO: Handle error')
+          console.error(error)
         }
       })
 

@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler'
-import React, { useEffect, useMemo } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import {
   LogBox,

@@ -2,14 +2,9 @@ import React, { useCallback, useMemo, useState } from 'react'
 import { FlatList } from 'react-native'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
-import { uniq } from 'lodash'
 import { useAnalytics } from '@segment/analytics-react-native'
-import {
-  Account,
-  HotspotMeta,
-  useHotspotBle,
-  useSolana,
-} from '@helium/react-native-sdk'
+import { first, uniq } from 'lodash'
+import { Account, useHotspotBle, useSolana } from '@helium/react-native-sdk'
 import BackScreen from '../../../components/BackScreen'
 import Text from '../../../components/Text'
 import {
@@ -105,33 +100,18 @@ const HotspotSetupPickWifiScreen = () => {
     const address = await getAddress()
     if (!token || !address) return
 
-    /*
-         TODO: Determine which network types this hotspot supports
-         Could possibly use the maker address
-      */
-    const hotspotTypes = getHotspotTypes()
+    const solAddress = Account.heliumAddressToSolAddress(address || '')
+    const hotspot = await getHotspotDetails({
+      address: hotspotAddress,
+      type: first(getHotspotTypes()) || 'IOT',
+    })
 
-    let hotspot: HotspotMeta | undefined
-    if (hotspotTypes.length) {
-      hotspot = await getHotspotDetails({
-        address: hotspotAddress,
-        type: hotspotTypes[0],
-      })
-    }
-
-    if (
-      hotspot &&
-      (hotspot.owner === address ||
-        hotspot.owner === Account.heliumAddressToSolAddress(address))
-    ) {
-      navigation.replace('OwnedHotspotErrorScreen')
-    } else if (hotspot && hotspot.owner !== address) {
-      navigation.replace('NotHotspotOwnerErrorScreen')
-    } else if (addGatewayTxn.length < 20) {
-      // moving to owned as this was a wifi update action
-      // 20 is the number that helium ble parsing uses to see if something
-      // is a valid transaction or not.
-      navigation.replace('OwnedHotspotErrorScreen')
+    if (hotspot?.owner) {
+      if (hotspot.owner === solAddress) {
+        navigation.replace('OwnedHotspotErrorScreen')
+      } else {
+        navigation.replace('NotHotspotOwnerErrorScreen')
+      }
     } else {
       navigation.replace('HotspotSetupLocationInfoScreen', {
         hotspotAddress,
