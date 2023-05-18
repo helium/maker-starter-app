@@ -2,7 +2,7 @@ import React, { memo, useCallback, useEffect, useMemo, useState } from 'react'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import animalName from 'angry-purple-tiger'
 import { useTranslation } from 'react-i18next'
-import { HotspotMeta, useSolana } from '@helium/react-native-sdk'
+import { HotspotMeta } from '@helium/react-native-sdk'
 import MapboxGL from '@react-native-mapbox-gl/maps'
 import Config from 'react-native-config'
 import { ActivityIndicator, Linking } from 'react-native'
@@ -14,6 +14,7 @@ import { RootNavigationProp } from '../../../navigation/main/tabTypes'
 import Box from '../../../components/Box'
 import { EXPLORER_BASE_URL } from '../../../utils/config'
 import { useColors } from '../../../theme/themeHooks'
+import useSolanaCache from '../../../utils/solanaCache'
 
 type Route = RouteProp<HotspotStackParamList, 'HotspotScreen'>
 type HotspotDetails = {
@@ -32,7 +33,7 @@ const HotspotScreen = () => {
   const navigation = useNavigation<RootNavigationProp>()
   const [details, setDetails] = useState<HotspotDetails>()
   const [loadingDetails, setLoadingDetails] = useState(true)
-  const { getHotspotDetails } = useSolana()
+  const { getCachedHotspotDetails: getHotspotDetails } = useSolanaCache()
 
   const needsOnboarding = useMemo(
     () => !loadingDetails && !details,

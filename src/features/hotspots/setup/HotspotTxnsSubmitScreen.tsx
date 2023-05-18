@@ -9,6 +9,7 @@ import Text from '../../../components/Text'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
 import SafeAreaBox from '../../../components/SafeAreaBox'
 import { HotspotSetupStackParamList } from './hotspotSetupTypes'
+import useSolanaCache from '../../../utils/solanaCache'
 
 type Route = RouteProp<HotspotSetupStackParamList, 'HotspotTxnsSubmitScreen'>
 
@@ -18,6 +19,7 @@ const HotspotTxnsSubmitScreen = () => {
   const navigation = useNavigation<RootNavigationProp>()
   const { submitTransactions } = useOnboarding()
   const submitted = useRef(false)
+  const { invalidateHotspotCache } = useSolanaCache()
 
   useAsync(async () => {
     if (submitted.current) return
@@ -41,6 +43,7 @@ const HotspotTxnsSubmitScreen = () => {
       console.log({
         solanaTxnIds,
       })
+      invalidateHotspotCache()
     } catch (e) {
       // eslint-disable-next-line no-console
       console.log(e)

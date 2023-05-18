@@ -31,7 +31,6 @@ import {
   createClient,
   AnalyticsProvider,
 } from '@segment/analytics-react-native'
-import animalName from 'angry-purple-tiger'
 import { theme, darkThemeColors, lightThemeColors } from './theme/theme'
 import NavigationRoot from './navigation/NavigationRoot'
 import { useAppDispatch } from './store/store'
@@ -42,10 +41,7 @@ import AppLinkProvider from './providers/AppLinkProvider'
 import { navigationRef } from './navigation/navigator'
 import useMount from './utils/useMount'
 import usePrevious from './utils/usePrevious'
-import { fetchHotspotsData } from './store/hotspots/hotspotsSlice'
 import { fetchInitialData } from './store/helium/heliumDataSlice'
-import { getMakerName } from './utils/stakingClient'
-import { getEvent, Scope, Action } from './utils/analytics/utils'
 import { getAddress } from './utils/secureAccount'
 import useCheckWalletLink from './utils/useCheckWalletLink'
 
@@ -117,42 +113,6 @@ const App = () => {
   const { appState } = useAppState()
   const dispatch = useAppDispatch()
 
-  const [deviceLoaded, setDeviceLoaded] = useState(false)
-
-  const hotspots = useSelector(
-    (state: RootState) => state.hotspots.hotspots.data,
-  )
-  const hotspotsLoaded = useSelector(
-    (state: RootState) => state.hotspots.hotspotsLoaded,
-  )
-  const makers = useSelector((state: RootState) => state.heliumData.makers)
-  const makersLoaded = useSelector(
-    (state: RootState) => state.heliumData.makersLoaded,
-  )
-
-  useEffect(() => {
-    if (!deviceLoaded && hotspotsLoaded && makersLoaded) {
-      const params = hotspots.map((hotspot) => ({
-        hotspot_address: hotspot.address,
-        hotspot_name: animalName(hotspot.address),
-        owner_address: hotspot.owner,
-        maker_name: getMakerName(hotspot.payer, makers),
-      }))
-
-      segmentClient.track(
-        getEvent({
-          scope: Scope.HOTSPOT,
-          action: Action.LOADED,
-        }),
-        {
-          hotspots: params,
-        },
-      )
-
-      setDeviceLoaded(true)
-    }
-  }, [deviceLoaded, hotspots, hotspotsLoaded, makers, makersLoaded])
-
   const {
     lastIdle,
     isPinRequired,
@@ -210,7 +170,6 @@ const App = () => {
       const fiveMinutesAgo = Date.now() - 300000
       if (lastIdle && fiveMinutesAgo > lastIdle) {
         dispatch(fetchInitialData())
-        dispatch(fetchHotspotsData())
       }
     }
   }, [appState, dispatch, prevAppState, lastIdle, isLocked])
