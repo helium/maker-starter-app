@@ -107,6 +107,7 @@ export type HotspotSetupStackParamList = {
     elevation?: number
     gain?: number
     coords?: number[]
+    updateAntennaOnly?: boolean
   }
   NotHotspotOwnerErrorScreen: undefined
   OwnedHotspotErrorScreen: undefined

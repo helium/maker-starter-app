@@ -80,7 +80,7 @@ function useSolanaCache() {
     getHotspotAddress,
     getCachedHotspots,
     getCachedHotspotDetails,
-    invalidateHotspotCache
+    invalidateHotspotCache,
   }
 }
 

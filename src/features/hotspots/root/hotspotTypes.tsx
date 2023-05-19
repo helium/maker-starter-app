@@ -47,7 +47,7 @@ export const getHotspotTypes = (): HotspotType[] => {
    */
   const types = ['IOT'] as HotspotType[]
 
-  console.warn(
+  console.log(
     'You need to determine which hotspot types you support. Current setting is ',
     types,
   )

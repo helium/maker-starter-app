@@ -88,6 +88,15 @@ const HotspotScreen = () => {
     })
   }, [hotspot.address, navigation])
 
+  const updateAntenna = useCallback(() => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    navigation.navigate('HotspotAssert', {
+      screen: 'AntennaSetupScreen',
+      params: { hotspotAddress: hotspot.address, updateAntennaOnly: true },
+    })
+  }, [hotspot.address, navigation])
+
   const transferHotspot = useCallback(
     () =>
       navigation.push('TransferHotspot', { hotspotAddress: hotspot.address }),
@@ -203,6 +212,13 @@ const HotspotScreen = () => {
         marginTop="l"
         mode="contained"
         title={t('hotspots.empty.hotspots.updateWifi')}
+      />
+      <Button
+        onPress={updateAntenna}
+        height={48}
+        marginTop="l"
+        mode="contained"
+        title={t('hotspot_details.options.update_antenna')}
       />
       <Button
         onPress={viewExplorer}

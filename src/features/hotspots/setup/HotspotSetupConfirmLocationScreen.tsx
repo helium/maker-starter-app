@@ -34,17 +34,22 @@ const HotspotSetupConfirmLocationScreen = () => {
   const { params } = useRoute<Route>()
   const { getAssertData, getOnboardingRecord, getOnboardTransactions } =
     useOnboarding()
+  // this isn't using caching yet as we want the latest record in this case.
   const { getHotspotDetails } = useSolana()
 
   useAsync(async () => {
-    const { elevation, gain, coords } = params
+    console.log('lets get onboarding rcord.')
+    const { elevation, gain, coords, updateAntennaOnly } = params
 
     const userAddress = await getAddress()
 
     const lat = last(coords)
     const lng = first(coords)
 
-    if (!lat || !lng || !userAddress) return
+    if (!userAddress) return
+    console.log('user address: ', userAddress)
+    if (!updateAntennaOnly && (!lat || !lng)) return
+    console.log('antenna only update or location assert')
 
     try {
       const onboardingRecord = await getOnboardingRecord(params.hotspotAddress)
@@ -58,13 +63,21 @@ const HotspotSetupConfirmLocationScreen = () => {
       }
       if (params.addGatewayTxn) {
         setIsFree(true)
+        console.log('onboarding is free')
       } else {
         const hotspotDetails = await getHotspotDetails({
           address: params.hotspotAddress,
           type: hotspotTypes[0],
         })
         const hotspotExists = !!hotspotDetails
+
         if (hotspotExists) {
+          console.log('exising hotspot, get assert data')
+          if (updateAntennaOnly) {
+            locationParams.lat = hotspotDetails?.lat
+            locationParams.lng = hotspotDetails?.lng
+          }
+
           const assert = await getAssertData({
             ...locationParams,
             gateway: params.hotspotAddress,
@@ -72,6 +85,8 @@ const HotspotSetupConfirmLocationScreen = () => {
             onboardingRecord,
             hotspotTypes,
           })
+
+          console.log('assert: ', assert)
 
           setAssertData(assert)
           setSolanaTransactions(assert.solanaTransactions)
@@ -268,11 +283,17 @@ const HotspotSetupConfirmLocationScreen = () => {
                 <Text variant="body1" color="primaryText">
                   {t('hotspot_setup.location_fee.fee')}
                 </Text>
-                <Text variant="body1" color="primaryText">
-                  {assertData?.ownerFees?.dc
-                    ?.toUsd(assertData.oraclePrice)
-                    .toString(2)}
-                </Text>
+                {/* {params.updateAntennaOnly ? (
+                  <Text variant="body1" color="primaryText">
+                    55,000 DC ($0.55)
+                  </Text>
+                ) : ( */}
+                  <Text variant="body1" color="primaryText">
+                    {assertData?.ownerFees?.dc
+                      ?.toUsd(assertData.oraclePrice)
+                      .toString(2)}
+                  </Text>
+                {/* )} */}
                 <Text variant="body1" color="primaryText">
                   {assertData?.ownerFees?.sol?.toString(2)}
                 </Text>
@@ -290,17 +311,27 @@ const HotspotSetupConfirmLocationScreen = () => {
         </Box>
       </ScrollView>
       <Box>
-        <DebouncedButton
-          title={
-            isFree
-              ? t('hotspot_setup.location_fee.next')
-              : t('hotspot_setup.location_fee.fee_next')
-          }
-          mode="contained"
-          variant="secondary"
-          onPress={navNext}
-          disabled={disabled}
-        />
+        {params.updateAntennaOnly ? (
+          <DebouncedButton
+            title={t('hotspot_setup.antenna_only_fee.fee_antenna')}
+            mode="contained"
+            variant="primary"
+            onPress={navNext}
+            disabled={isFree ? false : disabled}
+          />
+        ) : (
+          <DebouncedButton
+            title={
+              isFree
+                ? t('hotspot_setup.location_fee.next')
+                : t('hotspot_setup.location_fee.fee_next')
+            }
+            mode="contained"
+            variant="secondary"
+            onPress={navNext}
+            disabled={disabled}
+          />
+        )}
       </Box>
     </BackScreen>
   )
