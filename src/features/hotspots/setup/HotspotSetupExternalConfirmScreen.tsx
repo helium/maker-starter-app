@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import Fingerprint from '@assets/images/fingerprint.svg'
 import { ActivityIndicator } from 'react-native'
 import Toast from 'react-native-simple-toast'
-import { useOnboarding, useSolana, Account } from '@helium/react-native-sdk'
+import { useOnboarding, Account } from '@helium/react-native-sdk'
 import { first } from 'lodash'
 import BackScreen from '../../../components/BackScreen'
 import Box from '../../../components/Box'
@@ -20,6 +20,7 @@ import { RootNavigationProp } from '../../../navigation/main/tabTypes'
 import { getAddress } from '../../../utils/secureAccount'
 import * as Logger from '../../../utils/logger'
 import { getHotspotTypes } from '../root/hotspotTypes'
+import useSolanaCache from '../../../utils/solanaCache'
 
 type Route = RouteProp<
   HotspotSetupStackParamList,
@@ -38,7 +39,7 @@ const HotspotSetupExternalConfirmScreen = () => {
   const [ownerAddress, setOwnerAddress] = useState('')
   const rootNav = useNavigation<RootNavigationProp>()
   const { getOnboardingRecord } = useOnboarding()
-  const { getHotspotDetails } = useSolana()
+  const { getCachedHotspotDetails: getHotspotDetails } = useSolanaCache()
 
   const handleClose = useCallback(() => rootNav.navigate('MainTabs'), [rootNav])
 

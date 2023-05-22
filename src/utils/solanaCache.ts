@@ -56,12 +56,11 @@ function useSolanaCache() {
     type: 'MOBILE' | 'IOT'
   }) => {
     if (hotspots.hotspotDetails.has(params.address)) {
-      console.log('hotspot details: cache hit')
       return hotspots.hotspotDetails.get(params.address)
     }
     const hotspotMeta = await getHotspotDetails(params)
     if (hotspotMeta) {
-      console.log('hotspot details:, entry')
+      console.log('cache miss')
       dispatch(
         updateHotspotDetail({
           address: params.address,
@@ -73,6 +72,7 @@ function useSolanaCache() {
   }
 
   const invalidateHotspotCache = async () => {
+    console.log('invalidating cache')
     dispatch(dropHotspotCache())
   }
 

@@ -2,7 +2,7 @@ import React, { useCallback, useMemo, useState } from 'react'
 import { ActivityIndicator, ScrollView } from 'react-native'
 import { useTranslation } from 'react-i18next'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
-import { useOnboarding, AssertData, useSolana } from '@helium/react-native-sdk'
+import { useOnboarding, AssertData } from '@helium/react-native-sdk'
 import { useAsync } from 'react-async-hook'
 import { first, last } from 'lodash'
 import animalName from 'angry-purple-tiger'
@@ -18,6 +18,7 @@ import { RootNavigationProp } from '../../../navigation/main/tabTypes'
 import { getAddress } from '../../../utils/secureAccount'
 import HotspotLocationPreview from './HotspotLocationPreview'
 import { getHotspotTypes } from '../root/hotspotTypes'
+import useSolanaCache from '../../../utils/solanaCache'
 
 type Route = RouteProp<
   HotspotSetupStackParamList,
@@ -34,8 +35,7 @@ const HotspotSetupConfirmLocationScreen = () => {
   const { params } = useRoute<Route>()
   const { getAssertData, getOnboardingRecord, getOnboardTransactions } =
     useOnboarding()
-  // this isn't using caching yet as we want the latest record in this case.
-  const { getHotspotDetails } = useSolana()
+  const { getCachedHotspotDetails: getHotspotDetails } = useSolanaCache()
 
   useAsync(async () => {
     console.log('lets get onboarding rcord.')
@@ -288,11 +288,11 @@ const HotspotSetupConfirmLocationScreen = () => {
                     55,000 DC ($0.55)
                   </Text>
                 ) : ( */}
-                  <Text variant="body1" color="primaryText">
-                    {assertData?.ownerFees?.dc
-                      ?.toUsd(assertData.oraclePrice)
-                      .toString(2)}
-                  </Text>
+                <Text variant="body1" color="primaryText">
+                  {assertData?.ownerFees?.dc
+                    ?.toUsd(assertData.oraclePrice)
+                    .toString(2)}
+                </Text>
                 {/* )} */}
                 <Text variant="body1" color="primaryText">
                   {assertData?.ownerFees?.sol?.toString(2)}
