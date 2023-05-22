@@ -11,11 +11,9 @@ import { OnboardingNavigationProp } from '../onboardingTypes'
 import TextTransform from '../../../components/TextTransform'
 import SafeAreaBox from '../../../components/SafeAreaBox'
 import TouchableOpacityBox from '../../../components/TouchableOpacityBox'
-import useDelegateApps from '../../../utils/useDelegateApps'
 
 const WelcomeScreen = () => {
   const { t } = useTranslation()
-  const { walletApp } = useDelegateApps()
   const navigation = useNavigation<OnboardingNavigationProp>()
 
   const createAccount = useCallback(
@@ -27,7 +25,6 @@ const WelcomeScreen = () => {
   const importAccount = useCallback(() => {
     try {
       const url = createWalletLinkUrl({
-        universalLink: walletApp?.universalLink,
         requestAppId: getBundleId(),
         callbackUrl: 'nebrahotspot://',
         appName: 'Nebra Hotspot',
@@ -38,7 +35,7 @@ const WelcomeScreen = () => {
       // eslint-disable-next-line no-console
       console.error(error)
     }
-  }, [walletApp?.universalLink])
+  }, [])
 
   return (
     <SafeAreaBox backgroundColor="primary" flex={1}>

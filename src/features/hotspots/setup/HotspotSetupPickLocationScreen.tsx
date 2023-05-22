@@ -32,7 +32,7 @@ import BSHandle from '../../../components/BSHandle'
 import AddressSearchModal from './AddressSearchModal'
 import { PlaceGeography } from '../../../utils/googlePlaces'
 import useGetLocation from '../../../utils/useGetLocation'
-import { getHotspotDetails } from '../../../utils/appDataClient'
+import useSolanaCache from '../../../utils/solanaCache'
 
 type Route = RouteProp<
   HotspotSetupStackParamList,
@@ -52,6 +52,7 @@ const HotspotSetupPickLocationScreen = () => {
   const searchModal = useRef<BottomSheetModal>(null)
   const { surface } = useColors()
   const maybeGetLocation = useGetLocation()
+  const { getCachedHotspotDetails: getHotspotDetails } = useSolanaCache()
 
   useEffect(() => {
     const checkLocationPermissions = () => {
@@ -111,7 +112,7 @@ const HotspotSetupPickLocationScreen = () => {
       setHasGPSLocation(true)
       setMapCenter(defaultLocation)
     },
-    [params],
+    [params, getHotspotDetails],
   )
 
   const handleSearchPress = useCallback(() => {

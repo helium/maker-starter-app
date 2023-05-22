@@ -2,11 +2,11 @@ import React, { memo, useCallback, useEffect, useMemo, useState } from 'react'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import animalName from 'angry-purple-tiger'
 import { useTranslation } from 'react-i18next'
-import { HotspotMeta, useOnboarding } from '@helium/react-native-sdk'
+import { HotspotMeta } from '@helium/react-native-sdk'
 import MapboxGL from '@react-native-mapbox-gl/maps'
 import Config from 'react-native-config'
 import { ActivityIndicator, Linking } from 'react-native'
-import { getHotpotTypes, HotspotStackParamList } from './hotspotTypes'
+import { getHotspotTypes, HotspotStackParamList } from './hotspotTypes'
 import Text from '../../../components/Text'
 import SafeAreaBox from '../../../components/SafeAreaBox'
 import Button from '../../../components/Button'
@@ -14,6 +14,7 @@ import { RootNavigationProp } from '../../../navigation/main/tabTypes'
 import Box from '../../../components/Box'
 import { EXPLORER_BASE_URL } from '../../../utils/config'
 import { useColors } from '../../../theme/themeHooks'
+import useSolanaCache from '../../../utils/solanaCache'
 
 type Route = RouteProp<HotspotStackParamList, 'HotspotScreen'>
 type HotspotDetails = {
@@ -32,7 +33,7 @@ const HotspotScreen = () => {
   const navigation = useNavigation<RootNavigationProp>()
   const [details, setDetails] = useState<HotspotDetails>()
   const [loadingDetails, setLoadingDetails] = useState(true)
-  const { getOnboardingRecord, getHotspotDetails } = useOnboarding()
+  const { getCachedHotspotDetails: getHotspotDetails } = useSolanaCache()
 
   const needsOnboarding = useMemo(
     () => !loadingDetails && !details,
@@ -40,15 +41,7 @@ const HotspotScreen = () => {
   )
 
   const updateHotspotDetails = useCallback(async () => {
-    const onboardingRecord = await getOnboardingRecord(hotspot.address)
-
-    /*
-         TODO: Determine which network types this hotspot supports
-         Could possibly use the maker address
-      */
-    const hotspotTypes = getHotpotTypes({
-      hotspotMakerAddress: onboardingRecord?.maker.address || '',
-    })
+    const hotspotTypes = getHotspotTypes()
 
     let hotspotMeta: HotspotMeta | undefined
     if (hotspotTypes.length) {
@@ -59,7 +52,7 @@ const HotspotScreen = () => {
     }
     setDetails(hotspotMeta)
     setLoadingDetails(false)
-  }, [getHotspotDetails, getOnboardingRecord, hotspot])
+  }, [getHotspotDetails, hotspot])
 
   useEffect(() => {
     return navigation.addListener('focus', () => {
@@ -95,6 +88,15 @@ const HotspotScreen = () => {
     })
   }, [hotspot.address, navigation])
 
+  const updateAntenna = useCallback(() => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    navigation.navigate('HotspotAssert', {
+      screen: 'AntennaSetupScreen',
+      params: { hotspotAddress: hotspot.address, updateAntennaOnly: true },
+    })
+  }, [hotspot.address, navigation])
+
   const transferHotspot = useCallback(
     () =>
       navigation.push('TransferHotspot', { hotspotAddress: hotspot.address }),
@@ -106,6 +108,16 @@ const HotspotScreen = () => {
     const target = 'hotspots'
     return `${EXPLORER_BASE_URL}/${target}/${hotspot.address}`
   }, [hotspot])
+
+  const antennaDetails = useMemo(() => {
+    if (!hotspot) return ''
+    const gain = details?.gain ? details.gain / 10 : 0.0
+    const elevation = details?.elevation ? details.elevation : 0.0
+    return (
+      `${t('antennas.gain_info.title')}: ${gain} dBi\n` +
+      `${t('antennas.elevation_info.title')}: ${elevation} meters`
+    )
+  }, [details, hotspot, t])
 
   const viewExplorer = () => {
     Linking.openURL(explorerUrl)
@@ -144,6 +156,11 @@ const HotspotScreen = () => {
       {needsOnboarding && (
         <Text color="primaryText" variant="body1">
           {t('hotspots.notOnboarded')}
+        </Text>
+      )}
+      {details && (
+        <Text color="primaryText" variant="body1">
+          {antennaDetails}
         </Text>
       )}
 
@@ -210,6 +227,13 @@ const HotspotScreen = () => {
         marginTop="l"
         mode="contained"
         title={t('hotspots.empty.hotspots.updateWifi')}
+      />
+      <Button
+        onPress={updateAntenna}
+        height={48}
+        marginTop="l"
+        mode="contained"
+        title={t('hotspot_details.options.update_antenna')}
       />
       <Button
         onPress={viewExplorer}

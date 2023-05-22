@@ -17,7 +17,8 @@ import Text from '../../../components/Text'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
 import { getAddress } from '../../../utils/secureAccount'
 import HotspotLocationPreview from './HotspotLocationPreview'
-import { getHotpotTypes } from '../root/hotspotTypes'
+import { getHotspotTypes } from '../root/hotspotTypes'
+import useSolanaCache from '../../../utils/solanaCache'
 
 type Route = RouteProp<
   HotspotSetupStackParamList,
@@ -30,36 +31,29 @@ const HotspotSetupConfirmLocationScreen = () => {
   const rootNav = useNavigation<RootNavigationProp>()
   const [assertData, setAssertData] = useState<AssertData>()
   const [isFree, setIsFree] = useState<boolean>()
-  const [assertLocationTxn, setAssertLocationTxn] = useState<string>()
   const [solanaTransactions, setSolanaTransactions] = useState<string[]>()
   const { params } = useRoute<Route>()
-  const {
-    getAssertData,
-    getOnboardingRecord,
-    getOnboardTransactions,
-    getHotspotDetails,
-  } = useOnboarding()
+  const { getAssertData, getOnboardingRecord, getOnboardTransactions } =
+    useOnboarding()
+  const { getCachedHotspotDetails: getHotspotDetails } = useSolanaCache()
 
   useAsync(async () => {
-    const { elevation, gain, coords } = params
+    console.log('lets get onboarding rcord.')
+    const { elevation, gain, coords, updateAntennaOnly } = params
 
     const userAddress = await getAddress()
 
     const lat = last(coords)
     const lng = first(coords)
 
-    if (!lat || !lng || !userAddress) return
+    if (!userAddress) return
+    console.log('user address: ', userAddress)
+    if (!updateAntennaOnly && (!lat || !lng)) return
+    console.log('antenna only update or location assert')
 
     try {
       const onboardingRecord = await getOnboardingRecord(params.hotspotAddress)
-
-      /*
-         TODO: Determine which network types this hotspot supports
-         Could possibly use the maker address
-      */
-      const hotspotTypes = getHotpotTypes({
-        hotspotMakerAddress: onboardingRecord?.maker.address || '',
-      })
+      const hotspotTypes = getHotspotTypes()
 
       const locationParams = {
         decimalGain: gain,
@@ -69,13 +63,21 @@ const HotspotSetupConfirmLocationScreen = () => {
       }
       if (params.addGatewayTxn) {
         setIsFree(true)
+        console.log('onboarding is free')
       } else {
         const hotspotDetails = await getHotspotDetails({
           address: params.hotspotAddress,
           type: hotspotTypes[0],
         })
         const hotspotExists = !!hotspotDetails
+
         if (hotspotExists) {
+          console.log('exising hotspot, get assert data')
+          if (updateAntennaOnly) {
+            locationParams.lat = hotspotDetails?.lat
+            locationParams.lng = hotspotDetails?.lng
+          }
+
           const assert = await getAssertData({
             ...locationParams,
             gateway: params.hotspotAddress,
@@ -84,14 +86,14 @@ const HotspotSetupConfirmLocationScreen = () => {
             hotspotTypes,
           })
 
+          console.log('assert: ', assert)
+
           setAssertData(assert)
-          setAssertLocationTxn(assert.assertLocationTxn)
           setSolanaTransactions(assert.solanaTransactions)
           setIsFree(assert.isFree)
         } else {
           // Edge  case - hotspot hasn't been onboarded yet
           const onboard = await getOnboardTransactions({
-            txn: '',
             hotspotAddress: params.hotspotAddress,
             hotspotTypes,
             ...locationParams,
@@ -115,14 +117,13 @@ const HotspotSetupConfirmLocationScreen = () => {
   const navNext = useCallback(async () => {
     navigation.replace('HotspotTxnsProgressScreen', {
       addGatewayTxn: params.addGatewayTxn,
-      assertLocationTxn: assertLocationTxn || '',
       solanaTransactions: solanaTransactions || [],
       hotspotAddress: params.hotspotAddress,
       coords: params.coords,
       elevation: params.elevation,
       gain: params.gain,
     })
-  }, [assertLocationTxn, navigation, params, solanaTransactions])
+  }, [navigation, params, solanaTransactions])
 
   const handleClose = useCallback(() => rootNav.navigate('MainTabs'), [rootNav])
 
@@ -282,11 +283,17 @@ const HotspotSetupConfirmLocationScreen = () => {
                 <Text variant="body1" color="primaryText">
                   {t('hotspot_setup.location_fee.fee')}
                 </Text>
+                {/* {params.updateAntennaOnly ? (
+                  <Text variant="body1" color="primaryText">
+                    55,000 DC ($0.55)
+                  </Text>
+                ) : ( */}
                 <Text variant="body1" color="primaryText">
                   {assertData?.ownerFees?.dc
                     ?.toUsd(assertData.oraclePrice)
                     .toString(2)}
                 </Text>
+                {/* )} */}
                 <Text variant="body1" color="primaryText">
                   {assertData?.ownerFees?.sol?.toString(2)}
                 </Text>
@@ -304,17 +311,27 @@ const HotspotSetupConfirmLocationScreen = () => {
         </Box>
       </ScrollView>
       <Box>
-        <DebouncedButton
-          title={
-            isFree
-              ? t('hotspot_setup.location_fee.next')
-              : t('hotspot_setup.location_fee.fee_next')
-          }
-          mode="contained"
-          variant="secondary"
-          onPress={navNext}
-          disabled={disabled}
-        />
+        {params.updateAntennaOnly ? (
+          <DebouncedButton
+            title={t('hotspot_setup.antenna_only_fee.fee_antenna')}
+            mode="contained"
+            variant="primary"
+            onPress={navNext}
+            disabled={isFree ? false : disabled}
+          />
+        ) : (
+          <DebouncedButton
+            title={
+              isFree
+                ? t('hotspot_setup.location_fee.next')
+                : t('hotspot_setup.location_fee.fee_next')
+            }
+            mode="contained"
+            variant="secondary"
+            onPress={navNext}
+            disabled={disabled}
+          />
+        )}
       </Box>
     </BackScreen>
   )

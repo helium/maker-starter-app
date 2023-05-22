@@ -1,4 +1,8 @@
-import { parseWalletLinkToken, createWalletLinkUrl } from '@helium/wallet-link'
+import {
+  parseWalletLinkToken,
+  createWalletLinkUrl,
+  HELIUM_HOTSPOT_APP,
+} from '@helium/wallet-link'
 import { useCallback, useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert, Linking, Platform } from 'react-native'
@@ -10,15 +14,13 @@ import useDelegateApps from './useDelegateApps'
 const useCheckWalletLink = () => {
   const { t } = useTranslation()
   const { walletLinkToken } = useSelector((state: RootState) => state.app)
-  const { hotspotApp, walletApp } = useDelegateApps()
+  const { walletApp } = useDelegateApps()
 
   const hotspotAppId = useMemo(() => {
-    if (!hotspotApp) return
-
     return Platform.OS === 'ios'
-      ? hotspotApp.iosBundleId
-      : hotspotApp.androidPackage
-  }, [hotspotApp])
+      ? HELIUM_HOTSPOT_APP.iosBundleId
+      : HELIUM_HOTSPOT_APP.androidPackage
+  }, [])
 
   const showAlert = useCallback(() => {
     if (!walletApp) return
@@ -30,7 +32,6 @@ const useCheckWalletLink = () => {
         text: t('wallet.checkLink.link'),
         onPress: () => {
           const url = createWalletLinkUrl({
-            universalLink: walletApp.universalLink,
             requestAppId: getBundleId(),
             callbackUrl: 'nebrahotspot://',
             appName: 'Nebra Hotspot',

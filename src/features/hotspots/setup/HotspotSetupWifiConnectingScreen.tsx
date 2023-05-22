@@ -1,16 +1,10 @@
 import React, { useCallback } from 'react'
-import { uniq } from 'lodash'
+import { first, uniq } from 'lodash'
 import { useAsync } from 'react-async-hook'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
 import { useAnalytics } from '@segment/analytics-react-native'
-import {
-  Account,
-  BleError,
-  HotspotMeta,
-  useHotspotBle,
-  useOnboarding,
-} from '@helium/react-native-sdk'
+import { Account, BleError, useHotspotBle } from '@helium/react-native-sdk'
 import useAlert from '../../../utils/useAlert'
 import {
   HotspotSetupNavigationProp,
@@ -26,7 +20,8 @@ import {
   SubScope,
   Action,
 } from '../../../utils/analytics/utils'
-import { getHotpotTypes } from '../root/hotspotTypes'
+import { getHotspotTypes } from '../root/hotspotTypes'
+import useSolanaCache from '../../../utils/solanaCache'
 
 type Route = RouteProp<
   HotspotSetupStackParamList,
@@ -42,7 +37,7 @@ const HotspotSetupWifiConnectingScreen = () => {
   } = useRoute<Route>()
 
   const { readWifiNetworks, setWifi, removeConfiguredWifi } = useHotspotBle()
-  const { getHotspotDetails, getOnboardingRecord } = useOnboarding()
+  const { getCachedHotspotDetails: getHotspotDetails } = useSolanaCache()
 
   const { showOKAlert } = useAlert()
 
@@ -67,31 +62,17 @@ const HotspotSetupWifiConnectingScreen = () => {
     const address = await getAddress()
     if (!address) return
 
-    const onboardingRecord = await getOnboardingRecord(hotspotAddress)
-
-    /*
-         TODO: Determine which network types this hotspot supports
-         Could possibly use the maker address
-      */
-    const hotspotTypes = getHotpotTypes({
-      hotspotMakerAddress: onboardingRecord?.maker.address || '',
+    const solAddress = Account.heliumAddressToSolAddress(address || '')
+    const hotspot = await getHotspotDetails({
+      address: hotspotAddress,
+      type: first(getHotspotTypes()) || 'IOT',
     })
-    let hotspot: HotspotMeta | undefined
-    if (hotspotTypes.length) {
-      hotspot = await getHotspotDetails({
-        address: hotspotAddress,
-        type: hotspotTypes[0],
-      })
-    }
-
-    if (
-      hotspot &&
-      (hotspot.owner === address ||
-        hotspot.owner === Account.heliumAddressToSolAddress(address))
-    ) {
-      navigation.replace('OwnedHotspotErrorScreen')
-    } else if (hotspot && hotspot.owner !== address) {
-      navigation.replace('NotHotspotOwnerErrorScreen')
+    if (hotspot?.owner) {
+      if (hotspot.owner === solAddress) {
+        navigation.replace('OwnedHotspotErrorScreen')
+      } else {
+        navigation.replace('NotHotspotOwnerErrorScreen')
+      }
     } else {
       navigation.replace('HotspotSetupLocationInfoScreen', {
         hotspotAddress,
@@ -102,7 +83,6 @@ const HotspotSetupWifiConnectingScreen = () => {
   }, [
     addGatewayTxn,
     getHotspotDetails,
-    getOnboardingRecord,
     hotspotAddress,
     hotspotType,
     navigation,

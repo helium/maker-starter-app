@@ -2,14 +2,9 @@ import React, { useCallback, useMemo, useState } from 'react'
 import { FlatList } from 'react-native'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
-import { uniq } from 'lodash'
 import { useAnalytics } from '@segment/analytics-react-native'
-import {
-  Account,
-  HotspotMeta,
-  useHotspotBle,
-  useOnboarding,
-} from '@helium/react-native-sdk'
+import { first, uniq } from 'lodash'
+import { Account, useHotspotBle } from '@helium/react-native-sdk'
 import BackScreen from '../../../components/BackScreen'
 import Text from '../../../components/Text'
 import {
@@ -30,7 +25,8 @@ import {
   SubScope,
   Action,
 } from '../../../utils/analytics/utils'
-import { getHotpotTypes } from '../root/hotspotTypes'
+import { getHotspotTypes } from '../root/hotspotTypes'
+import useSolanaCache from '../../../utils/solanaCache'
 
 const WifiItem = ({
   name,
@@ -59,7 +55,7 @@ const WifiItem = ({
       borderBottomLeftRadius={isLast ? 'm' : 'none'}
       borderBottomRightRadius={isLast ? 'm' : 'none'}
     >
-      <Text variant="body2" color="primaryText">
+      <Text variant="body2" color="primaryText2">
         {name}
       </Text>
       {icon === 'carot' && <CarotRight color={colors.secondaryBackground} />}
@@ -86,7 +82,7 @@ const HotspotSetupPickWifiScreen = () => {
     },
   } = useRoute<Route>()
   const { readWifiNetworks } = useHotspotBle()
-  const { getHotspotDetails, getOnboardingRecord } = useOnboarding()
+  const { getCachedHotspotDetails: getHotspotDetails } = useSolanaCache()
 
   const [wifiNetworks, setWifiNetworks] = useState(networks)
   const [connectedWifiNetworks, setConnectedWifiNetworks] =
@@ -105,37 +101,18 @@ const HotspotSetupPickWifiScreen = () => {
     const address = await getAddress()
     if (!token || !address) return
 
-    const onboardingRecord = await getOnboardingRecord(hotspotAddress)
-
-    /*
-         TODO: Determine which network types this hotspot supports
-         Could possibly use the maker address
-      */
-    const hotspotTypes = getHotpotTypes({
-      hotspotMakerAddress: onboardingRecord?.maker.address || '',
+    const solAddress = Account.heliumAddressToSolAddress(address || '')
+    const hotspot = await getHotspotDetails({
+      address: hotspotAddress,
+      type: first(getHotspotTypes()) || 'IOT',
     })
 
-    let hotspot: HotspotMeta | undefined
-    if (hotspotTypes.length) {
-      hotspot = await getHotspotDetails({
-        address: hotspotAddress,
-        type: hotspotTypes[0],
-      })
-    }
-
-    if (
-      hotspot &&
-      (hotspot.owner === address ||
-        hotspot.owner === Account.heliumAddressToSolAddress(address))
-    ) {
-      navigation.replace('OwnedHotspotErrorScreen')
-    } else if (hotspot && hotspot.owner !== address) {
-      navigation.replace('NotHotspotOwnerErrorScreen')
-    } else if (addGatewayTxn.length < 20) {
-      // moving to owned as this was a wifi update action
-      // 20 is the number that helium ble parsing uses to see if something
-      // is a valid transaction or not.
-      navigation.replace('OwnedHotspotErrorScreen')
+    if (hotspot?.owner) {
+      if (hotspot.owner === solAddress) {
+        navigation.replace('OwnedHotspotErrorScreen')
+      } else {
+        navigation.replace('NotHotspotOwnerErrorScreen')
+      }
     } else {
       navigation.replace('HotspotSetupLocationInfoScreen', {
         hotspotAddress,
@@ -144,7 +121,6 @@ const HotspotSetupPickWifiScreen = () => {
       })
     }
   }, [
-    getOnboardingRecord,
     hotspotAddress,
     getHotspotDetails,
     navigation,
@@ -233,7 +209,11 @@ const HotspotSetupPickWifiScreen = () => {
           mode="contained"
         />
       </Box>
-      <Box paddingHorizontal="l" flex={1} backgroundColor="secondaryBackground">
+      <Box
+        paddingHorizontal="l"
+        flex={1}
+        backgroundColor="secondaryBackground1"
+      >
         <FlatList
           data={wifiNetworks}
           keyExtractor={(item) => item}

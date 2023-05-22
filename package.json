@@ -1,6 +1,6 @@
 {
   "name": "Nebra",
-  "version": "2.0.0",
+  "version": "2.0.2",
   "build": "1",
   "private": true,
   "scripts": {
@@ -53,10 +53,10 @@
     "@helium/http": "^4.7.5",
     "@helium/onboarding": "^4.10.0",
     "@helium/proto-ble": "^4.0.0",
-    "@helium/react-native-sdk": "^2.0.19",
+    "@helium/react-native-sdk": "^2.1.2",
     "@helium/transactions": "^4.7.5",
     "@react-native-community/async-storage": "^1.12.1",
-    "@helium/wallet-link": "^4.8.3",
+    "@helium/wallet-link": "^4.10.1",
     "@metaplex-foundation/mpl-bubblegum": "^0.6.2",
     "@pythnetwork/client": "^2.11.0",
     "@react-native-community/blur": "^3.6.0",
@@ -136,7 +136,8 @@
     "stream": "^0.0.2",
     "tinycolor2": "^1.4.2",
     "use-debounce": "^5.2.0",
-    "use-state-with-callback": "^2.0.3"
+    "use-state-with-callback": "^2.0.3",
+    "immer": "^9.0.21"
   },
   "devDependencies": {
     "@babel/core": "^7.18.6",

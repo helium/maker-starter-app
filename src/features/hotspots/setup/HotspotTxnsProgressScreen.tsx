@@ -1,10 +1,15 @@
+/* eslint-disable no-console */
 import React, { useCallback } from 'react'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
-import { first, last } from 'lodash'
-import { useOnboarding } from '@helium/react-native-sdk'
 import { createUpdateHotspotUrl, SignHotspotRequest } from '@helium/wallet-link'
-import { ActivityIndicator, Linking, Platform } from 'react-native'
+import {
+  AlreadyOnboardedError,
+  CreateHotspotExistsError,
+  useOnboarding,
+} from '@helium/react-native-sdk'
+import { first, last } from 'lodash'
+import { ActivityIndicator, Linking } from 'react-native'
 import Box from '../../../components/Box'
 import Text from '../../../components/Text'
 import { RootNavigationProp } from '../../../navigation/main/tabTypes'
@@ -14,7 +19,7 @@ import { getSecureItem } from '../../../utils/secureAccount'
 import { useColors } from '../../../theme/themeHooks'
 import { DebouncedButton } from '../../../components/Button'
 import useMount from '../../../utils/useMount'
-import { getHotpotTypes } from '../root/hotspotTypes'
+import { getHotspotTypes } from '../root/hotspotTypes'
 
 type Route = RouteProp<HotspotSetupStackParamList, 'HotspotTxnsProgressScreen'>
 
@@ -23,9 +28,7 @@ const HotspotTxnsProgressScreen = () => {
   const { params } = useRoute<Route>()
   const navigation = useNavigation<RootNavigationProp>()
   const { primaryText } = useColors()
-
-  const { createHotspot, getOnboardTransactions, getOnboardingRecord } =
-    useOnboarding()
+  const { createHotspot, getOnboardTransactions } = useOnboarding()
 
   const navToHeliumAppForSigning = useCallback(
     async (opts?: {
@@ -43,7 +46,6 @@ const HotspotTxnsProgressScreen = () => {
 
       const updateParams = {
         token,
-        platform: Platform.OS,
       } as SignHotspotRequest
 
       if (solanaTransactions.length) {
@@ -56,7 +58,6 @@ const HotspotTxnsProgressScreen = () => {
 
       const url = createUpdateHotspotUrl(updateParams)
       if (!url) {
-        // eslint-disable-next-line no-console
         console.error('Link could not be created')
         return
       }
@@ -68,60 +69,60 @@ const HotspotTxnsProgressScreen = () => {
 
   const handleAddGateway = useCallback(async () => {
     if (!params.addGatewayTxn || !params.hotspotAddress) return
+
     try {
       // This creates the hotspot, signing not required
-      await createHotspot(params.addGatewayTxn)
-    } catch (err) {
-      console.log(err) // this could still happen
-      const screenParams = {
-        title: t('hotspot_setup.onboarding_error.unknown_error.title'),
-        subTitle: t('hotspot_setup.onboarding_error.unknown_error.subtitle'),
-        errorMsg: err.message,
+      try {
+        const txnIds = await createHotspot(params.addGatewayTxn)
+        if (!txnIds.length) {
+          throw new Error('Failed to create hotspot!')
+        }
+      } catch (e) {
+        if (e !== CreateHotspotExistsError) {
+          // eslint-disable-next-line no-console
+          console.error(e)
+          throw e
+        }
+        // if the hotspot has already been created, carry on and try to onboard
       }
-      navigation.replace('HotspotUnknownErrorScreen', screenParams)
-      return
-    }
 
-    const onboardingRecord = await getOnboardingRecord(params.hotspotAddress)
+      const hotspotTypes = getHotspotTypes()
 
-    /*
-         TODO: Determine which network types this hotspot supports
-         Could possibly use the maker address
-      */
-    const hotspotTypes = getHotpotTypes({
-      hotspotMakerAddress: onboardingRecord?.maker.address || '',
-    })
-
-    try {
-      const { solanaTransactions, addGatewayTxn, assertLocationTxn } =
-        await getOnboardTransactions({
-          txn: params.addGatewayTxn,
-          hotspotAddress: params.hotspotAddress,
-          hotspotTypes,
-          lat: last(params.coords),
-          lng: first(params.coords),
-          elevation: params.elevation,
-          decimalGain: params.gain,
-        })
+      // getOnboardTransactions will throw an error if the hotspot has already
+      // been onboarded to all of the provided network types
+      const { solanaTransactions } = await getOnboardTransactions({
+        hotspotAddress: params.hotspotAddress,
+        hotspotTypes,
+        lat: last(params.coords),
+        lng: first(params.coords),
+        elevation: params.elevation,
+        decimalGain: params.gain,
+      })
 
       navToHeliumAppForSigning({
         onboardTransactions: solanaTransactions,
-        addGatewayTxn,
-        assertLocationTxn,
       })
     } catch (err) {
       console.log(err)
-      const screenParams = {
-        title: t('hotspot_setup.onboarding_error.unknown_error.title'),
-        subTitle: t('hotspot_setup.onboarding_error.unknown_error.subtitle'),
-        errorMsg: err.message,
+      if (err === AlreadyOnboardedError) {
+        const screenParams = {
+          title: t('hotspot_setup.owned_hotspot.title'),
+          subTitle: t('hotspot_setup.owned_hotspot.subtitle_2'),
+          errorMsg: err.message,
+        }
+        navigation.replace('HotspotUnknownErrorScreen', screenParams)
+      } else {
+        const screenParams = {
+          title: t('hotspot_setup.onboarding_error.unknown_error.title'),
+          subTitle: t('hotspot_setup.onboarding_error.unknown_error.subtitle'),
+          errorMsg: err.message,
+        }
+        navigation.replace('HotspotUnknownErrorScreen', screenParams)
       }
-      navigation.replace('HotspotUnknownErrorScreen', screenParams)
     }
   }, [
     createHotspot,
     getOnboardTransactions,
-    getOnboardingRecord,
     navToHeliumAppForSigning,
     params,
     t,

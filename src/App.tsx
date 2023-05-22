@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler'
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import {
   LogBox,
@@ -31,7 +31,6 @@ import {
   createClient,
   AnalyticsProvider,
 } from '@segment/analytics-react-native'
-import animalName from 'angry-purple-tiger'
 import { theme, darkThemeColors, lightThemeColors } from './theme/theme'
 import NavigationRoot from './navigation/NavigationRoot'
 import { useAppDispatch } from './store/store'
@@ -42,10 +41,7 @@ import AppLinkProvider from './providers/AppLinkProvider'
 import { navigationRef } from './navigation/navigator'
 import useMount from './utils/useMount'
 import usePrevious from './utils/usePrevious'
-import { fetchHotspotsData } from './store/hotspots/hotspotsSlice'
 import { fetchInitialData } from './store/helium/heliumDataSlice'
-import { getMakerName } from './utils/stakingClient'
-import { getEvent, Scope, Action } from './utils/analytics/utils'
 import { getAddress } from './utils/secureAccount'
 import useCheckWalletLink from './utils/useCheckWalletLink'
 
@@ -117,42 +113,6 @@ const App = () => {
   const { appState } = useAppState()
   const dispatch = useAppDispatch()
 
-  const [deviceLoaded, setDeviceLoaded] = useState(false)
-
-  const hotspots = useSelector(
-    (state: RootState) => state.hotspots.hotspots.data,
-  )
-  const hotspotsLoaded = useSelector(
-    (state: RootState) => state.hotspots.hotspotsLoaded,
-  )
-  const makers = useSelector((state: RootState) => state.heliumData.makers)
-  const makersLoaded = useSelector(
-    (state: RootState) => state.heliumData.makersLoaded,
-  )
-
-  useEffect(() => {
-    if (!deviceLoaded && hotspotsLoaded && makersLoaded) {
-      const params = hotspots.map((hotspot) => ({
-        hotspot_address: hotspot.address,
-        hotspot_name: animalName(hotspot.address),
-        owner_address: hotspot.owner,
-        maker_name: getMakerName(hotspot.payer, makers),
-      }))
-
-      segmentClient.track(
-        getEvent({
-          scope: Scope.HOTSPOT,
-          action: Action.LOADED,
-        }),
-        {
-          hotspots: params,
-        },
-      )
-
-      setDeviceLoaded(true)
-    }
-  }, [deviceLoaded, hotspots, hotspotsLoaded, makers, makersLoaded])
-
   const {
     lastIdle,
     isPinRequired,
@@ -160,21 +120,10 @@ const App = () => {
     isRestored,
     isRequestingPermission,
     isLocked,
+    heliumAddress,
   } = useSelector((state: RootState) => state.app)
 
-  const { walletLinkToken } = useSelector((state: RootState) => state.app)
-  const [heliumWallet, setHeliumWallet] = useState<string>()
-
-  useEffect(() => {
-    if (!walletLinkToken) {
-      if (heliumWallet) {
-        setHeliumWallet('')
-      }
-      return
-    }
-
-    getAddress().then(setHeliumWallet)
-  }, [heliumWallet, walletLinkToken])
+  const { result: heliumWallet } = useAsync(getAddress, [])
 
   useMount(() => {
     dispatch(restoreAppSettings())
@@ -221,7 +170,6 @@ const App = () => {
       const fiveMinutesAgo = Date.now() - 300000
       if (lastIdle && fiveMinutesAgo > lastIdle) {
         dispatch(fetchInitialData())
-        dispatch(fetchHotspotsData())
       }
     }
   }, [appState, dispatch, prevAppState, lastIdle, isLocked])
@@ -262,7 +210,7 @@ const App = () => {
     <AnalyticsProvider client={segmentClient}>
       <SolanaProvider
         rpcEndpoint={Config.SOLANA_RPC_ENDPOINT || ''}
-        heliumWallet={heliumWallet}
+        heliumWallet={heliumAddress || heliumWallet}
         // --- devnet provider ---
         // cluster="devnet"
         // solanaStatusOverride="complete"
