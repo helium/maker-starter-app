@@ -30,9 +30,9 @@ function useSolanaCache() {
 
   const getCachedHotspots = async () => {
     if (hotspots.hotspotsLoaded) {
-      console.log('hotspots: cache hit')
       return hotspots.hotspots
     }
+    console.log('hotspots: cache miss')
 
     const heliumAddress = await getAddress()
     if (!heliumAddress) {
