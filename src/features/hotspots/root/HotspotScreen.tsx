@@ -109,6 +109,16 @@ const HotspotScreen = () => {
     return `${EXPLORER_BASE_URL}/${target}/${hotspot.address}`
   }, [hotspot])
 
+  const antennaDetails = useMemo(() => {
+    if (!hotspot) return ''
+    const gain = details?.gain ? details.gain / 10 : 0.0
+    const elevation = details?.elevation ? details.elevation : 0.0
+    return (
+      `${t('antennas.gain_info.title')}: ${gain} dBi\n` +
+      `${t('antennas.elevation_info.title')}: ${elevation} meters`
+    )
+  }, [details, hotspot, t])
+
   const viewExplorer = () => {
     Linking.openURL(explorerUrl)
   }
@@ -146,6 +156,11 @@ const HotspotScreen = () => {
       {needsOnboarding && (
         <Text color="primaryText" variant="body1">
           {t('hotspots.notOnboarded')}
+        </Text>
+      )}
+      {details && (
+        <Text color="primaryText" variant="body1">
+          {antennaDetails}
         </Text>
       )}
 
