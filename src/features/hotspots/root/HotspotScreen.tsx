@@ -103,10 +103,12 @@ const HotspotScreen = () => {
     [hotspot.address, navigation],
   )
 
+  // the hotspots are only available at hotspoty now, the explorer.helium.com only
+  // offers link to hotspoty, it is better to directly go there.
   const explorerUrl = useMemo(() => {
     if (!hotspot) return ''
     const target = 'hotspots'
-    return `${EXPLORER_BASE_URL}/${target}/${hotspot.address}`
+    return `${EXPLORER_BASE_URL}/${target}/${hotspot.address}/rewards`
   }, [hotspot])
 
   const antennaDetails = useMemo(() => {
