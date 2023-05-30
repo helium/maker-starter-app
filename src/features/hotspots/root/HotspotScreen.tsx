@@ -126,7 +126,7 @@ const HotspotScreen = () => {
   }
 
   return (
-    <ScrollView>
+    <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
       <SafeAreaBox
         backgroundColor="primaryBackground"
         padding="m"
