@@ -10,11 +10,15 @@ const usePermissionManager = () => {
   const dispatch = useAppDispatch()
 
   const requestLocationPermission = useCallback(
-    async (showAlert = true) => {
+    async (showAlert = true, upgradeToPrecise = false) => {
       if (showAlert) {
         const decision = await showOKCancelAlert({
-          titleKey: 'permissions.location.title',
-          messageKey: 'permissions.location.message',
+          titleKey: upgradeToPrecise
+            ? 'permissions.upgrade_location.title'
+            : 'permissions.location.title',
+          messageKey: upgradeToPrecise
+            ? 'permissions.upgrade_location.message'
+            : 'permissions.location.message',
         })
         if (!decision) return false
       }
