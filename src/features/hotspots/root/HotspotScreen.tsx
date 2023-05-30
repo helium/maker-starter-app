@@ -213,6 +213,7 @@ const HotspotScreen = () => {
         </Box>
         <Button
           onPress={assertHotspot}
+          disabled={needsOnboarding}
           height={48}
           marginTop="l"
           mode="contained"
