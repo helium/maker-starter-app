@@ -8,48 +8,48 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* NebraTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* NebraTests.m */; };
-                13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
-                13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
-                13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-                1D60E4A1E4684B6EAA3FC42C /* NotoSerif-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DD049305D59C415C928D12A4 /* NotoSerif-Regular.ttf */; };
-                36A3CD3DF0F348F7B14E5E7B /* NotoSerif-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 42368FC6CF2C45249AA70569 /* NotoSerif-BoldItalic.ttf */; };
-                3AAA8194DB4D059944852532 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D65FC53696548063B0CA59 /* ExpoModulesProvider.swift */; };
-                3ABE5B1E93EA450A98ACD11C /* Soleil-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B04C0FACF44046A7B6386267 /* Soleil-Bold.ttf */; };
-                3C2D26697DA9DE0D62775384 /* libPods-Nebra.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C2C551342F5A01DDC30CEC /* libPods-Nebra.a */; };
-                3C3B78E8216E4A24B3D41182 /* Soleil-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = BFC64B4103074D7AA69E04D9 /* Soleil-SemiBold.otf */; };
-                4A77FB337CAD456D9370EFC6 /* Inter-MediumItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = EE865C00D31F47798364F638 /* Inter-MediumItalic.otf */; };
-                4BA26FE8BF3F4C21834310E0 /* Inter-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 7AF3B2B9D978452B9802793E /* Inter-Black.otf */; };
-                52DF7BF9B6F6812C987607E2 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7F384B36BEBF65291C3764 /* ExpoModulesProvider.swift */; };
-                5906EE5D2CDC48419E7A1B5B /* Inter-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 194757A61DA44CB6B84C901B /* Inter-Thin.otf */; };
-                5F985E57455542968CBF8D08 /* InputMono-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8663B75D37AD42248F8FEE5C /* InputMono-Light.ttf */; };
-                61A19470368E44DA9DDCA6EB /* Inter-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 10D550C7ED0D4ED9881DB9F6 /* Inter-Regular.otf */; };
-                65E1C9BDDF8F4ABE83664BF6 /* InputMono-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 49D24060E2F6475A9C7F0A3C /* InputMono-Bold.ttf */; };
-                6661ED5CB29F47B79F0AC99C /* Inter-Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1981C7F74281477090AF24E8 /* Inter-Italic.otf */; };
-                6EFFB6485D1346E2A1AFEFF5 /* Inter-ExtraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9948C330F5A041D4965958BE /* Inter-ExtraLight.otf */; };
-                78771B5356165C9F7AF63C78 /* libPods-Nebra-NebraTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ED9B03F4EE6066C138C909EC /* libPods-Nebra-NebraTests.a */; };
-                81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-                8D875E73C9EF4FDBAFE0BC04 /* NotoSerif-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C56E7BBFD25F493485E29F50 /* NotoSerif-Italic.ttf */; };
-                8E1FA42FB6B249DD935F3230 /* InputMono-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2E9EB1714E79456AADB1DAB7 /* InputMono-Medium.ttf */; };
-                94D04421FF644811AB74A577 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB5EFA40EEE5497BB8817E49 /* SplashScreen.storyboard */; };
-                964E9C302638CD0C00CCBCCC /* bridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 964E9C2F2638CD0C00CCBCCC /* bridge.swift */; };
-                9831B45C0C934D5DA7C1E376 /* Inter-V.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C5F68EC473F1401E8BA6E90E /* Inter-V.ttf */; };
-                AB1857680BD24A12948F47A0 /* Inter-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = D9F43C83056C42FB97DD6F7B /* Inter-Bold.otf */; };
-                B0ADCAB187E146A2A2E0F646 /* Inter-SemiBoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9805AE8FF826418AB3C89816 /* Inter-SemiBoldItalic.otf */; };
-                BC1C8D2066F94F6A9FB9C4FA /* Inter-BlackItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = A350AB28C29843339950CAAA /* Inter-BlackItalic.otf */; };
-                BFC02D3E6B594D2599F7F51A /* InputMono-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FE0FAF4483384BF1BF9042B6 /* InputMono-Regular.ttf */; };
-                C8AA8C82087A452EABEC614F /* Inter-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 751B66B213714C59A79D2D2D /* Inter-Light.otf */; };
-                C8D2547F52474DBA870637A3 /* Soleil-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 68D481494AB54729938986C7 /* Soleil-Regular.otf */; };
-                C8FA9CAE35254E1BB6E3DF55 /* Inter-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 7A960030C6DD48769B05DC18 /* Inter-SemiBold.otf */; };
-                DC1FCD22462C44DF9D5B28D1 /* Soleil-Book.otf in Resources */ = {isa = PBXBuildFile; fileRef = FF75445FEB124F46B3AE0793 /* Soleil-Book.otf */; };
-                E02E6649D9A84B2EBE4A2C8E /* Inter-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0B94E653FDA5418794E1363D /* Inter-Medium.otf */; };
-                E3B4BE6121004BE390342382 /* NotoSerif-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 18440AE4D1FF4D94B24E20C5 /* NotoSerif-Bold.ttf */; };
-                E6A35AB4E531457597AD427E /* Inter-ThinItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = C1E82B90540E4E179C192CD2 /* Inter-ThinItalic.otf */; };
-                E7A35657F9204661B2E42451 /* Inter-ExtraLightItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 7431FE7176504C62ACBB568A /* Inter-ExtraLightItalic.otf */; };
-                F149B238DB484C94AB4A698C /* Inter-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4818542C66034B959FD4EFAD /* Inter-BoldItalic.otf */; };
-                F4C03F23BF854FCC8E672AB0 /* Inter-ExtraBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = F27587BE65C345D4A56C622A /* Inter-ExtraBold.otf */; };
-                F68DCB2D248C48D1B21317C9 /* Inter-ExtraBoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = D5F2703F8A784EA78F77067E /* Inter-ExtraBoldItalic.otf */; };
-                F7EC3B25C8DD4087BE093542 /* Soleil-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = ED61005034144775AB735610 /* Soleil-Light.otf */; };
-                F8DCE83B8C214420BAD4FB6F /* Inter-LightItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 99A2BCE84307474886CFA5DB /* Inter-LightItalic.otf */; };
+		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
+		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
+		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		1D60E4A1E4684B6EAA3FC42C /* NotoSerif-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DD049305D59C415C928D12A4 /* NotoSerif-Regular.ttf */; };
+		36A3CD3DF0F348F7B14E5E7B /* NotoSerif-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 42368FC6CF2C45249AA70569 /* NotoSerif-BoldItalic.ttf */; };
+		3AAA8194DB4D059944852532 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D65FC53696548063B0CA59 /* ExpoModulesProvider.swift */; };
+		3ABE5B1E93EA450A98ACD11C /* Soleil-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B04C0FACF44046A7B6386267 /* Soleil-Bold.ttf */; };
+		3C2D26697DA9DE0D62775384 /* libPods-Nebra.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C2C551342F5A01DDC30CEC /* libPods-Nebra.a */; };
+		3C3B78E8216E4A24B3D41182 /* Soleil-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = BFC64B4103074D7AA69E04D9 /* Soleil-SemiBold.otf */; };
+		4A77FB337CAD456D9370EFC6 /* Inter-MediumItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = EE865C00D31F47798364F638 /* Inter-MediumItalic.otf */; };
+		4BA26FE8BF3F4C21834310E0 /* Inter-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 7AF3B2B9D978452B9802793E /* Inter-Black.otf */; };
+		52DF7BF9B6F6812C987607E2 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7F384B36BEBF65291C3764 /* ExpoModulesProvider.swift */; };
+		5906EE5D2CDC48419E7A1B5B /* Inter-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 194757A61DA44CB6B84C901B /* Inter-Thin.otf */; };
+		5F985E57455542968CBF8D08 /* InputMono-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8663B75D37AD42248F8FEE5C /* InputMono-Light.ttf */; };
+		61A19470368E44DA9DDCA6EB /* Inter-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 10D550C7ED0D4ED9881DB9F6 /* Inter-Regular.otf */; };
+		65E1C9BDDF8F4ABE83664BF6 /* InputMono-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 49D24060E2F6475A9C7F0A3C /* InputMono-Bold.ttf */; };
+		6661ED5CB29F47B79F0AC99C /* Inter-Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1981C7F74281477090AF24E8 /* Inter-Italic.otf */; };
+		6EFFB6485D1346E2A1AFEFF5 /* Inter-ExtraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9948C330F5A041D4965958BE /* Inter-ExtraLight.otf */; };
+		78771B5356165C9F7AF63C78 /* libPods-Nebra-NebraTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ED9B03F4EE6066C138C909EC /* libPods-Nebra-NebraTests.a */; };
+		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		8D875E73C9EF4FDBAFE0BC04 /* NotoSerif-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C56E7BBFD25F493485E29F50 /* NotoSerif-Italic.ttf */; };
+		8E1FA42FB6B249DD935F3230 /* InputMono-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2E9EB1714E79456AADB1DAB7 /* InputMono-Medium.ttf */; };
+		94D04421FF644811AB74A577 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB5EFA40EEE5497BB8817E49 /* SplashScreen.storyboard */; };
+		964E9C302638CD0C00CCBCCC /* bridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 964E9C2F2638CD0C00CCBCCC /* bridge.swift */; };
+		9831B45C0C934D5DA7C1E376 /* Inter-V.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C5F68EC473F1401E8BA6E90E /* Inter-V.ttf */; };
+		AB1857680BD24A12948F47A0 /* Inter-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = D9F43C83056C42FB97DD6F7B /* Inter-Bold.otf */; };
+		B0ADCAB187E146A2A2E0F646 /* Inter-SemiBoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9805AE8FF826418AB3C89816 /* Inter-SemiBoldItalic.otf */; };
+		BC1C8D2066F94F6A9FB9C4FA /* Inter-BlackItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = A350AB28C29843339950CAAA /* Inter-BlackItalic.otf */; };
+		BFC02D3E6B594D2599F7F51A /* InputMono-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FE0FAF4483384BF1BF9042B6 /* InputMono-Regular.ttf */; };
+		C8AA8C82087A452EABEC614F /* Inter-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 751B66B213714C59A79D2D2D /* Inter-Light.otf */; };
+		C8D2547F52474DBA870637A3 /* Soleil-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 68D481494AB54729938986C7 /* Soleil-Regular.otf */; };
+		C8FA9CAE35254E1BB6E3DF55 /* Inter-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 7A960030C6DD48769B05DC18 /* Inter-SemiBold.otf */; };
+		DC1FCD22462C44DF9D5B28D1 /* Soleil-Book.otf in Resources */ = {isa = PBXBuildFile; fileRef = FF75445FEB124F46B3AE0793 /* Soleil-Book.otf */; };
+		E02E6649D9A84B2EBE4A2C8E /* Inter-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0B94E653FDA5418794E1363D /* Inter-Medium.otf */; };
+		E3B4BE6121004BE390342382 /* NotoSerif-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 18440AE4D1FF4D94B24E20C5 /* NotoSerif-Bold.ttf */; };
+		E6A35AB4E531457597AD427E /* Inter-ThinItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = C1E82B90540E4E179C192CD2 /* Inter-ThinItalic.otf */; };
+		E7A35657F9204661B2E42451 /* Inter-ExtraLightItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 7431FE7176504C62ACBB568A /* Inter-ExtraLightItalic.otf */; };
+		F149B238DB484C94AB4A698C /* Inter-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4818542C66034B959FD4EFAD /* Inter-BoldItalic.otf */; };
+		F4C03F23BF854FCC8E672AB0 /* Inter-ExtraBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = F27587BE65C345D4A56C622A /* Inter-ExtraBold.otf */; };
+		F68DCB2D248C48D1B21317C9 /* Inter-ExtraBoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = D5F2703F8A784EA78F77067E /* Inter-ExtraBoldItalic.otf */; };
+		F7EC3B25C8DD4087BE093542 /* Soleil-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = ED61005034144775AB735610 /* Soleil-Light.otf */; };
+		F8DCE83B8C214420BAD4FB6F /* Inter-LightItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 99A2BCE84307474886CFA5DB /* Inter-LightItalic.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,10 +76,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-                0083A76402762B827EFB1B60 /* Pods-Nebra-NebraTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nebra-NebraTests.release.xcconfig"; path = "Target Support Files/Pods-Nebra-NebraTests/Pods-Nebra-NebraTests.release.xcconfig"; sourceTree = "<group>"; };
-                008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
-                00E356EE1AD99517003FC87E /* NebraTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NebraTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-                00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
+		00E356EE1AD99517003FC87E /* NebraTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NebraTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* NebraTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objc; path = NebraTests.m; sourceTree = "<group>"; };
 		0B94E653FDA5418794E1363D /* Inter-Medium.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Medium.otf"; path = "../src/assets/fonts/Inter-Medium.otf"; sourceTree = "<group>"; };
 		10D550C7ED0D4ED9881DB9F6 /* Inter-Regular.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Regular.otf"; path = "../src/assets/fonts/Inter-Regular.otf"; sourceTree = "<group>"; };
@@ -107,34 +106,34 @@
 		7A960030C6DD48769B05DC18 /* Inter-SemiBold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-SemiBold.otf"; path = "../src/assets/fonts/Inter-SemiBold.otf"; sourceTree = "<group>"; };
 		7AF3B2B9D978452B9802793E /* Inter-Black.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Black.otf"; path = "../src/assets/fonts/Inter-Black.otf"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Nebra/LaunchScreen.storyboard; sourceTree = "<group>"; };
-                8663B75D37AD42248F8FEE5C /* InputMono-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "InputMono-Light.ttf"; path = "../src/assets/fonts/InputMono-Light.ttf"; sourceTree = "<group>"; };
-                964E9C2E2638CD0B00CCBCCC /* Nebra-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Nebra-Bridging-Header.h"; sourceTree = "<group>"; };
-                964E9C2F2638CD0C00CCBCCC /* bridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bridge.swift; sourceTree = "<group>"; };
-                9805AE8FF826418AB3C89816 /* Inter-SemiBoldItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-SemiBoldItalic.otf"; path = "../src/assets/fonts/Inter-SemiBoldItalic.otf"; sourceTree = "<group>"; };
-                9948C330F5A041D4965958BE /* Inter-ExtraLight.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-ExtraLight.otf"; path = "../src/assets/fonts/Inter-ExtraLight.otf"; sourceTree = "<group>"; };
-                99A2BCE84307474886CFA5DB /* Inter-LightItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-LightItalic.otf"; path = "../src/assets/fonts/Inter-LightItalic.otf"; sourceTree = "<group>"; };
-                A350AB28C29843339950CAAA /* Inter-BlackItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-BlackItalic.otf"; path = "../src/assets/fonts/Inter-BlackItalic.otf"; sourceTree = "<group>"; };
-                A8C2C551342F5A01DDC30CEC /* libPods-Nebra.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Nebra.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-                AB5EFA40EEE5497BB8817E49 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = Nebra/SplashScreen.storyboard; sourceTree = "<group>"; };
-                B04C0FACF44046A7B6386267 /* Soleil-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Soleil-Bold.ttf"; path = "../src/assets/fonts/Soleil-Bold.ttf"; sourceTree = "<group>"; };
-                BFB45BBD2A85DBD1301D84BC /* Pods-Nebra-NebraTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nebra-NebraTests.debug.xcconfig"; path = "Target Support Files/Pods-Nebra-NebraTests/Pods-Nebra-NebraTests.debug.xcconfig"; sourceTree = "<group>"; };
-                BFC64B4103074D7AA69E04D9 /* Soleil-SemiBold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Soleil-SemiBold.otf"; path = "../src/assets/fonts/Soleil-SemiBold.otf"; sourceTree = "<group>"; };
-                C1E82B90540E4E179C192CD2 /* Inter-ThinItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-ThinItalic.otf"; path = "../src/assets/fonts/Inter-ThinItalic.otf"; sourceTree = "<group>"; };
-                C56E7BBFD25F493485E29F50 /* NotoSerif-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSerif-Italic.ttf"; path = "../src/assets/fonts/NotoSerif-Italic.ttf"; sourceTree = "<group>"; };
-                C5F68EC473F1401E8BA6E90E /* Inter-V.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-V.ttf"; path = "../src/assets/fonts/Inter-V.ttf"; sourceTree = "<group>"; };
-                D5F2703F8A784EA78F77067E /* Inter-ExtraBoldItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-ExtraBoldItalic.otf"; path = "../src/assets/fonts/Inter-ExtraBoldItalic.otf"; sourceTree = "<group>"; };
-                D9F43C83056C42FB97DD6F7B /* Inter-Bold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Bold.otf"; path = "../src/assets/fonts/Inter-Bold.otf"; sourceTree = "<group>"; };
-                DD049305D59C415C928D12A4 /* NotoSerif-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSerif-Regular.ttf"; path = "../src/assets/fonts/NotoSerif-Regular.ttf"; sourceTree = "<group>"; };
-                DE9CC2ABA6BCC071224EC7DF /* Pods-Nebra-NebraTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nebra-NebraTests.release.xcconfig"; path = "Target Support Files/Pods-Nebra-NebraTests/Pods-Nebra-NebraTests.release.xcconfig"; sourceTree = "<group>"; };
-                ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-                ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
-                ED61005034144775AB735610 /* Soleil-Light.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Soleil-Light.otf"; path = "../src/assets/fonts/Soleil-Light.otf"; sourceTree = "<group>"; };
-                ED9B03F4EE6066C138C909EC /* libPods-Nebra-NebraTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Nebra-NebraTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-                EE865C00D31F47798364F638 /* Inter-MediumItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-MediumItalic.otf"; path = "../src/assets/fonts/Inter-MediumItalic.otf"; sourceTree = "<group>"; };
-                F27587BE65C345D4A56C622A /* Inter-ExtraBold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-ExtraBold.otf"; path = "../src/assets/fonts/Inter-ExtraBold.otf"; sourceTree = "<group>"; };
-                F8B0E2112563005D00EB1E73 /* Nebra.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Nebra.entitlements; path = Nebra/Nebra.entitlements; sourceTree = "<group>"; };
-                FE0FAF4483384BF1BF9042B6 /* InputMono-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "InputMono-Regular.ttf"; path = "../src/assets/fonts/InputMono-Regular.ttf"; sourceTree = "<group>"; };
-                FF75445FEB124F46B3AE0793 /* Soleil-Book.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Soleil-Book.otf"; path = "../src/assets/fonts/Soleil-Book.otf"; sourceTree = "<group>"; };
+		8663B75D37AD42248F8FEE5C /* InputMono-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "InputMono-Light.ttf"; path = "../src/assets/fonts/InputMono-Light.ttf"; sourceTree = "<group>"; };
+		964E9C2E2638CD0B00CCBCCC /* Nebra-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Nebra-Bridging-Header.h"; sourceTree = "<group>"; };
+		964E9C2F2638CD0C00CCBCCC /* bridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bridge.swift; sourceTree = "<group>"; };
+		9805AE8FF826418AB3C89816 /* Inter-SemiBoldItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-SemiBoldItalic.otf"; path = "../src/assets/fonts/Inter-SemiBoldItalic.otf"; sourceTree = "<group>"; };
+		9948C330F5A041D4965958BE /* Inter-ExtraLight.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-ExtraLight.otf"; path = "../src/assets/fonts/Inter-ExtraLight.otf"; sourceTree = "<group>"; };
+		99A2BCE84307474886CFA5DB /* Inter-LightItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-LightItalic.otf"; path = "../src/assets/fonts/Inter-LightItalic.otf"; sourceTree = "<group>"; };
+		A350AB28C29843339950CAAA /* Inter-BlackItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-BlackItalic.otf"; path = "../src/assets/fonts/Inter-BlackItalic.otf"; sourceTree = "<group>"; };
+		A8C2C551342F5A01DDC30CEC /* libPods-Nebra.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Nebra.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AB5EFA40EEE5497BB8817E49 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = Nebra/SplashScreen.storyboard; sourceTree = "<group>"; };
+		B04C0FACF44046A7B6386267 /* Soleil-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Soleil-Bold.ttf"; path = "../src/assets/fonts/Soleil-Bold.ttf"; sourceTree = "<group>"; };
+		BFB45BBD2A85DBD1301D84BC /* Pods-Nebra-NebraTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nebra-NebraTests.debug.xcconfig"; path = "Target Support Files/Pods-Nebra-NebraTests/Pods-Nebra-NebraTests.debug.xcconfig"; sourceTree = "<group>"; };
+		BFC64B4103074D7AA69E04D9 /* Soleil-SemiBold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Soleil-SemiBold.otf"; path = "../src/assets/fonts/Soleil-SemiBold.otf"; sourceTree = "<group>"; };
+		C1E82B90540E4E179C192CD2 /* Inter-ThinItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-ThinItalic.otf"; path = "../src/assets/fonts/Inter-ThinItalic.otf"; sourceTree = "<group>"; };
+		C56E7BBFD25F493485E29F50 /* NotoSerif-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSerif-Italic.ttf"; path = "../src/assets/fonts/NotoSerif-Italic.ttf"; sourceTree = "<group>"; };
+		C5F68EC473F1401E8BA6E90E /* Inter-V.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-V.ttf"; path = "../src/assets/fonts/Inter-V.ttf"; sourceTree = "<group>"; };
+		D5F2703F8A784EA78F77067E /* Inter-ExtraBoldItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-ExtraBoldItalic.otf"; path = "../src/assets/fonts/Inter-ExtraBoldItalic.otf"; sourceTree = "<group>"; };
+		D9F43C83056C42FB97DD6F7B /* Inter-Bold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Bold.otf"; path = "../src/assets/fonts/Inter-Bold.otf"; sourceTree = "<group>"; };
+		DD049305D59C415C928D12A4 /* NotoSerif-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSerif-Regular.ttf"; path = "../src/assets/fonts/NotoSerif-Regular.ttf"; sourceTree = "<group>"; };
+		DE9CC2ABA6BCC071224EC7DF /* Pods-Nebra-NebraTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nebra-NebraTests.release.xcconfig"; path = "Target Support Files/Pods-Nebra-NebraTests/Pods-Nebra-NebraTests.release.xcconfig"; sourceTree = "<group>"; };
+		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
+		ED61005034144775AB735610 /* Soleil-Light.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Soleil-Light.otf"; path = "../src/assets/fonts/Soleil-Light.otf"; sourceTree = "<group>"; };
+		ED9B03F4EE6066C138C909EC /* libPods-Nebra-NebraTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Nebra-NebraTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		EE865C00D31F47798364F638 /* Inter-MediumItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-MediumItalic.otf"; path = "../src/assets/fonts/Inter-MediumItalic.otf"; sourceTree = "<group>"; };
+		F27587BE65C345D4A56C622A /* Inter-ExtraBold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-ExtraBold.otf"; path = "../src/assets/fonts/Inter-ExtraBold.otf"; sourceTree = "<group>"; };
+		F8B0E2112563005D00EB1E73 /* Nebra.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Nebra.entitlements; path = Nebra/Nebra.entitlements; sourceTree = "<group>"; };
+		FE0FAF4483384BF1BF9042B6 /* InputMono-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "InputMono-Regular.ttf"; path = "../src/assets/fonts/InputMono-Regular.ttf"; sourceTree = "<group>"; };
+		FF75445FEB124F46B3AE0793 /* Soleil-Book.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Soleil-Book.otf"; path = "../src/assets/fonts/Soleil-Book.otf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -201,13 +200,12 @@
 			name = Nebra;
 			sourceTree = "<group>";
 		};
-                2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
-                        isa = PBXGroup;
-                        children = (
-                                967EDD5A28D0368A002F60D1 /* hermes.xcframework */,
-                                ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-                                ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
-                                A8C2C551342F5A01DDC30CEC /* libPods-Nebra.a */,
+		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
+				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
+				A8C2C551342F5A01DDC30CEC /* libPods-Nebra.a */,
 				ED9B03F4EE6066C138C909EC /* libPods-Nebra-NebraTests.a */,
 			);
 			name = Frameworks;
@@ -320,15 +318,15 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "NebraTests" */;
 			buildPhases = (
-				77C2A180FAF2ECEC031B2BFC /* [CP] Check Pods Manifest.lock */,
-                                00E356EA1AD99517003FC87E /* Sources */,
-                                00E356EB1AD99517003FC87E /* Frameworks */,
-                                00E356EC1AD99517003FC87E /* Resources */,
-                                E72A38196DB94B6D25648724 /* [CP] Embed Pods Frameworks */,
-                                C1A5B3267B457386F5F47F52 /* [CP] Copy Pods Resources */,
-                        );
-                        buildRules = (
-                        );
+				A988D1A90A1C3B02A8E2BB2D /* [CP] Check Pods Manifest.lock */,
+				00E356EA1AD99517003FC87E /* Sources */,
+				00E356EB1AD99517003FC87E /* Frameworks */,
+				00E356EC1AD99517003FC87E /* Resources */,
+				E72A38196DB94B6D25648724 /* [CP] Embed Pods Frameworks */,
+				C1A5B3267B457386F5F47F52 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
 			dependencies = (
 				00E356F51AD99517003FC87E /* PBXTargetDependency */,
 			);
@@ -338,22 +336,21 @@
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		13B07F861A680F5B00A75B9A /* Nebra */ = {
-                        isa = PBXNativeTarget;
-                        buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Nebra" */;
-                        buildPhases = (
-                                11DAB1315E22AD7E9A5C073D /* [CP] Check Pods Manifest.lock */,
-                                FD10A7F022414F080027D42C /* Start Packager */,
-                                13B07F871A680F5B00A75B9A /* Sources */,
-                                13B07F8E1A680F5B00A75B9A /* Resources */,
-                                13B07F8C1A680F5B00A75B9A /* Frameworks */,
-                                00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-                                F8B0E225256300AD00EB1E73 /* Embed App Extensions */,
-                                967EDD5E28D0370A002F60D1 /* Embed Frameworks */,
-                                2F109C1039DBE5B297E58A49 /* [CP] Embed Pods Frameworks */,
-                                8AB56CA3C019604AD672FF5F /* [CP] Copy Pods Resources */,
-                        );
-                        buildRules = (
-                        );
+			isa = PBXNativeTarget;
+			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Nebra" */;
+			buildPhases = (
+				11DAB1315E22AD7E9A5C073D /* [CP] Check Pods Manifest.lock */,
+				FD10A7F022414F080027D42C /* Start Packager */,
+				13B07F871A680F5B00A75B9A /* Sources */,
+				13B07F8E1A680F5B00A75B9A /* Resources */,
+				13B07F8C1A680F5B00A75B9A /* Frameworks */,
+				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
+				F8B0E225256300AD00EB1E73 /* Embed App Extensions */,
+				2F109C1039DBE5B297E58A49 /* [CP] Embed Pods Frameworks */,
+				8AB56CA3C019604AD672FF5F /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
 			dependencies = (
 			);
 			name = Nebra;
@@ -452,7 +449,133 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0038EAC593322FA1EE8C387E /* [CP] Embed Pods Frameworks */ = {
+		00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Bundle React Native code and images";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export SENTRY_PROPERTIES=sentry.properties\nexport EXTRA_PACKAGER_ARGS=\"--sourcemap-output $DERIVED_FILE_DIR/main.jsbundle.map\"\nexport NODE_BINARY=node\nexport EXTRA_PACKAGER_ARGS=\"--sourcemap-output $DERIVED_FILE_DIR/main.jsbundle.map\"\n../node_modules/@sentry/cli/bin/sentry-cli react-native xcode ../node_modules/react-native/scripts/react-native-xcode.sh\n";
+		};
+		11DAB1315E22AD7E9A5C073D /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Nebra-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		2F109C1039DBE5B297E58A49 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Nebra/Pods-Nebra-frameworks.sh",
+				"${PODS_ROOT}/Mapbox-iOS-SDK/dynamic/Mapbox.framework",
+				"${BUILT_PRODUCTS_DIR}/MapboxMobileEvents/MapboxMobileEvents.framework",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/Flipper-DoubleConversion/double-conversion.framework/double-conversion",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/Flipper-Glog/glog.framework/glog",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/OpenSSL-Universal/OpenSSL.framework/OpenSSL",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/hermes-engine/hermes.framework/hermes",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Mapbox.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxMobileEvents.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/double-conversion.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/glog.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OpenSSL.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/hermes.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Nebra/Pods-Nebra-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8AB56CA3C019604AD672FF5F /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Nebra/Pods-Nebra-resources.sh",
+				"${PODS_CONFIGURATION_BUILD_DIR}/EXConstants/EXConstants.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/EXConstants.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AccessibilityResources.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Nebra/Pods-Nebra-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A988D1A90A1C3B02A8E2BB2D /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Nebra-NebraTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C1A5B3267B457386F5F47F52 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Nebra-NebraTests/Pods-Nebra-NebraTests-resources.sh",
+				"${PODS_CONFIGURATION_BUILD_DIR}/EXConstants/EXConstants.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/EXConstants.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AccessibilityResources.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Nebra-NebraTests/Pods-Nebra-NebraTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E72A38196DB94B6D25648724 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -480,161 +603,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Nebra-NebraTests/Pods-Nebra-NebraTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Bundle React Native code and images";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-                        shellPath = /bin/sh;
-                        shellScript = "export SENTRY_PROPERTIES=sentry.properties\nexport EXTRA_PACKAGER_ARGS=\"--sourcemap-output $DERIVED_FILE_DIR/main.jsbundle.map\"\nexport NODE_BINARY=node\nexport EXTRA_PACKAGER_ARGS=\"--sourcemap-output $DERIVED_FILE_DIR/main.jsbundle.map\"\n../node_modules/@sentry/cli/bin/sentry-cli react-native xcode ../node_modules/react-native/scripts/react-native-xcode.sh\n";
-                };
-                11DAB1315E22AD7E9A5C073D /* [CP] Check Pods Manifest.lock */ = {
-                        isa = PBXShellScriptBuildPhase;
-                        buildActionMask = 2147483647;
-                        files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Nebra-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-                        shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-                        showEnvVarsInLog = 0;
-                };
-                2F109C1039DBE5B297E58A49 /* [CP] Embed Pods Frameworks */ = {
-                        isa = PBXShellScriptBuildPhase;
-                        buildActionMask = 2147483647;
-                        files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Nebra/Pods-Nebra-frameworks.sh",
-				"${PODS_ROOT}/Mapbox-iOS-SDK/dynamic/Mapbox.framework",
-				"${BUILT_PRODUCTS_DIR}/MapboxMobileEvents/MapboxMobileEvents.framework",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/Flipper-DoubleConversion/double-conversion.framework/double-conversion",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/Flipper-Glog/glog.framework/glog",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/OpenSSL-Universal/OpenSSL.framework/OpenSSL",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/hermes-engine/hermes.framework/hermes",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Mapbox.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxMobileEvents.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/double-conversion.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/glog.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OpenSSL.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/hermes.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-                        shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Nebra/Pods-Nebra-frameworks.sh\"\n";
-                        showEnvVarsInLog = 0;
-                };
-                8AB56CA3C019604AD672FF5F /* [CP] Copy Pods Resources */ = {
-                        isa = PBXShellScriptBuildPhase;
-                        buildActionMask = 2147483647;
-                        files = (
-                        );
-                        inputPaths = (
-                                "${PODS_ROOT}/Target Support Files/Pods-Nebra/Pods-Nebra-resources.sh",
-                                "${PODS_CONFIGURATION_BUILD_DIR}/EXConstants/EXConstants.bundle",
-                                "${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle",
-                        );
-                        name = "[CP] Copy Pods Resources";
-                        outputPaths = (
-                                "${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/EXConstants.bundle",
-                                "${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AccessibilityResources.bundle",
-                        );
-                        runOnlyForDeploymentPostprocessing = 0;
-                        shellPath = /bin/sh;
-                        shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Nebra/Pods-Nebra-resources.sh\"\n";
-                        showEnvVarsInLog = 0;
-                };
-                C1A5B3267B457386F5F47F52 /* [CP] Copy Pods Resources */ = {
-                        isa = PBXShellScriptBuildPhase;
-                        buildActionMask = 2147483647;
-                        files = (
-                        );
-                        inputPaths = (
-                                "${PODS_ROOT}/Target Support Files/Pods-Nebra-NebraTests/Pods-Nebra-NebraTests-resources.sh",
-                                "${PODS_CONFIGURATION_BUILD_DIR}/EXConstants/EXConstants.bundle",
-                                "${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle",
-                        );
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/EXConstants.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AccessibilityResources.bundle",
-                        );
-                        runOnlyForDeploymentPostprocessing = 0;
-                        shellPath = /bin/sh;
-                        shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Nebra-NebraTests/Pods-Nebra-NebraTests-resources.sh\"\n";
-                        showEnvVarsInLog = 0;
-                };
-                D08626C09FECA1F258CD036C /* [CP] Check Pods Manifest.lock */ = {
-                        isa = PBXShellScriptBuildPhase;
-                        buildActionMask = 2147483647;
-                        files = (
-                        );
-                        inputFileListPaths = (
-                        );
-                        inputPaths = (
-                                "${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-                                "${PODS_ROOT}/Manifest.lock",
-                        );
-                        name = "[CP] Check Pods Manifest.lock";
-                        outputFileListPaths = (
-                        );
-                        outputPaths = (
-                                "$(DERIVED_FILE_DIR)/Pods-Nebra-NebraTests-checkManifestLockResult.txt",
-                        );
-                        runOnlyForDeploymentPostprocessing = 0;
-                        shellPath = /bin/sh;
-                        shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-                        showEnvVarsInLog = 0;
-                };
-                E72A38196DB94B6D25648724 /* [CP] Embed Pods Frameworks */ = {
-                        isa = PBXShellScriptBuildPhase;
-                        buildActionMask = 2147483647;
-                        files = (
-                        );
-                        inputPaths = (
-                                "${PODS_ROOT}/Target Support Files/Pods-Nebra-NebraTests/Pods-Nebra-NebraTests-frameworks.sh",
-                                "${PODS_ROOT}/Mapbox-iOS-SDK/dynamic/Mapbox.framework",
-                                "${BUILT_PRODUCTS_DIR}/MapboxMobileEvents/MapboxMobileEvents.framework",
-                                "${PODS_XCFRAMEWORKS_BUILD_DIR}/Flipper-DoubleConversion/double-conversion.framework/double-conversion",
-                                "${PODS_XCFRAMEWORKS_BUILD_DIR}/Flipper-Glog/glog.framework/glog",
-                                "${PODS_XCFRAMEWORKS_BUILD_DIR}/OpenSSL-Universal/OpenSSL.framework/OpenSSL",
-                                "${PODS_XCFRAMEWORKS_BUILD_DIR}/hermes-engine/hermes.framework/hermes",
-                        );
-                        name = "[CP] Embed Pods Frameworks";
-                        outputPaths = (
-                                "${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Mapbox.framework",
-                                "${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxMobileEvents.framework",
-                                "${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/double-conversion.framework",
-                                "${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/glog.framework",
-                                "${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OpenSSL.framework",
-                                "${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/hermes.framework",
-                        );
-                        runOnlyForDeploymentPostprocessing = 0;
-                        shellPath = /bin/sh;
-                        shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Nebra-NebraTests/Pods-Nebra-NebraTests-frameworks.sh\"\n";
-                        showEnvVarsInLog = 0;
-                };
-                FD10A7F022414F080027D42C /* Start Packager */ = {
+		FD10A7F022414F080027D42C /* Start Packager */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -679,11 +648,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-                00E356F51AD99517003FC87E /* PBXTargetDependency */ = {
-                        isa = PBXTargetDependency;
-                        target = 13B07F861A680F5B00A75B9A /* Nebra */;
-                        targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
-                };
+		00E356F51AD99517003FC87E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 13B07F861A680F5B00A75B9A /* Nebra */;
+			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
@@ -746,13 +715,13 @@
 				DEVELOPMENT_TEAM = SDV42U7N4S;
 				ENABLE_BITCODE = NO;
 				EXCLUDED_ARCHS = "";
-                                "EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
-                                INFOPLIST_FILE = Nebra/Info.plist;
-                                LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-                                MARKETING_VERSION = 2.0.1;
-                                OTHER_LDFLAGS = (
-                                        "$(inherited)",
-                                        "-ObjC",
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
+				INFOPLIST_FILE = Nebra/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 2.0.2;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
 					"-lc++",
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG";
@@ -777,13 +746,13 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = SDV42U7N4S;
 				EXCLUDED_ARCHS = "";
-                                "EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
-                                INFOPLIST_FILE = Nebra/Info.plist;
-                                LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-                                MARKETING_VERSION = 2.0.1;
-                                OTHER_LDFLAGS = (
-                                        "$(inherited)",
-                                        "-ObjC",
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
+				INFOPLIST_FILE = Nebra/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 2.0.2;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
 					"-lc++",
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_RELEASE";
