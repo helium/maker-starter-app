@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { HotspotMeta } from '@helium/react-native-sdk'
 import MapboxGL from '@react-native-mapbox-gl/maps'
 import Config from 'react-native-config'
-import { ActivityIndicator, Linking } from 'react-native'
+import { ActivityIndicator, Linking, ScrollView } from 'react-native'
 import { getHotspotTypes, HotspotStackParamList } from './hotspotTypes'
 import Text from '../../../components/Text'
 import SafeAreaBox from '../../../components/SafeAreaBox'
@@ -103,10 +103,12 @@ const HotspotScreen = () => {
     [hotspot.address, navigation],
   )
 
+  // the hotspots are only available at hotspoty now, the explorer.helium.com only
+  // offers link to hotspoty, it is better to directly go there.
   const explorerUrl = useMemo(() => {
     if (!hotspot) return ''
     const target = 'hotspots'
-    return `${EXPLORER_BASE_URL}/${target}/${hotspot.address}`
+    return `${EXPLORER_BASE_URL}/${target}/${hotspot.address}/rewards`
   }, [hotspot])
 
   const antennaDetails = useMemo(() => {
@@ -124,125 +126,129 @@ const HotspotScreen = () => {
   }
 
   return (
-    <SafeAreaBox
-      backgroundColor="primaryBackground"
-      flex={1}
-      paddingHorizontal="l"
-      justifyContent="center"
-    >
-      <Text
-        fontSize={29}
-        lineHeight={31}
-        color="primaryText"
-        fontWeight="200"
-        numberOfLines={1}
-        width="100%"
-        adjustsFontSizeToFit
+    <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+      <SafeAreaBox
+        backgroundColor="primaryBackground"
+        padding="m"
+        flex={1}
+        paddingHorizontal="l"
+        justifyContent="center"
       >
-        {formattedHotspotName[0]}
-      </Text>
-      <Text
-        variant="body1"
-        fontSize={29}
-        lineHeight={31}
-        paddingRight="s"
-        color="primaryText"
-        numberOfLines={1}
-        adjustsFontSizeToFit
-        marginBottom="l"
-      >
-        {formattedHotspotName[1]}
-      </Text>
-      {needsOnboarding && (
-        <Text color="primaryText" variant="body1">
-          {t('hotspots.notOnboarded')}
+        <Text
+          fontSize={29}
+          lineHeight={31}
+          color="primaryText"
+          fontWeight="200"
+          numberOfLines={1}
+          width="100%"
+          adjustsFontSizeToFit
+        >
+          {formattedHotspotName[0]}
         </Text>
-      )}
-      {details && (
-        <Text color="primaryText" variant="body1">
-          {antennaDetails}
+        <Text
+          variant="body1"
+          fontSize={29}
+          lineHeight={31}
+          paddingRight="s"
+          color="primaryText"
+          numberOfLines={1}
+          adjustsFontSizeToFit
+          marginBottom="l"
+        >
+          {formattedHotspotName[1]}
         </Text>
-      )}
-
-      <Box
-        height={210}
-        width="100%"
-        borderRadius="xl"
-        overflow="hidden"
-        marginTop="s"
-        marginBottom="xxs"
-      >
-        {details?.lat && details.lng && (
-          <Box height={200} width="100%" borderRadius="xl" overflow="hidden">
-            <MapboxGL.MapView
-              styleURL={Config.MAPBOX_STYLE_URL}
-              style={{ height: 200, width: '100%' }}
-            >
-              <MapboxGL.Camera
-                defaultSettings={{
-                  centerCoordinate: [details.lng, details.lat],
-                  zoomLevel: 9,
-                }}
-              />
-            </MapboxGL.MapView>
-            <Box
-              position="absolute"
-              top={0}
-              bottom={0}
-              left={0}
-              right={0}
-              alignItems="center"
-              justifyContent="center"
-              pointerEvents="none"
-            >
-              <Box
-                height={16}
-                borderRadius="round"
-                width={16}
-                backgroundColor="peacockGreen"
-                pointerEvents="none"
-              />
-            </Box>
-          </Box>
+        {needsOnboarding && (
+          <Text color="primaryText" variant="body1">
+            {t('hotspots.notOnboarded')}
+          </Text>
         )}
-        {!details && <ActivityIndicator size="small" color={primaryText} />}
-      </Box>
-      <Button
-        onPress={assertHotspot}
-        height={48}
-        marginTop="l"
-        mode="contained"
-        title={t('hotspots.empty.hotspots.assertLocation')}
-      />
-      <Button
-        onPress={transferHotspot}
-        height={48}
-        marginTop="l"
-        mode="contained"
-        title={t('hotspots.empty.hotspots.transfer')}
-      />
-      <Button
-        onPress={updateWifi}
-        height={48}
-        marginTop="l"
-        mode="contained"
-        title={t('hotspots.empty.hotspots.updateWifi')}
-      />
-      <Button
-        onPress={updateAntenna}
-        height={48}
-        marginTop="l"
-        mode="contained"
-        title={t('hotspot_details.options.update_antenna')}
-      />
-      <Button
-        onPress={viewExplorer}
-        height={48}
-        marginTop="l"
-        mode="contained"
-        title={t('hotspot_details.options.viewExplorer')}
-      />
-    </SafeAreaBox>
+        {details && (
+          <Text color="primaryText" variant="body1">
+            {antennaDetails}
+          </Text>
+        )}
+
+        <Box
+          height={210}
+          width="100%"
+          borderRadius="xl"
+          overflow="hidden"
+          marginTop="s"
+          marginBottom="xxs"
+        >
+          {details?.lat && details.lng && (
+            <Box height={200} width="100%" borderRadius="xl" overflow="hidden">
+              <MapboxGL.MapView
+                styleURL={Config.MAPBOX_STYLE_URL}
+                style={{ height: 200, width: '100%' }}
+              >
+                <MapboxGL.Camera
+                  defaultSettings={{
+                    centerCoordinate: [details.lng, details.lat],
+                    zoomLevel: 9,
+                  }}
+                />
+              </MapboxGL.MapView>
+              <Box
+                position="absolute"
+                top={0}
+                bottom={0}
+                left={0}
+                right={0}
+                alignItems="center"
+                justifyContent="center"
+                pointerEvents="none"
+              >
+                <Box
+                  height={16}
+                  borderRadius="round"
+                  width={16}
+                  backgroundColor="peacockGreen"
+                  pointerEvents="none"
+                />
+              </Box>
+            </Box>
+          )}
+          {!details && <ActivityIndicator size="small" color={primaryText} />}
+        </Box>
+        <Button
+          onPress={assertHotspot}
+          disabled={needsOnboarding}
+          height={48}
+          marginTop="l"
+          mode="contained"
+          title={t('hotspots.empty.hotspots.assertLocation')}
+        />
+        <Button
+          onPress={transferHotspot}
+          height={48}
+          marginTop="l"
+          mode="contained"
+          title={t('hotspots.empty.hotspots.transfer')}
+        />
+        <Button
+          onPress={updateWifi}
+          height={48}
+          marginTop="l"
+          mode="contained"
+          title={t('hotspots.empty.hotspots.updateWifi')}
+        />
+        <Button
+          onPress={updateAntenna}
+          height={48}
+          marginTop="l"
+          mode="contained"
+          title={t('hotspot_details.options.update_antenna')}
+        />
+        <Button
+          onPress={viewExplorer}
+          height={48}
+          marginTop="l"
+          mode="contained"
+          title={t('hotspot_details.options.viewExplorer')}
+        />
+      </SafeAreaBox>
+    </ScrollView>
   )
 }
 

@@ -431,8 +431,13 @@ export default {
   permissions: {
     location: {
       message:
-        'The Nebra Hotspot App needs access to your location for Bluetooth discovery and to enable location assertion. This information will never be sold or shared.',
+        'The Nebra Hotspot App needs access to your precise location for Bluetooth discovery and to enable location assertion. This information will never be sold or shared.',
       title: 'Location Permission',
+    },
+    upgrade_location: {
+      message:
+        'The Nebra Hotspot App needs to upgrade your location permissions. It needs access to your precise location for location assertion. This information will never be sold or shared.',
+      title: 'Upgrade Location Permission',
     },
   },
   transferHotspot: {

@@ -44,12 +44,14 @@ const useGetLocation = () => {
       }
       if (!permResponse) return null // this shouldn't happen unless shit hits the fan
 
-      if (permResponse.granted) {
+      if (permResponse.granted && permResponse?.android?.accuracy === 'fine') {
         return dispatchGetLocation()
       }
+      // prompt again as either we don't have permission or have coarse accuracy.
       if (canPromptUser !== false && permResponse.canAskAgain) {
         const response = await requestLocationPermission(
           canPromptUser !== 'skip',
+          permResponse.granted,
         )
 
         if (response && response.granted) {
