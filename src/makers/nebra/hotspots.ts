@@ -64,6 +64,26 @@ const HHRK4IN1BLE = {
   },
 } as MakerHotspot
 
+const NONNEBRABLE = {
+  name: 'Non Nebra Hotspot (Bluetooth)',
+  icon: INROCKPIIcon,
+  onboardType: 'BLE',
+  translations: {
+    en: {
+      internal: [
+        {
+          title: 'Pair with hotspot',
+          body: "1. Make sure Phone's Bluetooth is turned on.\n\n2. Press and hold the button on the side of your hotspot for 3 seconds to make it discoverable.",
+          button: 'Continue',
+        },
+      ],
+    },
+    ja: {},
+    ko: {},
+    zh: {},
+  },
+} as MakerHotspot
+
 const NEBRA5GMAGMA = {
   name: 'Nebra HNT 5G Gateway',
   icon: IN5GIcon,
@@ -91,4 +111,4 @@ const NEBRA5GMAGMA = {
   onboardUrl: 'https://nebra.dashboard.helium.freedomfi.com//?wallet_id=WALLET',
 } as MakerHotspot
 
-export default { IN1BLE, OUT1BLE, HHRK4IN1BLE, NEBRA5GMAGMA }
+export default { IN1BLE, OUT1BLE, HHRK4IN1BLE, NEBRA5GMAGMA, NONNEBRABLE }
