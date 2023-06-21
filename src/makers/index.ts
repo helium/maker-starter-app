@@ -17,9 +17,7 @@ export const HotspotMakerModels = {
 }
 
 export type HotspotType = keyof typeof HotspotMakerModels
-export const HotspotModelKeys = Object.keys(
-  HotspotMakerModels,
-).sort() as HotspotType[]
+export const HotspotModelKeys = Object.keys(HotspotMakerModels) as HotspotType[]
 export const HotspotTypeCount = HotspotModelKeys.length
 
 type MakerLangType = Record<

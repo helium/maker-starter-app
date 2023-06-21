@@ -1,5 +1,6 @@
 import IN1Icon from './in1.svg'
 import OUT1Icon from './out1.svg'
+import NonNebraBleIcon from './non_nebra_ble.svg'
 import INROCKPIIcon from './inrockpi.svg'
 import IN5GIcon from './in5g.svg'
 import { MakerHotspot } from '../hotspotMakerTypes'
@@ -66,7 +67,7 @@ const HHRK4IN1BLE = {
 
 const NONNEBRABLE = {
   name: 'Non Nebra Hotspot (Bluetooth)',
-  icon: INROCKPIIcon,
+  icon: NonNebraBleIcon,
   onboardType: 'BLE',
   translations: {
     en: {

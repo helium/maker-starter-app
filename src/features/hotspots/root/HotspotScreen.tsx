@@ -45,6 +45,7 @@ const HotspotScreen = () => {
 
     let hotspotMeta: HotspotMeta | undefined
     if (hotspotTypes.length) {
+      console.log('addresss: ', hotspot.address)
       hotspotMeta = await getHotspotDetails({
         address: hotspot.address,
         type: hotspotTypes[0],

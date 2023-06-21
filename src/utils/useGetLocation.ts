@@ -2,6 +2,7 @@ import * as Location from 'expo-location'
 import { useCallback, useEffect } from 'react'
 import useAppState from 'react-native-appstate-hook'
 import { useSelector } from 'react-redux'
+import { Platform } from 'react-native'
 import {
   getLocation,
   getLocationPermission,
@@ -11,6 +12,8 @@ import { useAppDispatch } from '../store/store'
 import { LocationCoords } from './location'
 import usePermissionManager from './usePermissionManager'
 import usePrevious from './usePrevious'
+
+const isAndroid = Platform.OS === 'android'
 
 const useGetLocation = () => {
   const { appState } = useAppState()
@@ -44,9 +47,17 @@ const useGetLocation = () => {
       }
       if (!permResponse) return null // this shouldn't happen unless shit hits the fan
 
-      if (permResponse.granted && permResponse?.android?.accuracy === 'fine') {
-        return dispatchGetLocation()
+      if (permResponse.granted) {
+        if (!isAndroid) {
+          // incase of ios we don't need to check for fine location
+          return dispatchGetLocation()
+        }
+        // check for fine for android
+        if (permResponse?.android?.accuracy === 'fine') {
+          return dispatchGetLocation()
+        }
       }
+
       // prompt again as either we don't have permission or have coarse accuracy.
       if (canPromptUser !== false && permResponse.canAskAgain) {
         const response = await requestLocationPermission(
