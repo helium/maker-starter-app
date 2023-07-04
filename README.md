@@ -354,7 +354,7 @@ You can also open the Android project in Android Studio by selecting `open an ex
 
 #### Android Release
 
-1. Set build version env vars. `VERSION_CODE_OFFSET` is using format `5xxyyzz`. Corresponding to major, minor, patch. So v1.0.1, equal to 5010001. `APPCENTER_BUILD_ID` is always `0000000`.
+1. Set build version env vars. `VERSION_CODE_OFFSET` is using format `5xxyyzz`. Corresponding to major, minor, patch. So v1.0.1, equal to 5010001. `APPCENTER_BUILD_ID` is always `0000000`. One can pick the last code offset from last android release in play store console.
 2. Open Android Studio in terminal, supplying the values from above:
 
 ```
