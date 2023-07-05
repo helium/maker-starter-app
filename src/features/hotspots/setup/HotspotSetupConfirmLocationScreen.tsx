@@ -254,7 +254,7 @@ const HotspotSetupConfirmLocationScreen = () => {
                 <Box>
                   <Text
                     variant="body1"
-                    color={disabled ? 'error' : 'secondaryText'}
+                    color={disabled ? 'error' : 'primaryText'}
                   >
                     {assertData?.balances?.hnt?.toString(4)}
                   </Text>
