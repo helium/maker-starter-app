@@ -28,7 +28,9 @@ const HotspotTxnsProgressScreen = () => {
   const { params } = useRoute<Route>()
   const navigation = useNavigation<RootNavigationProp>()
   const { primaryText } = useColors()
-  const { createHotspot, getOnboardTransactions } = useOnboarding()
+
+  const { createHotspot, getOnboardTransactions, getOnboardingRecord } =
+    useOnboarding()
 
   const navToHeliumAppForSigning = useCallback(
     async (opts?: {
@@ -86,7 +88,11 @@ const HotspotTxnsProgressScreen = () => {
         // if the hotspot has already been created, carry on and try to onboard
       }
 
-      const hotspotTypes = getHotspotTypes()
+      const onboardingRecord = await getOnboardingRecord(params.hotspotAddress)
+
+      const hotspotTypes = getHotspotTypes({
+        hotspotMakerAddress: onboardingRecord?.maker.address || '',
+      })
 
       // getOnboardTransactions will throw an error if the hotspot has already
       // been onboarded to all of the provided network types
@@ -123,6 +129,7 @@ const HotspotTxnsProgressScreen = () => {
   }, [
     createHotspot,
     getOnboardTransactions,
+    getOnboardingRecord,
     navToHeliumAppForSigning,
     params,
     t,

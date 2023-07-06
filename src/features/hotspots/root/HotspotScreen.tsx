@@ -2,7 +2,7 @@ import React, { memo, useCallback, useEffect, useMemo, useState } from 'react'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import animalName from 'angry-purple-tiger'
 import { useTranslation } from 'react-i18next'
-import { HotspotMeta } from '@helium/react-native-sdk'
+import { HotspotMeta, useOnboarding } from '@helium/react-native-sdk'
 import MapboxGL from '@react-native-mapbox-gl/maps'
 import Config from 'react-native-config'
 import { ActivityIndicator, Linking, ScrollView } from 'react-native'
@@ -34,6 +34,7 @@ const HotspotScreen = () => {
   const [details, setDetails] = useState<HotspotDetails>()
   const [loadingDetails, setLoadingDetails] = useState(true)
   const { getCachedHotspotDetails: getHotspotDetails } = useSolanaCache()
+  const { getOnboardingRecord } = useOnboarding()
 
   const needsOnboarding = useMemo(
     () => !loadingDetails && !details,
@@ -41,7 +42,14 @@ const HotspotScreen = () => {
   )
 
   const updateHotspotDetails = useCallback(async () => {
-    const hotspotTypes = getHotspotTypes()
+    const onboardingRecord = await getOnboardingRecord(hotspot.address)
+
+    /*
+    NOTE: Beware the env should contain both 5G and lora maker address for this to work
+    */
+    const hotspotTypes = getHotspotTypes({
+      hotspotMakerAddress: onboardingRecord?.maker.address || '',
+    })
 
     let hotspotMeta: HotspotMeta | undefined
     if (hotspotTypes.length) {
@@ -53,7 +61,7 @@ const HotspotScreen = () => {
     }
     setDetails(hotspotMeta)
     setLoadingDetails(false)
-  }, [getHotspotDetails, hotspot])
+  }, [getHotspotDetails, getOnboardingRecord, hotspot])
 
   useEffect(() => {
     return navigation.addListener('focus', () => {

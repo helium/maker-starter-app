@@ -53,7 +53,13 @@ const HotspotSetupConfirmLocationScreen = () => {
 
     try {
       const onboardingRecord = await getOnboardingRecord(params.hotspotAddress)
-      const hotspotTypes = getHotspotTypes()
+
+      /*
+      NOTE: Beware the env should contain both 5G and lora maker address for this to work
+      */
+      const hotspotTypes = getHotspotTypes({
+        hotspotMakerAddress: onboardingRecord?.maker.address || '',
+      })
 
       const locationParams = {
         decimalGain: gain,

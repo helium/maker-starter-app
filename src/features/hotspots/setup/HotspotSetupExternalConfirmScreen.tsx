@@ -49,11 +49,15 @@ const HotspotSetupExternalConfirmScreen = () => {
   }, [])
 
   useEffect(() => {
-    if (!publicKey) return
+    if (!publicKey) {
+      console.log('public key: ', publicKey)
+      return
+    }
 
     const getRecord = async () => {
       let onboardingRecord: OnboardingRecord | null = null
       try {
+        console.log('getting onboarding record for : ', publicKey)
         onboardingRecord = await getOnboardingRecord(publicKey)
       } catch (e) {
         if (e.message) {
@@ -83,9 +87,13 @@ const HotspotSetupExternalConfirmScreen = () => {
 
   const navNext = useCallback(async () => {
     const solAddress = Account.heliumAddressToSolAddress(address || '')
+    const onboardingRecord = await getOnboardingRecord(publicKey)
+    const hotspotTypes = getHotspotTypes({
+      hotspotMakerAddress: onboardingRecord?.maker.address || '',
+    })
     const hotspot = await getHotspotDetails({
       address: publicKey,
-      type: first(getHotspotTypes()) || 'IOT',
+      type: first(hotspotTypes) || 'IOT',
     })
 
     if (hotspot?.owner) {
@@ -103,6 +111,7 @@ const HotspotSetupExternalConfirmScreen = () => {
     }
   }, [
     address,
+    getOnboardingRecord,
     getHotspotDetails,
     navigation,
     params.addGatewayTxn,

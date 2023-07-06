@@ -4,7 +4,12 @@ import { useAsync } from 'react-async-hook'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
 import { useAnalytics } from '@segment/analytics-react-native'
-import { Account, BleError, useHotspotBle } from '@helium/react-native-sdk'
+import {
+  Account,
+  BleError,
+  useHotspotBle,
+  useOnboarding,
+} from '@helium/react-native-sdk'
 import useAlert from '../../../utils/useAlert'
 import {
   HotspotSetupNavigationProp,
@@ -38,6 +43,7 @@ const HotspotSetupWifiConnectingScreen = () => {
 
   const { readWifiNetworks, setWifi, removeConfiguredWifi } = useHotspotBle()
   const { getCachedHotspotDetails: getHotspotDetails } = useSolanaCache()
+  const { getOnboardingRecord } = useOnboarding()
 
   const { showOKAlert } = useAlert()
 
@@ -63,10 +69,17 @@ const HotspotSetupWifiConnectingScreen = () => {
     if (!address) return
 
     const solAddress = Account.heliumAddressToSolAddress(address || '')
+
+    const onboardingRecord = await getOnboardingRecord(hotspotAddress)
+    const hotspotTypes = getHotspotTypes({
+      hotspotMakerAddress: onboardingRecord?.maker.address || '',
+    })
+
     const hotspot = await getHotspotDetails({
       address: hotspotAddress,
-      type: first(getHotspotTypes()) || 'IOT',
+      type: first(hotspotTypes) || 'IOT',
     })
+
     if (hotspot?.owner) {
       if (hotspot.owner === solAddress) {
         navigation.replace('OwnedHotspotErrorScreen')
@@ -83,6 +96,7 @@ const HotspotSetupWifiConnectingScreen = () => {
   }, [
     addGatewayTxn,
     getHotspotDetails,
+    getOnboardingRecord,
     hotspotAddress,
     hotspotType,
     navigation,
