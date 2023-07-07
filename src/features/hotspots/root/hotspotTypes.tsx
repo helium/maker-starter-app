@@ -47,6 +47,7 @@ export const getHotspotTypes = ({
     Could possibly use your maker address, make sure that 5G maker address 
     is present in the env file
   */
+  console.log('someone wants to know hotspot type for : ', hotspotMakerAddress)
 
   if (
     Config.MAKER_ADDRESS_5G &&

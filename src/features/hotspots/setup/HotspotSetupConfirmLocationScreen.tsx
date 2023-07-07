@@ -38,7 +38,7 @@ const HotspotSetupConfirmLocationScreen = () => {
   const { getCachedHotspotDetails: getHotspotDetails } = useSolanaCache()
 
   useAsync(async () => {
-    console.log('lets get onboarding rcord.')
+    console.log('lets get onboarding record.')
     const { elevation, gain, coords, updateAntennaOnly } = params
 
     const userAddress = await getAddress()

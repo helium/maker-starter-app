@@ -1,5 +1,10 @@
 import { useSelector } from 'react-redux'
-import { Asset, HotspotMeta, useSolana } from '@helium/react-native-sdk'
+import {
+  Asset,
+  HotspotMeta,
+  useSolana,
+  useOnboarding,
+} from '@helium/react-native-sdk'
 import { Hotspot } from '@helium/http'
 import { useAppDispatch } from '../store/store'
 import { getAddress } from './secureAccount'
@@ -7,6 +12,7 @@ import {
   HotspotsSliceState,
   updateHotspots,
   updateHotspotDetail,
+  updateOnboardingCache,
   dropHotspotCache,
 } from '../store/hotspots/hotspotsSlice'
 import { RootState } from '../store/rootReducer'
@@ -16,6 +22,8 @@ function useSolanaCache() {
     (state: RootState) => state.hotspots,
   )
   const { getHotspotDetails, getHotspots } = useSolana()
+  const { getOnboardingRecord } = useOnboarding()
+
   const dispatch = useAppDispatch()
 
   const getHotspotAddress = (item: Asset | Hotspot): string => {
@@ -44,7 +52,10 @@ function useSolanaCache() {
       // makerName: Config.MAKER_NAME,
     })
 
-    if (!nextHotspots) return
+    if (!nextHotspots) {
+      console.log('no hotspots with this account')
+      return
+    }
 
     console.log('hotspots: cache miss, doing entry in cache')
     dispatch(updateHotspots(nextHotspots))
@@ -71,6 +82,23 @@ function useSolanaCache() {
     return hotspotMeta
   }
 
+  const getCachedOnboardingRecord = async (params: { address: string }) => {
+    const hotspotAddress = params.address
+    if (hotspots.onboardingCache.has(hotspotAddress)) {
+      return hotspots.onboardingCache.get(hotspotAddress)
+    }
+    const record = await getOnboardingRecord(hotspotAddress)
+    if (record) {
+      console.log('cache miss, inserting')
+      dispatch(
+        updateOnboardingCache({
+          address: hotspotAddress,
+          onboardingRecord: record,
+        }),
+      )
+    }
+  }
+
   const invalidateHotspotCache = async () => {
     console.log('invalidating cache')
     dispatch(dropHotspotCache())
@@ -80,6 +108,7 @@ function useSolanaCache() {
     getHotspotAddress,
     getCachedHotspots,
     getCachedHotspotDetails,
+    getCachedOnboardingRecord,
     invalidateHotspotCache,
   }
 }
