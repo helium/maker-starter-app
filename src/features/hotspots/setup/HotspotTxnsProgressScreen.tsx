@@ -20,6 +20,7 @@ import { useColors } from '../../../theme/themeHooks'
 import { DebouncedButton } from '../../../components/Button'
 import useMount from '../../../utils/useMount'
 import { getHotspotTypes } from '../root/hotspotTypes'
+import useSolanaCache from '../../../utils/solanaCache'
 
 type Route = RouteProp<HotspotSetupStackParamList, 'HotspotTxnsProgressScreen'>
 
@@ -29,8 +30,8 @@ const HotspotTxnsProgressScreen = () => {
   const navigation = useNavigation<RootNavigationProp>()
   const { primaryText } = useColors()
 
-  const { createHotspot, getOnboardTransactions, getOnboardingRecord } =
-    useOnboarding()
+  const { createHotspot, getOnboardTransactions } = useOnboarding()
+  const { getCachedOnboardingRecord: getOnboardingRecord } = useSolanaCache()
 
   const navToHeliumAppForSigning = useCallback(
     async (opts?: {

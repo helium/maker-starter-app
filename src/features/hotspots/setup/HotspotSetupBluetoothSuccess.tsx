@@ -29,6 +29,7 @@ import {
 } from '../../../utils/analytics/utils'
 import { RootState } from '../../../store/rootReducer'
 import { getSecureItem } from '../../../utils/secureAccount'
+import useSolanaCache from '../../../utils/solanaCache'
 
 type Route = RouteProp<
   HotspotSetupStackParamList,
@@ -50,7 +51,9 @@ const HotspotSetupBluetoothSuccess = () => {
     readWifiNetworks,
     getOnboardingAddress,
   } = useHotspotBle()
-  const { getMinFirmware, getOnboardingRecord } = useOnboarding()
+  const { getMinFirmware } = useOnboarding()
+  const { getCachedOnboardingRecord: getOnboardingRecord } = useSolanaCache()
+
   const { showOKAlert } = useAlert()
   const makers = useSelector((state: RootState) => state.heliumData.makers)
 

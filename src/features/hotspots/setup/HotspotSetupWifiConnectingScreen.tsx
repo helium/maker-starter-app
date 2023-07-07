@@ -4,12 +4,7 @@ import { useAsync } from 'react-async-hook'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
 import { useAnalytics } from '@segment/analytics-react-native'
-import {
-  Account,
-  BleError,
-  useHotspotBle,
-  useOnboarding,
-} from '@helium/react-native-sdk'
+import { Account, BleError, useHotspotBle } from '@helium/react-native-sdk'
 import useAlert from '../../../utils/useAlert'
 import {
   HotspotSetupNavigationProp,
@@ -42,8 +37,10 @@ const HotspotSetupWifiConnectingScreen = () => {
   } = useRoute<Route>()
 
   const { readWifiNetworks, setWifi, removeConfiguredWifi } = useHotspotBle()
-  const { getCachedHotspotDetails: getHotspotDetails } = useSolanaCache()
-  const { getOnboardingRecord } = useOnboarding()
+  const {
+    getCachedHotspotDetails: getHotspotDetails,
+    getCachedOnboardingRecord: getOnboardingRecord,
+  } = useSolanaCache()
 
   const { showOKAlert } = useAlert()
 

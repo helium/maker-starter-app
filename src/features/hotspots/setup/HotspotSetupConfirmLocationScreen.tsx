@@ -2,7 +2,7 @@ import React, { useCallback, useMemo, useState } from 'react'
 import { ActivityIndicator, ScrollView } from 'react-native'
 import { useTranslation } from 'react-i18next'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
-import { useOnboarding, AssertData } from '@helium/react-native-sdk'
+import { AssertData } from '@helium/react-native-sdk'
 import { useAsync } from 'react-async-hook'
 import { first, last } from 'lodash'
 import animalName from 'angry-purple-tiger'
@@ -33,9 +33,11 @@ const HotspotSetupConfirmLocationScreen = () => {
   const [isFree, setIsFree] = useState<boolean>()
   const [solanaTransactions, setSolanaTransactions] = useState<string[]>()
   const { params } = useRoute<Route>()
-  const { getAssertData, getOnboardingRecord, getOnboardTransactions } =
-    useOnboarding()
-  const { getCachedHotspotDetails: getHotspotDetails } = useSolanaCache()
+  const { getAssertData, getOnboardTransactions } = useOnboarding()
+  const {
+    getCachedHotspotDetails: getHotspotDetails,
+    getCachedOnboardingRecord: getOnboardingRecord,
+  } = useSolanaCache()
 
   useAsync(async () => {
     console.log('lets get onboarding record.')

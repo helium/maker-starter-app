@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import Fingerprint from '@assets/images/fingerprint.svg'
 import { ActivityIndicator } from 'react-native'
 import Toast from 'react-native-simple-toast'
-import { useOnboarding, Account } from '@helium/react-native-sdk'
+import { Account } from '@helium/react-native-sdk'
 import { first } from 'lodash'
 import { AddGatewayV1 } from '@helium/transactions'
 import BackScreen from '../../../components/BackScreen'
@@ -39,8 +39,10 @@ const HotspotSetupExternalConfirmScreen = () => {
   const [macAddress, setMacAddress] = useState('')
   const [ownerAddress, setOwnerAddress] = useState('')
   const rootNav = useNavigation<RootNavigationProp>()
-  const { getOnboardingRecord } = useOnboarding()
-  const { getCachedHotspotDetails: getHotspotDetails } = useSolanaCache()
+  const {
+    getCachedHotspotDetails: getHotspotDetails,
+    getCachedOnboardingRecord: getOnboardingRecord,
+  } = useSolanaCache()
 
   const handleClose = useCallback(() => rootNav.navigate('MainTabs'), [rootNav])
 

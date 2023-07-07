@@ -2,7 +2,7 @@ import React, { memo, useCallback, useEffect, useMemo, useState } from 'react'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import animalName from 'angry-purple-tiger'
 import { useTranslation } from 'react-i18next'
-import { HotspotMeta, useOnboarding } from '@helium/react-native-sdk'
+import { HotspotMeta } from '@helium/react-native-sdk'
 import MapboxGL from '@react-native-mapbox-gl/maps'
 import Config from 'react-native-config'
 import { ActivityIndicator, Linking, ScrollView } from 'react-native'
@@ -33,8 +33,11 @@ const HotspotScreen = () => {
   const navigation = useNavigation<RootNavigationProp>()
   const [details, setDetails] = useState<HotspotDetails>()
   const [loadingDetails, setLoadingDetails] = useState(true)
-  const { getCachedHotspotDetails: getHotspotDetails } = useSolanaCache()
-  const { getOnboardingRecord } = useOnboarding()
+  // import cache functions as real ones
+  const {
+    getCachedHotspotDetails: getHotspotDetails,
+    getCachedOnboardingRecord: getOnboardingRecord,
+  } = useSolanaCache()
 
   const needsOnboarding = useMemo(
     () => !loadingDetails && !details,

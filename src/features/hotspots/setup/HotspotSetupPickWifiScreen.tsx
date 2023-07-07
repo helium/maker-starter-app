@@ -4,7 +4,7 @@ import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
 import { useAnalytics } from '@segment/analytics-react-native'
 import { first, uniq } from 'lodash'
-import { Account, useHotspotBle, useOnboarding } from '@helium/react-native-sdk'
+import { Account, useHotspotBle } from '@helium/react-native-sdk'
 import BackScreen from '../../../components/BackScreen'
 import Text from '../../../components/Text'
 import {
@@ -82,8 +82,10 @@ const HotspotSetupPickWifiScreen = () => {
     },
   } = useRoute<Route>()
   const { readWifiNetworks } = useHotspotBle()
-  const { getCachedHotspotDetails: getHotspotDetails } = useSolanaCache()
-  const { getOnboardingRecord } = useOnboarding()
+  const {
+    getCachedHotspotDetails: getHotspotDetails,
+    getCachedOnboardingRecord: getOnboardingRecord,
+  } = useSolanaCache()
 
   const [wifiNetworks, setWifiNetworks] = useState(networks)
   const [connectedWifiNetworks, setConnectedWifiNetworks] =
