@@ -46,17 +46,19 @@ const HotspotScreen = () => {
 
   const updateHotspotDetails = useCallback(async () => {
     const onboardingRecord = await getOnboardingRecord(hotspot.address)
+    // console.log("returned record: ", onboardingRecord)
 
     /*
     NOTE: Beware the env should contain both 5G and lora maker address for this to work
     */
+    // console.log("hotspot maker address ", onboardingRecord?.maker.address)
     const hotspotTypes = getHotspotTypes({
       hotspotMakerAddress: onboardingRecord?.maker.address || '',
     })
 
     let hotspotMeta: HotspotMeta | undefined
     if (hotspotTypes.length) {
-      console.log('addresss: ', hotspot.address)
+      // console.log('addresss: ', hotspot.address)
       hotspotMeta = await getHotspotDetails({
         address: hotspot.address,
         type: hotspotTypes[0],

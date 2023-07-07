@@ -71,7 +71,7 @@ function useSolanaCache() {
     }
     const hotspotMeta = await getHotspotDetails(params)
     if (hotspotMeta) {
-      console.log('cache miss')
+      console.log('hotspot details: cache miss')
       dispatch(
         updateHotspotDetail({
           address: params.address,
@@ -82,14 +82,16 @@ function useSolanaCache() {
     return hotspotMeta
   }
 
-  const getCachedOnboardingRecord = async (params: { address: string }) => {
-    const hotspotAddress = params.address
+  const getCachedOnboardingRecord = async (hotspotAddress: string) => {
+    // console.log("check cache for : ", hotspotAddress)
     if (hotspots.onboardingCache.has(hotspotAddress)) {
       return hotspots.onboardingCache.get(hotspotAddress)
     }
+    console.log('onboardingRecord: cache miss for: ', hotspotAddress)
     const record = await getOnboardingRecord(hotspotAddress)
+    // console.log("record: ", record)
     if (record) {
-      console.log('cache miss, inserting')
+      console.log('onboardingRecord: update cache')
       dispatch(
         updateOnboardingCache({
           address: hotspotAddress,
@@ -97,6 +99,7 @@ function useSolanaCache() {
         }),
       )
     }
+    return record
   }
 
   const invalidateHotspotCache = async () => {

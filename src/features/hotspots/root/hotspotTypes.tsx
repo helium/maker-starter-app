@@ -47,15 +47,15 @@ export const getHotspotTypes = ({
     Could possibly use your maker address, make sure that 5G maker address 
     is present in the env file
   */
-  console.log('someone wants to know hotspot type for : ', hotspotMakerAddress)
+  // console.log('someone wants to know hotspot type for : ', hotspotMakerAddress)
 
   if (
     Config.MAKER_ADDRESS_5G &&
     Config.MAKER_ADDRESS_5G === hotspotMakerAddress
   ) {
-    console.log('5g hotspot containing both iot and mobile radio')
+    // console.log('5g hotspot containing both iot and mobile radio')
     return ['IOT', 'MOBILE']
   }
-  console.log('iot hotspot')
+  // console.log('iot hotspot')
   return ['IOT']
 }

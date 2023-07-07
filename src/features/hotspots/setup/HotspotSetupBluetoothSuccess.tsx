@@ -159,7 +159,7 @@ const HotspotSetupBluetoothSuccess = () => {
         )
         const isCurrent = firmwareDetails.current || lightCurrent
         if (!isCurrent) {
-          console.log(isCurrent)
+          // console.log(isCurrent)
           navigation.navigate('FirmwareUpdateNeededScreen', firmwareDetails)
           return
         }

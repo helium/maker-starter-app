@@ -1,0 +1,21 @@
+{
+  "batch": "NEBRA_NEBHNT-5G_2203",
+  "createdAt": "2022-01-21T08:34:57.531Z",
+  "heliumSerial": null,
+  "id": 1920691,
+  "macEth0": "0A:A9:B7:8D:9C:60",
+  "macWlan0": null,
+  "maker": {
+    "address": "13aBYzpWA6ELqB4L2bQeXd2FH2QMRUMHZAioQawLbSZEqaDVXeh",
+    "createdAt": "2021-02-08T17:59:47.382Z",
+    "id": 4,
+    "locationNonceLimit": 1,
+    "name": "Nebra Ltd",
+    "updatedAt": "2021-02-08T17:59:47.382Z"
+  },
+  "makerId": 4,
+  "onboardingKey": "11DA6d3JSjr7BjAcH7NY7vF1eXxCfXKxibMQmvtj1VWwbiRAis6",
+  "publicAddress": "11DA6d3JSjr7BjAcH7NY7vF1eXxCfXKxibMQmvtj1VWwbiRAis6",
+  "rpiSerial": "NB-2250-21706888",
+  "updatedAt": "2022-03-03T12:56:54.728Z"
+}

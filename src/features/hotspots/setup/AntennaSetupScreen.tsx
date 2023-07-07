@@ -49,7 +49,7 @@ const AntennaSetupScreen = () => {
       gain,
       elevation,
     }
-    console.log('all parameters: ', newParams)
+    // console.log('all parameters: ', newParams)
 
     navigation.navigate('HotspotSetupConfirmLocationScreen', newParams)
   }, [antenna, elevation, gain, navigation, params])

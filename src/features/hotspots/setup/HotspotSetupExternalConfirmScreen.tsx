@@ -52,14 +52,14 @@ const HotspotSetupExternalConfirmScreen = () => {
 
   useEffect(() => {
     if (!publicKey) {
-      console.log('public key: ', publicKey)
+      // console.log('public key: ', publicKey)
       return
     }
 
     const getRecord = async () => {
       let onboardingRecord: OnboardingRecord | null = null
       try {
-        console.log('getting onboarding record for : ', publicKey)
+        // console.log('getting onboarding record for : ', publicKey)
         onboardingRecord = await getOnboardingRecord(publicKey)
       } catch (e) {
         if (e.message) {
