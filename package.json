@@ -55,10 +55,11 @@
     "@helium/proto-ble": "^4.0.0",
     "@helium/react-native-sdk": "^2.1.4",
     "@helium/transactions": "^4.7.5",
-    "@react-native-community/async-storage": "^1.12.1",
     "@helium/wallet-link": "^4.10.1",
     "@metaplex-foundation/mpl-bubblegum": "^0.6.2",
+    "@noble/curves": "1.0.0",
     "@pythnetwork/client": "^2.11.0",
+    "@react-native-community/async-storage": "^1.12.1",
     "@react-native-community/blur": "^3.6.0",
     "@react-native-community/clipboard": "^1.5.1",
     "@react-native-community/netinfo": "9.3.5",
@@ -95,6 +96,7 @@
     "geojson2h3": "^1.1.1",
     "h3-js": "^4.1.0",
     "i18next": "^19.8.3",
+    "immer": "^9.0.21",
     "lodash": "^4.17.20",
     "number-to-locale-string-polyfill": "^1.0.9",
     "patch-package": "^6.4.7",
@@ -136,8 +138,7 @@
     "stream": "^0.0.2",
     "tinycolor2": "^1.4.2",
     "use-debounce": "^5.2.0",
-    "use-state-with-callback": "^2.0.3",
-    "immer": "^9.0.21"
+    "use-state-with-callback": "^2.0.3"
   },
   "devDependencies": {
     "@babel/core": "^7.18.6",
