@@ -147,7 +147,7 @@ const HotspotSetupBluetoothSuccess = () => {
       if (connectStatus !== true) return
 
       try {
-        // check firmware
+        // check firmware, comes as gateway-v1.0.0 etc from gateway
         const minFirmware = await getMinFirmware()
         if (!minFirmware) return
         const firmwareDetails = await checkFirmwareCurrent(minFirmware)
@@ -157,7 +157,13 @@ const HotspotSetupBluetoothSuccess = () => {
           'v0.9.9',
           '>=',
         )
-        const isCurrent = firmwareDetails.current || lightCurrent
+
+        // check for third party mess, some devices only have latest or gateway-latest
+        const othersCurrent =
+          firmwareDetails.deviceFirmwareVersion.includes('latest')
+
+        const isCurrent =
+          firmwareDetails.current || lightCurrent || othersCurrent
         if (!isCurrent) {
           // console.log(isCurrent)
           navigation.navigate('FirmwareUpdateNeededScreen', firmwareDetails)
